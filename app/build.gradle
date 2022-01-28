@@ -1,0 +1,161 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.protobuf'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    // Firebase
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+
+android {
+    compileSdk 31
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "dev.mslalith.focuslauncher"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "0.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"
+                ]
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"false"]
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlyticsCollectionEnabled:"true"]
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+    // Kotlin Libraries
+    implementation 'androidx.core:core-ktx:1.8.0-alpha02'
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.1'
+
+    // Androidx & Compose Libraries
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+    implementation "androidx.navigation:navigation-compose:2.4.0-rc01"
+
+
+    // Google & Android Libraries
+    implementation 'com.google.protobuf:protobuf-javalite:3.15.6'
+    implementation "com.google.android.play:core-ktx:1.8.1"
+    implementation "androidx.palette:palette-ktx:1.0.0"
+
+
+    // Architecture Components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+    implementation "androidx.datastore:datastore:1.0.0"
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+
+    // Hilt DI Libraries
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    def hilt_viewmodel_version = '1.0.0-alpha03'
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodel_version"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-rc01'
+
+
+    // Room
+    def room_version = "2.4.1"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
+    // Accompanist
+    def accompanist_version = "0.24.0-alpha"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
+
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
+    // 3rd Party Libraries
+    implementation 'org.shredzone.commons:commons-suncalc:3.5'
+
+
+    // Test Libraries
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.14.0:osx-x86_64'
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
