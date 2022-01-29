@@ -212,7 +212,7 @@ fun SettingsItem(
     modifier: Modifier = Modifier,
     text: String,
     horizontalPadding: Dp? = null,
-    verticalPadding: Dp = 8.dp,
+    verticalPadding: Dp = 12.dp,
     afterLeadingPadding: Dp = 20.dp,
     leading: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
