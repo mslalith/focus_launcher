@@ -5,6 +5,7 @@ object Versions {
     const val GOOGLE_SERVICES = "4.3.10"
     const val CRASHLYTICS_GRADLE = "2.8.1"
     const val PROTOBUF_GRADLE = "0.8.17"
+    const val PROTOBUF_COMPILER = "3.18.0"
 
     const val KOTLIN_CORE_KTX = "1.8.0-alpha03"
     const val KOTLINX_DATETIME = "0.2.1"

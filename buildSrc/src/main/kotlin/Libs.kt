@@ -10,6 +10,8 @@ object Libs {
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
     const val buildToolsProtobufGradlePlugin = "com.google.protobuf:protobuf-gradle-plugin:${Versions.PROTOBUF_GRADLE}"
 
+    const val protobufCompiler = "com.google.protobuf:protoc:${Versions.PROTOBUF_COMPILER}"
+
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
 

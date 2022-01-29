@@ -16,15 +16,15 @@ plugins {
 
 
 android {
-    compileSdk = 31
+    compileSdk = ConfigData.TARGET_SDK
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
-        minSdk =21
-        targetSdk = 31
-        versionCode = 1
-        versionName = "0.1"
+        minSdk = ConfigData.MIN_SDK
+        targetSdk = ConfigData.TARGET_SDK
+        versionCode = ConfigData.VERSION_CODE
+        versionName = ConfigData.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -95,9 +95,9 @@ dependencies {
 protobuf {
     protoc {
         artifact = if (project.osdetector.arch == "aarch_64") {
-            "com.google.protobuf:protoc:3.18.0:${project.osdetector.os}-${project.osdetector.arch}"
+            "${Libs.protobufCompiler}:${project.osdetector.os}-${project.osdetector.arch}"
         } else {
-            "com.google.protobuf:protoc:3.18.0"
+            Libs.protobufCompiler
         }
     }
 
