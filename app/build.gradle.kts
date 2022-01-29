@@ -94,7 +94,11 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.14.0:osx-x86_64"
+        artifact = if (project.osdetector.arch == "aarch_64") {
+            "com.google.protobuf:protoc:3.18.0:${project.osdetector.os}-${project.osdetector.arch}"
+        } else {
+            "com.google.protobuf:protoc:3.18.0"
+        }
     }
 
     generateProtoTasks {
