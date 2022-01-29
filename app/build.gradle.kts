@@ -17,7 +17,7 @@ plugins {
 
 android {
     compileSdk = ConfigData.TARGET_SDK
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = ConfigData.BUILD_TOOLS
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
