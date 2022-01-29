@@ -1,3 +1,5 @@
+import org.gradle.api.artifacts.dsl.DependencyHandler
+
 object Libs {
     const val buildToolsGradle = "com.android.tools.build:gradle:${Versions.GRADLE}"
     const val buildToolsKotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
@@ -57,4 +59,107 @@ object Libs {
     const val testAndroidXJUnit = "androidx.test.ext:junit:${Versions.TEST_ANDROIDX_JUNIT}"
     const val testAndroidXEspresso = "androidx.test.espresso:espresso-core:${Versions.TEST_ANDROIDX_ESPRESSO}"
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
+}
+
+/**
+ * Grouping methods
+ */
+fun DependencyHandler.kotlin() {
+    implementation(Libs.coreKtx)
+    implementation(Libs.kotlinxDateTime)
+}
+
+fun DependencyHandler.compose() {
+    implementation(Libs.composeMaterial)
+    implementation(Libs.composeUi)
+    implementation(Libs.composeUiTooling)
+}
+
+fun DependencyHandler.google() {
+    implementation(Libs.googleMaterial)
+    implementation(Libs.googlePlayCoreKtx)
+}
+
+fun DependencyHandler.androidx() {
+    implementation(Libs.lifecycleRuntimeKtx)
+    implementation(Libs.paletteKtx)
+}
+
+fun DependencyHandler.composeInterop() {
+    implementation(Libs.activityCompose)
+    implementation(Libs.constraintLayoutCompose)
+    implementation(Libs.navigationCompose)
+    implementation(Libs.lifecycleViewModelCompose)
+}
+
+fun DependencyHandler.dataStore() {
+    implementation(Libs.dataStore)
+    implementation(Libs.dataStorePreferences)
+}
+
+fun DependencyHandler.firebase() {
+    implementation(Libs.firebaseCrashlyticsKtx)
+    implementation(Libs.firebaseAnalyticsKtx)
+}
+
+fun DependencyHandler.hilt() {
+    implementation(Libs.hiltAndroid)
+    kapt(Libs.hiltAndroidCompiler)
+
+    implementation(Libs.hiltLifecycleViewModel)
+    kapt(Libs.hiltCompiler)
+    implementation(Libs.hiltNavigationCompose)
+}
+
+fun DependencyHandler.room() {
+    implementation(Libs.roomKtx)
+    implementation(Libs.roomRuntime)
+    kapt(Libs.roomCompiler)
+}
+
+fun DependencyHandler.accompanist() {
+    implementation(Libs.accompanistPager)
+    implementation(Libs.accompanistSystemUiController)
+    implementation(Libs.accompanistInsets)
+    implementation(Libs.accompanistFlowLayout)
+}
+
+fun DependencyHandler.retrofit() {
+    implementation(Libs.retrofit)
+    implementation(Libs.retrofitGsonConverter)
+}
+
+fun DependencyHandler.protobuf() {
+    implementation(Libs.googleProtobufJavalite)
+}
+
+fun DependencyHandler.thirdPartyLibs() {
+    implementation(Libs.thirdSunCalc)
+}
+
+fun DependencyHandler.testLibs() {
+    testImplementation(Libs.testJUnit)
+    androidTestImplementation(Libs.testAndroidXJUnit)
+    androidTestImplementation(Libs.testAndroidXEspresso)
+    androidTestImplementation(Libs.testComposeJUnit)
+}
+
+
+/**
+ * Helper methods
+ */
+private fun DependencyHandler.implementation(depName: String) {
+    add("implementation", depName)
+}
+
+private fun DependencyHandler.kapt(depName: String) {
+    add("kapt", depName)
+}
+
+private fun DependencyHandler.testImplementation(depName: String) {
+    add("testImplementation", depName)
+}
+
+private fun DependencyHandler.androidTestImplementation(depName: String) {
+    add("androidTestImplementation", depName)
 }

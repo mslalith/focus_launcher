@@ -73,76 +73,25 @@ android {
 }
 
 dependencies {
-    // Kotlin Libraries
-    implementation(Libs.coreKtx)
-    implementation(Libs.kotlinxDateTime)
+    kotlin()
+    google()
+    androidx()
 
+    compose()
+    composeInterop()
 
-    // Androidx & Compose Libraries
-    implementation(Libs.googleMaterial)
-    implementation(Libs.composeMaterial)
-    implementation(Libs.composeUi)
-    implementation(Libs.composeUiTooling)
-    implementation(Libs.lifecycleRuntimeKtx)
-    implementation(Libs.activityCompose)
-    implementation(Libs.constraintLayoutCompose)
-    implementation(Libs.navigationCompose)
-
-
-    // Google & Android Libraries
-    implementation(Libs.googleProtobufJavalite)
-    implementation(Libs.googlePlayCoreKtx)
-    implementation(Libs.paletteKtx)
-
-
-    // Architecture Components
-    implementation(Libs.lifecycleViewModelCompose)
-    implementation(Libs.dataStore)
-    implementation(Libs.dataStorePreferences)
-
-
-    // Firebase
     implementation(platform(Libs.firebaseBom))
-    implementation(Libs.firebaseCrashlyticsKtx)
-    implementation(Libs.firebaseAnalyticsKtx)
+    firebase()
 
+    hilt()
+    room()
+    dataStore()
+    accompanist()
+    retrofit()
+    protobuf()
 
-    // Hilt DI Libraries
-    implementation(Libs.hiltAndroid)
-    kapt(Libs.hiltAndroidCompiler)
-
-    implementation(Libs.hiltLifecycleViewModel)
-    kapt(Libs.hiltCompiler)
-    implementation(Libs.hiltNavigationCompose)
-
-
-    // Room
-    implementation(Libs.roomKtx)
-    implementation(Libs.roomRuntime)
-    kapt(Libs.roomCompiler)
-
-
-    // Accompanist
-    implementation(Libs.accompanistPager)
-    implementation(Libs.accompanistSystemUiController)
-    implementation(Libs.accompanistInsets)
-    implementation(Libs.accompanistFlowLayout)
-
-
-    // Retrofit
-    implementation(Libs.retrofit)
-    implementation(Libs.retrofitGsonConverter)
-
-
-    // 3rd Party Libraries
-    implementation(Libs.thirdSunCalc)
-
-
-    // Test Libraries
-    testImplementation(Libs.testJUnit)
-    androidTestImplementation(Libs.testAndroidXJUnit)
-    androidTestImplementation(Libs.testAndroidXEspresso)
-    androidTestImplementation(Libs.testComposeJUnit)
+    thirdPartyLibs()
+    testLibs()
 }
 
 protobuf {
