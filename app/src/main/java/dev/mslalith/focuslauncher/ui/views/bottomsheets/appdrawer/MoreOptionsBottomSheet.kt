@@ -15,8 +15,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
+import dev.mslalith.focuslauncher.data.database.entities.App
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.extensions.showAppInfo
+import dev.mslalith.focuslauncher.extensions.toast
 import dev.mslalith.focuslauncher.extensions.uninstallApp
 import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.views.ConfirmSelectableItem
@@ -35,10 +37,22 @@ fun MoreOptionsBottomSheet(
         val colors = MaterialTheme.colors
 
         val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, app.name)
+        val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, app.name)
+        val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, app.name)
 
         fun closeAfterAction(action: () -> Unit) {
             action()
             onClose()
+        }
+
+        fun addToFavorites(app: App) {
+            appsViewModel.addToFavorites(app)
+            context.toast(addedAppToFavoritesMessage)
+        }
+
+        fun removeFromFavorites(app: App) {
+            appsViewModel.removeFromFavorites(app)
+            context.toast(removedAppFromFavoritesMessage)
         }
 
 
@@ -54,7 +68,7 @@ fun MoreOptionsBottomSheet(
             )
             Divider(
                 color = colors.onBackground,
-                modifier = Modifier.fillMaxWidth(0.4f)
+                modifier = Modifier.fillMaxWidth(fraction = 0.4f)
             )
             12.dp.verticalSpacer()
 
@@ -64,11 +78,9 @@ fun MoreOptionsBottomSheet(
                 iconRes = favoriteIconRes,
                 onClick = {
                     closeAfterAction {
-                        appsViewModel.apply {
-                            val app = app.toApp()
-                            if (isFavorite) removeFromFavorites(app)
-                            else addToFavorites(app)
-                        }
+                        val app = app.toApp()
+                        if (isFavorite) removeFromFavorites(app)
+                        else addToFavorites(app)
                     }
                 },
             )
