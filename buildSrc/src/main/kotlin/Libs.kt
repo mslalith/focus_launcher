@@ -1,4 +1,5 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.support.delegates.DependencyHandlerDelegate
 
 object Libs {
     const val buildToolsGradle = "com.android.tools.build:gradle:${Versions.GRADLE}"
@@ -97,7 +98,8 @@ fun DependencyHandler.dataStore() {
     implementation(Libs.dataStorePreferences)
 }
 
-fun DependencyHandler.firebase() {
+fun DependencyHandlerDelegate.firebase() {
+    implementationPlatform(Libs.firebaseBom)
     implementation(Libs.firebaseCrashlyticsKtx)
     implementation(Libs.firebaseAnalyticsKtx)
 }
@@ -162,4 +164,8 @@ private fun DependencyHandler.testImplementation(depName: String) {
 
 private fun DependencyHandler.androidTestImplementation(depName: String) {
     add("androidTestImplementation", depName)
+}
+
+private fun DependencyHandlerDelegate.implementationPlatform(depName: String) {
+    add("implementation", platform(depName))
 }

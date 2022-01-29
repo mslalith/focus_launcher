@@ -80,9 +80,7 @@ dependencies {
     compose()
     composeInterop()
 
-    implementation(platform(Libs.firebaseBom))
     firebase()
-
     hilt()
     room()
     dataStore()
@@ -106,6 +104,9 @@ protobuf {
                     option("lite")
                 }
             }
+            // it.builtins {
+            //     id("kotlin")
+            // }
         }
     }
 }
