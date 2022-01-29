@@ -12,6 +12,7 @@ object Libs {
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
     const val googleProtobufJavalite = "com.google.protobuf:protobuf-javalite:${Versions.GOOGLE_PROTOBUF_JAVALITE}"
+    const val googleProtobufKotlinLite = "com.google.protobuf:protobuf-kotlin-lite:${Versions.GOOGLE_PROTOBUF_KOTLIN_LITE}"
     const val googlePlayCoreKtx = "com.google.android.play:core-ktx:${Versions.GOOGLE_PLAY_CORE_KTX}"
     const val paletteKtx = "androidx.palette:palette-ktx:${Versions.PALETTE_KTX}"
 

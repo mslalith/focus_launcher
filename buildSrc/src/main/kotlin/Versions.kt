@@ -11,6 +11,7 @@ object Versions {
 
     const val GOOGLE_MATERIAL = "1.5.0"
     const val GOOGLE_PROTOBUF_JAVALITE = "3.15.6"
+    const val GOOGLE_PROTOBUF_KOTLIN_LITE = "3.19.3"
     const val GOOGLE_PLAY_CORE_KTX = "1.8.1"
     const val PALETTE_KTX = "1.0.0"
 
