@@ -66,7 +66,6 @@ object Libs {
  * Grouping methods
  */
 fun DependencyHandler.kotlin() {
-    implementation(Libs.coreKtx)
     implementation(Libs.kotlinxDateTime)
 }
 
@@ -82,6 +81,7 @@ fun DependencyHandler.google() {
 }
 
 fun DependencyHandler.androidx() {
+    implementation(Libs.coreKtx)
     implementation(Libs.lifecycleRuntimeKtx)
     implementation(Libs.paletteKtx)
 }
