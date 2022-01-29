@@ -52,7 +52,7 @@ class ThemeViewModel @Inject constructor(
     companion object {
         val themePreferenceKey = stringPreferencesKey("theme_preference_key")
 
-        val DEFAULT_THEME = Theme.NOT_WHITE
+        val DEFAULT_THEME = Theme.SAID_DARK
         val allThemes = Theme.values().toList()
     }
 }
