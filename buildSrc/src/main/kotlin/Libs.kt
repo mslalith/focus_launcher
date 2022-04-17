@@ -40,8 +40,7 @@ object Libs {
     const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
 
-    const val hiltLifecycleViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_VIEWMODEL}"
-    const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.HILT_VIEWMODEL}"
+    const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}"
     const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE}"
 
     const val roomKtx = "androidx.room:room-ktx:${Versions.ROOM}"
@@ -110,7 +109,6 @@ fun DependencyHandler.hilt() {
     implementation(Libs.hiltAndroid)
     kapt(Libs.hiltAndroidCompiler)
 
-    implementation(Libs.hiltLifecycleViewModel)
     kapt(Libs.hiltCompiler)
     implementation(Libs.hiltNavigationCompose)
 }
