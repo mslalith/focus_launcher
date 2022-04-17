@@ -168,7 +168,7 @@ private fun ListFadeOutEdgeGradient(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun AppsGrid(
     appsViewModel: AppsViewModel,

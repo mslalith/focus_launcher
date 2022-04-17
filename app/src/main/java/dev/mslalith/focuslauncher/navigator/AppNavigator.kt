@@ -12,7 +12,6 @@ import dev.mslalith.focuslauncher.ui.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.ui.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.ui.screens.LauncherScreen
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AppNavigator() {
     val navController = LocalNavController.current

@@ -1,5 +1,8 @@
 package dev.mslalith.focuslauncher.ui.screens
 
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -14,8 +17,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -31,7 +32,6 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.ConfirmDialog
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -87,6 +87,7 @@ fun LauncherScreen(
             HorizontalPager(
                 count = 3,
                 state = pagerState,
+                modifier = Modifier.padding(bottom = it.calculateBottomPadding())
             ) { page ->
                 when (page) {
                     0 -> SettingsPage(
