@@ -1,3 +1,5 @@
+![GitHub Preview](https://github.com/mslalith/focus_launcher/blob/main/images/what_is.png)
+
 # Focus Launcher
 A minimalist Android Launcher built with Jetpack Compose
 
