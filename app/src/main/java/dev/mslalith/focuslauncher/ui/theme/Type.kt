@@ -12,7 +12,6 @@ private val regular = Font(R.font.worksans_regular)
 
 private val WorkSans = FontFamily(regular)
 
-
 val Typography = Typography(
     defaultFontFamily = WorkSans,
     body1 = TextStyle(

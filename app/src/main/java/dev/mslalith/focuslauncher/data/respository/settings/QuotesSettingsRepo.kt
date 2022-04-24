@@ -4,8 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.di.modules.SettingsProvider
+import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

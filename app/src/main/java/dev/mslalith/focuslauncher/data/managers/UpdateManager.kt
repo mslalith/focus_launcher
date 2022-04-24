@@ -74,9 +74,11 @@ class UpdateManager @Inject constructor(context: Context) : InstallStateUpdatedL
         mAppUpdateManager.appUpdateInfo
             .addOnSuccessListener { appUpdateInfo ->
                 waitAndRunAfter(startTime = startTime) {
+                    val isFlexibleUpdateAvailable = appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                    val isDownloaded = appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED
                     when {
-                        appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> initiateDownload(activity = activity, appUpdateInfo = appUpdateInfo)
-                        appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED -> _appUpdateStateFlow.value = Downloaded
+                        isFlexibleUpdateAvailable -> initiateDownload(activity = activity, appUpdateInfo = appUpdateInfo)
+                        isDownloaded -> _appUpdateStateFlow.value = Downloaded
                         else -> _appUpdateStateFlow.value = NoUpdateAvailable
                     }
                 }

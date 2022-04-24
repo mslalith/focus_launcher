@@ -70,7 +70,6 @@ fun LauncherScreen(
         }
     }
 
-
     ModalBottomSheetLayout(
         sheetState = viewManager.bottomSheetState,
         sheetBackgroundColor = MaterialTheme.colors.primaryVariant,

@@ -60,7 +60,6 @@ class AppDrawerSettingsRepo @Inject constructor(
         defaultValue = DEFAULT_APP_GROUP_HEADER,
     )
 
-
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
         defaultValue: Boolean,

@@ -52,7 +52,6 @@ class LauncherViewManager constructor(
         _dialogPropertiesFlow.value = properties
     }
 
-
     /**
      * SnackBars
      */

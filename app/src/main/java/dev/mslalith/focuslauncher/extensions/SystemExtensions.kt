@@ -76,8 +76,10 @@ fun Context.iconOf(packageName: String): Drawable? = try {
 }
 
 fun Context.isSystemApp(packageName: String) = try {
-    (packageManager.getApplicationInfo(packageName, 0).flags and
-        (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0
+    (
+        packageManager.getApplicationInfo(packageName, 0).flags and
+            (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)
+        ) != 0
 } catch (ex: PackageManager.NameNotFoundException) {
     false
 }

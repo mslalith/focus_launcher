@@ -20,9 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.extensions.verticalSpacer
-import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 
 @Composable

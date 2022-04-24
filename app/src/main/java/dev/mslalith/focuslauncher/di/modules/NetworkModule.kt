@@ -1,10 +1,10 @@
 package dev.mslalith.focuslauncher.di.modules
 
-import dev.mslalith.focuslauncher.data.api.QuotesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.data.api.QuotesApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

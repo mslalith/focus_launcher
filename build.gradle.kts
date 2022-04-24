@@ -15,7 +15,6 @@ buildscript {
         classpath(Libs.buildToolsGoogleServices)
         classpath(Libs.buildToolsCrashlyticsGradle)
 
-
         classpath(Libs.buildToolsHiltAndroidGradlePlugin)
         classpath(Libs.buildToolsProtobufGradlePlugin)
 

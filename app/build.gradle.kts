@@ -14,7 +14,6 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-
 android {
     compileSdk = ConfigData.TARGET_SDK
     buildToolsVersion = ConfigData.BUILD_TOOLS

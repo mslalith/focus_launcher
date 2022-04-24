@@ -111,7 +111,6 @@ private fun FavoritesList(
 
     val appHiddenMessage = stringResource(R.string.app_hidden_message)
 
-
     fun toggleFavorite(selectedApp: SelectedApp, isHidden: Boolean) {
         if (!isHidden && selectedApp.isSelected) {
             appsViewModel.apply {

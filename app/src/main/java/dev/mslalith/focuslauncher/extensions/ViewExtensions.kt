@@ -19,7 +19,6 @@ fun Dp.horizontalSpacer() = Spacer(modifier = Modifier.width(width = this))
 @Composable
 fun Dp.verticalSpacer() = Spacer(modifier = Modifier.height(height = this))
 
-
 suspend fun ScaffoldState.showSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,

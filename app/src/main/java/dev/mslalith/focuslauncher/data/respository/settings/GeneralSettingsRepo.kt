@@ -30,7 +30,6 @@ class GeneralSettingsRepo @Inject constructor(
             it[PREFERENCES_NOTIFICATION_SHADE] ?: DEFAULT_NOTIFICATION_SHADE
         }
 
-
     suspend fun overrideFirstRun() {
         settingsDataStore.edit { it[PREFERENCES_FIRST_RUN] = false }
     }
@@ -44,7 +43,6 @@ class GeneralSettingsRepo @Inject constructor(
         preference = PREFERENCES_NOTIFICATION_SHADE,
         defaultValue = DEFAULT_NOTIFICATION_SHADE,
     )
-
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,

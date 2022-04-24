@@ -24,7 +24,6 @@ class QuotesRepo @Inject constructor(
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
     val isFetchingQuotesStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
 
-
     suspend fun nextRandomQuote() {
         if (quotesSize() == 0) addInitialQuotes()
 

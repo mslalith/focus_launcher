@@ -69,7 +69,6 @@ fun SettingsPage(
 
     fun navigateTo(screen: Screen) = navController.navigate(screen.id)
 
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -265,7 +264,6 @@ private fun CheckForUpdates() {
     val updateManager = LocalUpdateManager.current
     val coroutineScope = rememberCoroutineScope()
     val appUpdateState by updateManager.appUpdateStateFlow.collectAsState()
-
 
     LaunchedEffect(key1 = appUpdateState) {
         if (appUpdateState is TryAgain || appUpdateState is NoUpdateAvailable) {

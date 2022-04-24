@@ -55,7 +55,6 @@ import dev.mslalith.focuslauncher.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANAL
 import kotlin.math.cos
 import kotlin.math.sin
 
-
 @Composable
 fun ClockWidget(
     modifier: Modifier = Modifier,
@@ -87,7 +86,6 @@ fun ClockWidget(
         widgetsViewModel.registerToTimeChange(context)
         onDispose { widgetsViewModel.unregisterToTimeChange(context) }
     }
-
 
     (currentTime as? Outcome.Success)?.value?.let { time ->
         Crossfade(
@@ -250,7 +248,6 @@ private fun AnalogClock(
         targetValue = if (analogClockPhase.second == AnalogClockHandlePhase.NONE) disabledColor else handleColor,
         animationSpec = colorAnimationSpec,
     )
-
 
     Canvas(modifier = modifier.size(size)) {
         drawLine(

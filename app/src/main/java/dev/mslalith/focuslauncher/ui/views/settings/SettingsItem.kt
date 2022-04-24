@@ -132,7 +132,6 @@ fun SettingsGridItem(
     var contentHeight by remember { mutableStateOf(0.dp) }
     val iconModifier = Modifier.size(contentHeight)
 
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -277,4 +276,3 @@ private fun Modifier.settingsContentCurve(
         )
     }
 }
-

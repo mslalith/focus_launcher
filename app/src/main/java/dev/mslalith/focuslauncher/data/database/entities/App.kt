@@ -11,4 +11,3 @@ data class App(
     val packageName: String,
     val isSystem: Boolean,
 )
-

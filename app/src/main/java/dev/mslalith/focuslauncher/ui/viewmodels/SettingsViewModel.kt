@@ -2,10 +2,11 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.models.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.models.ClockAlignment
-import dev.mslalith.focuslauncher.data.respository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.respository.settings.AppDrawerSettingsRepo
+import dev.mslalith.focuslauncher.data.respository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.respository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.respository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.respository.settings.QuotesSettingsRepo
@@ -23,7 +24,6 @@ import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.LunarPhase.D
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -52,7 +52,6 @@ class SettingsViewModel @Inject constructor(
     fun toggleStatusBarVisibility() { launch { generalSettingsRepo.toggleStatusBarVisibility() } }
     fun toggleNotificationShade() { launch { generalSettingsRepo.toggleNotificationShade() } }
 
-
     /**
      * App Drawer Settings
      */
@@ -66,7 +65,6 @@ class SettingsViewModel @Inject constructor(
     fun toggleSearchBarVisibility() { launch { appDrawerSettingsRepo.toggleSearchBarVisibility() } }
     fun toggleAppGroupHeaderVisibility() { launch { appDrawerSettingsRepo.toggleAppGroupHeaderVisibility() } }
 
-
     /**
      * Clock Settings
      */
@@ -77,7 +75,6 @@ class SettingsViewModel @Inject constructor(
     fun toggleClock24() { launch { clockSettingsRepo.toggleClock24() } }
     fun updateClockAlignment(clockAlignment: ClockAlignment) { launch { clockSettingsRepo.updateClockAlignment(clockAlignment) } }
     fun updateClock24AnimationDuration(duration: Int) { launch { clockSettingsRepo.updateClock24AnimationDuration(duration) } }
-
 
     /**
      * Lunar Phase Settings
@@ -90,13 +87,11 @@ class SettingsViewModel @Inject constructor(
     fun toggleShowIlluminationPercent() { launch { lunarPhaseSettingsRepo.toggleShowIlluminationPercent() } }
     fun toggleShowUpcomingPhaseDetails() { launch { lunarPhaseSettingsRepo.toggleShowUpcomingPhaseDetails() } }
 
-
     /**
      * Quotes Settings
      */
     val showQuotesStateFlow = quotesSettingsRepo.showQuotesFlow.withinScope(DEFAULT_SHOW_QUOTES)
     fun toggleShowQuotes() { launch { quotesSettingsRepo.toggleShowQuotes() } }
-
 
     private fun launch(
         coroutineContext: CoroutineContext = Dispatchers.IO,

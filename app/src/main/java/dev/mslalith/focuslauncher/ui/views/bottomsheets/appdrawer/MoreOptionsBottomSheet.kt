@@ -55,7 +55,6 @@ fun MoreOptionsBottomSheet(
             context.toast(removedAppFromFavoritesMessage)
         }
 
-
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             12.dp.verticalSpacer()
             Text(

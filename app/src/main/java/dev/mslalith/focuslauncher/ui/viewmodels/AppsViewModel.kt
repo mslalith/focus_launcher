@@ -3,13 +3,13 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.database.entities.App
 import dev.mslalith.focuslauncher.data.models.SelectedApp
 import dev.mslalith.focuslauncher.data.respository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.respository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.respository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

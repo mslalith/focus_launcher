@@ -241,7 +241,6 @@ private fun LunarPhaseMoonIcon(
                     )
                 )
 
-
                 Path()
                     .apply {
                         moveTo(radius, 0f)

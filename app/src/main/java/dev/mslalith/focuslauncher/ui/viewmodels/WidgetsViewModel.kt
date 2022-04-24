@@ -3,13 +3,13 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_TIME_OUTCOME
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
 import dev.mslalith.focuslauncher.data.respository.QuotesRepo
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +31,6 @@ class WidgetsViewModel @Inject constructor(
         }
     }
 
-
     /**
      * Clock
      */
@@ -41,13 +40,11 @@ class WidgetsViewModel @Inject constructor(
     fun registerToTimeChange(context: Context) = lunarPhaseRepo.registerToTimeChange(context)
     fun unregisterToTimeChange(context: Context) = lunarPhaseRepo.unregisterToTimeChange(context)
 
-
     /**
      * Lunar Phase
      */
     val lunarPhaseDetailsStateFlow = lunarPhaseRepo.lunarPhaseDetailsStateFlow.withinScope(INITIAL_LUNAR_PHASE_DETAILS_OUTCOME)
     val upcomingLunarPhaseStateFlow = lunarPhaseRepo.upcomingLunarPhaseStateFlow.withinScope(INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME)
-
 
     /**
      * Quotes
@@ -63,7 +60,6 @@ class WidgetsViewModel @Inject constructor(
             quotesRepo.fetchQuotes()
         }
     }
-
 
     private fun launch(
         coroutineContext: CoroutineContext = Dispatchers.Main,
