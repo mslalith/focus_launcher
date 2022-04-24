@@ -18,13 +18,16 @@ jobs:
 
       - name: Read contents from dependency_update_report.txt
         id: dependency_report
-        run: echo "::set-output name=content::$(cat build/dependencyUpdates/dependency_update_report.txt)"
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./build/dependencyUpdates/dependency_update_report.txt
+#        run: echo "::set-output name=content::$(cat ./build/dependencyUpdates/dependency_update_report.txt)"
 
       - name: Post results on Slack
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
           channel-id: 'C03CPGWLNAX'
-          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n${{ steps.dependency_report.outputs.content }}"
+          slack-message: "GitHub build result: ${{ job.status }}\n\n${{ steps.dependency_report.outputs.content }}"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
