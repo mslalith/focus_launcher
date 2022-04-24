@@ -1,6 +1,6 @@
 object Versions {
     const val KOTLIN = "1.6.10"
-    const val GRADLE = "7.3.0-alpha08"
+    const val GRADLE = "7.1.3"
 
     const val GOOGLE_SERVICES = "4.3.5"
     const val CRASHLYTICS_GRADLE = "2.8.1"
