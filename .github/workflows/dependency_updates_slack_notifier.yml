@@ -1,10 +1,10 @@
 name: Dependency Updates Slack Notifier
 
 on:
-  push:
-    branches: [ main ]
+  schedule:
+    # At 06:00 on every Saturday
+    - cron: "0 6 * * */6"
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,6 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: ./build/dependencyUpdates/dependency_update_report.txt
-#        run: echo "::set-output name=content::$(cat ./build/dependencyUpdates/dependency_update_report.txt)"
 
       - name: Post results on Slack
         id: slack
