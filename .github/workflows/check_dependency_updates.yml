@@ -21,17 +21,11 @@ jobs:
           name: dependency_updates_report
           path: ./build/dependencyUpdates/
 
-      - name: Read contents from dependency_update_report.txt
-        id: dependency_report
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./build/dependencyUpdates/dependency_update_report.txt
-
       - name: Notify on Slack
         id: slack
         uses: slackapi/slack-github-action@v1.18.0
         with:
           channel-id: 'C03CPGWLNAX'
-          slack-message: "GitHub build result: ${{ job.status }} \n\n https://github.com/$${{ github.repository }}/actions/runs/$${{ github.run_id }} \n\n ${{ steps.dependency_report.outputs.content }}"
+          slack-message: "Dependency Report: ${{ job.status }} \n\n https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
