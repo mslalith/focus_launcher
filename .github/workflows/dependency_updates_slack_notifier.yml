@@ -4,7 +4,6 @@ on:
   schedule:
     # At 06:00 on every Saturday
     - cron: "0 6 * * */6"
-
   workflow_dispatch:
 
 jobs:
@@ -15,6 +14,12 @@ jobs:
 
       - name: Run Dependency Updates
         run: ./gradlew dependencyUpdates --refresh-dependencies
+
+      - name: Upload dependency update report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency_updates_report
+          path: ./build/dependencyUpdates/
 
       - name: Read contents from dependency_update_report.txt
         id: dependency_report
