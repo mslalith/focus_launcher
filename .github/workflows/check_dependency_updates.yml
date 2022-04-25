@@ -1,4 +1,4 @@
-name: Dependency Updates Slack Notifier
+name: Check for Dependency Updates
 
 on:
   schedule:
