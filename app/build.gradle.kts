@@ -55,6 +55,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             manifestPlaceholders["crashlyticsEnabled"] = true
         }
+        create("dev") {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -68,6 +72,18 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE
+    }
+}
+
+if (project.properties["buildType"] != "dev") {
+    //exclude production build
+    android.variantFilter {
+        if (buildType.name == "dev") ignore = true
+    }
+} else {
+    //exclude all except production build
+    android.variantFilter {
+        if (buildType.name != "dev") ignore = true
     }
 }
 

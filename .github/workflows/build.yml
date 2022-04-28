@@ -1,4 +1,4 @@
-name: Build app
+name: Build
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         run: ./gradlew ktlintCheck
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew test -PbuildType=dev
 
       - name: Build debug app
         run: ./gradlew assembleDebug
