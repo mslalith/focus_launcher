@@ -1,6 +1,7 @@
 ![GitHub Preview](https://github.com/mslalith/focus_launcher/blob/main/images/what_is.png)
 
 # Focus Launcher
+[![Build](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml)
 A minimalist Android Launcher built with Jetpack Compose
 
 
