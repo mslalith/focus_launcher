@@ -76,12 +76,12 @@ android {
 }
 
 if (project.properties["buildType"] != "dev") {
-    //exclude production build
+    // exclude production build
     android.variantFilter {
         if (buildType.name == "dev") ignore = true
     }
 } else {
-    //exclude all except production build
+    // exclude all except production build
     android.variantFilter {
         if (buildType.name != "dev") ignore = true
     }
