@@ -10,7 +10,6 @@ import dev.mslalith.focuslauncher.data.database.AppDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
