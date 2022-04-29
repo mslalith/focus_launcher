@@ -7,6 +7,7 @@ import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.Quote
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.QuoteResponse
+import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,17 +15,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class QuotesRepo @Inject constructor(
+class QuotesRepoImpl @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesDao: QuotesDao
-) {
+) : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
-    val currentQuoteStateFlow = _currentQuoteStateFlow.asStateFlow()
+    override val currentQuoteStateFlow = _currentQuoteStateFlow.asStateFlow()
 
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
-    val isFetchingQuotesStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
+    override val isFetchingQuotesStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
 
-    suspend fun nextRandomQuote() {
+    override suspend fun nextRandomQuote() {
         if (quotesSize() == 0) addInitialQuotes()
 
         val quoteOutcome = quotesDao.getQuotes().let {
@@ -34,11 +35,11 @@ class QuotesRepo @Inject constructor(
         _currentQuoteStateFlow.value = quoteOutcome
     }
 
-    suspend fun fetchQuotes() {
+    override suspend fun fetchQuotes(maxPages: Int) {
         _isFetchingQuotesStateFlow.value = true
-        withContext(Dispatchers.IO) { fetchPageQuotes(page = 1) }
-        withContext(Dispatchers.IO) { fetchPageQuotes(page = 2) }
-        quotesDao.getQuotes()
+        repeat(maxPages) {
+            withContext(Dispatchers.IO) { fetchPageQuotes(page = it + 1) }
+        }
         _isFetchingQuotesStateFlow.value = false
     }
 
@@ -58,8 +59,8 @@ class QuotesRepo @Inject constructor(
 
     private suspend fun addAllQuotes(quotes: List<Quote>) = quotesDao.addQuotes(quotes)
 
-    suspend fun hasQuotesReachedLimit() = quotesSize() >= QUOTES_LIMIT
-    private suspend fun quotesSize() = quotesDao.getQuotesSize()
+    override suspend fun hasQuotesReachedLimit() = quotesSize() >= QUOTES_LIMIT
+    override suspend fun quotesSize() = quotesDao.getQuotesSize()
 
     companion object {
         private const val INITIAL_QUOTES_JSON = """
