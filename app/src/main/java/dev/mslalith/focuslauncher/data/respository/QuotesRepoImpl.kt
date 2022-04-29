@@ -11,7 +11,7 @@ import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -20,10 +20,12 @@ class QuotesRepoImpl @Inject constructor(
     private val quotesDao: QuotesDao
 ) : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
-    override val currentQuoteStateStateFlow = _currentQuoteStateFlow.asStateFlow()
+    override val currentQuoteStateFlow: StateFlow<Outcome<Quote>>
+        get() = _currentQuoteStateFlow
 
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
-    override val isFetchingQuotesStateStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
+    override val isFetchingQuotesStateFlow: StateFlow<Boolean>
+        get() = _isFetchingQuotesStateFlow
 
     override suspend fun nextRandomQuote() {
         if (quotesSize() == 0) addInitialQuotes()
