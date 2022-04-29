@@ -25,7 +25,7 @@ buildscript {
 
 // ktlint-gradle
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.github.ben-manes.versions") version "0.42.0"
 }
 allprojects {
