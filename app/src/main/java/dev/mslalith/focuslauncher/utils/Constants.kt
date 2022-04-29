@@ -19,6 +19,7 @@ object Constants {
 
     object Defaults {
         const val QUOTES_LIMIT = 300
+        const val QUOTES_LIMIT_PER_PAGE = 150
         const val DEFAULT_CLOCK_24_ANALOG_RADIUS = 30f
 
         object Settings {
