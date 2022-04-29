@@ -32,7 +32,7 @@ class QuotesRepoTest {
         quotesRepo.fetchQuotes(maxPages = 2)
         val indexes = listOf(7, 23)
         val job = launch {
-            quotesRepo.currentQuoteStateStateFlow.test {
+            quotesRepo.currentQuoteStateFlow.test {
                 var quoteOutcome = awaitItem()
                 assertThat(quoteOutcome).isInstanceOf(Outcome.None::class.java)
                 indexes.forEach { index ->
@@ -56,7 +56,7 @@ class QuotesRepoTest {
     @Test
     fun isFetchingQuotesStateFlow() = runTest {
         val job = launch {
-            quotesRepo.isFetchingQuotesStateStateFlow.test {
+            quotesRepo.isFetchingQuotesStateFlow.test {
                 assertThat(awaitItem()).isFalse()
                 assertThat(awaitItem()).isTrue()
                 expectNoEvents()
@@ -74,7 +74,7 @@ class QuotesRepoTest {
         indexes.forEach { index ->
             quotesRepo.randomIndex = index
             quotesRepo.nextRandomQuote()
-            val quote = (quotesRepo.currentQuoteStateStateFlow.value as Outcome.Success).value
+            val quote = (quotesRepo.currentQuoteStateFlow.value as Outcome.Success).value
             assertThat(quote).isEqualTo(quotesRepo.getQuoteAt(index))
         }
     }

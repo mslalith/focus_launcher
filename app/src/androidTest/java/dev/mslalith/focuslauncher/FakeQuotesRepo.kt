@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 class FakeQuotesRepo : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
-    override val currentQuoteStateStateFlow: StateFlow<Outcome<Quote>>
+    override val currentQuoteStateFlow: StateFlow<Outcome<Quote>>
         get() = _currentQuoteStateFlow
 
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
-    override val isFetchingQuotesStateStateFlow: StateFlow<Boolean>
+    override val isFetchingQuotesStateFlow: StateFlow<Boolean>
         get() = _isFetchingQuotesStateFlow
 
     private val quotesApi = FakeQuotesApi()
