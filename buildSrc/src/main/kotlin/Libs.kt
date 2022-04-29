@@ -57,8 +57,7 @@ object Libs {
 
     const val thirdSunCalc = "org.shredzone.commons:commons-suncalc:${Versions.THIRD_SUNCALC}"
 
-    const val testJUnit5 = "org.junit.jupiter:junit-jupiter:${Versions.TEST_JUNIT_5}"
-    const val testTruth = "com.google.truth:truth:${Versions.TEST_TRUTH}"
+    const val testJUnit = "junit:junit:${Versions.TEST_JUNIT}"
     const val testAndroidXJUnit = "androidx.test.ext:junit:${Versions.TEST_ANDROIDX_JUNIT}"
     const val testAndroidXEspresso = "androidx.test.espresso:espresso-core:${Versions.TEST_ANDROIDX_ESPRESSO}"
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
@@ -141,8 +140,7 @@ fun DependencyHandler.thirdPartyLibs() {
 }
 
 fun DependencyHandler.testLibs() {
-    testImplementation(Libs.testJUnit5)
-    testImplementation(Libs.testTruth)
+    testImplementation(Libs.testJUnit)
     androidTestImplementation(Libs.testAndroidXJUnit)
     androidTestImplementation(Libs.testAndroidXEspresso)
     androidTestImplementation(Libs.testComposeJUnit)
