@@ -20,10 +20,10 @@ class QuotesRepoImpl @Inject constructor(
     private val quotesDao: QuotesDao
 ) : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
-    override val currentQuoteStateFlow = _currentQuoteStateFlow.asStateFlow()
+    override val currentQuoteStateStateFlow = _currentQuoteStateFlow.asStateFlow()
 
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
-    override val isFetchingQuotesStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
+    override val isFetchingQuotesStateStateFlow = _isFetchingQuotesStateFlow.asStateFlow()
 
     override suspend fun nextRandomQuote() {
         if (quotesSize() == 0) addInitialQuotes()
