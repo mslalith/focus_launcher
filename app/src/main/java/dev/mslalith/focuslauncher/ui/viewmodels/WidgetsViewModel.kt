@@ -9,7 +9,7 @@ import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_TIME_OUTCOME
 import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
-import dev.mslalith.focuslauncher.data.respository.QuotesRepo
+import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
