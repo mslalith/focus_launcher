@@ -42,4 +42,6 @@ object Versions {
     const val TEST_JUNIT = "4.13.2"
     const val TEST_ANDROIDX_JUNIT = "1.1.4-alpha05"
     const val TEST_ANDROIDX_ESPRESSO = "3.5.0-alpha05"
+    const val TEST_KOTLIN_COROUTINES = "1.6.1"
+    const val TEST_TURBINE = "0.7.0"
 }
