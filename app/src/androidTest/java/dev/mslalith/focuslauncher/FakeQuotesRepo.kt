@@ -29,7 +29,12 @@ class FakeQuotesRepo : QuotesRepo {
 
     override suspend fun fetchQuotes(maxPages: Int) {
         _isFetchingQuotesStateFlow.value = true
-        val quotes = quotesApi.getQuotes(maxPages).results.map { it.toQuote() }
+        val quotes = buildList {
+            repeat(maxPages) { page ->
+                val list = quotesApi.getQuotes(page + 1).results.map { it.toQuote() }
+                addAll(list)
+            }
+        }
         quoteList.addAll(quotes)
         _isFetchingQuotesStateFlow.value = false
     }

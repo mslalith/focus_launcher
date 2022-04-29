@@ -7,14 +7,17 @@ import dev.mslalith.focuslauncher.data.models.QuotesApiResponse
 
 class FakeQuotesApi : QuotesApi {
     override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {
-        val quotes = TestQuotes.buildQuotes(page, limit).map(TestQuotes::toQuoteResponse)
+        val quoteResponseList = buildList {
+            val quotes = TestQuotes.buildQuotes(page, limit).map(TestQuotes::toQuoteResponse)
+            addAll(quotes)
+        }
         return QuotesApiResponse(
-            count = quotes.size,
-            totalCount = quotes.size,
+            count = quoteResponseList.size,
+            totalCount = quoteResponseList.size,
             page = page,
             totalPages = 5,
             lastItemIndex = 5,
-            results = quotes
+            results = quoteResponseList
         )
     }
 }
@@ -29,7 +32,7 @@ private object TestQuotes {
     }
 
     fun buildSingleQuote(index: Int) = Quote(
-        id = (1000 * index).toString(),
+        id = index.toString(),
         tags = listOf("tag_1", "tag_2"),
         quote = "Quote #$index",
         author = "Author #$index",

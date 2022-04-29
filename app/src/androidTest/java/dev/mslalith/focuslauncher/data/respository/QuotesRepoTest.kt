@@ -7,6 +7,7 @@ import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -32,9 +33,12 @@ class QuotesRepoTest {
         val indexes = listOf(7, 23)
         val job = launch {
             quotesRepo.currentQuoteStateFlow.test {
+                var quoteOutcome = awaitItem()
+                assertThat(quoteOutcome).isInstanceOf(Outcome.None::class.java)
                 indexes.forEach { index ->
-                    val quote = awaitItem()
-                    assertThat(quote).isInstanceOf(Outcome.Success::class.java)
+                    quoteOutcome = awaitItem()
+                    assertThat(quoteOutcome).isInstanceOf(Outcome.Success::class.java)
+                    val quote = (quoteOutcome as Outcome.Success).value
                     assertThat(quote).isEqualTo(quotesRepo.getQuoteAt(index))
                 }
                 expectNoEvents()
@@ -43,6 +47,7 @@ class QuotesRepoTest {
 
         indexes.forEach { index ->
             quotesRepo.randomIndex = index
+            advanceTimeBy(1_000)
             quotesRepo.nextRandomQuote()
         }
         job.join()
@@ -69,7 +74,8 @@ class QuotesRepoTest {
         indexes.forEach { index ->
             quotesRepo.randomIndex = index
             quotesRepo.nextRandomQuote()
-            assertThat(quotesRepo.currentQuoteStateFlow.value).isEqualTo(quotesRepo.getQuoteAt(index))
+            val quote = (quotesRepo.currentQuoteStateFlow.value as Outcome.Success).value
+            assertThat(quote).isEqualTo(quotesRepo.getQuoteAt(index))
         }
     }
 
