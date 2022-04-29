@@ -73,6 +73,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE
     }
+    lint {
+        error.add("VisibleForTests")
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
