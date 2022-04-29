@@ -61,6 +61,8 @@ object Libs {
     const val testAndroidXJUnit = "androidx.test.ext:junit:${Versions.TEST_ANDROIDX_JUNIT}"
     const val testAndroidXEspresso = "androidx.test.espresso:espresso-core:${Versions.TEST_ANDROIDX_ESPRESSO}"
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
+    const val testKotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.TEST_KOTLIN_COROUTINES}"
+    const val testTurbine = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
 }
 
 /**
@@ -144,6 +146,11 @@ fun DependencyHandler.testLibs() {
     androidTestImplementation(Libs.testAndroidXJUnit)
     androidTestImplementation(Libs.testAndroidXEspresso)
     androidTestImplementation(Libs.testComposeJUnit)
+
+    testImplementation(Libs.testKotlinCoroutines)
+    androidTestImplementation(Libs.testKotlinCoroutines)
+    testImplementation(Libs.testTurbine)
+    androidTestImplementation(Libs.testTurbine)
 }
 
 
