@@ -39,7 +39,8 @@ object Versions {
 
     const val THIRD_SUNCALC = "3.5"
 
-    const val TEST_JUNIT = "4.13.2"
+    const val TEST_JUNIT_5 = "5.8.2"
+    const val TEST_TRUTH = "1.1.3"
     const val TEST_ANDROIDX_JUNIT = "1.1.4-alpha05"
     const val TEST_ANDROIDX_ESPRESSO = "3.5.0-alpha05"
 }
