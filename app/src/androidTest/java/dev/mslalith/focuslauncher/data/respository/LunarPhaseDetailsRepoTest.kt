@@ -47,24 +47,6 @@ class LunarPhaseDetailsRepoTest {
     }
 
     @Test
-    fun isTimeChangeBroadcastReceiverRegisteredStateFlow() = runTest {
-        val job = launch {
-            lunarPhaseDetailsRepo.isTimeChangeBroadcastReceiverRegisteredStateFlow.test {
-                assertThat(awaitItem()).isFalse()
-                assertThat(awaitItem()).isTrue()
-                assertThat(awaitItem()).isFalse()
-                expectNoEvents()
-            }
-        }
-
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
-        advanceTimeBy(1_000)
-        lunarPhaseDetailsRepo.unregisterToTimeChange(context)
-
-        job.join()
-    }
-
-    @Test
     fun getCurrentTimeStateFlow() = runTest {
         val instants = getConsecutiveInstants(max = 2)
         lunarPhaseDetailsRepo.instantTimeList = instants

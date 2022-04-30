@@ -17,10 +17,6 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() {
-    private val _isTimeChangeBroadcastReceiverRegisteredFlow = MutableStateFlow(value = false)
-    override val isTimeChangeBroadcastReceiverRegisteredStateFlow: StateFlow<Boolean>
-        get() = _isTimeChangeBroadcastReceiverRegisteredFlow
-
     private val _currentTimeStateFlow = MutableStateFlow<Outcome<String>>(INITIAL_TIME_OUTCOME)
     override val currentTimeStateFlow: StateFlow<Outcome<String>>
         get() = _currentTimeStateFlow
@@ -55,23 +51,17 @@ class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() 
     }
 
     override fun registerToTimeChange(context: Context) {
-        _isTimeChangeBroadcastReceiverRegisteredFlow.let {
-            if (!it.value) {
-                _isTimeChangeBroadcastReceiverRegisteredFlow.value = true
-                context.registerReceiver(
-                    timeChangeBroadcastReceiver,
-                    IntentFilter(Intent.ACTION_TIME_TICK)
-                )
-            }
-        }
+        context.registerReceiver(
+            timeChangeBroadcastReceiver,
+            IntentFilter(Intent.ACTION_TIME_TICK)
+        )
     }
 
     override fun unregisterToTimeChange(context: Context) {
-        _isTimeChangeBroadcastReceiverRegisteredFlow.let {
-            if (it.value) {
-                it.value = false
-                context.unregisterReceiver(timeChangeBroadcastReceiver)
-            }
+        try {
+            context.unregisterReceiver(timeChangeBroadcastReceiver)
+        } catch (ex: IllegalArgumentException) {
+            ex.printStackTrace()
         }
     }
 

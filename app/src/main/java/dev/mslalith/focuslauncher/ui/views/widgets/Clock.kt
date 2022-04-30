@@ -64,7 +64,6 @@ fun ClockWidget(
     centerVertically: Boolean = false,
 ) {
     val context = LocalContext.current
-    val isTimeChangeBroadcastReceiverRegistered by widgetsViewModel.isTimeChangeBroadcastReceiverRegisteredStateFlow.collectAsState()
     val currentTime by widgetsViewModel.currentTimeStateFlow.collectAsState()
     val showClock24 by settingsViewModel.showClock24StateFlow.collectAsState()
     val clockAlignment by settingsViewModel.clockAlignmentStateFlow.collectAsState()
@@ -82,7 +81,7 @@ fun ClockWidget(
         }
     )
 
-    DisposableEffect(key1 = isTimeChangeBroadcastReceiverRegistered) {
+    DisposableEffect(key1 = Unit) {
         widgetsViewModel.registerToTimeChange(context)
         onDispose { widgetsViewModel.unregisterToTimeChange(context) }
     }

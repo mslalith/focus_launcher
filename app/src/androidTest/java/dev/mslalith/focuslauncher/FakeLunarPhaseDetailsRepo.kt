@@ -17,7 +17,7 @@ class FakeLunarPhaseDetailsRepo(
     private val coroutineScope: CoroutineScope,
 ) : LunarPhaseDetailsRepo() {
     private val _isTimeChangeBroadcastReceiverRegisteredFlow = MutableStateFlow(value = false)
-    override val isTimeChangeBroadcastReceiverRegisteredStateFlow: StateFlow<Boolean>
+    val isTimeChangeBroadcastReceiverRegisteredStateFlow: StateFlow<Boolean>
         get() = _isTimeChangeBroadcastReceiverRegisteredFlow
 
     private val _currentTimeStateFlow = MutableStateFlow<Outcome<String>>(Outcome.Error(""))
@@ -55,21 +55,13 @@ class FakeLunarPhaseDetailsRepo(
     }
 
     override fun registerToTimeChange(context: Context) {
-        _isTimeChangeBroadcastReceiverRegisteredFlow.let {
-            if (!it.value) {
-                _isTimeChangeBroadcastReceiverRegisteredFlow.value = true
-                setupTickJob(context)
-            }
-        }
+        _isTimeChangeBroadcastReceiverRegisteredFlow.value = true
+        setupTickJob(context)
     }
 
     override fun unregisterToTimeChange(context: Context) {
-        _isTimeChangeBroadcastReceiverRegisteredFlow.let {
-            if (it.value) {
-                it.value = false
-                tickJob?.cancel()
-                tickJob = null
-            }
-        }
+        _isTimeChangeBroadcastReceiverRegisteredFlow.value = false
+        tickJob?.cancel()
+        tickJob = null
     }
 }

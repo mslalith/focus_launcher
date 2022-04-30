@@ -34,7 +34,6 @@ class WidgetsViewModel @Inject constructor(
     /**
      * Clock
      */
-    val isTimeChangeBroadcastReceiverRegisteredStateFlow = lunarPhaseRepo.isTimeChangeBroadcastReceiverRegisteredStateFlow.withinScope(initialValue = false)
     val currentTimeStateFlow = lunarPhaseRepo.currentTimeStateFlow.withinScope(INITIAL_TIME_OUTCOME)
 
     fun registerToTimeChange(context: Context) = lunarPhaseRepo.registerToTimeChange(context)

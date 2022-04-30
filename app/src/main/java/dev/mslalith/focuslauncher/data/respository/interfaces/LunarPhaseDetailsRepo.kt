@@ -16,7 +16,6 @@ import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPhase
 
 abstract class LunarPhaseDetailsRepo {
-    abstract val isTimeChangeBroadcastReceiverRegisteredStateFlow: StateFlow<Boolean>
     abstract val currentTimeStateFlow: StateFlow<Outcome<String>>
     abstract val lunarPhaseDetailsStateFlow: StateFlow<Outcome<LunarPhaseDetails>>
     abstract val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
@@ -24,7 +23,7 @@ abstract class LunarPhaseDetailsRepo {
     abstract fun registerToTimeChange(context: Context)
     abstract fun unregisterToTimeChange(context: Context)
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails =
         MoonIllumination.compute().on(instant.toJavaInstant()).execute().run {
             LunarPhaseDetails(
@@ -34,7 +33,7 @@ abstract class LunarPhaseDetailsRepo {
             )
         }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun findUpcomingMoonPhaseFor(lunarPhaseDirection: LunarPhaseDirection) =
         when (lunarPhaseDirection) {
             LunarPhaseDirection.NEW_TO_FULL -> findUpcomingLunarPhaseOf(LunarPhase.FULL_MOON)
