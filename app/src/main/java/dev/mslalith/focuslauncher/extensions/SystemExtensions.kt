@@ -85,8 +85,7 @@ fun Context.isSystemApp(packageName: String) = try {
 }
 
 fun Context.canLaunch(packageName: String): Boolean {
-    val intent = Intent(Intent.ACTION_MAIN)
-    intent.addCategory(Intent.CATEGORY_LAUNCHER)
+    val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
 
     val list = packageManager.queryIntentActivities(intent, PackageManager.GET_META_DATA)
     return list.any { resolveInfo ->
@@ -99,7 +98,7 @@ fun Context.appNoIconModelOf(packageName: String): App? = try {
         val info = getApplicationInfo(packageName, 0)
         val name = getApplicationLabel(info).toString()
         val isSystem = isSystemApp(packageName)
-        return App(name, packageName, isSystem)
+        App(name, packageName, isSystem)
     }
 } catch (ex: PackageManager.NameNotFoundException) {
     null
