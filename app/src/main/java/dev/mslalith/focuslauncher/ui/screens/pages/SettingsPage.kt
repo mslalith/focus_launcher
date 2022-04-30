@@ -1,9 +1,19 @@
 package dev.mslalith.focuslauncher.ui.screens.pages
 
 import android.app.Activity
+import android.app.role.RoleManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,13 +29,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import dev.mslalith.focuslauncher.data.managers.AppUpdateState.CheckForUpdates
 import dev.mslalith.focuslauncher.data.managers.AppUpdateState.CheckingForUpdates
 import dev.mslalith.focuslauncher.data.managers.AppUpdateState.Downloaded
@@ -50,6 +64,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.ui.views.onLifecycleEventChange
 import dev.mslalith.focuslauncher.ui.views.settings.LoadingSettingsItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
@@ -85,7 +100,7 @@ fun SettingsPage(
         PullDownNotifications(settingsViewModel)
         AppDrawer(appsViewModel, settingsViewModel)
         Widgets(widgetsViewModel, settingsViewModel)
-        // SetAsDefaultLauncher()
+        SetAsDefaultLauncher()
         CheckForUpdates()
 
         12.dp.verticalSpacer()
@@ -250,9 +265,42 @@ private fun Widgets(
 @Composable
 private fun SetAsDefaultLauncher() {
     val context = LocalContext.current
-    if (!context.isAppDefaultLauncher()) {
-        SettingsItem(text = "Set as Default Launcher") {
+    var shouldShow by remember { mutableStateOf(false) }
+
+    fun isDefaultLauncher(): Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
+        roleManager.isRoleAvailable(RoleManager.ROLE_HOME) && roleManager.isRoleHeld(RoleManager.ROLE_HOME)
+    } else {
+        context.isAppDefaultLauncher()
+    }
+
+    val launchForHome = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+        shouldShow = !isDefaultLauncher()
+    }
+
+    fun askToSetAsDefaultLauncher() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
+            val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
+            launchForHome.launch(intent)
+        } else {
             context.startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
+        }
+    }
+
+    onLifecycleEventChange { event ->
+        if (event == Lifecycle.Event.ON_RESUME) {
+            shouldShow = !isDefaultLauncher()
+        }
+    }
+
+    AnimatedVisibility(
+        visible = shouldShow,
+        enter = slideInVertically() + fadeIn(),
+        exit = slideOutVertically() + fadeOut()
+    ) {
+        SettingsItem(text = "Set as Default Launcher") {
+            askToSetAsDefaultLauncher()
         }
     }
 }
