@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  ktlint:
     if: "!contains(github.event.head_commit.message, 'ci(skip)')"
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -19,8 +19,23 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Run tests
         run: ./gradlew test -PbuildType=dev
+
+  build:
+    needs: [ ktlint, tests ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Build dev app
         run: ./gradlew assembleDev -PbuildType=dev
