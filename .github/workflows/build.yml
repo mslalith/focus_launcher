@@ -47,8 +47,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build app
-        run: ./gradlew assembleDebug --stacktrace --no-daemon
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleDebug --stacktrace --no-daemon
+
+#      - name: Build app
+#        run: ./gradlew assembleDebug --stacktrace --no-daemon
 
   unit_tests:
     needs: [ ktlint, build ]
@@ -59,8 +63,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Unit Tests
-        run: ./gradlew test --stacktrace
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test --stacktrace
+
+#      - name: Run Unit Tests
+#        run: ./gradlew test --stacktrace
 
   android_tests:
     needs: [ ktlint, build ]
