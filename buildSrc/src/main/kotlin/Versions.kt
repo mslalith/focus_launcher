@@ -4,15 +4,11 @@ object Versions {
 
     const val GOOGLE_SERVICES = "4.3.5"
     const val CRASHLYTICS_GRADLE = "2.8.1"
-    const val PROTOBUF_GRADLE = "0.8.18"
-    const val PROTOBUF_COMPILER = "4.0.0-rc-2"
 
     const val KOTLIN_CORE_KTX = "1.8.0-alpha07"
     const val KOTLINX_DATETIME = "0.3.2"
 
     const val GOOGLE_MATERIAL = "1.7.0-alpha01"
-    const val GOOGLE_PROTOBUF_JAVALITE = "4.0.0-rc-2"
-    const val GOOGLE_PROTOBUF_KOTLIN_LITE = "3.19.3"
     const val GOOGLE_PLAY_CORE_KTX = "1.8.1"
     const val PALETTE_KTX = "1.0.0"
 

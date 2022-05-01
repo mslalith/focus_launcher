@@ -8,16 +8,11 @@ object Libs {
     const val buildToolsGoogleServices = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES}"
     const val buildToolsCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.CRASHLYTICS_GRADLE}"
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
-    const val buildToolsProtobufGradlePlugin = "com.google.protobuf:protobuf-gradle-plugin:${Versions.PROTOBUF_GRADLE}"
-
-    const val protobufCompiler = "com.google.protobuf:protoc:${Versions.PROTOBUF_COMPILER}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
-    const val googleProtobufJavalite = "com.google.protobuf:protobuf-javalite:${Versions.GOOGLE_PROTOBUF_JAVALITE}"
-    const val googleProtobufKotlinLite = "com.google.protobuf:protobuf-kotlin-lite:${Versions.GOOGLE_PROTOBUF_KOTLIN_LITE}"
     const val googlePlayCoreKtx = "com.google.android.play:core-ktx:${Versions.GOOGLE_PLAY_CORE_KTX}"
     const val paletteKtx = "androidx.palette:palette-ktx:${Versions.PALETTE_KTX}"
 
@@ -132,10 +127,6 @@ fun DependencyHandler.accompanist() {
 fun DependencyHandler.retrofit() {
     implementation(Libs.retrofit)
     implementation(Libs.retrofitGsonConverter)
-}
-
-fun DependencyHandler.protobuf() {
-    implementation(Libs.googleProtobufJavalite)
 }
 
 fun DependencyHandler.thirdPartyLibs() {

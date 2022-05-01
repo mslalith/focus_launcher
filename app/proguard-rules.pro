@@ -31,9 +31,3 @@
 }
 # --------------- End: Retrofit  ---------------
 
-
-# --------------- Begin: Datastore  ---------------
--keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite {
-    <fields>;
-}
-# --------------- End: Datastore  ---------------
