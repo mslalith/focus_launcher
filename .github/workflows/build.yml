@@ -27,7 +27,7 @@ jobs:
       - name: Decode google-services.json
         env:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET | base64 -d > FocusLauncher/app/google-services.json
+        run: echo $FIREBASE_SECRET | base64 -d > $GITHUB_WORKSPACE/app/google-services.json
 
   ktlint:
     needs: [ setup ]
