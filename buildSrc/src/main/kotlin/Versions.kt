@@ -2,9 +2,6 @@ object Versions {
     const val KOTLIN = "1.6.10"
     const val GRADLE = "7.1.3"
 
-    const val GOOGLE_SERVICES = "4.3.5"
-    const val CRASHLYTICS_GRADLE = "2.8.1"
-
     const val KOTLIN_CORE_KTX = "1.8.0-alpha07"
     const val KOTLINX_DATETIME = "0.3.2"
 
@@ -20,8 +17,6 @@ object Versions {
     const val LIFECYCLE_VIEWMODEL_COMPOSE = "2.5.0-alpha06"
 
     const val DATASTORE = "1.0.0"
-
-    const val FIREBASE_BOM = "29.3.1"
 
     const val HILT = "2.41"
     const val HILT_COMPILER = "1.0.0"

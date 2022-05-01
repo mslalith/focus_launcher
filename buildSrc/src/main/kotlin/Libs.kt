@@ -1,12 +1,8 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.support.delegates.DependencyHandlerDelegate
 
 object Libs {
     const val buildToolsGradle = "com.android.tools.build:gradle:${Versions.GRADLE}"
     const val buildToolsKotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
-
-    const val buildToolsGoogleServices = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES}"
-    const val buildToolsCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.CRASHLYTICS_GRADLE}"
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
@@ -27,10 +23,6 @@ object Libs {
 
     const val dataStore = "androidx.datastore:datastore:${Versions.DATASTORE}"
     const val dataStorePreferences = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
-
-    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
-    const val firebaseCrashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
-    const val firebaseAnalyticsKtx = "com.google.firebase:firebase-analytics-ktx"
 
     const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
@@ -97,12 +89,6 @@ fun DependencyHandler.dataStore() {
     implementation(Libs.dataStorePreferences)
 }
 
-fun DependencyHandlerDelegate.firebase() {
-    implementationPlatform(Libs.firebaseBom)
-    implementation(Libs.firebaseCrashlyticsKtx)
-    implementation(Libs.firebaseAnalyticsKtx)
-}
-
 fun DependencyHandler.hilt() {
     implementation(Libs.hiltAndroid)
     kapt(Libs.hiltAndroidCompiler)
@@ -165,8 +151,4 @@ private fun DependencyHandler.testImplementation(depName: String) {
 
 private fun DependencyHandler.androidTestImplementation(depName: String) {
     add("androidTestImplementation", depName)
-}
-
-private fun DependencyHandlerDelegate.implementationPlatform(depName: String) {
-    add("implementation", platform(depName))
 }
