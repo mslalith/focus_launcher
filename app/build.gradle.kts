@@ -1,13 +1,7 @@
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
     // Firebase
     id("com.google.gms.google-services")
@@ -110,31 +104,7 @@ dependencies {
     dataStore()
     accompanist()
     retrofit()
-    protobuf()
 
     thirdPartyLibs()
     testLibs()
-}
-
-protobuf {
-    protoc {
-        artifact = if (project.osdetector.arch == "aarch_64") {
-            "${Libs.protobufCompiler}:${project.osdetector.os}-${project.osdetector.arch}"
-        } else {
-            Libs.protobufCompiler
-        }
-    }
-
-    generateProtoTasks {
-        all().forEach {
-            it.plugins {
-                id("java") {
-                    option("lite")
-                }
-            }
-            // it.builtins {
-            //     id("kotlin")
-            // }
-        }
-    }
 }
