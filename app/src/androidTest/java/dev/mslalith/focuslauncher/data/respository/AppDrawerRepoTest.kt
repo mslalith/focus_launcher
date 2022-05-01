@@ -79,7 +79,7 @@ class AppDrawerRepoTest {
             appDrawerRepo.allAppsFlow.test {
                 val appsList = awaitItem()
                 assertThat(appsList.size).isEqualTo(1)
-                assertThat(appsList).isEqualTo(app)
+                assertThat(appsList).isEqualTo(listOf(app))
                 expectNoEvents()
             }
         }
