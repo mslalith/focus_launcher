@@ -24,6 +24,11 @@ jobs:
           java-version: '11'
           cache: 'gradle'
 
+      - name: Decode google-services.json
+        env:
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+        run: echo $FIREBASE_SECRET | base64 -d > FocusLauncher/app/google-services.json
+
   ktlint:
     needs: [ setup ]
     name: Run ktlint
@@ -46,7 +51,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build dev app
-        run: ./gradlew assembleDev -PbuildType=dev --no-daemon
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
 
   unit_tests:
     needs: [ ktlint, build ]
@@ -58,7 +63,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run Unit Tests
-        run: ./gradlew test -PbuildType=dev
+        run: ./gradlew test --stacktrace
 
   android_tests:
     needs: [ ktlint, build ]
