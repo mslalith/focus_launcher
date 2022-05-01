@@ -75,6 +75,9 @@ jobs:
     name: Run Android Tests
     runs-on: macos-latest
     timeout-minutes: 30
+    strategy:
+      matrix:
+        api-level: [ 29 ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -85,8 +88,33 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: Cache AVD
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
       - name: Run Android Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
           script: ./gradlew connectedCheck --stacktrace
