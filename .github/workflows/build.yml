@@ -2,6 +2,9 @@ name: Build
 
 on:
   pull_request:
+  push:
+    branches:
+      - optimize_workflow
   workflow_dispatch:
 
 jobs:
