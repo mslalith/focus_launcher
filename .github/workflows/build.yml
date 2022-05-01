@@ -24,19 +24,8 @@ jobs:
           java-version: '11'
           cache: 'gradle'
 
-      - name: Decode google-services.json
-        env:
-          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET | base64 -d > $GITHUB_WORKSPACE/app/google-services.json
-
-#      - name: Cache files
-#        uses: actions/cache@v2
-#        with:
-#          path: $GITHUB_WORKSPACE/app/google-services.json
-#          key: firebase-files-${{ hashFiles('$GITHUB_WORKSPACE/app/google-services.json') }}
-#          restore-keys: |
-#            firebase-files-${{ hashFiles('$GITHUB_WORKSPACE/app/google-services.json') }}
-#            firebase-files-
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
   ktlint:
     needs: [ setup ]
@@ -58,11 +47,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Decode google-services.json
-        env:
-          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET | base64 -d > $GITHUB_WORKSPACE/app/google-services.json
 
       - name: Build app
         run: ./gradlew assembleDebug --stacktrace --no-daemon
@@ -94,11 +78,6 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
           cache: 'gradle'
-
-      - name: Decode google-services.json
-        env:
-          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET | base64 -d > $GITHUB_WORKSPACE/app/google-services.json
 
       - name: Run Android Tests
         uses: reactivecircus/android-emulator-runner@v2
