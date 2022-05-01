@@ -3,9 +3,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    // Firebase
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -30,8 +27,6 @@ android {
                 )
             }
         }
-
-        manifestPlaceholders["crashlyticsEnabled"] = true
     }
 
     sourceSets["main"].java.srcDir("src/main/kotlin")
@@ -41,16 +36,10 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            manifestPlaceholders["crashlyticsEnabled"] = false
         }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            manifestPlaceholders["crashlyticsEnabled"] = true
-        }
-        create("dev") {
-            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -72,24 +61,6 @@ android {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-}
-
-if (project.properties["buildType"] != "dev") {
-    // exclude production build
-    android.variantFilter {
-        if (buildType.name == "dev") ignore = true
-    }
-} else {
-    // exclude all except production build
-    android.variantFilter {
-        if (buildType.name != "dev") ignore = true
-    }
-}
-
 dependencies {
     kotlin()
     google()
@@ -98,7 +69,6 @@ dependencies {
     compose()
     composeInterop()
 
-    firebase()
     hilt()
     room()
     dataStore()

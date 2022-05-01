@@ -1,4 +1,5 @@
 assets/
+build-cache
 
 # Android Studio provided
 .DS_Store
