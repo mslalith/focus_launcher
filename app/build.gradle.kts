@@ -12,6 +12,8 @@ plugins {
     // Firebase
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    // KSP
+    id("com.google.devtools.ksp") version Versions.KSP
 }
 
 android {

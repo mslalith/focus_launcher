@@ -119,7 +119,7 @@ fun DependencyHandler.hilt() {
 fun DependencyHandler.room() {
     implementation(Libs.roomKtx)
     implementation(Libs.roomRuntime)
-    kapt(Libs.roomCompiler)
+    ksp(Libs.roomCompiler)
 }
 
 fun DependencyHandler.accompanist() {
@@ -166,6 +166,10 @@ private fun DependencyHandler.implementation(depName: String) {
 
 private fun DependencyHandler.kapt(depName: String) {
     add("kapt", depName)
+}
+
+private fun DependencyHandler.ksp(depName: String) {
+    add("ksp", depName)
 }
 
 private fun DependencyHandler.testImplementation(depName: String) {

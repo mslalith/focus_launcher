@@ -1,6 +1,8 @@
 object Versions {
-    const val KOTLIN = "1.6.10"
+    const val KOTLIN = "1.6.20"
     const val GRADLE = "7.1.3"
+
+    const val KSP = "1.6.21-1.0.5"
 
     const val GOOGLE_SERVICES = "4.3.5"
     const val CRASHLYTICS_GRADLE = "2.8.1"
@@ -16,7 +18,7 @@ object Versions {
     const val GOOGLE_PLAY_CORE_KTX = "1.8.1"
     const val PALETTE_KTX = "1.0.0"
 
-    const val COMPOSE = "1.2.0-alpha07"
+    const val COMPOSE = "1.2.0-alpha08"
     const val LIFECYCLE_RUNTIME_KTX = "2.5.0-alpha06"
     const val ACTIVITY_COMPOSE = "1.5.0-alpha05"
     const val CONSTRAINT_LAYOUT_COMPOSE = "1.0.0"
@@ -33,7 +35,7 @@ object Versions {
 
     const val ROOM = "2.5.0-alpha01"
 
-    const val ACCOMPANIST = "0.24.6-alpha"
+    const val ACCOMPANIST = "0.24.7-alpha"
 
     const val RETROFIT = "2.9.0"
 
