@@ -22,7 +22,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -77,7 +76,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-          cache: 'gradle'
 
       - name: Run Android Tests
         uses: reactivecircus/android-emulator-runner@v2
