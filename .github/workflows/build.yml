@@ -8,8 +8,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  ktlint:
+  setup:
     if: "!contains(github.event.head_commit.message, 'ci(skip)')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          cache: 'gradle'
+
+  ktlint:
+    needs: [ setup ]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -19,18 +34,8 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
-  tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run tests
-        run: ./gradlew test -PbuildType=dev
-
   build:
-    needs: [ ktlint, tests ]
+    needs: [ setup ]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -38,4 +43,30 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build dev app
-        run: ./gradlew assembleDev -PbuildType=dev
+        run: ./gradlew build --no-daemon
+#        run: ./gradlew assembleDev -PbuildType=dev
+
+  unit_tests:
+    needs: [ ktlint, build ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Unit Tests
+        run: ./gradlew test -PbuildType=dev
+
+  android_tests:
+    needs: [ ktlint, build ]
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Android Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew connectedCheck --stacktrace
