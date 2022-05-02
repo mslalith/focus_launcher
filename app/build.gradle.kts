@@ -35,6 +35,7 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
             isShrinkResources = false
+            isTestCoverageEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         getByName("release") {

@@ -16,18 +16,16 @@ object Versions {
     const val NAVIGATION_COMPOSE = "2.5.0-alpha04"
     const val LIFECYCLE_VIEWMODEL_COMPOSE = "2.5.0-alpha06"
 
-    const val DATASTORE = "1.0.0"
-
     const val HILT = "2.41"
     const val HILT_COMPILER = "1.0.0"
     const val HILT_NAVIGATION_COMPOSE = "1.0.0"
 
+    const val DATASTORE = "1.0.0"
     const val ROOM = "2.5.0-alpha01"
-
+    const val RETROFIT = "2.9.0"
     const val ACCOMPANIST = "0.24.6-alpha"
 
-    const val RETROFIT = "2.9.0"
-
+    const val JACOCO_PLUGIN = "0.16.0"
     const val THIRD_SUNCALC = "3.5"
 
     const val TEST_JUNIT = "4.13.2"
