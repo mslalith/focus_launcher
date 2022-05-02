@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.data.repository.interfaces
 
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import dev.mslalith.focuslauncher.data.models.LunarPhase
 import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
@@ -20,8 +19,7 @@ abstract class LunarPhaseDetailsRepo {
     abstract val lunarPhaseDetailsStateFlow: StateFlow<Outcome<LunarPhaseDetails>>
     abstract val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
 
-    abstract fun registerToTimeChange(context: Context)
-    abstract fun unregisterToTimeChange(context: Context)
+    abstract fun refreshTime()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails =

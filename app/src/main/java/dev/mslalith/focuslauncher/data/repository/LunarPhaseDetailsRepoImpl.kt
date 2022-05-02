@@ -1,9 +1,5 @@
 package dev.mslalith.focuslauncher.data.repository
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
@@ -37,31 +33,14 @@ class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() 
         updateStateFlowsWith(lunarPhaseDetails)
     }
 
-    private val timeChangeBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val currentInstant = Clock.System.now()
-            val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
-            _currentTimeStateFlow.value = Outcome.Success(currentInstant.formatToTime())
+    override fun refreshTime() {
+        val currentInstant = Clock.System.now()
+        val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
+        _currentTimeStateFlow.value = Outcome.Success(currentInstant.formatToTime())
 
-            runAfter(delayInMillis) {
-                val lunarPhaseDetails = findLunarPhaseDetails(currentInstant)
-                updateStateFlowsWith(lunarPhaseDetails)
-            }
-        }
-    }
-
-    override fun registerToTimeChange(context: Context) {
-        context.registerReceiver(
-            timeChangeBroadcastReceiver,
-            IntentFilter(Intent.ACTION_TIME_TICK)
-        )
-    }
-
-    override fun unregisterToTimeChange(context: Context) {
-        try {
-            context.unregisterReceiver(timeChangeBroadcastReceiver)
-        } catch (ex: IllegalArgumentException) {
-            ex.printStackTrace()
+        runAfter(delayInMillis) {
+            val lunarPhaseDetails = findLunarPhaseDetails(currentInstant)
+            updateStateFlowsWith(lunarPhaseDetails)
         }
     }
 

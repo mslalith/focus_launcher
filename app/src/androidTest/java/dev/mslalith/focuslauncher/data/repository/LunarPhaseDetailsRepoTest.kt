@@ -1,7 +1,5 @@
 package dev.mslalith.focuslauncher.data.repository
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.FakeLunarPhaseDetailsRepo
@@ -22,12 +20,10 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalCoroutinesApi::class)
 class LunarPhaseDetailsRepoTest {
 
-    private lateinit var context: Context
     private lateinit var lunarPhaseDetailsRepo: FakeLunarPhaseDetailsRepo
 
     @Before
     fun setUp() {
-        context = ApplicationProvider.getApplicationContext()
         lunarPhaseDetailsRepo = FakeLunarPhaseDetailsRepo(TestCoroutineScope())
     }
 
@@ -62,7 +58,7 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
+        lunarPhaseDetailsRepo.registerToTimeChange()
         job.join()
     }
 
@@ -82,7 +78,7 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
+        lunarPhaseDetailsRepo.registerToTimeChange()
         job.join()
     }
 
@@ -103,7 +99,7 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
+        lunarPhaseDetailsRepo.registerToTimeChange()
         job.join()
     }
 
@@ -118,9 +114,9 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
+        lunarPhaseDetailsRepo.registerToTimeChange()
         advanceTimeBy(2_000)
-        lunarPhaseDetailsRepo.unregisterToTimeChange(context)
+        lunarPhaseDetailsRepo.unregisterToTimeChange()
 
         job.join()
     }
@@ -136,9 +132,9 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange(context)
+        lunarPhaseDetailsRepo.registerToTimeChange()
         advanceTimeBy(3_000)
-        lunarPhaseDetailsRepo.unregisterToTimeChange(context)
+        lunarPhaseDetailsRepo.unregisterToTimeChange()
 
         job.join()
     }

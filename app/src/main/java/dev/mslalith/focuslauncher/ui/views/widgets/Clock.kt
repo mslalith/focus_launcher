@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.ui.views.widgets
 
+import android.content.Intent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.AnimationSpec
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,7 +28,6 @@ import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +40,7 @@ import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.ui.views.SystemBroadcastReceiver
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_LEFT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_RIGHT
@@ -63,7 +63,6 @@ fun ClockWidget(
     horizontalPadding: Dp,
     centerVertically: Boolean = false,
 ) {
-    val context = LocalContext.current
     val currentTime by widgetsViewModel.currentTimeStateFlow.collectAsState()
     val showClock24 by settingsViewModel.showClock24StateFlow.collectAsState()
     val clockAlignment by settingsViewModel.clockAlignmentStateFlow.collectAsState()
@@ -81,9 +80,8 @@ fun ClockWidget(
         }
     )
 
-    DisposableEffect(key1 = Unit) {
-        widgetsViewModel.registerToTimeChange(context)
-        onDispose { widgetsViewModel.unregisterToTimeChange(context) }
+    SystemBroadcastReceiver(systemAction = Intent.ACTION_TIME_TICK) {
+        widgetsViewModel.refreshTime()
     }
 
     (currentTime as? Outcome.Success)?.value?.let { time ->
