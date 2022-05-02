@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -127,6 +128,19 @@ class AppsViewModel @Inject constructor(
 
     fun addToFavorites(app: App) {
         launch { favoritesRepo.addToFavorites(app) }
+    }
+
+    fun reorderFavorite(app: App, withApp: App, onReordered: () -> Unit) {
+        if (app.packageName == withApp.packageName) {
+            onReordered()
+            return
+        }
+        launch {
+            favoritesRepo.reorderFavorite(app, withApp)
+            withContext(Dispatchers.Main) {
+                onReordered()
+            }
+        }
     }
 
     fun removeFromFavorites(app: App) {

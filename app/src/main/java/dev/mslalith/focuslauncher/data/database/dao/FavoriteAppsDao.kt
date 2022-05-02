@@ -27,6 +27,9 @@ interface FavoriteAppsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFavorite(favoriteApp: FavoriteApp)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addFavorites(favoriteApps: List<FavoriteApp>)
+
     @Delete
     suspend fun removeFavorite(favoriteApp: FavoriteApp)
 }
