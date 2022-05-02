@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher
 
 import dev.mslalith.focuslauncher.data.database.entities.Quote
 import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.QuotesRepo
 import dev.mslalith.focuslauncher.utils.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

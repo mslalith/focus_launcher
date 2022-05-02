@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository
+package dev.mslalith.focuslauncher.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore

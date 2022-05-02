@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository
+package dev.mslalith.focuslauncher.data.repository
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
-import dev.mslalith.focuslauncher.data.respository.interfaces.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import dev.mslalith.focuslauncher.extensions.runAfter
 import kotlinx.coroutines.flow.MutableStateFlow

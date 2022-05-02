@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository.interfaces
+package dev.mslalith.focuslauncher.data.repository.interfaces
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting

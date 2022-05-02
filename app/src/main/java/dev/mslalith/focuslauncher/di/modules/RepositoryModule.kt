@@ -11,18 +11,18 @@ import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
-import dev.mslalith.focuslauncher.data.respository.AppDrawerRepo
-import dev.mslalith.focuslauncher.data.respository.FavoritesRepo
-import dev.mslalith.focuslauncher.data.respository.HiddenAppsRepo
-import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepoImpl
-import dev.mslalith.focuslauncher.data.respository.QuotesRepoImpl
-import dev.mslalith.focuslauncher.data.respository.interfaces.LunarPhaseDetailsRepo
-import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
-import dev.mslalith.focuslauncher.data.respository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.data.respository.settings.ClockSettingsRepo
-import dev.mslalith.focuslauncher.data.respository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.respository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.data.respository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
+import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
+import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl
+import dev.mslalith.focuslauncher.data.repository.QuotesRepoImpl
+import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import javax.inject.Singleton
 
 @Module

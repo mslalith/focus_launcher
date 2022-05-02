@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository.interfaces
+package dev.mslalith.focuslauncher.data.repository.interfaces
 
 import dev.mslalith.focuslauncher.data.database.entities.Quote
 import dev.mslalith.focuslauncher.data.models.Outcome

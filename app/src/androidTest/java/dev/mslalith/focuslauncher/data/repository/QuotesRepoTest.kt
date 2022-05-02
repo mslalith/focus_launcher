@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository
+package dev.mslalith.focuslauncher.data.repository
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat

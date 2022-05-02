@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository
+package dev.mslalith.focuslauncher.data.repository
 
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao

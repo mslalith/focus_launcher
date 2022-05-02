@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.respository
+package dev.mslalith.focuslauncher.data.repository
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.Quote
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.QuoteResponse
-import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.QuotesRepo
 import dev.mslalith.focuslauncher.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
