@@ -1,8 +1,8 @@
-package dev.mslalith.focuslauncher.data.respository.settings
+package dev.mslalith.focuslauncher.data.repository.settings
 
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.data.models.ClockAlignment
-import dev.mslalith.focuslauncher.data.respository.DataStoreTest
+import dev.mslalith.focuslauncher.data.repository.DataStoreTest
 import dev.mslalith.focuslauncher.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

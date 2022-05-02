@@ -4,7 +4,7 @@ import android.content.Context
 import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
-import dev.mslalith.focuslauncher.data.respository.interfaces.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

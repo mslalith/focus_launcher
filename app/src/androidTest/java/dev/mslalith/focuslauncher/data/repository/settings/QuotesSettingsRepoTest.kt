@@ -1,6 +1,6 @@
-package dev.mslalith.focuslauncher.data.respository.settings
+package dev.mslalith.focuslauncher.data.repository.settings
 
-import dev.mslalith.focuslauncher.data.respository.DataStoreTest
+import dev.mslalith.focuslauncher.data.repository.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import com.google.common.truth.Truth.assertThat

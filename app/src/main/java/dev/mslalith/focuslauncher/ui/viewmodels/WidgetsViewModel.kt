@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
-import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_TIME_OUTCOME
-import dev.mslalith.focuslauncher.data.respository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
-import dev.mslalith.focuslauncher.data.respository.interfaces.LunarPhaseDetailsRepo
-import dev.mslalith.focuslauncher.data.respository.interfaces.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_TIME_OUTCOME
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
+import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.QuotesRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
