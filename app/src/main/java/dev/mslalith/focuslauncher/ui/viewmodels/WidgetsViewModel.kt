@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.ui.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,8 +35,7 @@ class WidgetsViewModel @Inject constructor(
      */
     val currentTimeStateFlow = lunarPhaseRepo.currentTimeStateFlow.withinScope(INITIAL_TIME_OUTCOME)
 
-    fun registerToTimeChange(context: Context) = lunarPhaseRepo.registerToTimeChange(context)
-    fun unregisterToTimeChange(context: Context) = lunarPhaseRepo.unregisterToTimeChange(context)
+    fun refreshTime() = lunarPhaseRepo.refreshTime()
 
     /**
      * Lunar Phase

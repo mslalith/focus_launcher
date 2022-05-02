@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher
 
-import android.content.Context
 import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
@@ -36,7 +35,7 @@ class FakeLunarPhaseDetailsRepo(
 
     var instantTimeList = listOf<Instant>()
 
-    private fun setupTickJob(context: Context) {
+    private fun setupTickJob() {
         tickJob = coroutineScope.launch {
             instantTimeList.forEach { currentInstant ->
                 _currentTimeStateFlow.value = Outcome.Success(currentInstant.formatToTime())
@@ -45,7 +44,7 @@ class FakeLunarPhaseDetailsRepo(
                 updateStateFlowsWith(lunarPhaseDetails)
             }
             instantTimeList = emptyList()
-            unregisterToTimeChange(context)
+            unregisterToTimeChange()
         }
     }
 
@@ -54,12 +53,16 @@ class FakeLunarPhaseDetailsRepo(
         _upcomingLunarPhaseStateFlow.value = Outcome.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
     }
 
-    override fun registerToTimeChange(context: Context) {
-        _isTimeChangeBroadcastReceiverRegisteredFlow.value = true
-        setupTickJob(context)
+    override fun refreshTime() {
+        TODO("Not yet implemented")
     }
 
-    override fun unregisterToTimeChange(context: Context) {
+    fun registerToTimeChange() {
+        _isTimeChangeBroadcastReceiverRegisteredFlow.value = true
+        setupTickJob()
+    }
+
+    fun unregisterToTimeChange() {
         _isTimeChangeBroadcastReceiverRegisteredFlow.value = false
         tickJob?.cancel()
         tickJob = null
