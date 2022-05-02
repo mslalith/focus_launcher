@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.data.models.ClockAlignment
 import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.extensions.horizontalSpacer
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
+import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM
@@ -168,7 +168,7 @@ fun Clock24(
                 colorAnimationSpec = colorAnimationSpec,
             )
             if (index != timeList.size - 1) {
-                digitSpacing.horizontalSpacer()
+                HorizontalSpacer(spacing = digitSpacing)
             }
         }
     }
@@ -195,7 +195,7 @@ private fun DigitWithAnalogClocks(
                     offsetAnimationSpec = offsetAnimationSpec,
                     colorAnimationSpec = colorAnimationSpec,
                 )
-                analogClockSpacing.horizontalSpacer()
+                HorizontalSpacer(spacing = analogClockSpacing)
                 AnalogClock(
                     radius = analogClockRadius,
                     analogClockPhase = list.last(),
@@ -206,7 +206,7 @@ private fun DigitWithAnalogClocks(
                 )
             }
             if (index != digit.analogHandles.size - 1) {
-                analogClockSpacing.verticalSpacer()
+                VerticalSpacer(spacing = analogClockSpacing)
             }
         }
     }

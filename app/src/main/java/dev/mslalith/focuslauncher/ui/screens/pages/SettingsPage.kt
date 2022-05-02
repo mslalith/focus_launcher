@@ -58,8 +58,8 @@ import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.data.providers.LocalUpdateManager
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.isAppDefaultLauncher
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
@@ -91,7 +91,7 @@ fun SettingsPage(
         verticalArrangement = Arrangement.Center,
     ) {
         SettingsHeader()
-        12.dp.verticalSpacer()
+        VerticalSpacer(spacing = 12.dp)
 
         ChangeTheme(themeViewModel)
         EditFavorites(::navigateTo)
@@ -103,7 +103,7 @@ fun SettingsPage(
         SetAsDefaultLauncher()
         CheckForUpdates()
 
-        12.dp.verticalSpacer()
+        VerticalSpacer(spacing = 12.dp)
     }
 }
 
