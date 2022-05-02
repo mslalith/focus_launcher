@@ -42,7 +42,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.extensions.horizontalSpacer
+import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 
 @Composable
 fun BackPressHandler(
@@ -220,7 +220,7 @@ fun TextIconButton(
             contentDescription = contentDescription ?: text,
             tint = MaterialTheme.colors.onBackground,
         )
-        afterIconSpacing.horizontalSpacer()
+        HorizontalSpacer(spacing = afterIconSpacing)
         Text(
             text = text,
             style = TextStyle(
