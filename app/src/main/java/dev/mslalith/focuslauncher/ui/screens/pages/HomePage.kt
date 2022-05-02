@@ -1,11 +1,23 @@
 package dev.mslalith.focuslauncher.ui.screens.pages
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,13 +30,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -37,17 +47,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
+import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import dev.mslalith.focuslauncher.extensions.FillSpacer
+import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.defaultDialerApp
 import dev.mslalith.focuslauncher.extensions.defaultMessagingApp
 import dev.mslalith.focuslauncher.extensions.launchApp
@@ -56,14 +69,18 @@ import dev.mslalith.focuslauncher.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
+import dev.mslalith.focuslauncher.ui.viewmodels.FavoritesContextMode
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
+import dev.mslalith.focuslauncher.ui.views.IconType
+import dev.mslalith.focuslauncher.ui.views.RoundIcon
 import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
 import kotlinx.coroutines.flow.first
+import kotlin.reflect.KClass
 
 private val LocalHomePadding = staticCompositionLocalOf<HomePadding> {
     error("No LocalHomePadding provided")
@@ -122,10 +139,10 @@ fun HomePage(
                     )
                 }
                 FavoritesList(
-                    modifier = Modifier.padding(horizontal = horizontalPadding),
                     appsViewModel = appsViewModel,
                     homeViewModel = homeViewModel,
                     settingsViewModel = settingsViewModel,
+                    contentPadding = horizontalPadding
                 )
                 Spacer(modifier = Modifier.height(bottomPadding))
             }
@@ -178,26 +195,17 @@ fun DecoratedQuote(
 
 @Composable
 private fun FavoritesList(
-    modifier: Modifier = Modifier,
     appsViewModel: AppsViewModel,
     homeViewModel: HomeViewModel,
-    settingsViewModel: SettingsViewModel
+    settingsViewModel: SettingsViewModel,
+    contentPadding: Dp,
 ) {
     val context = LocalContext.current
-    val isInContextualMode by homeViewModel.isInContextualMode.collectAsState()
+    val currentContextMode by homeViewModel.favoritesContextualMode.collectAsState()
     val onlyFavoritesList by appsViewModel.onlyFavoritesStateFlow.collectAsState()
 
-    fun onContextualModeChanged(value: Boolean) {
-        homeViewModel.apply {
-            when (value) {
-                true -> showContextualMode()
-                false -> hideContextualMode()
-            }
-        }
-    }
-
     LaunchedEffect(onlyFavoritesList.isEmpty()) {
-        if (onlyFavoritesList.isNotEmpty()) return@LaunchedEffect
+        if (onlyFavoritesList.isNotEmpty() || homeViewModel.isReordering()) return@LaunchedEffect
 
         homeViewModel.hideContextualMode()
         appsViewModel.apply {
@@ -211,35 +219,165 @@ private fun FavoritesList(
         }
     }
 
-    BackPressHandler(enabled = isInContextualMode) { homeViewModel.hideContextualMode() }
+    BackPressHandler(enabled = homeViewModel.isInContextualMode()) { homeViewModel.hideContextualMode() }
 
-    FlowRow(
-        modifier = modifier,
-        mainAxisSpacing = 16.dp,
-        crossAxisSpacing = 12.dp,
-    ) {
-        onlyFavoritesList.toAppWithIconList(context).forEach { favorite ->
-            FavoriteItem(
-                app = favorite,
-                isInContextualMode = isInContextualMode,
-                onContextualModeChange = ::onContextualModeChanged,
-                onRemoveFavorite = { appsViewModel.removeFromFavorites(favorite.toApp()) }
+    val transition = updateTransition(targetState = currentContextMode, label = "Favorites Transition")
+    val outerPadding by transition.animateDp(label = "Outer Padding") { if (it.isInContextualMode()) 16.dp else 0.dp }
+    val innerPaddingBottom by transition.animateDp(label = "Inner Padding Bottom") { if (it.isInContextualMode()) 16.dp else 0.dp }
+    val borderOpacity by transition.animateFloat(label = "Border Opacity") { if (it.isInContextualMode()) 0.8f else 0f }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = outerPadding)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colors.onBackground.copy(alpha = borderOpacity),
+                shape = RoundedCornerShape(size = 12.dp)
             )
+            .padding(bottom = innerPaddingBottom)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            AnimatedVisibility(
+                visible = homeViewModel.isInContextualMode(),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp)
+            ) {
+                FavoritesContextHeader(
+                    currentContextMode = currentContextMode,
+                    changeContextModeToOpen = { homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Open) },
+                    onReorderClick = { homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder) },
+                    onRemoveClick = { homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Remove) }
+                )
+            }
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = contentPadding),
+                mainAxisSpacing = 16.dp,
+                crossAxisSpacing = 12.dp,
+            ) {
+                onlyFavoritesList.toAppWithIconList(context).forEach { favorite ->
+                    FavoriteItem(
+                        app = favorite,
+                        homeViewModel = homeViewModel,
+                        onClick = {
+                            when (currentContextMode) {
+                                FavoritesContextMode.Closed -> context.launchApp(favorite.toApp())
+                                FavoritesContextMode.Open -> Unit
+                                FavoritesContextMode.Remove -> appsViewModel.removeFromFavorites(favorite.toApp())
+                                FavoritesContextMode.Reorder -> homeViewModel.changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
+                                is FavoritesContextMode.ReorderPickPosition -> {
+                                    val contextMode = currentContextMode as FavoritesContextMode.ReorderPickPosition
+                                    appsViewModel.reorderFavorite(contextMode.app, favorite.toApp()) {
+                                        homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder)
+                                    }
+                                }
+                            }
+                        }
+                    )
+                }
+            }
         }
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun FavoriteItem(
-    app: AppWithIcon,
-    isInContextualMode: Boolean,
-    onContextualModeChange: (Boolean) -> Unit,
-    onRemoveFavorite: () -> Unit
+private fun FavoritesContextHeader(
+    currentContextMode: FavoritesContextMode,
+    changeContextModeToOpen: () -> Unit,
+    onReorderClick: () -> Unit,
+    onRemoveClick: () -> Unit,
 ) {
-    val context = LocalContext.current
+
+    fun handleReClickFor(contextMode: FavoritesContextMode, action: () -> Unit) {
+        if (currentContextMode == contextMode) changeContextModeToOpen() else action()
+    }
+
+    fun headerText(): String = when (currentContextMode) {
+        FavoritesContextMode.Open, FavoritesContextMode.Closed -> "Favorites"
+        FavoritesContextMode.Remove -> "Remove"
+        FavoritesContextMode.Reorder, is FavoritesContextMode.ReorderPickPosition -> "Reorder"
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .padding(top = 12.dp, bottom = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AnimatedContent(
+            targetState = headerText(),
+            transitionSpec = {
+                slideInVertically { it } + fadeIn() with slideOutVertically { -it } + fadeOut() using SizeTransform(clip = false)
+            }
+        ) { header ->
+            Text(
+                text = header,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onBackground,
+                    fontSize = 24.sp
+                )
+            )
+        }
+        FillSpacer()
+        FavoritesContextActionItem(
+            contextModes = listOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as List<KClass<FavoritesContextMode>>,
+            currentContextMode = currentContextMode,
+            iconType = IconType.Resource(resId = R.drawable.ic_drag_indicator),
+            onClick = { handleReClickFor(FavoritesContextMode.Reorder) { onReorderClick() } }
+        )
+        HorizontalSpacer(spacing = 4.dp)
+        FavoritesContextActionItem(
+            contextModes = listOf(FavoritesContextMode.Remove::class) as List<KClass<FavoritesContextMode>>,
+            currentContextMode = currentContextMode,
+            iconType = IconType.Vector(imageVector = Icons.Default.Delete),
+            onClick = { handleReClickFor(FavoritesContextMode.Remove) { onRemoveClick() } }
+        )
+    }
+}
+
+@Composable
+private fun FavoritesContextActionItem(
+    contextModes: List<KClass<FavoritesContextMode>>,
+    currentContextMode: FavoritesContextMode,
+    iconType: IconType,
+    onClick: () -> Unit,
+) {
+    val backgroundColor = MaterialTheme.colors.background
+    val onBackgroundColor = MaterialTheme.colors.onBackground
+    val iconBackgroundColor by animateColorAsState(
+        targetValue = if (currentContextMode::class in contextModes) onBackgroundColor else backgroundColor,
+        animationSpec = spring(stiffness = Spring.StiffnessLow)
+    )
+    val iconColor by animateColorAsState(
+        targetValue = if (currentContextMode::class in contextModes) backgroundColor else onBackgroundColor,
+        animationSpec = spring(stiffness = Spring.StiffnessLow)
+    )
+
+    RoundIcon(
+        iconSize = 40.dp,
+        iconType = iconType,
+        backgroundColor = iconBackgroundColor,
+        iconColor = iconColor,
+        onClick = onClick
+    )
+}
+
+@Composable
+private fun FavoriteItem(
+    app: AppWithIcon,
+    homeViewModel: HomeViewModel,
+    onClick: () -> Unit,
+) {
+    val backgroundColor = MaterialTheme.colors.background
     val onBackgroundColor = MaterialTheme.colors.onBackground
 
-    fun openContextualMenu() = onContextualModeChange(true)
+    fun isAppAboutToReorder() = homeViewModel.isAppAboutToReorder(app.toApp())
 
     val color = remember(key1 = app) {
         val appIconPalette = Palette.from(app.icon.toBitmap()).generate()
@@ -247,24 +385,30 @@ fun FavoriteItem(
         return@remember extractedColor.luminate(threshold = 0.36f, value = 0.6f)
     }
     val animatedColor by animateColorAsState(
-        targetValue = color,
+        targetValue = if (isAppAboutToReorder()) onBackgroundColor else color,
         animationSpec = tween(durationMillis = 600)
     )
+
+    fun backgroundColor(): Color = animatedColor.copy(alpha = if (isAppAboutToReorder()) 0.8f else 0.23f)
+
+    fun textColor(): Color = if (isAppAboutToReorder()) backgroundColor else animatedColor
 
     Row(
         modifier = Modifier
             .clip(MaterialTheme.shapes.small)
-            .background(animatedColor.copy(alpha = 0.23f))
+            .background(color = backgroundColor())
             .border(
                 width = 0.25.dp,
                 color = animatedColor,
                 shape = MaterialTheme.shapes.small
             )
-            .pointerInput(isInContextualMode) {
-                if (isInContextualMode) return@pointerInput
+            .pointerInput(homeViewModel.isInContextualMode()) {
                 detectTapGestures(
-                    onTap = { context.launchApp(app.toApp()) },
-                    onLongPress = { openContextualMenu() }
+                    onTap = { onClick() },
+                    onLongPress = {
+                        if (homeViewModel.isInContextualMode()) return@detectTapGestures
+                        homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Open)
+                    }
                 )
             }
             .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -272,43 +416,7 @@ fun FavoriteItem(
     ) {
         Text(
             text = app.name,
-            style = TextStyle(color = animatedColor),
-        )
-        AnimatedVisibility(visible = isInContextualMode) {
-            FavoriteItemActionButton(
-                icon = Icons.Rounded.Clear,
-                contentDescription = "Remove Favorite",
-                onClick = { onRemoveFavorite() }
-            )
-        }
-    }
-}
-
-@Composable
-private fun FavoriteItemActionButton(
-    icon: ImageVector,
-    contentDescription: String,
-    backgroundColor: Color? = null,
-    iconColor: Color? = null,
-    onClick: () -> Unit,
-) {
-    val contentSize = LocalHomePadding.current.favoriteActionItemSize
-    val contentColor = backgroundColor ?: MaterialTheme.colors.onBackground.copy(alpha = 0.23f)
-    val iconTint = iconColor ?: MaterialTheme.colors.onBackground.copy(alpha = 0.6f)
-
-    Box(
-        modifier = Modifier
-            .padding(start = 8.dp)
-            .size(contentSize)
-            .clip(CircleShape)
-            .background(contentColor)
-            .padding(2.dp)
-            .clickable { onClick() }
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = iconTint,
+            style = TextStyle(color = textColor()),
         )
     }
 }
