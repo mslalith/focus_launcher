@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.models.Outcome
+import dev.mslalith.focuslauncher.data.repository.ClockRepo
+import dev.mslalith.focuslauncher.data.repository.ClockRepo.Companion.INITIAL_TIME_OUTCOME
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
-import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_TIME_OUTCOME
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
-import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +21,8 @@ import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class WidgetsViewModel @Inject constructor(
-    private val lunarPhaseRepo: LunarPhaseDetailsRepo,
+    private val clockRepo: ClockRepo,
+    lunarPhaseRepo: LunarPhaseDetailsRepo,
     private val quotesRepo: QuotesRepo
 ) : ViewModel() {
 
@@ -33,9 +35,9 @@ class WidgetsViewModel @Inject constructor(
     /**
      * Clock
      */
-    val currentTimeStateFlow = lunarPhaseRepo.currentTimeStateFlow.withinScope(INITIAL_TIME_OUTCOME)
+    val currentTimeStateFlow = clockRepo.currentTimeStateFlow.withinScope(INITIAL_TIME_OUTCOME)
 
-    fun refreshTime() = lunarPhaseRepo.refreshTime()
+    fun refreshTime() = clockRepo.refreshTime()
 
     /**
      * Lunar Phase

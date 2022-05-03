@@ -12,6 +12,7 @@ import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
+import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl
@@ -45,7 +46,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLunarPhaseDetailsRepo(): LunarPhaseDetailsRepo = LunarPhaseDetailsRepoImpl()
+    fun provideClockRepo(): ClockRepo = ClockRepo()
+
+    @Provides
+    @Singleton
+    fun provideLunarPhaseDetailsRepo(clockRepo: ClockRepo): LunarPhaseDetailsRepo = LunarPhaseDetailsRepoImpl(clockRepo)
 
     /**
      * API Repository providers
