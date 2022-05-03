@@ -8,8 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem

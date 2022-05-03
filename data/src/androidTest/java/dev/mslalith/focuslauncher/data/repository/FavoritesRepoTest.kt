@@ -22,7 +22,6 @@ class FavoritesRepoTest {
     private lateinit var database: AppDatabase
     private lateinit var favoritesRepo: FavoritesRepo
 
-
     @Before
     fun setUp() = runTest {
         val appToRoomMapper = AppToRoomMapper()

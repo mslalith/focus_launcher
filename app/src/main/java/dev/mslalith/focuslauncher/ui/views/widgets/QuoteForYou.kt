@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.modifyIf
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
