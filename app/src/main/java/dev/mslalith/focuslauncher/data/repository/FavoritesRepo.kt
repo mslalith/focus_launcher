@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.data.repository
 
+import dev.mslalith.focuslauncher.data.App
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
-import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.data.database.entities.FavoriteAppRoom
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -13,16 +13,16 @@ class FavoritesRepo @Inject constructor(
     private val appsDao: AppsDao,
     private val favoriteAppsDao: FavoriteAppsDao
 ) {
-    val onlyFavoritesFlow: Flow<List<AppRoom>>
+    val onlyFavoritesFlow: Flow<List<App>>
         get() = favoriteAppsDao.getFavoriteAppsFlow().map { favorites ->
-            favorites.mapNotNull { appsDao.getAppBy(it.packageName) }
+            favorites.mapNotNull { appsDao.getAppBy(it.packageName)?.toApp() }
         }
 
-    suspend fun addToFavorites(app: AppRoom) {
+    suspend fun addToFavorites(app: App) {
         favoriteAppsDao.addFavorite(FavoriteAppRoom(app.packageName))
     }
 
-    suspend fun reorderFavorite(app: AppRoom, withApp: AppRoom) {
+    suspend fun reorderFavorite(app: App, withApp: App) {
         val apps = favoriteAppsDao.getFavoriteAppsFlow().first().toMutableList()
         val appIndex = apps.indexOfFirst { it.packageName == app.packageName }
         val withAppIndex = apps.indexOfFirst { it.packageName == withApp.packageName }
