@@ -16,4 +16,7 @@ buildCache {
 }
 
 rootProject.name = "Focus Launcher"
-include(":app")
+include(
+    ":app",
+    ":data"
+)
