@@ -20,7 +20,6 @@ class LunarPhaseDetailsRepoTest {
     private lateinit var clockRepo: ClockRepo
     private lateinit var lunarPhaseDetailsRepo: LunarPhaseDetailsRepo
 
-
     @Before
     fun setUp() {
         clockRepo = ClockRepo()

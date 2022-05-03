@@ -8,6 +8,7 @@ object Libs {
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
+    const val kotlinxCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
     const val googlePlayCoreKtx = "com.google.android.play:core-ktx:${Versions.GOOGLE_PLAY_CORE_KTX}"
@@ -134,16 +135,28 @@ fun DependencyHandler.testLibs() {
     androidTestImplementation(Libs.testAndroidXEspresso)
     androidTestImplementation(Libs.testComposeJUnit)
 
-    testImplementation(Libs.testTruth)
-    androidTestImplementation(Libs.testTruth)
-    testImplementation(Libs.testKotlinCoroutines)
-    androidTestImplementation(Libs.testKotlinCoroutines)
-    testImplementation(Libs.testTurbine)
-    androidTestImplementation(Libs.testTurbine)
+    truth()
+    kotlinxCoroutinesTest()
+    turbine()
 }
 
 fun DependencyHandler.junit() {
     testImplementation(Libs.testJUnit)
+}
+
+fun DependencyHandler.truth(includeAndroid: Boolean = true) {
+    testImplementation(Libs.testTruth)
+    if (includeAndroid) androidTestImplementation(Libs.testTruth)
+}
+
+fun DependencyHandler.kotlinxCoroutinesTest(includeAndroid: Boolean = true) {
+    testImplementation(Libs.testKotlinCoroutines)
+    if (includeAndroid) androidTestImplementation(Libs.testKotlinCoroutines)
+}
+
+fun DependencyHandler.turbine(includeAndroid: Boolean = true) {
+    testImplementation(Libs.testTurbine)
+    if (includeAndroid) androidTestImplementation(Libs.testTurbine)
 }
 
 

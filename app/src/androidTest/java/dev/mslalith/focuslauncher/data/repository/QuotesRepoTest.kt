@@ -5,8 +5,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.FakeQuotesApi
+import dev.mslalith.focuslauncher.androidtest.shared.FakeQuotesApi
 import dev.mslalith.focuslauncher.data.database.AppDatabase
+import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -28,7 +30,9 @@ class QuotesRepoTest {
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         quotesRepo = QuotesRepo(
             quotesApi = FakeQuotesApi(),
-            quotesDao = database.quotesDao()
+            quotesDao = database.quotesDao(),
+            quoteToRoomMapper = QuoteToRoomMapper(database.quotesDao()),
+            quoteResponseToRoomMapper = QuoteResponseToRoomMapper()
         )
     }
 
