@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import dev.mslalith.focuslauncher.utils.Constants
 
 @Entity(tableName = Constants.Database.FAVORITE_APPS_TABLE_NAME)
-data class FavoriteApp(
+data class FavoriteAppRoom(
     @PrimaryKey(autoGenerate = false)
     val packageName: String
 )

@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.data.repository
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.entities.App
-import dev.mslalith.focuslauncher.data.database.entities.FavoriteApp
+import dev.mslalith.focuslauncher.data.database.entities.FavoriteAppRoom
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -19,7 +19,7 @@ class FavoritesRepo @Inject constructor(
         }
 
     suspend fun addToFavorites(app: App) {
-        favoriteAppsDao.addFavorite(FavoriteApp(app.packageName))
+        favoriteAppsDao.addFavorite(FavoriteAppRoom(app.packageName))
     }
 
     suspend fun reorderFavorite(app: App, withApp: App) {
@@ -28,15 +28,15 @@ class FavoritesRepo @Inject constructor(
         val withAppIndex = apps.indexOfFirst { it.packageName == withApp.packageName }
         if (appIndex == -1 || withAppIndex == -1) return
 
-        apps[appIndex] = FavoriteApp(app.packageName)
-        apps[withAppIndex] = FavoriteApp(withApp.packageName)
+        apps[appIndex] = FavoriteAppRoom(app.packageName)
+        apps[withAppIndex] = FavoriteAppRoom(withApp.packageName)
 
         favoriteAppsDao.clearFavoriteApps()
         favoriteAppsDao.addFavorites(apps)
     }
 
     suspend fun removeFromFavorites(packageName: String) {
-        favoriteAppsDao.removeFavorite(FavoriteApp(packageName))
+        favoriteAppsDao.removeFavorite(FavoriteAppRoom(packageName))
     }
 
     suspend fun clearFavorites() = favoriteAppsDao.clearFavoriteApps()
