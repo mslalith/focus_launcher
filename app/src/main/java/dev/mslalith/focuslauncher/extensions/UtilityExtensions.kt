@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
 import dev.mslalith.focuslauncher.data.model.App
-import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime

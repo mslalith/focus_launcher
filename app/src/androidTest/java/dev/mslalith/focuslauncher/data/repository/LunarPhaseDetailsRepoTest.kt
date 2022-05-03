@@ -2,7 +2,9 @@ package dev.mslalith.focuslauncher.data.repository
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.data.models.Outcome
+import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.network.repository.ClockRepo
+import dev.mslalith.focuslauncher.data.network.repository.LunarPhaseDetailsRepo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

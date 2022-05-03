@@ -7,7 +7,8 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.FakeQuotesApi
 import dev.mslalith.focuslauncher.data.database.AppDatabase
-import dev.mslalith.focuslauncher.utils.Constants
+import dev.mslalith.focuslauncher.data.network.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceTimeBy

@@ -34,7 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.data.models.ClockAlignment
+import dev.mslalith.focuslauncher.data.model.ClockAlignment
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
@@ -50,7 +50,7 @@ import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP_LEFT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP_RIGHT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.VERTICAL
-import dev.mslalith.focuslauncher.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
 import kotlin.math.cos
 import kotlin.math.sin
 

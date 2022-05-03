@@ -95,11 +95,15 @@ fun DependencyHandler.dataStore() {
 }
 
 fun DependencyHandler.hilt() {
-    implementation(Libs.hiltAndroid)
-    kapt(Libs.hiltAndroidCompiler)
+    hiltAndroid()
 
     kapt(Libs.hiltCompiler)
     implementation(Libs.hiltNavigationCompose)
+}
+
+fun DependencyHandler.hiltAndroid() {
+    implementation(Libs.hiltAndroid)
+    kapt(Libs.hiltAndroidCompiler)
 }
 
 fun DependencyHandler.room() {

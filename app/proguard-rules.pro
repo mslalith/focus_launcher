@@ -24,7 +24,7 @@
 #-keep class com.google.firebase.** { *; }
 
 # --------------- Begin: Retrofit  ---------------
--keepclassmembers class dev.mslalith.focuslauncher.data.models.QuotesApiResponse {
+-keepclassmembers class dev.mslalith.focuslauncher.data.network.entities.QuotesApiResponse {
     public protected private *;
     # Keep default members & functions
     !public !protected !private *;

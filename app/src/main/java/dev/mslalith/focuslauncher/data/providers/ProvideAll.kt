@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.mslalith.focuslauncher.data.managers.LauncherViewManager
-import dev.mslalith.focuslauncher.data.managers.UpdateManager
+import dev.mslalith.focuslauncher.data.utils.UpdateManager
 
 @Composable
 fun ProvideAll(
