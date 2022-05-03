@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.network.repository
+package dev.mslalith.focuslauncher.data.repository
 
 import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao

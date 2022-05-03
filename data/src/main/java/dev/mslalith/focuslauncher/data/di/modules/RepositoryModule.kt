@@ -11,17 +11,17 @@ import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
-import dev.mslalith.focuslauncher.data.network.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.data.network.repository.ClockRepo
-import dev.mslalith.focuslauncher.data.network.repository.FavoritesRepo
-import dev.mslalith.focuslauncher.data.network.repository.HiddenAppsRepo
-import dev.mslalith.focuslauncher.data.network.repository.LunarPhaseDetailsRepo
-import dev.mslalith.focuslauncher.data.network.repository.QuotesRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.ClockSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
+import dev.mslalith.focuslauncher.data.repository.ClockRepo
+import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
+import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import javax.inject.Singleton
 
 @Module
