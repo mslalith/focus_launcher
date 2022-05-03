@@ -5,8 +5,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.TestApps
+import dev.mslalith.focuslauncher.androidtest.shared.TestApps
 import dev.mslalith.focuslauncher.data.database.AppDatabase
+import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
@@ -24,7 +25,10 @@ class AppDrawerRepoTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-        appDrawerRepo = AppDrawerRepo(database.appsDao())
+        appDrawerRepo = AppDrawerRepo(
+            appsDao = database.appsDao(),
+            appToRoomMapper = AppToRoomMapper()
+        )
     }
 
     @After

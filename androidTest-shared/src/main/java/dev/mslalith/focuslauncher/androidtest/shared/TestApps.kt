@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher
+package dev.mslalith.focuslauncher.androidtest.shared
 
 import dev.mslalith.focuslauncher.data.model.App
 

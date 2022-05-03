@@ -5,9 +5,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.TestApps
+import dev.mslalith.focuslauncher.androidtest.shared.TestApps
 import dev.mslalith.focuslauncher.data.database.AppDatabase
-import dev.mslalith.focuslauncher.data.database.entities.AppRoom
+import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.HiddenToRoomMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
@@ -23,10 +24,19 @@ class HiddenAppsRepoTest {
 
     @Before
     fun setUp() = runTest {
+        val appToRoomMapper = AppToRoomMapper()
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-        hiddenAppsRepo = HiddenAppsRepo(database.appsDao(), database.hiddenAppsDao())
-        database.appsDao().addApps(TestApps.all.map(AppRoom::fromApp))
+        database.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
+        hiddenAppsRepo = HiddenAppsRepo(
+            appsDao = database.appsDao(),
+            hiddenAppsDao = database.hiddenAppsDao(),
+            appToRoomMapper = appToRoomMapper,
+            hiddenToRoomMapper = HiddenToRoomMapper(
+                appsDao = database.appsDao(),
+                appToRoomMapper = appToRoomMapper
+            )
+        )
     }
 
     @After

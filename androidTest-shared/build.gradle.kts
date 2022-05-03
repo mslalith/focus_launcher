@@ -31,7 +31,9 @@ android {
 }
 
 dependencies {
-    androidxCoreKtx()
+    implementation(project(":data"))
+    implementation(Libs.kotlinxCoroutines)
 
-    junit()
+    implementation(Libs.testJUnit)
+    implementation(Libs.testKotlinCoroutines)
 }

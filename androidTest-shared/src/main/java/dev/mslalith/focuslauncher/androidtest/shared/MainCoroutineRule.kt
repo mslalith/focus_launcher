@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher
+package dev.mslalith.focuslauncher.androidtest.shared
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
