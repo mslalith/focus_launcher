@@ -6,14 +6,19 @@ import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import dev.mslalith.focuslauncher.extensions.runAfter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import javax.inject.Inject
 import kotlin.random.Random
 
-class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() {
-    private val _currentTimeStateFlow = MutableStateFlow<Outcome<String>>(INITIAL_TIME_OUTCOME)
+class LunarPhaseDetailsRepoImpl @Inject constructor(
+    clockRepo: ClockRepo
+) : LunarPhaseDetailsRepo() {
+    private val _currentTimeStateFlow = MutableStateFlow<Outcome<String>>(ClockRepo.INITIAL_TIME_OUTCOME)
     override val currentTimeStateFlow: StateFlow<Outcome<String>>
         get() = _currentTimeStateFlow
 
@@ -26,6 +31,7 @@ class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() 
         get() = _upcomingLunarPhaseStateFlow
 
     init {
+        clockRepo.currentInstantStateFlow.onEach { refreshLunarPhaseDetails(it) }
         val currentInstant = Clock.System.now()
         val lunarPhaseDetails = findLunarPhaseDetails(currentInstant)
 
@@ -44,13 +50,20 @@ class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo() 
         }
     }
 
+    suspend fun refreshLunarPhaseDetails(instant: Instant) {
+        val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
+        delay(delayInMillis)
+
+        val lunarPhaseDetails = findLunarPhaseDetails(instant)
+        updateStateFlowsWith(lunarPhaseDetails)
+    }
+
     private fun updateStateFlowsWith(lunarPhaseDetails: LunarPhaseDetails) {
         _lunarPhaseDetailsStateFlow.value = Outcome.Success(lunarPhaseDetails)
         _upcomingLunarPhaseStateFlow.value = Outcome.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
     }
 
     companion object {
-        val INITIAL_TIME_OUTCOME = Outcome.Error("")
         val INITIAL_LUNAR_PHASE_DETAILS_OUTCOME = Outcome.Error("Has no Lunar Phase details")
         val INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME = Outcome.Error("Has no Upcoming Lunar Phase")
     }
