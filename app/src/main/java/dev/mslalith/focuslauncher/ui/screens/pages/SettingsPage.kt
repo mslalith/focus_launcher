@@ -40,13 +40,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckForUpdates
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckingForUpdates
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloaded
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloading
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Installing
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.NoUpdateAvailable
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.TryAgain
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
@@ -58,6 +51,13 @@ import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.data.providers.LocalUpdateManager
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckForUpdates
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckingForUpdates
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloaded
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloading
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Installing
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.NoUpdateAvailable
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.TryAgain
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.isAppDefaultLauncher
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
