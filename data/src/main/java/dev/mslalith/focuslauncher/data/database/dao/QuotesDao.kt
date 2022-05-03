@@ -15,7 +15,10 @@ interface QuotesDao {
     suspend fun getQuotes(): List<QuoteRoom>
 
     @Query("SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
-    suspend fun getQuoteBy(id: Int): QuoteRoom?
+    suspend fun getQuoteBy(id: String): QuoteRoom?
+
+    @Query("SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
+    fun getQuoteBySync(id: String): QuoteRoom?
 
     @Query("DELETE FROM $QUOTES_TABLE_NAME")
     suspend fun clearQuotes()

@@ -4,7 +4,10 @@ import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
-import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
+import dev.mslalith.focuslauncher.data.di.modules.QuoteResponseToRoomMapperProvider
+import dev.mslalith.focuslauncher.data.di.modules.QuoteToRoomMapperProvider
+import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.model.Outcome
 import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
@@ -18,7 +21,9 @@ import javax.inject.Inject
 
 class QuotesRepo @Inject constructor(
     private val quotesApi: QuotesApi,
-    private val quotesDao: QuotesDao
+    private val quotesDao: QuotesDao,
+    @QuoteToRoomMapperProvider private val quoteToRoomMapper: QuoteToRoomMapper,
+    @QuoteResponseToRoomMapperProvider private val quoteResponseToRoomMapper: QuoteResponseToRoomMapper
 ) {
     private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
     val currentQuoteStateFlow: StateFlow<Outcome<Quote>>
@@ -33,7 +38,7 @@ class QuotesRepo @Inject constructor(
 
         val quoteOutcome = quotesDao.getQuotes().let {
             if (it.isEmpty()) Outcome.None
-            else Outcome.Success(it.random().toQuote())
+            else Outcome.Success(quoteToRoomMapper.fromEntity(it.random()))
         }
         _currentQuoteStateFlow.value = quoteOutcome
     }
@@ -44,7 +49,7 @@ class QuotesRepo @Inject constructor(
 
         val quoteOutcome = quotesDao.getQuotes().let {
             if (it.isEmpty()) Outcome.None
-            else Outcome.Success(it[index].toQuote())
+            else Outcome.Success(quoteToRoomMapper.fromEntity(it[index]))
         }
         _currentQuoteStateFlow.value = quoteOutcome
         return quoteOutcome
@@ -60,19 +65,24 @@ class QuotesRepo @Inject constructor(
 
     private suspend fun fetchPageQuotes(page: Int) {
         val quotesApiResponse = quotesApi.getQuotes(page = page)
-        val quotes = quotesApiResponse.results.map { it.toQuoteRoom() }
+        val quoteRoomList = quotesApiResponse.results.map(quoteResponseToRoomMapper::fromEntity)
+        val quotes = quoteRoomList.map(quoteToRoomMapper::fromEntity)
         addAllQuotes(quotes)
     }
 
     private suspend fun addInitialQuotes() {
         val quotesListType = object : TypeToken<List<QuoteResponse>>() {}.type
         val initialQuoteResponses = Gson().fromJson<List<QuoteResponse>>(INITIAL_QUOTES_JSON, quotesListType)
-        val initialQuotes = initialQuoteResponses.map { it.toQuoteRoom() }
+        val initialQuoteRoomList = initialQuoteResponses.map(quoteResponseToRoomMapper::fromEntity)
+        val initialQuotes = initialQuoteRoomList.map(quoteToRoomMapper::fromEntity)
         addAllQuotes(initialQuotes)
         nextRandomQuote()
     }
 
-    private suspend fun addAllQuotes(quotes: List<QuoteRoom>) = quotesDao.addQuotes(quotes)
+    private suspend fun addAllQuotes(quotes: List<Quote>) {
+        val quoteRoomList = quotes.map(quoteToRoomMapper::toEntity)
+        quotesDao.addQuotes(quoteRoomList)
+    }
 
     suspend fun hasQuotesReachedLimit() = quotesSize() >= QUOTES_LIMIT
     suspend fun quotesSize() = quotesDao.getQuotesSize()

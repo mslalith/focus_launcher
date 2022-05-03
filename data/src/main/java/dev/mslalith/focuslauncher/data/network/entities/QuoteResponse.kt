@@ -1,8 +1,6 @@
 package dev.mslalith.focuslauncher.data.network.entities
 
 import com.google.gson.annotations.SerializedName
-import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
-import dev.mslalith.focuslauncher.data.model.Quote
 
 data class QuoteResponse(
     @SerializedName(value = "_id")
@@ -17,22 +15,7 @@ data class QuoteResponse(
     val length: Int,
     @SerializedName(value = "tags")
     val tags: List<String>,
-) {
-    fun toQuote() = Quote(
-        id = id,
-        quote = quote,
-        author = author
-    )
-
-    fun toQuoteRoom() = QuoteRoom(
-        id = id,
-        quote = quote,
-        author = author,
-        authorSlug = authorSlug,
-        length = length,
-        tags = tags
-    )
-}
+)
 
 data class QuotesApiResponse(
     @SerializedName(value = "count")
