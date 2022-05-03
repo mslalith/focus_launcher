@@ -1,9 +1,12 @@
 package dev.mslalith.focuslauncher.data.repository
 
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.FakeQuotesRepo
-import dev.mslalith.focuslauncher.data.models.Outcome
+import dev.mslalith.focuslauncher.FakeQuotesApi
+import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -16,41 +19,33 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class QuotesRepoTest {
 
-    private lateinit var quotesRepo: FakeQuotesRepo
+    private lateinit var database: AppDatabase
+    private lateinit var quotesRepo: QuotesRepo
 
     @Before
     fun setUp() {
-        quotesRepo = FakeQuotesRepo()
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        quotesRepo = QuotesRepo(
+            quotesApi = FakeQuotesApi(),
+            quotesDao = database.quotesDao()
+        )
     }
 
     @After
     fun tearDown() {
+        database.close()
     }
 
     @Test
     fun getCurrentQuoteStateFlow() = runTest {
         quotesRepo.fetchQuotes(maxPages = 2)
         val indexes = listOf(7, 23)
-        val job = launch {
-            quotesRepo.currentQuoteStateFlow.test {
-                var quoteOutcome = awaitItem()
-                assertThat(quoteOutcome).isInstanceOf(Outcome.None::class.java)
-                indexes.forEach { index ->
-                    quoteOutcome = awaitItem()
-                    assertThat(quoteOutcome).isInstanceOf(Outcome.Success::class.java)
-                    val quote = (quoteOutcome as Outcome.Success).value
-                    assertThat(quote).isEqualTo(quotesRepo.getQuoteAt(index))
-                }
-                expectNoEvents()
-            }
-        }
-
         indexes.forEach { index ->
-            quotesRepo.randomIndex = index
-            advanceTimeBy(1_000)
-            quotesRepo.nextRandomQuote()
+            val quote = quotesRepo.nextRandomQuoteTest(index)
+            val quoteFromFlow = quotesRepo.currentQuoteStateFlow.value
+            assertThat(quote).isEqualTo(quoteFromFlow)
         }
-        job.join()
     }
 
     @Test
@@ -63,7 +58,8 @@ class QuotesRepoTest {
             }
         }
 
-        quotesRepo.fetchQuotes()
+        advanceTimeBy(1_000)
+        quotesRepo.fetchQuotes(maxPages = 2)
         job.join()
     }
 
@@ -72,10 +68,9 @@ class QuotesRepoTest {
         quotesRepo.fetchQuotes(maxPages = 2)
         val indexes = listOf(7, 23)
         indexes.forEach { index ->
-            quotesRepo.randomIndex = index
-            quotesRepo.nextRandomQuote()
-            val quote = (quotesRepo.currentQuoteStateFlow.value as Outcome.Success).value
-            assertThat(quote).isEqualTo(quotesRepo.getQuoteAt(index))
+            val quote = quotesRepo.nextRandomQuoteTest(index)
+            val quoteFromFlow = quotesRepo.currentQuoteStateFlow.value
+            assertThat(quote).isEqualTo(quoteFromFlow)
         }
     }
 

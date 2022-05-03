@@ -8,7 +8,7 @@ import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Comp
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_TIME_OUTCOME
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepoImpl.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
 import dev.mslalith.focuslauncher.data.repository.interfaces.LunarPhaseDetailsRepo
-import dev.mslalith.focuslauncher.data.repository.interfaces.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.QuotesRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -54,7 +54,7 @@ class WidgetsViewModel @Inject constructor(
     fun fetchQuotesIfRequired() {
         launch {
             if (quotesRepo.hasQuotesReachedLimit()) return@launch
-            quotesRepo.fetchQuotes()
+            quotesRepo.fetchQuotes(maxPages = 2)
         }
     }
 
