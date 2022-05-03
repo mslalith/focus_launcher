@@ -13,10 +13,10 @@ import android.os.Build
 import android.provider.Settings
 import android.provider.Telephony
 import android.telecom.TelecomManager
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import java.lang.reflect.Method
 
-val Context.appDrawerApps: List<App>
+val Context.appDrawerApps: List<AppRoom>
     get() {
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
@@ -27,12 +27,12 @@ val Context.appDrawerApps: List<App>
                 val appName = loadLabel(packageManager).toString()
                 val appPackageName = packageName
                 val isSystem = isSystemApp(appPackageName)
-                return@map App(appName, appPackageName, isSystem)
+                return@map AppRoom(appName, appPackageName, isSystem)
             }
         }.sortedBy { it.name }
     }
 
-val Context.defaultDialerApp: App?
+val Context.defaultDialerApp: AppRoom?
     get() {
         val manager = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -44,7 +44,7 @@ val Context.defaultDialerApp: App?
         }
     }
 
-val Context.defaultMessagingApp: App?
+val Context.defaultMessagingApp: AppRoom?
     get() {
         val packageName: String? = Telephony.Sms.getDefaultSmsPackage(this)
         return packageName?.let { appNoIconModelOf(packageName) }
@@ -93,12 +93,12 @@ fun Context.canLaunch(packageName: String): Boolean {
     }
 }
 
-fun Context.appNoIconModelOf(packageName: String): App? = try {
+fun Context.appNoIconModelOf(packageName: String): AppRoom? = try {
     with(packageManager) {
         val info = getApplicationInfo(packageName, 0)
         val name = getApplicationLabel(info).toString()
         val isSystem = isSystemApp(packageName)
-        App(name, packageName, isSystem)
+        AppRoom(name, packageName, isSystem)
     }
 } catch (ex: PackageManager.NameNotFoundException) {
     null
@@ -118,7 +118,7 @@ fun Context.isAppDefaultLauncher(): Boolean {
     return resolveInfo?.let { it.activityInfo.packageName == packageName } ?: false
 }
 
-fun Context.launchApp(app: App) {
+fun Context.launchApp(app: AppRoom) {
     packageManager.getLaunchIntentForPackage(app.packageName)?.let {
         it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(it)
@@ -133,7 +133,7 @@ fun Context.showAppInfo(packageName: String) {
     }
 }
 
-fun Context.uninstallApp(app: App) {
+fun Context.uninstallApp(app: AppRoom) {
     with(Intent(Intent.ACTION_DELETE)) {
         data = Uri.parse("package:${app.packageName}")
         startActivity(this)
