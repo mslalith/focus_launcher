@@ -51,9 +51,6 @@ jobs:
         with:
           arguments: assembleDebug --stacktrace --no-daemon
 
-#      - name: Build app
-#        run: ./gradlew assembleDebug --stacktrace --no-daemon
-
   unit_tests:
     needs: [ ktlint, build ]
     name: Run Unit Tests
@@ -65,10 +62,7 @@ jobs:
 
       - uses: gradle/gradle-build-action@v2
         with:
-          arguments: test --stacktrace
-
-#      - name: Run Unit Tests
-#        run: ./gradlew test --stacktrace
+          arguments: testDebug --stacktrace
 
   android_tests:
     needs: [ ktlint, build ]
