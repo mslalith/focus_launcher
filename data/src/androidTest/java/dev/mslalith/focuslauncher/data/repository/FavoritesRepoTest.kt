@@ -80,6 +80,23 @@ class FavoritesRepoTest {
     }
 
     @Test
+    fun reorderFavorite() = runTest {
+        val initialFavorites = listOf(TestApps.Chrome, TestApps.Phone, TestApps.Youtube)
+        initialFavorites.forEach { favoritesRepo.addToFavorites(it) }
+        val reorderedFavorites = initialFavorites.asReversed()
+
+        val job = launch {
+            favoritesRepo.onlyFavoritesFlow.test {
+                assertThat(awaitItem()).isEqualTo(reorderedFavorites)
+                expectNoEvents()
+            }
+        }
+
+        favoritesRepo.reorderFavorite(initialFavorites.first(), initialFavorites.last())
+        job.join()
+    }
+
+    @Test
     fun removeFromFavorites() = runTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
         val appToRemove = apps.first()

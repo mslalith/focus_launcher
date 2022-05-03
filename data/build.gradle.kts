@@ -15,6 +15,16 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -30,9 +40,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    lint {
+        error.add("VisibleForTests")
+    }
 }
 
 dependencies {
+    androidTestImplementation(project(mapOf("path" to ":androidTest-shared")))
+
     androidxCoreKtx()
     hiltAndroid()
     room()
@@ -43,5 +58,8 @@ dependencies {
     implementation(Libs.googlePlayCoreKtx)
     implementation(Libs.thirdSunCalc)
 
-    junit()
+    junit(includeAndroid = true)
+    truth(includeAndroid = true)
+    kotlinxCoroutinesTest(includeAndroid = true)
+    turbine(includeAndroid = true)
 }

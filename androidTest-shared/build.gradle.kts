@@ -33,7 +33,9 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(Libs.kotlinxCoroutines)
+    dataStore()
 
     implementation(Libs.testJUnit)
+    implementation(Libs.testAndroidXJUnit)
     implementation(Libs.testKotlinCoroutines)
 }

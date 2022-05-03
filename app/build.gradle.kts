@@ -64,7 +64,6 @@ android {
 
 dependencies {
     implementation(project(":data"))
-    implementation(project(":androidTest-shared"))
 
     kotlin()
     google()
