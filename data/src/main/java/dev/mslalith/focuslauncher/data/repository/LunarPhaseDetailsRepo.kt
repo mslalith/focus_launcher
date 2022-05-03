@@ -20,15 +20,17 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class LunarPhaseDetailsRepo @Inject constructor(
-    clockRepo: ClockRepo
+    clockRepo: ClockRepo,
 ) {
     private val _lunarPhaseDetailsStateFlow = MutableStateFlow<Outcome<LunarPhaseDetails>>(
-        INITIAL_LUNAR_PHASE_DETAILS_OUTCOME)
+        INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
+    )
     val lunarPhaseDetailsStateFlow: StateFlow<Outcome<LunarPhaseDetails>>
         get() = _lunarPhaseDetailsStateFlow
 
     private val _upcomingLunarPhaseStateFlow = MutableStateFlow<Outcome<UpcomingLunarPhase>>(
-        INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME)
+        INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
+    )
     val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
@@ -46,7 +48,8 @@ class LunarPhaseDetailsRepo @Inject constructor(
 
     private fun updateStateFlowsWith(lunarPhaseDetails: LunarPhaseDetails) {
         _lunarPhaseDetailsStateFlow.value = Outcome.Success(lunarPhaseDetails)
-        _upcomingLunarPhaseStateFlow.value = Outcome.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
+        _upcomingLunarPhaseStateFlow.value =
+            Outcome.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
     }
 
     @VisibleForTesting
