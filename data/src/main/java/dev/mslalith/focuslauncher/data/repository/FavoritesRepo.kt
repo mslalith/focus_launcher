@@ -1,12 +1,12 @@
 package dev.mslalith.focuslauncher.data.repository
 
-import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.di.modules.AppToRoomMapperProvider
 import dev.mslalith.focuslauncher.data.di.modules.FavoriteToRoomMapperProvider
 import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.FavoriteToRoomMapper
+import dev.mslalith.focuslauncher.data.model.App
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
