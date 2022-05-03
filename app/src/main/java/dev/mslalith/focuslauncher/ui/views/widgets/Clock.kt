@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.data.models.ClockAlignment
-import dev.mslalith.focuslauncher.data.models.Outcome
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
@@ -84,29 +83,27 @@ fun ClockWidget(
         widgetsViewModel.refreshTime()
     }
 
-    (currentTime as? Outcome.Success)?.value?.let { time ->
-        Crossfade(
-            targetState = showClock24,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = horizontalPadding),
+    Crossfade(
+        targetState = showClock24,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding),
+    ) {
+        Column(
+            horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            Column(
-                horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                if (it) {
-                    Clock24(
-                        currentTime = time,
-                        offsetAnimationSpec = tween(durationMillis = clock24AnimationDuration),
-                        colorAnimationSpec = tween(durationMillis = clock24AnimationDuration),
-                    )
-                } else {
-                    CurrentTime(
-                        currentTime = time,
-                        centerVertically = centerVertically,
-                    )
-                }
+            if (it) {
+                Clock24(
+                    currentTime = currentTime,
+                    offsetAnimationSpec = tween(durationMillis = clock24AnimationDuration),
+                    colorAnimationSpec = tween(durationMillis = clock24AnimationDuration),
+                )
+            } else {
+                CurrentTime(
+                    currentTime = currentTime,
+                    centerVertically = centerVertically,
+                )
             }
         }
     }
