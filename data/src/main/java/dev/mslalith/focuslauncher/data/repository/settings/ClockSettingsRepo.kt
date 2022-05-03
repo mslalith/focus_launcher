@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.network.repository.settings
+package dev.mslalith.focuslauncher.data.repository.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

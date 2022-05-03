@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.model.SelectedApp
-import dev.mslalith.focuslauncher.data.network.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.data.network.repository.FavoritesRepo
-import dev.mslalith.focuslauncher.data.network.repository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
+import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
+import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.network.repository
+package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
 import dev.mslalith.focuslauncher.data.model.LunarPhase
@@ -22,11 +22,13 @@ import kotlin.random.Random
 class LunarPhaseDetailsRepo @Inject constructor(
     clockRepo: ClockRepo
 ) {
-    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<Outcome<LunarPhaseDetails>>(INITIAL_LUNAR_PHASE_DETAILS_OUTCOME)
+    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<Outcome<LunarPhaseDetails>>(
+        INITIAL_LUNAR_PHASE_DETAILS_OUTCOME)
     val lunarPhaseDetailsStateFlow: StateFlow<Outcome<LunarPhaseDetails>>
         get() = _lunarPhaseDetailsStateFlow
 
-    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<Outcome<UpcomingLunarPhase>>(INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME)
+    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<Outcome<UpcomingLunarPhase>>(
+        INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME)
     val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 

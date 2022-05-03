@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.model.ClockAlignment
-import dev.mslalith.focuslauncher.data.network.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.ClockSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.data.network.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS

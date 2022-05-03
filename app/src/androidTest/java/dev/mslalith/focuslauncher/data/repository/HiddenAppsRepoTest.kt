@@ -8,7 +8,6 @@ import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.TestApps
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.database.entities.AppRoom
-import dev.mslalith.focuslauncher.data.network.repository.HiddenAppsRepo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest

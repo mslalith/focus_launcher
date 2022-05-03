@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.network.repository
+package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
 import com.google.gson.Gson
