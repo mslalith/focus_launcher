@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.data.models
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel

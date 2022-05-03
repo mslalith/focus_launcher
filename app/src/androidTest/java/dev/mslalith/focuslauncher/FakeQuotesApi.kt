@@ -1,14 +1,13 @@
 package dev.mslalith.focuslauncher
 
-import dev.mslalith.focuslauncher.data.api.QuotesApi
-import dev.mslalith.focuslauncher.data.database.entities.Quote
-import dev.mslalith.focuslauncher.data.models.QuoteResponse
-import dev.mslalith.focuslauncher.data.models.QuotesApiResponse
+import dev.mslalith.focuslauncher.data.network.api.QuotesApi
+import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
+import dev.mslalith.focuslauncher.data.network.entities.QuotesApiResponse
 
 class FakeQuotesApi : QuotesApi {
     override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {
         val quoteResponseList = buildList {
-            val quotes = TestQuotes.buildQuotes(page, limit).map(TestQuotes::toQuoteResponse)
+            val quotes = TestQuotes.buildQuoteResponses(page, limit)
             addAll(quotes)
         }
         return QuotesApiResponse(
@@ -24,28 +23,19 @@ class FakeQuotesApi : QuotesApi {
 
 private object TestQuotes {
 
-    fun buildQuotes(page: Int, limit: Int) = buildList {
+    fun buildQuoteResponses(page: Int, limit: Int) = buildList {
         val start = (page - 1) * limit
         repeat(limit) {
-            add(buildSingleQuote(start + it))
+            add(buildSingleQuoteResponse(start + it))
         }
     }
 
-    fun buildSingleQuote(index: Int) = Quote(
+    fun buildSingleQuoteResponse(index: Int) = QuoteResponse(
         id = index.toString(),
         tags = listOf("tag_1", "tag_2"),
         quote = "Quote #$index",
         author = "Author #$index",
         authorSlug = "author_$index",
         length = index
-    )
-
-    fun toQuoteResponse(quote: Quote) = QuoteResponse(
-        id = quote.id,
-        quote = quote.quote,
-        author = quote.author,
-        authorSlug = quote.authorSlug,
-        length = quote.length,
-        tags = quote.tags
     )
 }

@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    // id("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -34,7 +34,14 @@ android {
 
 dependencies {
     androidxCoreKtx()
+    hiltAndroid()
     room()
+    dataStore()
+
+    implementation(Libs.retrofitGsonConverter)
+    implementation(Libs.kotlinxDateTime)
+    implementation(Libs.googlePlayCoreKtx)
+    implementation(Libs.thirdSunCalc)
 
     junit()
 }

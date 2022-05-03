@@ -62,8 +62,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.google.accompanist.insets.LocalWindowInsets
-import dev.mslalith.focuslauncher.data.models.AppDrawerViewType
-import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager

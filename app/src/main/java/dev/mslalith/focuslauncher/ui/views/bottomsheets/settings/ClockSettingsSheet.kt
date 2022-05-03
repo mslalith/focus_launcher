@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.models.ClockAlignment
+import dev.mslalith.focuslauncher.data.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel

@@ -30,9 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
-import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
+import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
+import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.extensions.asPercent
 import dev.mslalith.focuslauncher.extensions.inShortReadableFormat
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
