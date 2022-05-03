@@ -63,6 +63,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
+
     kotlin()
     google()
     androidx()
