@@ -130,26 +130,28 @@ fun DependencyHandler.thirdPartyLibs() {
 }
 
 fun DependencyHandler.testLibs() {
-    junit()
-    androidTestImplementation(Libs.testAndroidXJUnit)
-    androidTestImplementation(Libs.testAndroidXEspresso)
+    junit(includeAndroid = true)
     androidTestImplementation(Libs.testComposeJUnit)
 
-    truth()
-    kotlinxCoroutinesTest()
+    truth(includeAndroid = true)
+    kotlinxCoroutinesTest(includeAndroid = true)
     turbine()
 }
 
-fun DependencyHandler.junit() {
+fun DependencyHandler.junit(includeAndroid: Boolean) {
     testImplementation(Libs.testJUnit)
+    if (includeAndroid) {
+        androidTestImplementation(Libs.testAndroidXJUnit)
+        androidTestImplementation(Libs.testAndroidXEspresso)
+    }
 }
 
-fun DependencyHandler.truth(includeAndroid: Boolean = true) {
+fun DependencyHandler.truth(includeAndroid: Boolean) {
     testImplementation(Libs.testTruth)
     if (includeAndroid) androidTestImplementation(Libs.testTruth)
 }
 
-fun DependencyHandler.kotlinxCoroutinesTest(includeAndroid: Boolean = true) {
+fun DependencyHandler.kotlinxCoroutinesTest(includeAndroid: Boolean) {
     testImplementation(Libs.testKotlinCoroutines)
     if (includeAndroid) androidTestImplementation(Libs.testKotlinCoroutines)
 }

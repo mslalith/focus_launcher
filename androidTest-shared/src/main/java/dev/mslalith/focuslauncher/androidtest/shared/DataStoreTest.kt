@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.repository
+package dev.mslalith.focuslauncher.androidtest.shared
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,8 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
-import dev.mslalith.focuslauncher.androidtest.shared.MainCoroutineRule
-import dev.mslalith.focuslauncher.androidtest.shared.newCoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.runTest
