@@ -2,12 +2,6 @@ package dev.mslalith.focuslauncher.data.model
 
 import android.graphics.drawable.Drawable
 
-data class SelectedApp(
-    val app: App,
-    val isSelected: Boolean,
-    val disabled: Boolean = false,
-)
-
 data class AppWithIcon(
     val name: String,
     val packageName: String,

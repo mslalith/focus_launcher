@@ -21,6 +21,9 @@ interface AppsDao {
     @Query("SELECT * FROM $APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
     suspend fun getAppBy(packageName: String): AppRoom?
 
+    @Query("SELECT * FROM $APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
+    fun getAppBySync(packageName: String): AppRoom?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addApps(apps: List<AppRoom>)
 

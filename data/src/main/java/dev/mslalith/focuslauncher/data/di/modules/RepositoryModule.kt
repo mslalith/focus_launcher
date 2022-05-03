@@ -10,6 +10,11 @@ import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
+import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.FavoriteToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.HiddenToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
+import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
@@ -33,15 +38,41 @@ object RepositoryModule {
      */
     @Provides
     @Singleton
-    fun provideAppDrawerRepo(appsDao: AppsDao) = AppDrawerRepo(appsDao)
+    fun provideAppDrawerRepo(
+        appsDao: AppsDao,
+        @AppToRoomMapperProvider appToRoomMapper: AppToRoomMapper
+    ) = AppDrawerRepo(
+        appsDao = appsDao,
+        appToRoomMapper = appToRoomMapper
+    )
 
     @Provides
     @Singleton
-    fun provideFavoritesRepo(appsDao: AppsDao, favoriteAppsDao: FavoriteAppsDao) = FavoritesRepo(appsDao, favoriteAppsDao)
+    fun provideFavoritesRepo(
+        appsDao: AppsDao,
+        favoriteAppsDao: FavoriteAppsDao,
+        @AppToRoomMapperProvider appToRoomMapper: AppToRoomMapper,
+        @FavoriteToRoomMapperProvider favoriteToRoomMapper: FavoriteToRoomMapper
+    ) = FavoritesRepo(
+        appsDao = appsDao,
+        favoriteAppsDao = favoriteAppsDao,
+        appToRoomMapper = appToRoomMapper,
+        favoriteToRoomMapper = favoriteToRoomMapper
+    )
 
     @Provides
     @Singleton
-    fun provideHiddenAppsRepo(appsDao: AppsDao, hiddenAppsDao: HiddenAppsDao) = HiddenAppsRepo(appsDao, hiddenAppsDao)
+    fun provideHiddenAppsRepo(
+        appsDao: AppsDao,
+        hiddenAppsDao: HiddenAppsDao,
+        @AppToRoomMapperProvider appToRoomMapper: AppToRoomMapper,
+        @HiddenToRoomMapperProvider hiddenToRoomMapper: HiddenToRoomMapper
+    ) = HiddenAppsRepo(
+        appsDao = appsDao,
+        hiddenAppsDao = hiddenAppsDao,
+        appToRoomMapper = appToRoomMapper,
+        hiddenToRoomMapper = hiddenToRoomMapper
+    )
 
     @Provides
     @Singleton
@@ -56,7 +87,17 @@ object RepositoryModule {
      */
     @Provides
     @Singleton
-    fun provideQuotesRepo(quotesApi: QuotesApi, quotesDao: QuotesDao): QuotesRepo = QuotesRepo(quotesApi, quotesDao)
+    fun provideQuotesRepo(
+        quotesApi: QuotesApi,
+        quotesDao: QuotesDao,
+        @QuoteToRoomMapperProvider quoteToRoomMapper: QuoteToRoomMapper,
+        @QuoteResponseToRoomMapperProvider quoteResponseToRoomMapper: QuoteResponseToRoomMapper
+    ): QuotesRepo = QuotesRepo(
+        quotesApi = quotesApi,
+        quotesDao = quotesDao,
+        quoteToRoomMapper = quoteToRoomMapper,
+        quoteResponseToRoomMapper = quoteResponseToRoomMapper
+    )
 
     /**
      * Settings Repository providers
