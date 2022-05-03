@@ -21,14 +21,12 @@ class ClockRepoTest {
     fun tearDown() {
     }
 
-    private fun getConsecutiveInstants(max: Int): List<Instant> {
-        return buildList {
-            val instant = Clock.System.now()
-            add(instant)
-            (1..max).forEach { index ->
-                val duration = index.seconds
-                add(instant.plus(duration))
-            }
+    private fun getConsecutiveInstants(max: Int): List<Instant> = buildList {
+        val instant = Clock.System.now()
+        add(instant)
+        (1..max).forEach { index ->
+            val duration = index.seconds
+            add(instant.plus(duration))
         }
     }
 

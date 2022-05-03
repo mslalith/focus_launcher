@@ -2,13 +2,10 @@ package dev.mslalith.focuslauncher.data.repository
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.FakeLunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -20,55 +17,36 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalCoroutinesApi::class)
 class LunarPhaseDetailsRepoTest {
 
-    private lateinit var lunarPhaseDetailsRepo: FakeLunarPhaseDetailsRepo
+    private lateinit var clockRepo: ClockRepo
+    private lateinit var lunarPhaseDetailsRepo: LunarPhaseDetailsRepo
+
 
     @Before
     fun setUp() {
-        lunarPhaseDetailsRepo = FakeLunarPhaseDetailsRepo(TestCoroutineScope())
+        clockRepo = ClockRepo()
+        lunarPhaseDetailsRepo = LunarPhaseDetailsRepo(clockRepo = clockRepo)
     }
 
     @After
     fun tearDown() {
     }
 
-    private fun getConsecutiveInstants(max: Int): List<Instant> {
-        return buildList {
-            val instant = Clock.System.now()
-            add(instant)
-            (1..max).forEach { index ->
-                val duration = index.seconds
-                add(instant.plus(duration))
-            }
+    private fun getConsecutiveInstants(max: Int): List<Instant> = buildList {
+        val instant = Clock.System.now()
+        add(instant)
+        (1..max).forEach { index ->
+            val duration = index.seconds
+            add(instant.plus(duration))
         }
-    }
-
-    @Test
-    fun getCurrentTimeStateFlow() = runTest {
-        val instants = getConsecutiveInstants(max = 2)
-        lunarPhaseDetailsRepo.instantTimeList = instants
-
-        val job = launch {
-            lunarPhaseDetailsRepo.currentTimeStateFlow.test {
-                instants.forEach { instant ->
-                    val time = instant.formatToTime()
-                    val expectedTime = (awaitItem() as Outcome.Success).value
-                    assertThat(expectedTime).isEqualTo(time)
-                }
-                expectNoEvents()
-            }
-        }
-
-        lunarPhaseDetailsRepo.registerToTimeChange()
-        job.join()
     }
 
     @Test
     fun getLunarPhaseDetailsStateFlow() = runTest {
-        val instants = getConsecutiveInstants(max = 5)
-        lunarPhaseDetailsRepo.instantTimeList = instants
+        val instants = getConsecutiveInstants(max = 2)
 
         val job = launch {
             lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.test {
+                assertThat(awaitItem()).isInstanceOf(Outcome.Error::class.java)
                 instants.forEach { instant ->
                     val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
                     val lunarPhase = (awaitItem() as Outcome.Success).value.lunarPhase
@@ -78,17 +56,20 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange()
+        instants.forEach { instant ->
+            delay(1_000)
+            clockRepo.refreshTime(instant)
+        }
         job.join()
     }
 
     @Test
     fun getUpcomingLunarPhaseStateFlow() = runTest {
-        val instants = getConsecutiveInstants(max = 5)
-        lunarPhaseDetailsRepo.instantTimeList = instants
+        val instants = getConsecutiveInstants(max = 6)
 
         val job = launch {
             lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.test {
+                assertThat(awaitItem()).isInstanceOf(Outcome.Error::class.java)
                 instants.forEach { instant ->
                     val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
                     val upcomingLunarPhase = lunarPhaseDetailsRepo.findUpcomingMoonPhaseFor(lunarPhaseDetails.direction)
@@ -99,43 +80,10 @@ class LunarPhaseDetailsRepoTest {
             }
         }
 
-        lunarPhaseDetailsRepo.registerToTimeChange()
-        job.join()
-    }
-
-    @Test
-    fun registerToTimeChange() = runTest {
-        val job = launch {
-            lunarPhaseDetailsRepo.isTimeChangeBroadcastReceiverRegisteredStateFlow.test {
-                assertThat(awaitItem()).isFalse()
-                assertThat(awaitItem()).isTrue()
-                assertThat(awaitItem()).isFalse()
-                expectNoEvents()
-            }
+        instants.forEach { instant ->
+            delay(1_000)
+            clockRepo.refreshTime(instant)
         }
-
-        lunarPhaseDetailsRepo.registerToTimeChange()
-        advanceTimeBy(2_000)
-        lunarPhaseDetailsRepo.unregisterToTimeChange()
-
-        job.join()
-    }
-
-    @Test
-    fun unregisterToTimeChange() = runTest {
-        val job = launch {
-            lunarPhaseDetailsRepo.isTimeChangeBroadcastReceiverRegisteredStateFlow.test {
-                assertThat(awaitItem()).isFalse()
-                assertThat(awaitItem()).isTrue()
-                assertThat(awaitItem()).isFalse()
-                expectNoEvents()
-            }
-        }
-
-        lunarPhaseDetailsRepo.registerToTimeChange()
-        advanceTimeBy(3_000)
-        lunarPhaseDetailsRepo.unregisterToTimeChange()
-
         job.join()
     }
 }
