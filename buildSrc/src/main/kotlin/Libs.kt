@@ -73,9 +73,13 @@ fun DependencyHandler.google() {
 }
 
 fun DependencyHandler.androidx() {
-    implementation(Libs.coreKtx)
+    androidxCoreKtx()
     implementation(Libs.lifecycleRuntimeKtx)
     implementation(Libs.paletteKtx)
+}
+
+fun DependencyHandler.androidxCoreKtx() {
+    implementation(Libs.coreKtx)
 }
 
 fun DependencyHandler.composeInterop() {
@@ -121,7 +125,7 @@ fun DependencyHandler.thirdPartyLibs() {
 }
 
 fun DependencyHandler.testLibs() {
-    testImplementation(Libs.testJUnit)
+    junit()
     androidTestImplementation(Libs.testAndroidXJUnit)
     androidTestImplementation(Libs.testAndroidXEspresso)
     androidTestImplementation(Libs.testComposeJUnit)
@@ -132,6 +136,10 @@ fun DependencyHandler.testLibs() {
     androidTestImplementation(Libs.testKotlinCoroutines)
     testImplementation(Libs.testTurbine)
     androidTestImplementation(Libs.testTurbine)
+}
+
+fun DependencyHandler.junit() {
+    testImplementation(Libs.testJUnit)
 }
 
 
