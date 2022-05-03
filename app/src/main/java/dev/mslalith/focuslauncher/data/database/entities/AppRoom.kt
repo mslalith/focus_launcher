@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import dev.mslalith.focuslauncher.utils.Constants
 
 @Entity(tableName = Constants.Database.APPS_TABLE_NAME)
-data class App(
+data class AppRoom(
     val name: String,
     @PrimaryKey(autoGenerate = false)
     val packageName: String,

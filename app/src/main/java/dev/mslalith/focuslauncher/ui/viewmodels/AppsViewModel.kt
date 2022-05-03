@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.data.models.SelectedApp
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
@@ -59,7 +59,7 @@ class AppsViewModel @Inject constructor(
     val onlyFavoritesStateFlow = favoritesRepo.onlyFavoritesFlow.withinScope(emptyList())
     val hiddenAppsStateFlow = hiddenAppsFlow.withinScope(emptyList())
 
-    private val appDrawerAppsFlow: Flow<List<App>>
+    private val appDrawerAppsFlow: Flow<List<AppRoom>>
         get() = appDrawerRepo.allAppsFlow.combine(hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
             allApps - hiddenApps.toSet()
         }.combine(searchAppFlow) { filteredApps, query ->
@@ -126,11 +126,11 @@ class AppsViewModel @Inject constructor(
      */
     suspend fun isFavorite(packageName: String) = favoritesRepo.isFavorite(packageName)
 
-    fun addToFavorites(app: App) {
+    fun addToFavorites(app: AppRoom) {
         launch { favoritesRepo.addToFavorites(app) }
     }
 
-    fun reorderFavorite(app: App, withApp: App, onReordered: () -> Unit) {
+    fun reorderFavorite(app: AppRoom, withApp: AppRoom, onReordered: () -> Unit) {
         if (app.packageName == withApp.packageName) {
             onReordered()
             return
@@ -143,7 +143,7 @@ class AppsViewModel @Inject constructor(
         }
     }
 
-    fun removeFromFavorites(app: App) {
+    fun removeFromFavorites(app: AppRoom) {
         launch { favoritesRepo.removeFromFavorites(app.packageName) }
     }
 
@@ -154,11 +154,11 @@ class AppsViewModel @Inject constructor(
     /**
      * Hidden Apps
      */
-    fun addToHiddenApps(app: App) {
+    fun addToHiddenApps(app: AppRoom) {
         launch { hiddenAppsRepo.addToHiddenApps(app) }
     }
 
-    fun removeFromHiddenApps(app: App) {
+    fun removeFromHiddenApps(app: AppRoom) {
         launch { hiddenAppsRepo.removeFromHiddenApps(app.packageName) }
     }
 
@@ -169,7 +169,7 @@ class AppsViewModel @Inject constructor(
     /**
      * App Install/Uninstall
      */
-    fun handleAppInstall(app: App) {
+    fun handleAppInstall(app: AppRoom) {
         launch { appDrawerRepo.addApp(app) }
     }
 

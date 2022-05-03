@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
@@ -12,7 +12,7 @@ sealed class FavoritesContextMode {
     object Closed : FavoritesContextMode()
     object Remove : FavoritesContextMode()
     object Reorder : FavoritesContextMode()
-    data class ReorderPickPosition(val app: App) : FavoritesContextMode()
+    data class ReorderPickPosition(val app: AppRoom) : FavoritesContextMode()
 
     fun isInContextualMode(): Boolean = this != Closed
 }
@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         else -> false
     }
 
-    fun isAppAboutToReorder(app: App): Boolean = if (_favoritesContextualMode.value is FavoritesContextMode.ReorderPickPosition) {
+    fun isAppAboutToReorder(app: AppRoom): Boolean = if (_favoritesContextualMode.value is FavoritesContextMode.ReorderPickPosition) {
         (_favoritesContextualMode.value as FavoritesContextMode.ReorderPickPosition).app.packageName != app.packageName
     } else false
 

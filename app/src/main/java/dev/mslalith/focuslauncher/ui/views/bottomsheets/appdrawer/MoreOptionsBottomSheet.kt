@@ -15,7 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.showAppInfo
@@ -45,12 +45,12 @@ fun MoreOptionsBottomSheet(
             onClose()
         }
 
-        fun addToFavorites(app: App) {
+        fun addToFavorites(app: AppRoom) {
             appsViewModel.addToFavorites(app)
             context.toast(addedAppToFavoritesMessage)
         }
 
-        fun removeFromFavorites(app: App) {
+        fun removeFromFavorites(app: AppRoom) {
             appsViewModel.removeFromFavorites(app)
             context.toast(removedAppFromFavoritesMessage)
         }

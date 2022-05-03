@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.utils.Constants.Database.APPS_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
@@ -13,20 +13,20 @@ import kotlinx.coroutines.flow.Flow
 interface AppsDao {
 
     @Query("SELECT * FROM $APPS_TABLE_NAME")
-    fun getAllAppsFlow(): Flow<List<App>>
+    fun getAllAppsFlow(): Flow<List<AppRoom>>
 
     @Query("SELECT * FROM $APPS_TABLE_NAME")
-    suspend fun getAllApps(): List<App>
+    suspend fun getAllApps(): List<AppRoom>
 
     @Query("SELECT * FROM $APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
-    suspend fun getAppBy(packageName: String): App?
+    suspend fun getAppBy(packageName: String): AppRoom?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addApps(apps: List<App>)
+    suspend fun addApps(apps: List<AppRoom>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addApp(app: App)
+    suspend fun addApp(app: AppRoom)
 
     @Delete
-    suspend fun removeApp(app: App)
+    suspend fun removeApp(app: AppRoom)
 }
