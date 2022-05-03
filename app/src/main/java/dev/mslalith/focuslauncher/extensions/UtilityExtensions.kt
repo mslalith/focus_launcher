@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
-import dev.mslalith.focuslauncher.data.database.entities.AppRoom
+import dev.mslalith.focuslauncher.data.App
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -85,7 +85,7 @@ private fun Int.to2Digit() = when {
     else -> this
 }
 
-fun AppRoom.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packageName)?.let { icon ->
+fun App.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packageName)?.let { icon ->
     AppWithIcon(
         name = name,
         packageName = packageName,
@@ -94,7 +94,7 @@ fun AppRoom.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packa
     )
 }
 
-fun List<AppRoom>.toAppWithIconList(context: Context) =
+fun List<App>.toAppWithIconList(context: Context) =
     mapNotNull {
         try {
             it.toAppWithIcon(context)

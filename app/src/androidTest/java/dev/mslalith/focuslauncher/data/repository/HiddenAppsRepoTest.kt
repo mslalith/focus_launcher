@@ -7,6 +7,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.TestApps
 import dev.mslalith.focuslauncher.data.database.AppDatabase
+import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
@@ -25,7 +26,7 @@ class HiddenAppsRepoTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
         hiddenAppsRepo = HiddenAppsRepo(database.appsDao(), database.hiddenAppsDao())
-        database.appsDao().addApps(TestApps.all)
+        database.appsDao().addApps(TestApps.all.map(AppRoom::fromApp))
     }
 
     @After
