@@ -8,14 +8,14 @@ import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.App
-import dev.mslalith.focuslauncher.data.database.entities.FavoriteApp
+import dev.mslalith.focuslauncher.data.database.entities.FavoriteAppRoom
 import dev.mslalith.focuslauncher.data.database.entities.HiddenAppRoom
 import dev.mslalith.focuslauncher.data.database.entities.Quote
 
 @Database(
     entities = [
         App::class,
-        FavoriteApp::class,
+        FavoriteAppRoom::class,
         HiddenAppRoom::class,
         Quote::class
     ],
