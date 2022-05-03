@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.data.models
 
 import android.graphics.drawable.Drawable
-import dev.mslalith.focuslauncher.data.App
+import dev.mslalith.focuslauncher.data.model.App
 
 data class SelectedApp(
     val app: App,
