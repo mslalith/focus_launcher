@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import dev.mslalith.focuslauncher.data.model.LunarPhase
 import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.model.LunarPhaseDirection
-import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.data.model.toLunarPhase
 import kotlinx.coroutines.delay
@@ -19,16 +19,16 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class LunarPhaseDetailsRepo @Inject constructor() {
-    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<Outcome<LunarPhaseDetails>>(
-        INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
+    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(
+        INITIAL_LUNAR_PHASE_DETAILS_STATE
     )
-    val lunarPhaseDetailsStateFlow: StateFlow<Outcome<LunarPhaseDetails>>
+    val lunarPhaseDetailsStateFlow: StateFlow<State<LunarPhaseDetails>>
         get() = _lunarPhaseDetailsStateFlow
 
-    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<Outcome<UpcomingLunarPhase>>(
-        INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
+    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(
+        INITIAL_UPCOMING_LUNAR_PHASE_STATE
     )
-    val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
+    val upcomingLunarPhaseStateFlow: StateFlow<State<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
     suspend fun refreshLunarPhaseDetails(instant: Instant) {
@@ -40,9 +40,9 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     }
 
     private fun updateStateFlowsWith(lunarPhaseDetails: LunarPhaseDetails) {
-        _lunarPhaseDetailsStateFlow.value = Outcome.Success(lunarPhaseDetails)
+        _lunarPhaseDetailsStateFlow.value = State.Success(lunarPhaseDetails)
         _upcomingLunarPhaseStateFlow.value =
-            Outcome.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
+            State.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
     }
 
     @VisibleForTesting
@@ -79,7 +79,7 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     }
 
     companion object {
-        val INITIAL_LUNAR_PHASE_DETAILS_OUTCOME = Outcome.Error("Has no Lunar Phase details")
-        val INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME = Outcome.Error("Has no Upcoming Lunar Phase")
+        val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error("Has no Lunar Phase details")
+        val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error("Has no Upcoming Lunar Phase")
     }
 }

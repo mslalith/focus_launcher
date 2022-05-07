@@ -3,11 +3,11 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
-import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
-import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_STATE
+import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_STATE
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
@@ -49,13 +49,13 @@ class WidgetsViewModel @Inject constructor(
     /**
      * Lunar Phase
      */
-    val lunarPhaseDetailsStateFlow = lunarPhaseRepo.lunarPhaseDetailsStateFlow.withinScope(INITIAL_LUNAR_PHASE_DETAILS_OUTCOME)
-    val upcomingLunarPhaseStateFlow = lunarPhaseRepo.upcomingLunarPhaseStateFlow.withinScope(INITIAL_UPCOMING_LUNAR_PHASE_OUTCOME)
+    val lunarPhaseDetailsStateFlow = lunarPhaseRepo.lunarPhaseDetailsStateFlow.withinScope(INITIAL_LUNAR_PHASE_DETAILS_STATE)
+    val upcomingLunarPhaseStateFlow = lunarPhaseRepo.upcomingLunarPhaseStateFlow.withinScope(INITIAL_UPCOMING_LUNAR_PHASE_STATE)
 
     /**
      * Quotes
      */
-    val currentQuoteOutcomeStateFlow = quotesRepo.currentQuoteStateFlow.withinScope(Outcome.None)
+    val currentQuoteStateFlow = quotesRepo.currentQuoteStateFlow.withinScope(State.Initial)
     val isFetchingQuotes = quotesRepo.isFetchingQuotesStateFlow.withinScope(false)
 
     fun nextRandomQuote() { launch { quotesRepo.nextRandomQuote() } }

@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.Outcome
 import dev.mslalith.focuslauncher.data.model.Quote
+import dev.mslalith.focuslauncher.data.model.getOrNull
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.modifyIf
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
@@ -39,13 +39,13 @@ fun QuoteForYou(
     backgroundColor: Color = MaterialTheme.colors.primaryVariant,
 ) {
     val showQuotes by settingsViewModel.showQuotesStateFlow.collectAsState()
-    val currentQuoteOutcome by widgetsViewModel.currentQuoteOutcomeStateFlow.collectAsState()
+    val currentQuoteState by widgetsViewModel.currentQuoteStateFlow.collectAsState()
 
     AnimatedVisibility(
         visible = showQuotes,
         modifier = modifier,
     ) {
-        val quote = (currentQuoteOutcome as? Outcome.Success)?.value ?: return@AnimatedVisibility
+        val quote = currentQuoteState.getOrNull() ?: return@AnimatedVisibility
 
         QuoteForYouContent(
             widgetsViewModel = widgetsViewModel,

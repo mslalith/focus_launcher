@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.data.repository
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.data.model.Outcome
+import dev.mslalith.focuslauncher.data.model.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,10 +43,10 @@ class LunarPhaseDetailsRepoTest {
 
         val job = launch {
             lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.test {
-                assertThat(awaitItem()).isInstanceOf(Outcome.Error::class.java)
+                assertThat(awaitItem()).isInstanceOf(State.Error::class.java)
                 instants.forEach { instant ->
                     val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
-                    val lunarPhase = (awaitItem() as Outcome.Success).value.lunarPhase
+                    val lunarPhase = (awaitItem() as State.Success).value.lunarPhase
                     assertThat(lunarPhase).isEqualTo(lunarPhaseDetails.lunarPhase)
                 }
                 expectNoEvents()
@@ -66,11 +66,12 @@ class LunarPhaseDetailsRepoTest {
 
         val job = launch {
             lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.test {
-                assertThat(awaitItem()).isInstanceOf(Outcome.Error::class.java)
+                assertThat(awaitItem()).isInstanceOf(State.Error::class.java)
                 instants.forEach { instant ->
                     val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
-                    val upcomingLunarPhase = lunarPhaseDetailsRepo.findUpcomingMoonPhaseFor(lunarPhaseDetails.direction)
-                    val lunarPhase = (awaitItem() as Outcome.Success).value.lunarPhase
+                    val upcomingLunarPhase =
+                        lunarPhaseDetailsRepo.findUpcomingMoonPhaseFor(lunarPhaseDetails.direction)
+                    val lunarPhase = (awaitItem() as State.Success).value.lunarPhase
                     assertThat(lunarPhase).isEqualTo(upcomingLunarPhase.lunarPhase)
                 }
                 expectNoEvents()

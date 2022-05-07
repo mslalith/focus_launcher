@@ -9,8 +9,8 @@ import dev.mslalith.focuslauncher.data.di.modules.QuoteResponseToRoomMapperProvi
 import dev.mslalith.focuslauncher.data.di.modules.QuoteToRoomMapperProvider
 import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
-import dev.mslalith.focuslauncher.data.model.Outcome
 import dev.mslalith.focuslauncher.data.model.Quote
+import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.QUOTES_LIMIT
@@ -26,8 +26,8 @@ class QuotesRepo @Inject constructor(
     @QuoteToRoomMapperProvider private val quoteToRoomMapper: QuoteToRoomMapper,
     @QuoteResponseToRoomMapperProvider private val quoteResponseToRoomMapper: QuoteResponseToRoomMapper
 ) {
-    private val _currentQuoteStateFlow = MutableStateFlow<Outcome<Quote>>(Outcome.None)
-    val currentQuoteStateFlow: StateFlow<Outcome<Quote>>
+    private val _currentQuoteStateFlow = MutableStateFlow<State<Quote>>(State.Initial)
+    val currentQuoteStateFlow: StateFlow<State<Quote>>
         get() = _currentQuoteStateFlow
 
     private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
@@ -37,23 +37,23 @@ class QuotesRepo @Inject constructor(
     suspend fun nextRandomQuote() {
         if (quotesSize() == 0) addInitialQuotes()
 
-        val quoteOutcome = quotesDao.getQuotes().let {
-            if (it.isEmpty()) Outcome.None
-            else Outcome.Success(quoteToRoomMapper.fromEntity(it.random()))
+        val quoteState = quotesDao.getQuotes().let {
+            if (it.isEmpty()) State.Initial
+            else State.Success(quoteToRoomMapper.fromEntity(it.random()))
         }
-        _currentQuoteStateFlow.value = quoteOutcome
+        _currentQuoteStateFlow.value = quoteState
     }
 
     @VisibleForTesting
-    suspend fun nextRandomQuoteTest(index: Int): Outcome<Quote> {
+    suspend fun nextRandomQuoteTest(index: Int): State<Quote> {
         if (quotesSize() == 0) addInitialQuotes()
 
-        val quoteOutcome = quotesDao.getQuotes().let {
-            if (it.isEmpty()) Outcome.None
-            else Outcome.Success(quoteToRoomMapper.fromEntity(it[index]))
+        val quoteState = quotesDao.getQuotes().let {
+            if (it.isEmpty()) State.Initial
+            else State.Success(quoteToRoomMapper.fromEntity(it[index]))
         }
-        _currentQuoteStateFlow.value = quoteOutcome
-        return quoteOutcome
+        _currentQuoteStateFlow.value = quoteState
+        return quoteState
     }
 
     suspend fun fetchQuotes(maxPages: Int) {
