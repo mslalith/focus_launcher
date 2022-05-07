@@ -4,7 +4,7 @@ object Libs {
     const val buildToolsGradle = "com.android.tools.build:gradle:${Versions.GRADLE}"
     const val buildToolsKotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
-    const val buildToolsJacocoPlugin = "com.vanniktech:gradle-android-junit-jacoco-plugin:${Versions.JACOCO_PLUGIN}"
+    const val buildToolsKotlinxKover = "org.jetbrains.kotlinx:kover:${Versions.KOTLINX_KOVER}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
@@ -53,6 +53,9 @@ object Libs {
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
     const val testKotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.TEST_KOTLIN_COROUTINES}"
     const val testTurbine = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
+    const val testAndroidxCoreKtx = "androidx.test:core-ktx:${Versions.TEST_ANDROIDX_CORE_KTX}"
+    const val testAndroidxCoreTesting = "androidx.arch.core:core-testing:${Versions.TEST_ANDROIDX_CORE_TESTING}"
+    const val testRobolectric = "org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC}"
 }
 
 /**
@@ -144,6 +147,11 @@ fun DependencyHandler.junit(includeAndroid: Boolean) {
         androidTestImplementation(Libs.testAndroidXJUnit)
         androidTestImplementation(Libs.testAndroidXEspresso)
     }
+}
+
+fun DependencyHandler.robolectric() {
+    testImplementation(Libs.testAndroidxCoreKtx)
+    testImplementation(Libs.testRobolectric)
 }
 
 fun DependencyHandler.truth(includeAndroid: Boolean) {

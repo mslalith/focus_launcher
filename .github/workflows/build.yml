@@ -65,6 +65,7 @@ jobs:
           arguments: testDebug --stacktrace
 
   android_tests:
+    if: ${{ false }} # Disable checking Instrumentation tests
     needs: [ ktlint, build ]
     name: Run Android Tests
     runs-on: macos-latest

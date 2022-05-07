@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Running Git pre-push hook"
+
+echo "Checking ktlint"
+./gradlew ktlintCheck --daemon
+
+STATUS=$?
+
+[ $STATUS -ne 0 ] && exit 1
+exit 0

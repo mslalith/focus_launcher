@@ -38,4 +38,5 @@ dependencies {
     implementation(Libs.testJUnit)
     implementation(Libs.testAndroidXJUnit)
     implementation(Libs.testKotlinCoroutines)
+    implementation(Libs.testAndroidxCoreTesting)
 }

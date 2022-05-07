@@ -56,7 +56,7 @@ class LunarPhaseDetailsRepoTest {
         }
 
         instants.forEach { instant ->
-            delay(1_000)
+            delay(100)
             clockRepo.refreshTime(instant)
         }
         job.join()
@@ -80,7 +80,7 @@ class LunarPhaseDetailsRepoTest {
         }
 
         instants.forEach { instant ->
-            delay(1_000)
+            delay(100)
             clockRepo.refreshTime(instant)
         }
         job.join()
