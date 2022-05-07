@@ -53,6 +53,9 @@ object Libs {
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
     const val testKotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.TEST_KOTLIN_COROUTINES}"
     const val testTurbine = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
+    const val testAndroidxCoreKtx = "androidx.test:core-ktx:${Versions.TEST_ANDROIDX_CORE_KTX}"
+    const val testAndroidxCoreTesting = "androidx.arch.core:core-testing:${Versions.TEST_ANDROIDX_CORE_TESTING}"
+    const val testRobolectric = "org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC}"
 }
 
 /**
@@ -144,6 +147,11 @@ fun DependencyHandler.junit(includeAndroid: Boolean) {
         androidTestImplementation(Libs.testAndroidXJUnit)
         androidTestImplementation(Libs.testAndroidXEspresso)
     }
+}
+
+fun DependencyHandler.robolectric() {
+    testImplementation(Libs.testAndroidxCoreKtx)
+    testImplementation(Libs.testRobolectric)
 }
 
 fun DependencyHandler.truth(includeAndroid: Boolean) {

@@ -48,10 +48,13 @@ android {
     lint {
         error.add("VisibleForTests")
     }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
-    androidTestImplementation(project(mapOf("path" to ":androidTest-shared")))
+    testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     androidxCoreKtx()
     hiltAndroid()
@@ -63,8 +66,9 @@ dependencies {
     implementation(Libs.googlePlayCoreKtx)
     implementation(Libs.thirdSunCalc)
 
-    junit(includeAndroid = true)
-    truth(includeAndroid = true)
-    kotlinxCoroutinesTest(includeAndroid = true)
-    turbine(includeAndroid = true)
+    junit(includeAndroid = false)
+    truth(includeAndroid = false)
+    kotlinxCoroutinesTest(includeAndroid = false)
+    turbine(includeAndroid = false)
+    robolectric()
 }

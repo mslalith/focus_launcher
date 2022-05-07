@@ -31,6 +31,11 @@ class FavoritesRepo @Inject constructor(
         favoriteAppsDao.addFavorite(favoriteAppRoom)
     }
 
+    suspend fun addToFavorites(apps: List<App>) {
+        val favoriteAppRoomList = apps.map(favoriteToRoomMapper::toEntity)
+        favoriteAppsDao.addFavorites(favoriteAppRoomList)
+    }
+
     suspend fun reorderFavorite(app: App, withApp: App) {
         val apps = favoriteAppsDao.getFavoriteAppsFlow().first().toMutableList()
         val appIndex = apps.indexOfFirst { it.packageName == app.packageName }

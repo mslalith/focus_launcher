@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
 import dev.mslalith.focuslauncher.androidtest.shared.FakeQuotesApi
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
@@ -13,13 +14,15 @@ import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class QuotesRepoTest {
+@RunWith(RobolectricTestRunner::class)
+class QuotesRepoTest : CoroutineTest() {
 
     private lateinit var database: AppDatabase
     private lateinit var quotesRepo: QuotesRepo
@@ -27,7 +30,8 @@ class QuotesRepoTest {
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries().build()
         quotesRepo = QuotesRepo(
             quotesApi = FakeQuotesApi(),
             quotesDao = database.quotesDao(),
@@ -42,7 +46,7 @@ class QuotesRepoTest {
     }
 
     @Test
-    fun getCurrentQuoteStateFlow() = runTest {
+    fun getCurrentQuoteStateFlow() = runCoroutineTest {
         quotesRepo.fetchQuotes(maxPages = 2)
         val indexes = listOf(7, 23)
         indexes.forEach { index ->
@@ -53,7 +57,7 @@ class QuotesRepoTest {
     }
 
     @Test
-    fun isFetchingQuotesStateFlow() = runTest {
+    fun isFetchingQuotesStateFlow() = runCoroutineTest {
         val job = launch {
             quotesRepo.isFetchingQuotesStateFlow.test {
                 assertThat(awaitItem()).isFalse()
@@ -62,13 +66,13 @@ class QuotesRepoTest {
             }
         }
 
-        advanceTimeBy(1_000)
+        advanceTimeBy(100)
         quotesRepo.fetchQuotes(maxPages = 2)
         job.join()
     }
 
     @Test
-    fun nextRandomQuote() = runTest {
+    fun nextRandomQuote() = runCoroutineTest {
         quotesRepo.fetchQuotes(maxPages = 2)
         val indexes = listOf(7, 23)
         indexes.forEach { index ->
@@ -79,7 +83,7 @@ class QuotesRepoTest {
     }
 
     @Test
-    fun fetchQuotes() = runTest {
+    fun fetchQuotes() = runCoroutineTest {
         val maxPages = 2
         val totalQuotes = maxPages * Constants.Defaults.QUOTES_LIMIT_PER_PAGE
         quotesRepo.fetchQuotes(maxPages)
@@ -87,8 +91,9 @@ class QuotesRepoTest {
     }
 
     @Test
-    fun hasQuotesReachedLimit() = runTest {
-        val pagesToReachMax = Constants.Defaults.QUOTES_LIMIT / Constants.Defaults.QUOTES_LIMIT_PER_PAGE
+    fun hasQuotesReachedLimit() = runCoroutineTest {
+        val pagesToReachMax =
+            Constants.Defaults.QUOTES_LIMIT / Constants.Defaults.QUOTES_LIMIT_PER_PAGE
         quotesRepo.fetchQuotes(pagesToReachMax - 1)
         assertThat(quotesRepo.hasQuotesReachedLimit()).isFalse()
         quotesRepo.fetchQuotes(pagesToReachMax + 1)
@@ -96,7 +101,7 @@ class QuotesRepoTest {
     }
 
     @Test
-    fun quotesSize() = runTest {
+    fun quotesSize() = runCoroutineTest {
         val maxPages = 3
         val totalQuotes = maxPages * Constants.Defaults.QUOTES_LIMIT_PER_PAGE
         quotesRepo.fetchQuotes(maxPages)

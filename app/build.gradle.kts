@@ -73,11 +73,6 @@ dependencies {
     composeInterop()
 
     hilt()
-    room()
     dataStore()
     accompanist()
-    retrofit()
-
-    thirdPartyLibs()
-    testLibs()
 }

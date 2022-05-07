@@ -5,28 +5,33 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
 import dev.mslalith.focuslauncher.androidtest.shared.TestApps
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.HiddenToRoomMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.advanceTimeBy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class HiddenAppsRepoTest {
+@RunWith(RobolectricTestRunner::class)
+class HiddenAppsRepoTest : CoroutineTest() {
 
     private lateinit var database: AppDatabase
     private lateinit var hiddenAppsRepo: HiddenAppsRepo
 
     @Before
-    fun setUp() = runTest {
+    fun setUp() = runCoroutineTest {
         val appToRoomMapper = AppToRoomMapper()
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
+            .allowMainThreadQueries().build()
         database.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
         hiddenAppsRepo = HiddenAppsRepo(
             appsDao = database.appsDao(),
@@ -45,77 +50,72 @@ class HiddenAppsRepoTest {
     }
 
     @Test
-    fun getOnlyHiddenAppsFlow() = runTest {
+    fun getOnlyHiddenAppsFlow() = runCoroutineTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
         val job = launch {
             hiddenAppsRepo.onlyHiddenAppsFlow.test {
-                var appsList = awaitItem()
-                assertThat(appsList).isEmpty()
-                appsList = awaitItem()
-                assertThat(appsList.size).isEqualTo(apps.size)
-                assertThat(appsList).isEqualTo(apps)
+                assertThat(awaitItem()).isEmpty()
+                assertThat(awaitItem()).isEqualTo(apps)
                 expectNoEvents()
             }
         }
 
-        apps.forEach { hiddenAppsRepo.addToHiddenApps(it) }
+        advanceTimeBy(100)
+        hiddenAppsRepo.addToHiddenApps(apps)
         job.join()
     }
 
     @Test
-    fun addToHiddenApps() = runTest {
+    fun addToHiddenApps() = runCoroutineTest {
         val app = TestApps.Chrome
         val job = launch {
             hiddenAppsRepo.onlyHiddenAppsFlow.test {
-                val appsList = awaitItem()
-                assertThat(appsList.size).isEqualTo(1)
-                assertThat(appsList).isEqualTo(listOf(app))
+                assertThat(awaitItem()).isEmpty()
+                assertThat(awaitItem()).isEqualTo(listOf(app))
                 expectNoEvents()
             }
         }
 
+        advanceTimeBy(100)
         hiddenAppsRepo.addToHiddenApps(app)
         job.join()
     }
 
     @Test
-    fun removeFromHiddenApps() = runTest {
+    fun removeFromHiddenApps() = runCoroutineTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
         val appToRemove = apps.first()
         val appsAfterRemoving = apps.filter { it.packageName != appToRemove.packageName }
 
         val job = launch {
             hiddenAppsRepo.onlyHiddenAppsFlow.test {
-                var appsList = awaitItem()
-                assertThat(appsList.size).isEqualTo(apps.size)
-                assertThat(appsList).isEqualTo(apps)
-                appsList = awaitItem()
-                assertThat(appsList.size).isEqualTo(appsAfterRemoving.size)
-                assertThat(appsList).isEqualTo(appsAfterRemoving)
+                assertThat(awaitItem()).isEqualTo(apps)
+                assertThat(awaitItem()).isEqualTo(appsAfterRemoving)
                 expectNoEvents()
             }
         }
 
-        apps.forEach { hiddenAppsRepo.addToHiddenApps(it) }
+        hiddenAppsRepo.addToHiddenApps(apps)
+        advanceTimeBy(100)
         hiddenAppsRepo.removeFromHiddenApps(appToRemove.packageName)
         job.join()
     }
 
     @Test
-    fun clearHiddenApps() = runTest {
+    fun clearHiddenApps() = runCoroutineTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
         val job = launch {
             hiddenAppsRepo.onlyHiddenAppsFlow.test {
-                var appsList = awaitItem()
-                assertThat(appsList.size).isEqualTo(apps.size)
-                assertThat(appsList).isEqualTo(apps)
-                appsList = awaitItem()
-                assertThat(appsList).isEmpty()
+                assertThat(awaitItem()).isEmpty()
+                assertThat(awaitItem()).isEqualTo(apps)
+                assertThat(awaitItem()).isEmpty()
                 expectNoEvents()
             }
         }
 
-        apps.forEach { hiddenAppsRepo.addToHiddenApps(it) }
+        advanceTimeBy(100)
+        hiddenAppsRepo.addToHiddenApps(apps)
+        advanceTimeBy(100)
         hiddenAppsRepo.clearHiddenApps()
         job.join()
     }

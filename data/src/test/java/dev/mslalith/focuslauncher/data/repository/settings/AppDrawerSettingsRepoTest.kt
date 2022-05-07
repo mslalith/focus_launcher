@@ -8,8 +8,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class)
 class AppDrawerSettingsRepoTest : DataStoreTest<AppDrawerSettingsRepo>(
     setupRepo = { AppDrawerSettingsRepo(it) }
 ) {

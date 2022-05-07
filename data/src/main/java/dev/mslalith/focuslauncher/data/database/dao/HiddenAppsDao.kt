@@ -27,6 +27,9 @@ interface HiddenAppsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun hideApp(hiddenAppRoom: HiddenAppRoom)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun hideApps(hiddenAppRoomList: List<HiddenAppRoom>)
+
     @Delete
     suspend fun unHideApp(hiddenAppRoom: HiddenAppRoom)
 }

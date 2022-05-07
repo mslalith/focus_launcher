@@ -35,4 +35,7 @@ object Versions {
     const val TEST_ANDROIDX_ESPRESSO = "3.5.0-alpha05"
     const val TEST_KOTLIN_COROUTINES = "1.6.1"
     const val TEST_TURBINE = "0.7.0"
+    const val TEST_ROBOLECTRIC = "4.8"
+    const val TEST_ANDROIDX_CORE_KTX = "1.4.0"
+    const val TEST_ANDROIDX_CORE_TESTING = "2.1.0"
 }

@@ -29,6 +29,11 @@ class HiddenAppsRepo @Inject constructor(
         hiddenAppsDao.hideApp(hiddenToRoomMapper.toEntity(app))
     }
 
+    suspend fun addToHiddenApps(apps: List<App>) {
+        val hiddenAppRoomList = apps.map(hiddenToRoomMapper::toEntity)
+        hiddenAppsDao.hideApps(hiddenAppRoomList)
+    }
+
     suspend fun removeFromHiddenApps(packageName: String) {
         val appRoom = appsDao.getAppBy(packageName) ?: throw IllegalStateException("$packageName app was not found in Database")
         val app = appToRoomMapper.fromEntity(appRoom)
