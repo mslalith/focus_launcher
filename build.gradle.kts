@@ -62,12 +62,12 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
     reportfileName = "dependency_update_report"
 }
 
-// Create a task which copies Git scripts to .git/hooks path
-tasks.register("installGitHook", Copy::class) {
-    from(File(projectDir, "scripts/pre-push"))
-    to(File(projectDir, ".git/hooks"))
+// Create a task to copy Git hooks from /scripts to .git/hooks path
+val installGitHooks by tasks.creating(Copy::class) {
+    from(layout.projectDirectory.file("scripts/pre-push"))
+    into(layout.projectDirectory.dir(".git/hooks"))
     fileMode = 777
 }
 
 // Register the Git task to run at beginning
-tasks.getByPath(":app:preBuild").dependsOn("installGitHook")
+tasks.getByPath(":app:preBuild").dependsOn(installGitHooks)
