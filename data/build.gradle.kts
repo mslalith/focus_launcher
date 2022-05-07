@@ -64,10 +64,10 @@ dependencies {
     hiltAndroid()
     room()
     dataStore()
+    playInAppUpdate()
 
     implementation(Libs.retrofitGsonConverter)
     implementation(Libs.kotlinxDateTime)
-    implementation(Libs.googlePlayCoreKtx)
     implementation(Libs.thirdSunCalc)
 
     junit(includeAndroid = false)

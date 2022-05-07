@@ -5,7 +5,6 @@ import android.content.Context
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
-import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallErrorCode
@@ -34,34 +33,36 @@ sealed class AppUpdateState(open val message: String) {
     data class TryAgain(override val message: String) : AppUpdateState(message)
 }
 
-class UpdateManager @Inject constructor(context: Context) : InstallStateUpdatedListener {
+class UpdateManager @Inject constructor(context: Context) {
     private var mAppUpdateManager = AppUpdateManagerFactory.create(context)
 
     private val _appUpdateStateFlow = MutableStateFlow<AppUpdateState>(CheckForUpdates)
     val appUpdateStateFlow = _appUpdateStateFlow.asStateFlow()
 
-    override fun onStateUpdate(state: InstallState) {
-        if (state.installErrorCode() == InstallErrorCode.NO_ERROR) {
-            when (state.installStatus()) {
-                InstallStatus.PENDING -> _appUpdateStateFlow.value = Downloading("Downloading...")
-                InstallStatus.DOWNLOADING -> {
-                    val percent = state.bytesDownloaded() / state.totalBytesToDownload().toDouble()
-                    val percentToShow = (percent * 100).toInt()
-                    _appUpdateStateFlow.value = Downloading("Downloading... ($percentToShow%)")
+    private val installStateUpdateListener: InstallStateUpdatedListener by lazy {
+        InstallStateUpdatedListener { state ->
+            if (state.installErrorCode() == InstallErrorCode.NO_ERROR) {
+                when (state.installStatus()) {
+                    InstallStatus.PENDING -> _appUpdateStateFlow.value = Downloading("Downloading...")
+                    InstallStatus.DOWNLOADING -> {
+                        val percent = state.bytesDownloaded() / state.totalBytesToDownload().toDouble()
+                        val percentToShow = (percent * 100).toInt()
+                        _appUpdateStateFlow.value = Downloading("Downloading... ($percentToShow%)")
+                    }
+                    InstallStatus.DOWNLOADED -> _appUpdateStateFlow.value = Downloaded
+                    InstallStatus.INSTALLING -> _appUpdateStateFlow.value = Installing
+                    InstallStatus.INSTALLED -> {
+                        resetAppUpdateState()
+                        mAppUpdateManager.unregisterListener(installStateUpdateListener)
+                    }
+                    InstallStatus.FAILED, InstallStatus.CANCELED -> _appUpdateStateFlow.value = DownloadFailed
+                    else -> _appUpdateStateFlow.value = TryAgain("Failed to update, try again (${state.installStatus()})")
                 }
-                InstallStatus.DOWNLOADED -> _appUpdateStateFlow.value = Downloaded
-                InstallStatus.INSTALLING -> _appUpdateStateFlow.value = Installing
-                InstallStatus.INSTALLED -> {
-                    resetAppUpdateState()
-                    mAppUpdateManager.unregisterListener(this)
+            } else {
+                val message = getAppropriateMessage(state.installErrorCode())
+                if (message.isNotEmpty()) {
+                    _appUpdateStateFlow.value = TryAgain(message)
                 }
-                InstallStatus.FAILED, InstallStatus.CANCELED -> _appUpdateStateFlow.value = DownloadFailed
-                else -> _appUpdateStateFlow.value = TryAgain("Failed to update, try again (${state.installStatus()})")
-            }
-        } else {
-            val message = getAppropriateMessage(state.installErrorCode())
-            if (message.isNotEmpty()) {
-                _appUpdateStateFlow.value = TryAgain(message)
             }
         }
     }
@@ -81,12 +82,24 @@ class UpdateManager @Inject constructor(context: Context) : InstallStateUpdatedL
                         else -> _appUpdateStateFlow.value = NoUpdateAvailable
                     }
                 }
+            }.addOnCompleteListener {
+                val appUpdateInfo = it.result
+                appUpdateInfo ?: return@addOnCompleteListener
+                waitAndRunAfter(startTime = startTime) {
+                    val isFlexibleUpdateAvailable = appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                    val isDownloaded = appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED
+                    when {
+                        isFlexibleUpdateAvailable -> initiateDownload(activity = activity, appUpdateInfo = appUpdateInfo)
+                        isDownloaded -> _appUpdateStateFlow.value = Downloaded
+                        else -> _appUpdateStateFlow.value = NoUpdateAvailable
+                    }
+                }
             }
     }
 
     private fun initiateDownload(activity: Activity, appUpdateInfo: AppUpdateInfo) {
         val appUpdateOptions = AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
-        mAppUpdateManager.registerListener(this)
+        mAppUpdateManager.registerListener(installStateUpdateListener)
         mAppUpdateManager.startUpdateFlow(appUpdateInfo, activity, appUpdateOptions)
             .addOnCompleteListener {
                 if (it.result == 0) {

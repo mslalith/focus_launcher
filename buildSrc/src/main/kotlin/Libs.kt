@@ -11,7 +11,8 @@ object Libs {
     const val kotlinxCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
-    const val googlePlayCoreKtx = "com.google.android.play:core-ktx:${Versions.GOOGLE_PLAY_CORE_KTX}"
+    const val googlePlayAppUpdate = "com.google.android.play:app-update:${Versions.GOOGLE_PLAY_APP_UPDATE}"
+    const val googlePlayAppUpdateKtx = "com.google.android.play:app-update-ktx:${Versions.GOOGLE_PLAY_APP_UPDATE}"
     const val paletteKtx = "androidx.palette:palette-ktx:${Versions.PALETTE_KTX}"
 
     const val composeMaterial = "androidx.compose.material:material:${Versions.COMPOSE}"
@@ -73,7 +74,11 @@ fun DependencyHandler.compose() {
 
 fun DependencyHandler.google() {
     implementation(Libs.googleMaterial)
-    implementation(Libs.googlePlayCoreKtx)
+}
+
+fun DependencyHandler.playInAppUpdate() {
+    implementation(Libs.googlePlayAppUpdate)
+    implementation(Libs.googlePlayAppUpdateKtx)
 }
 
 fun DependencyHandler.androidx() {

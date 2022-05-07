@@ -8,7 +8,7 @@ object Versions {
     const val KOTLIN_COROUTINES = "1.6.1"
 
     const val GOOGLE_MATERIAL = "1.7.0-alpha01"
-    const val GOOGLE_PLAY_CORE_KTX = "1.8.1"
+    const val GOOGLE_PLAY_APP_UPDATE = "2.0.0"
     const val PALETTE_KTX = "1.0.0"
 
     const val COMPOSE = "1.2.0-alpha07"
