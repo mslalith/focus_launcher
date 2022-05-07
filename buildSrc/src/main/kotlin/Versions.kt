@@ -27,7 +27,6 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val ACCOMPANIST = "0.24.6-alpha"
 
-    const val JACOCO_PLUGIN = "0.16.0"
     const val THIRD_SUNCALC = "3.5"
 
     const val TEST_JUNIT = "4.13.2"
