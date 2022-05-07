@@ -10,7 +10,6 @@ import dev.mslalith.focuslauncher.data.model.toLunarPhase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaInstant
@@ -19,9 +18,7 @@ import org.shredzone.commons.suncalc.MoonPhase
 import javax.inject.Inject
 import kotlin.random.Random
 
-class LunarPhaseDetailsRepo @Inject constructor(
-    clockRepo: ClockRepo,
-) {
+class LunarPhaseDetailsRepo @Inject constructor() {
     private val _lunarPhaseDetailsStateFlow = MutableStateFlow<Outcome<LunarPhaseDetails>>(
         INITIAL_LUNAR_PHASE_DETAILS_OUTCOME
     )
@@ -34,11 +31,7 @@ class LunarPhaseDetailsRepo @Inject constructor(
     val upcomingLunarPhaseStateFlow: StateFlow<Outcome<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
-    init {
-        clockRepo.currentInstantStateFlow.onEach { refreshLunarPhaseDetails(it) }
-    }
-
-    private suspend fun refreshLunarPhaseDetails(instant: Instant) {
+    suspend fun refreshLunarPhaseDetails(instant: Instant) {
         val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
         delay(delayInMillis)
 

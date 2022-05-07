@@ -80,7 +80,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLunarPhaseDetailsRepo(clockRepo: ClockRepo): LunarPhaseDetailsRepo = LunarPhaseDetailsRepo(clockRepo)
+    fun provideLunarPhaseDetailsRepo(): LunarPhaseDetailsRepo = LunarPhaseDetailsRepo()
 
     /**
      * API Repository providers

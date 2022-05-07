@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -23,13 +24,18 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class WidgetsViewModel @Inject constructor(
     private val clockRepo: ClockRepo,
-    lunarPhaseRepo: LunarPhaseDetailsRepo,
+    private val lunarPhaseRepo: LunarPhaseDetailsRepo,
     private val quotesRepo: QuotesRepo
 ) : ViewModel() {
 
     init {
         launch {
             quotesRepo.nextRandomQuote()
+        }
+        launch {
+            clockRepo.currentInstantStateFlow.collectLatest { instant ->
+                lunarPhaseRepo.refreshLunarPhaseDetails(instant)
+            }
         }
     }
 

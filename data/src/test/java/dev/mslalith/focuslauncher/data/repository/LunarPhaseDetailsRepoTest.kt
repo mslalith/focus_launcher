@@ -17,13 +17,11 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalCoroutinesApi::class)
 class LunarPhaseDetailsRepoTest {
 
-    private lateinit var clockRepo: ClockRepo
     private lateinit var lunarPhaseDetailsRepo: LunarPhaseDetailsRepo
 
     @Before
     fun setUp() {
-        clockRepo = ClockRepo()
-        lunarPhaseDetailsRepo = LunarPhaseDetailsRepo(clockRepo = clockRepo)
+        lunarPhaseDetailsRepo = LunarPhaseDetailsRepo()
     }
 
     @After
@@ -57,7 +55,7 @@ class LunarPhaseDetailsRepoTest {
 
         instants.forEach { instant ->
             delay(100)
-            clockRepo.refreshTime(instant)
+            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
         }
         job.join()
     }
@@ -81,7 +79,7 @@ class LunarPhaseDetailsRepoTest {
 
         instants.forEach { instant ->
             delay(100)
-            clockRepo.refreshTime(instant)
+            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
         }
         job.join()
     }
