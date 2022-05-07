@@ -60,6 +60,13 @@ android {
     lint {
         error.add("VisibleForTests")
     }
+    testOptions {
+        unitTests.all {
+            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                isDisabled = it.name != "testDebugUnitTest"
+            }
+        }
+    }
 }
 
 dependencies {

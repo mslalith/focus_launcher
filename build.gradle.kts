@@ -13,19 +13,38 @@ buildscript {
         classpath(Libs.buildToolsKotlinGradlePlugin)
         classpath(Libs.buildToolsHiltAndroidGradlePlugin)
         classpath(Libs.buildToolsJacocoPlugin)
+        classpath(Libs.buildToolsKotlinxKover)
     }
 }
 
 apply(plugin = "com.vanniktech.android.junit.jacoco")
+apply(plugin = "kover")
 
 // ktlint-gradle
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.github.ben-manes.versions") version "0.42.0"
+    id("org.jetbrains.kotlinx.kover") version "0.5.0"
 }
 
 allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+}
+
+kover {
+    isDisabled = false
+    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+}
+
+tasks.koverMergedHtmlReport {
+    isEnabled = true
+    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
+    excludes = listOf(
+        "jdk.internal.*",
+        "dagger.hilt.internal.aggregatedroot.codegen.**",
+        "hilt_aggregated_deps.**",
+        "dev.mslalith.focuslauncher.**.*_Factory"
+    )
 }
 
 tasks.register("clean", Delete::class) {

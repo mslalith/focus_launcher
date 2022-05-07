@@ -49,7 +49,11 @@ android {
         error.add("VisibleForTests")
     }
     testOptions {
-        unitTests.isIncludeAndroidResources = true
+        unitTests.all {
+            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                isDisabled = it.name != "testDebugUnitTest"
+            }
+        }
     }
 }
 
