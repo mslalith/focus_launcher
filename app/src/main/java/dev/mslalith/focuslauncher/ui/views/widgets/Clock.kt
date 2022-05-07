@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import dev.mslalith.focuslauncher.data.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
@@ -41,6 +42,7 @@ import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.SystemBroadcastReceiver
+import dev.mslalith.focuslauncher.ui.views.onLifecycleEventChange
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_LEFT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_RIGHT
@@ -81,6 +83,10 @@ fun ClockWidget(
 
     SystemBroadcastReceiver(systemAction = Intent.ACTION_TIME_TICK) {
         widgetsViewModel.refreshTime()
+    }
+
+    onLifecycleEventChange { event ->
+        if (event == Lifecycle.Event.ON_RESUME) widgetsViewModel.refreshTime()
     }
 
     Crossfade(
