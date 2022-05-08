@@ -45,9 +45,6 @@ object Libs {
     const val accompanistInsets = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"
     const val accompanistFlowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.ACCOMPANIST}"
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
-    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"
-
     const val thirdSunCalc = "org.shredzone.commons:commons-suncalc:${Versions.THIRD_SUNCALC}"
 
     const val testJUnit = "junit:junit:${Versions.TEST_JUNIT}"
@@ -134,11 +131,6 @@ fun DependencyHandler.accompanist() {
     implementation(Libs.accompanistSystemUiController)
     implementation(Libs.accompanistInsets)
     implementation(Libs.accompanistFlowLayout)
-}
-
-fun DependencyHandler.retrofit() {
-    implementation(Libs.retrofit)
-    implementation(Libs.retrofitGsonConverter)
 }
 
 fun DependencyHandler.thirdPartyLibs() {

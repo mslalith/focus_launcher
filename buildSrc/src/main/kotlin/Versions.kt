@@ -26,7 +26,6 @@ object Versions {
 
     const val DATASTORE = "1.0.0"
     const val ROOM = "2.5.0-alpha01"
-    const val RETROFIT = "2.9.0"
     const val ACCOMPANIST = "0.24.6-alpha"
 
     const val THIRD_SUNCALC = "3.5"

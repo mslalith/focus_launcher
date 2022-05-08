@@ -16,8 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -75,9 +74,11 @@ class QuotesRepo @Inject constructor(
         addAllQuotes(quoteRoomList)
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun addInitialQuotes() {
-        val initialQuoteResponses = Json.decodeFromString<List<QuoteResponse>>(INITIAL_QUOTES_JSON)
+        val initialQuoteResponses = Json.decodeFromString(
+            deserializer = ListSerializer(elementSerializer = QuoteResponse.serializer()),
+            string = INITIAL_QUOTES_JSON
+        )
         val initialQuoteRoomList = initialQuoteResponses.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(initialQuoteRoomList)
         nextRandomQuote()

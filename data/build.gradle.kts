@@ -68,7 +68,6 @@ dependencies {
     ktorClient()
     playInAppUpdate()
 
-    implementation(Libs.retrofitGsonConverter)
     implementation(Libs.kotlinxDateTime)
     implementation(Libs.thirdSunCalc)
 

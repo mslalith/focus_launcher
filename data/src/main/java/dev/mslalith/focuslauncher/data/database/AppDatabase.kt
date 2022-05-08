@@ -11,7 +11,7 @@ import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.data.database.entities.FavoriteAppRoom
 import dev.mslalith.focuslauncher.data.database.entities.HiddenAppRoom
 import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
-import dev.mslalith.focuslauncher.data.utils.Converters
+import dev.mslalith.focuslauncher.data.database.typeconverter.Converters
 
 @Database(
     entities = [
@@ -23,7 +23,6 @@ import dev.mslalith.focuslauncher.data.utils.Converters
     version = 1,
     exportSchema = false
 )
-// TODO: @ms: are these Converters really necessary
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
