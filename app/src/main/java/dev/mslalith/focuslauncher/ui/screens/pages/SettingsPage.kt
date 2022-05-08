@@ -101,7 +101,7 @@ fun SettingsPage(
         AppDrawer(appsViewModel, settingsViewModel)
         Widgets(widgetsViewModel, settingsViewModel)
         SetAsDefaultLauncher()
-        CheckForUpdates()
+        // CheckForUpdates()
 
         VerticalSpacer(spacing = 12.dp)
     }
