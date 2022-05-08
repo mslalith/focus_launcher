@@ -3,6 +3,6 @@ object ConfigData {
     const val TARGET_SDK = 31
     const val BUILD_TOOLS = "30.0.3"
 
-    const val VERSION_CODE = 3
-    const val VERSION_NAME = "0.1.0"
+    const val VERSION_CODE = 4
+    const val VERSION_NAME = "0.1.1"
 }
