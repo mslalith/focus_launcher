@@ -30,7 +30,7 @@ class WidgetsViewModel @Inject constructor(
 
     init {
         launch {
-            quotesRepo.nextRandomQuote()
+            quotesRepo.addInitialQuotesIfNeeded()
         }
         launch {
             clockRepo.currentInstantStateFlow.collectLatest { instant ->

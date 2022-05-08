@@ -10,7 +10,6 @@ import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
-import dev.mslalith.focuslauncher.data.network.api.QuotesApiKtor
 import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.Dispatchers
@@ -66,8 +65,12 @@ class QuotesRepo @Inject constructor(
         _isFetchingQuotesStateFlow.value = false
     }
 
+    suspend fun addInitialQuotesIfNeeded() {
+        if (quotesSize() == 0) addInitialQuotes()
+    }
+
     private suspend fun fetchPageQuotes(page: Int) {
-        val quotesApiResponse = QuotesApiKtor.create().getQuotes(page)
+        val quotesApiResponse = quotesApi.getQuotes(page)
         val quoteRoomList = quotesApiResponse.results.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(quoteRoomList)
     }

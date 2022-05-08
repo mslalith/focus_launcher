@@ -5,20 +5,41 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import dev.mslalith.focuslauncher.data.network.api.QuotesApiKtorImpl
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.android.Android
+import io.ktor.client.features.HttpTimeout
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val QUOTES_BASE_URL = "https://api.quotable.io"
+    @Provides
+    @Singleton
+    fun provideKtorClient(): HttpClient = HttpClient(Android) {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(
+                Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    encodeDefaults = false
+                }
+            )
+        }
+
+        val timeout = 15_000L
+        install(HttpTimeout) {
+            requestTimeoutMillis = timeout
+            connectTimeoutMillis = timeout
+            socketTimeoutMillis = timeout
+        }
+    }
 
     @Provides
     @Singleton
-    fun provideQuoteApi(): QuotesApi = Retrofit.Builder().baseUrl(QUOTES_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(QuotesApi::class.java)
+    fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiKtorImpl(httpClient)
 }
