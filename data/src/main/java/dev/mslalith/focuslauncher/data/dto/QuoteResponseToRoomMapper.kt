@@ -7,7 +7,7 @@ class QuoteResponseToRoomMapper : Mapper<QuoteResponse, QuoteRoom> {
     override fun fromEntity(data: QuoteResponse) = QuoteRoom(
         id = data.id,
         quote = data.quote,
-        author = data.quote,
+        author = data.author,
         authorSlug = data.authorSlug,
         length = data.length,
         tags = data.tags
@@ -16,7 +16,7 @@ class QuoteResponseToRoomMapper : Mapper<QuoteResponse, QuoteRoom> {
     override fun toEntity(data: QuoteRoom) = QuoteResponse(
         id = data.id,
         quote = data.quote,
-        author = data.quote,
+        author = data.author,
         authorSlug = data.authorSlug,
         length = data.length,
         tags = data.tags

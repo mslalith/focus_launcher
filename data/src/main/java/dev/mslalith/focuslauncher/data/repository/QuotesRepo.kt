@@ -1,8 +1,6 @@
 package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.data.di.modules.QuoteResponseToRoomMapperProvider
@@ -18,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class QuotesRepo @Inject constructor(
@@ -64,15 +64,21 @@ class QuotesRepo @Inject constructor(
         _isFetchingQuotesStateFlow.value = false
     }
 
+    suspend fun addInitialQuotesIfNeeded() {
+        if (quotesSize() == 0) addInitialQuotes()
+    }
+
     private suspend fun fetchPageQuotes(page: Int) {
-        val quotesApiResponse = quotesApi.getQuotes(page = page)
+        val quotesApiResponse = quotesApi.getQuotes(page)
         val quoteRoomList = quotesApiResponse.results.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(quoteRoomList)
     }
 
     private suspend fun addInitialQuotes() {
-        val quotesListType = object : TypeToken<List<QuoteResponse>>() {}.type
-        val initialQuoteResponses = Gson().fromJson<List<QuoteResponse>>(INITIAL_QUOTES_JSON, quotesListType)
+        val initialQuoteResponses = Json.decodeFromString(
+            deserializer = ListSerializer(elementSerializer = QuoteResponse.serializer()),
+            string = INITIAL_QUOTES_JSON
+        )
         val initialQuoteRoomList = initialQuoteResponses.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(initialQuoteRoomList)
         nextRandomQuote()

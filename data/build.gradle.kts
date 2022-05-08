@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("kotlinx-serialization")
     id("dagger.hilt.android.plugin")
 }
 
@@ -34,7 +35,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -64,9 +65,9 @@ dependencies {
     hiltAndroid()
     room()
     dataStore()
+    ktorClient()
     playInAppUpdate()
 
-    implementation(Libs.retrofitGsonConverter)
     implementation(Libs.kotlinxDateTime)
     implementation(Libs.thirdSunCalc)
 

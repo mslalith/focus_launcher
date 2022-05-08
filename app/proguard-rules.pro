@@ -14,7 +14,7 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
@@ -22,12 +22,3 @@
 
 # Firebase
 #-keep class com.google.firebase.** { *; }
-
-# --------------- Begin: Retrofit  ---------------
--keepclassmembers class dev.mslalith.focuslauncher.data.network.entities.QuotesApiResponse {
-    public protected private *;
-    # Keep default members & functions
-    !public !protected !private *;
-}
-# --------------- End: Retrofit  ---------------
-
