@@ -6,6 +6,8 @@ object Versions {
     const val KOTLIN_CORE_KTX = "1.8.0-alpha07"
     const val KOTLINX_DATETIME = "0.3.2"
     const val KOTLIN_COROUTINES = "1.6.1"
+    const val KOTLIN_SERIALIZATION = "1.6.10"
+    const val KTOR_CLIENT = "1.6.4"
 
     const val GOOGLE_MATERIAL = "1.7.0-alpha01"
     const val GOOGLE_PLAY_APP_UPDATE = "2.0.0"

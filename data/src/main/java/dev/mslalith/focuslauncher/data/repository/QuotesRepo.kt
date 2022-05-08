@@ -1,8 +1,6 @@
 package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.data.di.modules.QuoteResponseToRoomMapperProvider
@@ -12,12 +10,16 @@ import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
+import dev.mslalith.focuslauncher.data.network.api.QuotesApiKtor
 import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class QuotesRepo @Inject constructor(
@@ -65,14 +67,14 @@ class QuotesRepo @Inject constructor(
     }
 
     private suspend fun fetchPageQuotes(page: Int) {
-        val quotesApiResponse = quotesApi.getQuotes(page = page)
+        val quotesApiResponse = QuotesApiKtor.create().getQuotes(page)
         val quoteRoomList = quotesApiResponse.results.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(quoteRoomList)
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private suspend fun addInitialQuotes() {
-        val quotesListType = object : TypeToken<List<QuoteResponse>>() {}.type
-        val initialQuoteResponses = Gson().fromJson<List<QuoteResponse>>(INITIAL_QUOTES_JSON, quotesListType)
+        val initialQuoteResponses = Json.decodeFromString<List<QuoteResponse>>(INITIAL_QUOTES_JSON)
         val initialQuoteRoomList = initialQuoteResponses.map(quoteResponseToRoomMapper::fromEntity)
         addAllQuotes(initialQuoteRoomList)
         nextRandomQuote()

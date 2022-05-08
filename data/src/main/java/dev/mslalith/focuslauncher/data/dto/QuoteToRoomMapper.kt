@@ -11,7 +11,7 @@ class QuoteToRoomMapper @Inject constructor(
     override fun fromEntity(data: QuoteRoom) = Quote(
         id = data.id,
         quote = data.quote,
-        author = data.quote
+        author = data.author
     )
 
     override fun toEntity(data: Quote): QuoteRoom {

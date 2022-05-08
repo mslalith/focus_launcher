@@ -33,6 +33,7 @@ android {
 
     buildTypes {
         getByName("debug") {
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isShrinkResources = false
             isTestCoverageEnabled = true

@@ -5,10 +5,13 @@ object Libs {
     const val buildToolsKotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
     const val buildToolsKotlinxKover = "org.jetbrains.kotlinx:kover:${Versions.KOTLINX_KOVER}"
+    const val buildToolsKotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN_SERIALIZATION}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
     const val kotlinxCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
+    const val ktorClientAndroid = "io.ktor:ktor-client-android:${Versions.KTOR_CLIENT}"
+    const val ktorClientSerialization = "io.ktor:ktor-client-serialization:${Versions.KTOR_CLIENT}"
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
     const val googlePlayAppUpdate = "com.google.android.play:app-update:${Versions.GOOGLE_PLAY_APP_UPDATE}"
@@ -64,6 +67,11 @@ object Libs {
  */
 fun DependencyHandler.kotlin() {
     implementation(Libs.kotlinxDateTime)
+}
+
+fun DependencyHandler.ktorClient() {
+    implementation(Libs.ktorClientAndroid)
+    implementation(Libs.ktorClientSerialization)
 }
 
 fun DependencyHandler.compose() {

@@ -11,6 +11,7 @@ buildscript {
         classpath(Libs.buildToolsGradle)
         classpath(Libs.buildToolsKotlinGradlePlugin)
         classpath(Libs.buildToolsHiltAndroidGradlePlugin)
+        classpath(Libs.buildToolsKotlinSerialization)
         classpath(Libs.buildToolsKotlinxKover)
     }
 }

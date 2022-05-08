@@ -1,33 +1,36 @@
 package dev.mslalith.focuslauncher.data.network.entities
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class QuoteResponse(
-    @SerializedName(value = "_id")
+    @SerialName(value = "_id")
     val id: String,
-    @SerializedName(value = "content")
+    @SerialName(value = "content")
     val quote: String,
-    @SerializedName(value = "author")
+    @SerialName(value = "author")
     val author: String,
-    @SerializedName(value = "authorSlug")
+    @SerialName(value = "authorSlug")
     val authorSlug: String,
-    @SerializedName(value = "length")
+    @SerialName(value = "length")
     val length: Int,
-    @SerializedName(value = "tags")
+    @SerialName(value = "tags")
     val tags: List<String>,
 )
 
+@Serializable
 data class QuotesApiResponse(
-    @SerializedName(value = "count")
+    @SerialName(value = "count")
     val count: Int,
-    @SerializedName(value = "totalCount")
+    @SerialName(value = "totalCount")
     val totalCount: Int,
-    @SerializedName(value = "page")
+    @SerialName(value = "page")
     val page: Int,
-    @SerializedName(value = "totalPages")
+    @SerialName(value = "totalPages")
     val totalPages: Int,
-    @SerializedName(value = "lastItemIndex")
+    @SerialName(value = "lastItemIndex")
     val lastItemIndex: Int,
-    @SerializedName(value = "results")
+    @SerialName(value = "results")
     val results: List<QuoteResponse>,
 )
