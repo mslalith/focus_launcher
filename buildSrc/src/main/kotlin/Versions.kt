@@ -1,6 +1,6 @@
 object Versions {
     const val KOTLIN = "1.6.21"
-    const val GRADLE = "7.1.3"
+    const val GRADLE = "7.2.0"
     const val KOTLINX_KOVER = "0.5.1"
 
     const val KOTLIN_CORE_KTX = "1.9.0-alpha03"
