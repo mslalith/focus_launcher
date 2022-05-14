@@ -8,9 +8,9 @@ import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.network.api.QuotesApiKtorImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
-import io.ktor.client.features.HttpTimeout
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
@@ -21,9 +21,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideKtorClient(): HttpClient = HttpClient(Android) {
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(
-                Json {
+        install(ContentNegotiation) {
+            json(
+                json = Json {
                     ignoreUnknownKeys = true
                     isLenient = true
                     encodeDefaults = false

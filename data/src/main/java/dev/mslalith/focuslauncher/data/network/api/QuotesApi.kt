@@ -3,8 +3,9 @@ package dev.mslalith.focuslauncher.data.network.api
 import dev.mslalith.focuslauncher.data.network.entities.QuotesApiResponse
 import dev.mslalith.focuslauncher.data.utils.Constants
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.request.url
+import io.ktor.client.request.parameter
 import javax.inject.Inject
 
 interface QuotesApi {
@@ -21,8 +22,9 @@ internal class QuotesApiKtorImpl @Inject constructor(
     private val baseUrl = "https://api.quotable.io"
 
     override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {
-        return httpClient.get {
-            url("$baseUrl/quotes?page=$page&limit=$limit")
-        }
+        return httpClient.get("$baseUrl/quotes") {
+            parameter("page", page)
+            parameter("limit", limit)
+        }.body()
     }
 }
