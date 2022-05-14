@@ -31,7 +31,7 @@ class LunarPhaseDetailsRepoTest {
     private fun getConsecutiveInstants(max: Int): List<Instant> = buildList {
         val instant = Clock.System.now()
         add(instant)
-        (1..max).forEach { index ->
+        (1 until max).forEach { index ->
             val duration = index.seconds
             add(instant.plus(duration))
         }
@@ -62,7 +62,7 @@ class LunarPhaseDetailsRepoTest {
 
     @Test
     fun getUpcomingLunarPhaseStateFlow() = runTest {
-        val instants = getConsecutiveInstants(max = 6)
+        val instants = getConsecutiveInstants(max = 1)
 
         val job = launch {
             lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.test {
