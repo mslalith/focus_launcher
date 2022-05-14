@@ -26,7 +26,7 @@ A minimalist Android Launcher built with Jetpack Compose
   - [Hilt-ViewModel](https://developer.android.com/training/dependency-injection/hilt-jetpack) - DI for injecting ViewModel.
 - [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose) - Modern UI development toolkit.
 - [Accompanist](https://chrisbanes.github.io/accompanist/) - A collection of extension libraries for Jetpack Compose.
-- [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
+- [Ktor](https://ktor.io/) - Lightweight & simple asynchronous HTTP Client
 - [ktlint](https://ktlint.github.io/) - An anti-bikeshedding Kotlin linter with built-in formatter.
 
 

@@ -1,24 +1,15 @@
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
-    // Firebase
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-    // KSP
     id("com.google.devtools.ksp") version Versions.KSP
 }
 
 android {
     compileSdk = ConfigData.TARGET_SDK
     buildToolsVersion = ConfigData.BUILD_TOOLS
+    namespace = "dev.mslalith.focuslauncher"
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
@@ -38,27 +29,21 @@ android {
                 )
             }
         }
-
-        manifestPlaceholders["crashlyticsEnabled"] = true
     }
 
     sourceSets["main"].java.srcDir("src/main/kotlin")
 
     buildTypes {
         getByName("debug") {
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isShrinkResources = false
+            isTestCoverageEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            manifestPlaceholders["crashlyticsEnabled"] = false
         }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            manifestPlaceholders["crashlyticsEnabled"] = true
-        }
-        create("dev") {
-            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -78,27 +63,18 @@ android {
     lint {
         error.add("VisibleForTests")
     }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-}
-
-if (project.properties["buildType"] != "dev") {
-    // exclude production build
-    android.variantFilter {
-        if (buildType.name == "dev") ignore = true
-    }
-} else {
-    // exclude all except production build
-    android.variantFilter {
-        if (buildType.name != "dev") ignore = true
+    testOptions {
+        unitTests.all {
+            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+                isDisabled = it.name != "testDebugUnitTest"
+            }
+        }
     }
 }
 
 dependencies {
+    implementation(project(":data"))
+
     kotlin()
     google()
     androidx()
@@ -106,37 +82,7 @@ dependencies {
     compose()
     composeInterop()
 
-    firebase()
     hilt()
-    room()
     dataStore()
     accompanist()
-    retrofit()
-    protobuf()
-
-    thirdPartyLibs()
-    testLibs()
-}
-
-protobuf {
-    protoc {
-        artifact = if (project.osdetector.arch == "aarch_64") {
-            "${Libs.protobufCompiler}:${project.osdetector.os}-${project.osdetector.arch}"
-        } else {
-            Libs.protobufCompiler
-        }
-    }
-
-    generateProtoTasks {
-        all().forEach {
-            it.plugins {
-                id("java") {
-                    option("lite")
-                }
-            }
-            // it.builtins {
-            //     id("kotlin")
-            // }
-        }
-    }
 }

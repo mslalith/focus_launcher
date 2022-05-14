@@ -62,15 +62,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.google.accompanist.insets.LocalWindowInsets
-import dev.mslalith.focuslauncher.data.models.AppDrawerViewType
-import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.isAlphabet
 import dev.mslalith.focuslauncher.extensions.launchApp
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 
@@ -136,7 +136,7 @@ fun AppDrawerPage(
             appsViewModel = appsViewModel,
             settingsViewModel = settingsViewModel,
         )
-        imeOffset.verticalSpacer()
+        VerticalSpacer(spacing = imeOffset)
     }
 }
 
@@ -189,7 +189,7 @@ private fun AppsGrid(
         modifier = Modifier.padding(horizontal = 24.dp),
     ) {
         repeat(columnCount) {
-            item { topSpacing.verticalSpacer() }
+            item { VerticalSpacer(spacing = topSpacing) }
         }
 
         items(items = appsList) { app ->
@@ -207,7 +207,7 @@ private fun AppsGrid(
         }
 
         repeat(columnCount) {
-            item { bottomSpacing.verticalSpacer() }
+            item { VerticalSpacer(spacing = bottomSpacing) }
         }
     }
 }
@@ -246,9 +246,11 @@ private fun AppsList(
 
     LazyColumn(
         verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier.fillMaxSize().height(150.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .height(150.dp),
     ) {
-        item { spacing.first.verticalSpacer() }
+        item { VerticalSpacer(spacing = spacing.first) }
 
         for ((character, apps) in groupedApps) {
             item(key = character) {
@@ -268,7 +270,7 @@ private fun AppsList(
                 )
             }
         }
-        item { spacing.second.verticalSpacer() }
+        item { VerticalSpacer(spacing = spacing.second) }
     }
 }
 
@@ -364,7 +366,7 @@ private fun AppDrawerGridItem(
                     .fillMaxSize()
             )
         }
-        8.dp.verticalSpacer()
+        VerticalSpacer(spacing = 8.dp)
         Text(
             text = app.name,
             textAlign = TextAlign.Center,

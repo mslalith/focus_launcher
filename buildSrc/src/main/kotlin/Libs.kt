@@ -1,24 +1,24 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.kotlin.dsl.support.delegates.DependencyHandlerDelegate
 
 object Libs {
     const val buildToolsGradle = "com.android.tools.build:gradle:${Versions.GRADLE}"
     const val buildToolsKotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
-
-    const val buildToolsGoogleServices = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES}"
-    const val buildToolsCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.CRASHLYTICS_GRADLE}"
     const val buildToolsHiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
-    const val buildToolsProtobufGradlePlugin = "com.google.protobuf:protobuf-gradle-plugin:${Versions.PROTOBUF_GRADLE}"
-
-    const val protobufCompiler = "com.google.protobuf:protoc:${Versions.PROTOBUF_COMPILER}"
+    const val buildToolsKotlinxKover = "org.jetbrains.kotlinx:kover:${Versions.KOTLINX_KOVER}"
+    const val buildToolsKotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.KOTLIN_CORE_KTX}"
     const val kotlinxDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.KOTLINX_DATETIME}"
+    const val kotlinxCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
+
+    const val ktorClientCore = "io.ktor:ktor-client-core:${Versions.KTOR_CLIENT}"
+    const val ktorClientAndroid = "io.ktor:ktor-client-android:${Versions.KTOR_CLIENT}"
+    const val ktorClientSerialization = "io.ktor:ktor-serialization-kotlinx-json:${Versions.KTOR_CLIENT}"
+    const val ktorClientContentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.KTOR_CLIENT}"
 
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
-    const val googleProtobufJavalite = "com.google.protobuf:protobuf-javalite:${Versions.GOOGLE_PROTOBUF_JAVALITE}"
-    const val googleProtobufKotlinLite = "com.google.protobuf:protobuf-kotlin-lite:${Versions.GOOGLE_PROTOBUF_KOTLIN_LITE}"
-    const val googlePlayCoreKtx = "com.google.android.play:core-ktx:${Versions.GOOGLE_PLAY_CORE_KTX}"
+    const val googlePlayAppUpdate = "com.google.android.play:app-update:${Versions.GOOGLE_PLAY_APP_UPDATE}"
+    const val googlePlayAppUpdateKtx = "com.google.android.play:app-update-ktx:${Versions.GOOGLE_PLAY_APP_UPDATE}"
     const val paletteKtx = "androidx.palette:palette-ktx:${Versions.PALETTE_KTX}"
 
     const val composeMaterial = "androidx.compose.material:material:${Versions.COMPOSE}"
@@ -32,10 +32,6 @@ object Libs {
 
     const val dataStore = "androidx.datastore:datastore:${Versions.DATASTORE}"
     const val dataStorePreferences = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
-
-    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
-    const val firebaseCrashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
-    const val firebaseAnalyticsKtx = "com.google.firebase:firebase-analytics-ktx"
 
     const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
@@ -52,9 +48,6 @@ object Libs {
     const val accompanistInsets = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"
     const val accompanistFlowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.ACCOMPANIST}"
 
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
-    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"
-
     const val thirdSunCalc = "org.shredzone.commons:commons-suncalc:${Versions.THIRD_SUNCALC}"
 
     const val testJUnit = "junit:junit:${Versions.TEST_JUNIT}"
@@ -64,6 +57,9 @@ object Libs {
     const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
     const val testKotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.TEST_KOTLIN_COROUTINES}"
     const val testTurbine = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
+    const val testAndroidxCoreKtx = "androidx.test:core-ktx:${Versions.TEST_ANDROIDX_CORE_KTX}"
+    const val testAndroidxCoreTesting = "androidx.arch.core:core-testing:${Versions.TEST_ANDROIDX_CORE_TESTING}"
+    const val testRobolectric = "org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC}"
 }
 
 /**
@@ -71,6 +67,13 @@ object Libs {
  */
 fun DependencyHandler.kotlin() {
     implementation(Libs.kotlinxDateTime)
+}
+
+fun DependencyHandler.ktorClient() {
+    implementation(Libs.ktorClientCore)
+    implementation(Libs.ktorClientAndroid)
+    implementation(Libs.ktorClientSerialization)
+    implementation(Libs.ktorClientContentNegotiation)
 }
 
 fun DependencyHandler.compose() {
@@ -81,13 +84,21 @@ fun DependencyHandler.compose() {
 
 fun DependencyHandler.google() {
     implementation(Libs.googleMaterial)
-    implementation(Libs.googlePlayCoreKtx)
+}
+
+fun DependencyHandler.playInAppUpdate() {
+    implementation(Libs.googlePlayAppUpdate)
+    implementation(Libs.googlePlayAppUpdateKtx)
 }
 
 fun DependencyHandler.androidx() {
-    implementation(Libs.coreKtx)
+    androidxCoreKtx()
     implementation(Libs.lifecycleRuntimeKtx)
     implementation(Libs.paletteKtx)
+}
+
+fun DependencyHandler.androidxCoreKtx() {
+    implementation(Libs.coreKtx)
 }
 
 fun DependencyHandler.composeInterop() {
@@ -102,18 +113,16 @@ fun DependencyHandler.dataStore() {
     implementation(Libs.dataStorePreferences)
 }
 
-fun DependencyHandlerDelegate.firebase() {
-    implementationPlatform(Libs.firebaseBom)
-    implementation(Libs.firebaseCrashlyticsKtx)
-    implementation(Libs.firebaseAnalyticsKtx)
-}
-
 fun DependencyHandler.hilt() {
-    implementation(Libs.hiltAndroid)
-    kapt(Libs.hiltAndroidCompiler)
+    hiltAndroid()
 
     kapt(Libs.hiltCompiler)
     implementation(Libs.hiltNavigationCompose)
+}
+
+fun DependencyHandler.hiltAndroid() {
+    implementation(Libs.hiltAndroid)
+    kapt(Libs.hiltAndroidCompiler)
 }
 
 fun DependencyHandler.room() {
@@ -129,31 +138,45 @@ fun DependencyHandler.accompanist() {
     implementation(Libs.accompanistFlowLayout)
 }
 
-fun DependencyHandler.retrofit() {
-    implementation(Libs.retrofit)
-    implementation(Libs.retrofitGsonConverter)
-}
-
-fun DependencyHandler.protobuf() {
-    implementation(Libs.googleProtobufJavalite)
-}
-
 fun DependencyHandler.thirdPartyLibs() {
     implementation(Libs.thirdSunCalc)
 }
 
 fun DependencyHandler.testLibs() {
-    testImplementation(Libs.testJUnit)
-    androidTestImplementation(Libs.testAndroidXJUnit)
-    androidTestImplementation(Libs.testAndroidXEspresso)
+    junit(includeAndroid = true)
     androidTestImplementation(Libs.testComposeJUnit)
 
+    truth(includeAndroid = true)
+    kotlinxCoroutinesTest(includeAndroid = true)
+    turbine()
+}
+
+fun DependencyHandler.junit(includeAndroid: Boolean) {
+    testImplementation(Libs.testJUnit)
+    if (includeAndroid) {
+        androidTestImplementation(Libs.testAndroidXJUnit)
+        androidTestImplementation(Libs.testAndroidXEspresso)
+    }
+}
+
+fun DependencyHandler.robolectric() {
+    testImplementation(Libs.testAndroidxCoreKtx)
+    testImplementation(Libs.testRobolectric)
+}
+
+fun DependencyHandler.truth(includeAndroid: Boolean) {
     testImplementation(Libs.testTruth)
-    androidTestImplementation(Libs.testTruth)
+    if (includeAndroid) androidTestImplementation(Libs.testTruth)
+}
+
+fun DependencyHandler.kotlinxCoroutinesTest(includeAndroid: Boolean) {
     testImplementation(Libs.testKotlinCoroutines)
-    androidTestImplementation(Libs.testKotlinCoroutines)
+    if (includeAndroid) androidTestImplementation(Libs.testKotlinCoroutines)
+}
+
+fun DependencyHandler.turbine(includeAndroid: Boolean = true) {
     testImplementation(Libs.testTurbine)
-    androidTestImplementation(Libs.testTurbine)
+    if (includeAndroid) androidTestImplementation(Libs.testTurbine)
 }
 
 
@@ -178,8 +201,4 @@ private fun DependencyHandler.testImplementation(depName: String) {
 
 private fun DependencyHandler.androidTestImplementation(depName: String) {
     add("androidTestImplementation", depName)
-}
-
-private fun DependencyHandlerDelegate.implementationPlatform(depName: String) {
-    add("implementation", platform(depName))
 }

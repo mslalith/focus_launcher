@@ -19,7 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
@@ -57,7 +57,7 @@ fun LunarPhaseSettingsSheet(
                 disabled = !showLunarPhase,
                 onClick = { settingsViewModel.toggleShowUpcomingPhaseDetails() }
             )
-            bottomSpacing.verticalSpacer()
+            VerticalSpacer(spacing = bottomSpacing)
         }
     }
 }

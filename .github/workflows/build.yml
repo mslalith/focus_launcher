@@ -2,11 +2,33 @@ name: Build
 
 on:
   pull_request:
+  push:
+    branches:
+      - optimize_workflow
   workflow_dispatch:
 
 jobs:
-  build:
+  setup:
     if: "!contains(github.event.head_commit.message, 'ci(skip)')"
+    name: Setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+  ktlint:
+    needs: [ setup ]
+    name: Run ktlint
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -16,8 +38,78 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
-      - name: Run tests
-        run: ./gradlew test -PbuildType=dev
+  build:
+    needs: [ setup ]
+    name: Build app
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Build dev app
-        run: ./gradlew assembleDev -PbuildType=dev
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleDebug --stacktrace --no-daemon
+
+  unit_tests:
+    needs: [ ktlint, build ]
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: testDebug --stacktrace
+
+  android_tests:
+    if: ${{ false }} # Disable checking Instrumentation tests
+    needs: [ ktlint, build ]
+    name: Run Android Tests
+    runs-on: macos-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        api-level: [ 29 ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Gradle cache
+        uses: gradle/gradle-build-action@v2
+
+      - name: Cache AVD
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run Android Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedCheck --stacktrace

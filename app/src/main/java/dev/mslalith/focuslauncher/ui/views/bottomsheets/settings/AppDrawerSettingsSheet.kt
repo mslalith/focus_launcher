@@ -8,9 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.R
+import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
-import dev.mslalith.focuslauncher.data.models.AppDrawerViewType
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 
@@ -34,7 +34,7 @@ fun AppDrawerSettingsSheet(
         )
 
         Column {
-            24.dp.verticalSpacer()
+            VerticalSpacer(spacing = 24.dp)
             SettingsSelectableChooserItem(
                 text = "Apps View Type",
                 subText = appDrawerViewType.text,
@@ -63,7 +63,7 @@ fun AppDrawerSettingsSheet(
                 disabled = isViewTypeGrid,
                 onClick = { settingsViewModel.toggleAppIconsVisibility() }
             )
-            bottomSpacing.verticalSpacer()
+            VerticalSpacer(spacing = bottomSpacing)
         }
     }
 }

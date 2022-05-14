@@ -14,8 +14,8 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
-import dev.mslalith.focuslauncher.data.managers.UpdateManager
 import dev.mslalith.focuslauncher.data.providers.ProvideAll
+import dev.mslalith.focuslauncher.data.utils.UpdateManager
 import dev.mslalith.focuslauncher.extensions.appNoIconModelOf
 import dev.mslalith.focuslauncher.extensions.canLaunch
 import dev.mslalith.focuslauncher.navigator.AppNavigator

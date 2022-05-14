@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.ui.views.widgets
 
+import android.content.Intent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.AnimationSpec
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,19 +28,21 @@ import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.data.models.ClockAlignment
-import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.extensions.horizontalSpacer
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
+import androidx.lifecycle.Lifecycle
+import dev.mslalith.focuslauncher.data.model.ClockAlignment
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
+import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.ui.views.SystemBroadcastReceiver
+import dev.mslalith.focuslauncher.ui.views.onLifecycleEventChange
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_LEFT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.BOTTOM_RIGHT
@@ -51,7 +53,6 @@ import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP_LEFT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.TOP_RIGHT
 import dev.mslalith.focuslauncher.ui.views.widgets.AnalogClockPhase.VERTICAL
-import dev.mslalith.focuslauncher.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -63,7 +64,6 @@ fun ClockWidget(
     horizontalPadding: Dp,
     centerVertically: Boolean = false,
 ) {
-    val context = LocalContext.current
     val currentTime by widgetsViewModel.currentTimeStateFlow.collectAsState()
     val showClock24 by settingsViewModel.showClock24StateFlow.collectAsState()
     val clockAlignment by settingsViewModel.clockAlignmentStateFlow.collectAsState()
@@ -81,34 +81,35 @@ fun ClockWidget(
         }
     )
 
-    DisposableEffect(key1 = Unit) {
-        widgetsViewModel.registerToTimeChange(context)
-        onDispose { widgetsViewModel.unregisterToTimeChange(context) }
+    SystemBroadcastReceiver(systemAction = Intent.ACTION_TIME_TICK) {
+        widgetsViewModel.refreshTime()
     }
 
-    (currentTime as? Outcome.Success)?.value?.let { time ->
-        Crossfade(
-            targetState = showClock24,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = horizontalPadding),
+    onLifecycleEventChange { event ->
+        if (event == Lifecycle.Event.ON_RESUME) widgetsViewModel.refreshTime()
+    }
+
+    Crossfade(
+        targetState = showClock24,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = horizontalPadding),
+    ) {
+        Column(
+            horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            Column(
-                horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                if (it) {
-                    Clock24(
-                        currentTime = time,
-                        offsetAnimationSpec = tween(durationMillis = clock24AnimationDuration),
-                        colorAnimationSpec = tween(durationMillis = clock24AnimationDuration),
-                    )
-                } else {
-                    CurrentTime(
-                        currentTime = time,
-                        centerVertically = centerVertically,
-                    )
-                }
+            if (it) {
+                Clock24(
+                    currentTime = currentTime,
+                    offsetAnimationSpec = tween(durationMillis = clock24AnimationDuration),
+                    colorAnimationSpec = tween(durationMillis = clock24AnimationDuration),
+                )
+            } else {
+                CurrentTime(
+                    currentTime = currentTime,
+                    centerVertically = centerVertically,
+                )
             }
         }
     }
@@ -168,7 +169,7 @@ fun Clock24(
                 colorAnimationSpec = colorAnimationSpec,
             )
             if (index != timeList.size - 1) {
-                digitSpacing.horizontalSpacer()
+                HorizontalSpacer(spacing = digitSpacing)
             }
         }
     }
@@ -195,7 +196,7 @@ private fun DigitWithAnalogClocks(
                     offsetAnimationSpec = offsetAnimationSpec,
                     colorAnimationSpec = colorAnimationSpec,
                 )
-                analogClockSpacing.horizontalSpacer()
+                HorizontalSpacer(spacing = analogClockSpacing)
                 AnalogClock(
                     radius = analogClockRadius,
                     analogClockPhase = list.last(),
@@ -206,7 +207,7 @@ private fun DigitWithAnalogClocks(
                 )
             }
             if (index != digit.analogHandles.size - 1) {
-                analogClockSpacing.verticalSpacer()
+                VerticalSpacer(spacing = analogClockSpacing)
             }
         }
     }

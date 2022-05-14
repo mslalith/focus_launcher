@@ -15,12 +15,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.database.entities.App
+import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.showAppInfo
 import dev.mslalith.focuslauncher.extensions.toast
 import dev.mslalith.focuslauncher.extensions.uninstallApp
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.views.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.ui.views.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.ui.views.SelectableIconItem
@@ -56,7 +56,7 @@ fun MoreOptionsBottomSheet(
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            12.dp.verticalSpacer()
+            VerticalSpacer(spacing = 12.dp)
             Text(
                 text = app.name,
                 style = TextStyle(
@@ -69,7 +69,7 @@ fun MoreOptionsBottomSheet(
                 color = colors.onBackground,
                 modifier = Modifier.fillMaxWidth(fraction = 0.4f)
             )
-            12.dp.verticalSpacer()
+            VerticalSpacer(spacing = 12.dp)
 
             val favoriteIconRes = if (isFavorite) R.drawable.ic_star_outline else R.drawable.ic_star
             SelectableIconItem(
@@ -123,7 +123,7 @@ fun MoreOptionsBottomSheet(
                     }
                 )
             }
-            bottomSpacing.verticalSpacer()
+            VerticalSpacer(spacing = bottomSpacing)
         }
     }
 }

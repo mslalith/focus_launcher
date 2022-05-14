@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.database.entities.App
-import dev.mslalith.focuslauncher.data.models.SelectedApp
-import dev.mslalith.focuslauncher.data.respository.AppDrawerRepo
-import dev.mslalith.focuslauncher.data.respository.FavoritesRepo
-import dev.mslalith.focuslauncher.data.respository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.data.model.SelectedApp
+import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
+import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
+import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -127,6 +128,19 @@ class AppsViewModel @Inject constructor(
 
     fun addToFavorites(app: App) {
         launch { favoritesRepo.addToFavorites(app) }
+    }
+
+    fun reorderFavorite(app: App, withApp: App, onReordered: () -> Unit) {
+        if (app.packageName == withApp.packageName) {
+            onReordered()
+            return
+        }
+        launch {
+            favoritesRepo.reorderFavorite(app, withApp)
+            withContext(Dispatchers.Main) {
+                onReordered()
+            }
+        }
     }
 
     fun removeFromFavorites(app: App) {

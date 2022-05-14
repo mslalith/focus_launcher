@@ -24,10 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.database.entities.Quote
-import dev.mslalith.focuslauncher.data.models.Outcome
+import dev.mslalith.focuslauncher.data.model.Quote
+import dev.mslalith.focuslauncher.data.model.getOrNull
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.modifyIf
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 
@@ -39,13 +39,13 @@ fun QuoteForYou(
     backgroundColor: Color = MaterialTheme.colors.primaryVariant,
 ) {
     val showQuotes by settingsViewModel.showQuotesStateFlow.collectAsState()
-    val currentQuoteOutcome by widgetsViewModel.currentQuoteOutcomeStateFlow.collectAsState()
+    val currentQuoteState by widgetsViewModel.currentQuoteStateFlow.collectAsState()
 
     AnimatedVisibility(
         visible = showQuotes,
         modifier = modifier,
     ) {
-        val quote = (currentQuoteOutcome as? Outcome.Success)?.value ?: return@AnimatedVisibility
+        val quote = currentQuoteState.getOrNull() ?: return@AnimatedVisibility
 
         QuoteForYouContent(
             widgetsViewModel = widgetsViewModel,
@@ -83,7 +83,7 @@ fun QuoteForYouContent(
             tint = MaterialTheme.colors.onBackground,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
-        12.dp.verticalSpacer()
+        VerticalSpacer(spacing = 12.dp)
         Crossfade(targetState = quote.quote) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -96,7 +96,7 @@ fun QuoteForYouContent(
                 )
             )
         }
-        16.dp.verticalSpacer()
+        VerticalSpacer(spacing = 16.dp)
         Crossfade(targetState = quote.author) {
             Text(
                 modifier = Modifier.fillMaxWidth(),

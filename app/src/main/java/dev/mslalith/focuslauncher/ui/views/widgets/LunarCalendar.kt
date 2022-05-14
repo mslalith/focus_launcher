@@ -30,9 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.data.models.LunarPhaseDetails
-import dev.mslalith.focuslauncher.data.models.Outcome
-import dev.mslalith.focuslauncher.data.models.UpcomingLunarPhase
+import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
+import dev.mslalith.focuslauncher.data.model.State
+import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
+import dev.mslalith.focuslauncher.data.model.getOrNull
 import dev.mslalith.focuslauncher.extensions.asPercent
 import dev.mslalith.focuslauncher.extensions.inShortReadableFormat
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
@@ -73,8 +74,8 @@ fun LunarCalendar(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LunarCalendarContent(
-    lunarPhaseDetails: Outcome<LunarPhaseDetails>,
-    upcomingLunarPhase: Outcome<UpcomingLunarPhase>,
+    lunarPhaseDetails: State<LunarPhaseDetails>,
+    upcomingLunarPhase: State<UpcomingLunarPhase>,
     showIlluminationPercent: Boolean,
     showUpcomingPhaseDetails: Boolean,
     height: Dp = 74.dp,
@@ -86,7 +87,7 @@ fun LunarCalendarContent(
             .height(height = height)
             .padding(horizontal = horizontalPadding),
         icon = {
-            (lunarPhaseDetails as? Outcome.Success)?.value?.let {
+            lunarPhaseDetails.getOrNull()?.let {
                 LunarPhaseMoonIcon(
                     lunarPhaseDetails = it,
                     moonSize = iconSize,
@@ -94,7 +95,7 @@ fun LunarCalendarContent(
             }
         },
         text = {
-            (lunarPhaseDetails as? Outcome.Success)?.value?.let {
+            lunarPhaseDetails.getOrNull()?.let {
                 LunarPhaseName(
                     lunarPhaseDetails = it,
                     showIlluminationPercent = showIlluminationPercent,
@@ -103,7 +104,7 @@ fun LunarCalendarContent(
         },
         secondaryText = if (showUpcomingPhaseDetails) {
             {
-                (upcomingLunarPhase as? Outcome.Success)?.value?.let {
+                upcomingLunarPhase.getOrNull()?.let {
                     UpcomingLunarPhaseDetails(
                         upcomingLunarPhase = it,
                         textColor = MaterialTheme.colors.onBackground.copy(alpha = 0.8f)

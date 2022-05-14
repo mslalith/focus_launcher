@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mslalith.focuslauncher.data.di.modules.ThemeProvider
 import dev.mslalith.focuslauncher.data.models.Theme
-import dev.mslalith.focuslauncher.di.modules.ThemeProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted

@@ -10,26 +10,39 @@ buildscript {
     dependencies {
         classpath(Libs.buildToolsGradle)
         classpath(Libs.buildToolsKotlinGradlePlugin)
-
-        // Firebase
-        classpath(Libs.buildToolsGoogleServices)
-        classpath(Libs.buildToolsCrashlyticsGradle)
-
         classpath(Libs.buildToolsHiltAndroidGradlePlugin)
-        classpath(Libs.buildToolsProtobufGradlePlugin)
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath(Libs.buildToolsKotlinSerialization)
+        classpath(Libs.buildToolsKotlinxKover)
     }
 }
 
-// ktlint-gradle
+apply(from = "./buildScripts/install-git-hooks.gradle.kts")
+apply(plugin = "kover")
+
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("com.github.ben-manes.versions") version "0.42.0"
+    id("org.jetbrains.kotlinx.kover") version "0.5.1"
 }
+
 allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+}
+
+kover {
+    isDisabled = false
+    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+}
+
+tasks.koverMergedHtmlReport {
+    isEnabled = true
+    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
+    excludes = listOf(
+        "jdk.internal.*",
+        "dagger.hilt.internal.aggregatedroot.codegen.**",
+        "hilt_aggregated_deps.**",
+        "dev.mslalith.focuslauncher.**.*_Factory"
+    )
 }
 
 tasks.register("clean", Delete::class) {

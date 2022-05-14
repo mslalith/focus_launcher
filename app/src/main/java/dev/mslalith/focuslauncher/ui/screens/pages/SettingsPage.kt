@@ -40,13 +40,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.CheckForUpdates
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.CheckingForUpdates
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.Downloaded
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.Downloading
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.Installing
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.NoUpdateAvailable
-import dev.mslalith.focuslauncher.data.managers.AppUpdateState.TryAgain
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
@@ -58,8 +51,15 @@ import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.data.providers.LocalUpdateManager
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckForUpdates
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckingForUpdates
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloaded
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloading
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Installing
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.NoUpdateAvailable
+import dev.mslalith.focuslauncher.data.utils.AppUpdateState.TryAgain
+import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.isAppDefaultLauncher
-import dev.mslalith.focuslauncher.extensions.verticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
@@ -91,7 +91,7 @@ fun SettingsPage(
         verticalArrangement = Arrangement.Center,
     ) {
         SettingsHeader()
-        12.dp.verticalSpacer()
+        VerticalSpacer(spacing = 12.dp)
 
         ChangeTheme(themeViewModel)
         EditFavorites(::navigateTo)
@@ -101,9 +101,9 @@ fun SettingsPage(
         AppDrawer(appsViewModel, settingsViewModel)
         Widgets(widgetsViewModel, settingsViewModel)
         SetAsDefaultLauncher()
-        CheckForUpdates()
+        // CheckForUpdates()
 
-        12.dp.verticalSpacer()
+        VerticalSpacer(spacing = 12.dp)
     }
 }
 

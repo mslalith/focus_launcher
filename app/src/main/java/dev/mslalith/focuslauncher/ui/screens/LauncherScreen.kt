@@ -32,6 +32,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.ConfirmDialog
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -51,10 +52,8 @@ fun LauncherScreen(
     val dialogProperties by viewManager.dialogPropertiesStateFlow.collectAsState()
 
     LaunchedEffect(key1 = pagerState) {
-        snapshotFlow { pagerState.currentPage }.collect { page ->
-            if (page != 1) {
-                homeViewModel.hideContextualMode()
-            }
+        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
+            if (page != 1) homeViewModel.hideContextualMode()
         }
     }
 
