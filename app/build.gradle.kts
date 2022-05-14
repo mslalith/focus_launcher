@@ -1,9 +1,10 @@
+import kotlinx.kover.api.KoverTaskExtension
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp") version Versions.KSP
 }
 
 android {
@@ -65,7 +66,7 @@ android {
     }
     testOptions {
         unitTests.all {
-            it.extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+            it.extensions.configure(KoverTaskExtension::class) {
                 isDisabled = it.name != "testDebugUnitTest"
             }
         }

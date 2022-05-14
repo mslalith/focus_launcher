@@ -138,19 +138,6 @@ fun DependencyHandler.accompanist() {
     implementation(Libs.accompanistFlowLayout)
 }
 
-fun DependencyHandler.thirdPartyLibs() {
-    implementation(Libs.thirdSunCalc)
-}
-
-fun DependencyHandler.testLibs() {
-    junit(includeAndroid = true)
-    androidTestImplementation(Libs.testComposeJUnit)
-
-    truth(includeAndroid = true)
-    kotlinxCoroutinesTest(includeAndroid = true)
-    turbine()
-}
-
 fun DependencyHandler.junit(includeAndroid: Boolean) {
     testImplementation(Libs.testJUnit)
     if (includeAndroid) {
