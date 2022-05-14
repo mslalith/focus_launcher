@@ -3,6 +3,8 @@ object Versions {
     const val GRADLE = "7.2.0"
     const val KOTLINX_KOVER = "0.5.1"
 
+    const val KSP = "1.6.21-1.0.5"
+
     const val KOTLIN_CORE_KTX = "1.9.0-alpha03"
     const val KOTLINX_DATETIME = "0.3.3"
     const val KOTLIN_COROUTINES = "1.6.1"
