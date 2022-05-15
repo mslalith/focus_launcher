@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.ui.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,12 +19,14 @@ import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.D
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
+import dev.mslalith.focuslauncher.extensions.isDefaultLauncher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,10 +50,12 @@ class SettingsViewModel @Inject constructor(
     val firstRunStateFlow = generalSettingsRepo.firstRunFlow.withinScope(DEFAULT_FIRST_RUN)
     val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(DEFAULT_STATUS_BAR)
     val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(DEFAULT_NOTIFICATION_SHADE)
+    val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(DEFAULT_IS_DEFAULT_LAUNCHER)
 
     fun overrideFirstRun() { launch { generalSettingsRepo.overrideFirstRun() } }
     fun toggleStatusBarVisibility() { launch { generalSettingsRepo.toggleStatusBarVisibility() } }
     fun toggleNotificationShade() { launch { generalSettingsRepo.toggleNotificationShade() } }
+    fun refreshIsDefaultLauncher(context: Context) { launch { generalSettingsRepo.setIsDefaultLauncher(context.isDefaultLauncher()) } }
 
     /**
      * App Drawer Settings

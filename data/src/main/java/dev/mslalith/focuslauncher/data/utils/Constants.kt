@@ -28,6 +28,7 @@ object Constants {
                 const val DEFAULT_FIRST_RUN = true
                 const val DEFAULT_STATUS_BAR = false
                 const val DEFAULT_NOTIFICATION_SHADE = true
+                const val DEFAULT_IS_DEFAULT_LAUNCHER = false
             }
 
             object AppDrawer {

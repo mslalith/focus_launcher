@@ -12,18 +12,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class DataStoreTest<T>(
     setupRepo: (DataStore<Preferences>) -> T
-) {
-
-    @get:Rule
-    var coroutineRule = MainCoroutineRule()
+) : CoroutineTest() {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
-    private val testCoroutineScope = coroutineRule.newCoroutineScope()
+    private val testCoroutineScope = coroutineTestRule.newCoroutineScope()
     private val dataStore: DataStore<Preferences> = PreferenceDataStoreFactory.create(
         scope = testCoroutineScope,
         produceFile = { context.preferencesDataStoreFile("test_settings_datastore") }

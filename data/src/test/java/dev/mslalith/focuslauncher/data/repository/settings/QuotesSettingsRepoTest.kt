@@ -5,7 +5,6 @@ import dev.mslalith.focuslauncher.androidtest.shared.DataStoreTest
 import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -17,13 +16,13 @@ class QuotesSettingsRepoTest : DataStoreTest<QuotesSettingsRepo>(
 ) {
 
     @Test
-    fun getShowQuotesFlow() = runTest {
+    fun getShowQuotesFlow() = runCoroutineTest {
         val value = repo.showQuotesFlow.first()
         assertThat(value).isEqualTo(Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES)
     }
 
     @Test
-    fun toggleShowQuotes() = runTest {
+    fun toggleShowQuotes() = runCoroutineTest {
         repo.toggleShowQuotes()
         val value = repo.showQuotesFlow.first()
         assertThat(value).isEqualTo(!Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES)

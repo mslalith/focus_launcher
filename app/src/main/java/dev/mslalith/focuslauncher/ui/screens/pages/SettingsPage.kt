@@ -29,10 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -59,7 +56,6 @@ import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Installing
 import dev.mslalith.focuslauncher.data.utils.AppUpdateState.NoUpdateAvailable
 import dev.mslalith.focuslauncher.data.utils.AppUpdateState.TryAgain
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
-import dev.mslalith.focuslauncher.extensions.isAppDefaultLauncher
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
@@ -100,7 +96,7 @@ fun SettingsPage(
         PullDownNotifications(settingsViewModel)
         AppDrawer(appsViewModel, settingsViewModel)
         Widgets(widgetsViewModel, settingsViewModel)
-        SetAsDefaultLauncher()
+        SetAsDefaultLauncher(settingsViewModel)
         // CheckForUpdates()
 
         VerticalSpacer(spacing = 12.dp)
@@ -263,19 +259,14 @@ private fun Widgets(
 }
 
 @Composable
-private fun SetAsDefaultLauncher() {
+private fun SetAsDefaultLauncher(
+    settingsViewModel: SettingsViewModel
+) {
     val context = LocalContext.current
-    var shouldShow by remember { mutableStateOf(false) }
-
-    fun isDefaultLauncher(): Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
-        roleManager.isRoleAvailable(RoleManager.ROLE_HOME) && roleManager.isRoleHeld(RoleManager.ROLE_HOME)
-    } else {
-        context.isAppDefaultLauncher()
-    }
+    val isDefaultLauncher by settingsViewModel.isDefaultLauncherStateFlow.collectAsState()
 
     val launchForHome = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        shouldShow = !isDefaultLauncher()
+        settingsViewModel.refreshIsDefaultLauncher(context)
     }
 
     fun askToSetAsDefaultLauncher() {
@@ -290,12 +281,12 @@ private fun SetAsDefaultLauncher() {
 
     onLifecycleEventChange { event ->
         if (event == Lifecycle.Event.ON_RESUME) {
-            shouldShow = !isDefaultLauncher()
+            settingsViewModel.refreshIsDefaultLauncher(context)
         }
     }
 
     AnimatedVisibility(
-        visible = shouldShow,
+        visible = !isDefaultLauncher,
         enter = slideInVertically() + fadeIn(),
         exit = slideOutVertically() + fadeOut()
     ) {

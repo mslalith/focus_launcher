@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import dev.mslalith.focuslauncher.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,11 @@ class GeneralSettingsRepo @Inject constructor(
             it[PREFERENCES_NOTIFICATION_SHADE] ?: DEFAULT_NOTIFICATION_SHADE
         }
 
+    val isDefaultLauncher: Flow<Boolean>
+        get() = settingsDataStore.data.map {
+            it[PREFERENCES_IS_DEFAULT_LAUNCHER] ?: DEFAULT_IS_DEFAULT_LAUNCHER
+        }
+
     suspend fun overrideFirstRun() {
         settingsDataStore.edit { it[PREFERENCES_FIRST_RUN] = false }
     }
@@ -43,6 +49,12 @@ class GeneralSettingsRepo @Inject constructor(
         preference = PREFERENCES_NOTIFICATION_SHADE,
         defaultValue = DEFAULT_NOTIFICATION_SHADE,
     )
+
+    suspend fun setIsDefaultLauncher(isDefault: Boolean) {
+        settingsDataStore.edit {
+            it[PREFERENCES_IS_DEFAULT_LAUNCHER] = isDefault
+        }
+    }
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
@@ -62,5 +74,8 @@ class GeneralSettingsRepo @Inject constructor(
 
         private val PREFERENCES_NOTIFICATION_SHADE =
             booleanPreferencesKey("preferences_notification_shade")
+
+        private val PREFERENCES_IS_DEFAULT_LAUNCHER =
+            booleanPreferencesKey("preferences_is_default_launcher")
     }
 }

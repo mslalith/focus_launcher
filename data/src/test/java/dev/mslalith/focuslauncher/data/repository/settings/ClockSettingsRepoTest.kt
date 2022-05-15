@@ -6,7 +6,6 @@ import dev.mslalith.focuslauncher.data.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -18,32 +17,32 @@ class ClockSettingsRepoTest : DataStoreTest<ClockSettingsRepo>(
 ) {
 
     @Test
-    fun getShowClock24Flow() = runTest {
+    fun getShowClock24Flow() = runCoroutineTest {
         val value = repo.showClock24Flow.first()
         assertThat(value).isEqualTo(Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24)
     }
 
     @Test
-    fun getClockAlignmentFlow() = runTest {
+    fun getClockAlignmentFlow() = runCoroutineTest {
         val value = repo.clockAlignmentFlow.first()
         assertThat(value).isEqualTo(Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT)
     }
 
     @Test
-    fun getClock24AnimationDurationFlow() = runTest {
+    fun getClock24AnimationDurationFlow() = runCoroutineTest {
         val value = repo.clock24AnimationDurationFlow.first()
         assertThat(value).isEqualTo(Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION)
     }
 
     @Test
-    fun toggleClock24() = runTest {
+    fun toggleClock24() = runCoroutineTest {
         repo.toggleClock24()
         val value = repo.showClock24Flow.first()
         assertThat(value).isEqualTo(!Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24)
     }
 
     @Test
-    fun updateClockAlignment() = runTest {
+    fun updateClockAlignment() = runCoroutineTest {
         ClockAlignment.values().forEach { clockAlignment ->
             repo.updateClockAlignment(clockAlignment)
             val value = repo.clockAlignmentFlow.first()
@@ -52,7 +51,7 @@ class ClockSettingsRepoTest : DataStoreTest<ClockSettingsRepo>(
     }
 
     @Test
-    fun updateClock24AnimationDuration() = runTest {
+    fun updateClock24AnimationDuration() = runCoroutineTest {
         val durations = List(8) { it * 1_000 }
         durations.forEach { duration ->
             repo.updateClock24AnimationDuration(duration)

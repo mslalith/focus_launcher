@@ -279,9 +279,11 @@ private fun FavoritesList(
                                     FavoritesContextMode.Reorder -> homeViewModel.changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
                                     is FavoritesContextMode.ReorderPickPosition -> {
                                         val contextMode = currentContextMode as FavoritesContextMode.ReorderPickPosition
-                                        appsViewModel.reorderFavorite(contextMode.app, favorite.toApp()) {
-                                            homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder)
-                                        }
+                                        appsViewModel.reorderFavorite(
+                                            app = contextMode.app,
+                                            withApp = favorite.toApp(),
+                                            onReordered = { homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder) }
+                                        )
                                     }
                                 }
                             }
