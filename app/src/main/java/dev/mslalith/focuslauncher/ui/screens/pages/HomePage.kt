@@ -38,7 +38,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -203,9 +205,14 @@ private fun FavoritesList(
     val context = LocalContext.current
     val currentContextMode by homeViewModel.favoritesContextualMode.collectAsState()
     val onlyFavoritesList by appsViewModel.onlyFavoritesStateFlow.collectAsState()
+    val favoritesWithAppIcon by remember {
+        derivedStateOf {
+            onlyFavoritesList.toAppWithIconList(context)
+        }
+    }
 
-    LaunchedEffect(onlyFavoritesList.isEmpty()) {
-        if (onlyFavoritesList.isNotEmpty() || homeViewModel.isReordering()) return@LaunchedEffect
+    LaunchedEffect(favoritesWithAppIcon.isEmpty()) {
+        if (favoritesWithAppIcon.isNotEmpty() || homeViewModel.isReordering()) return@LaunchedEffect
 
         homeViewModel.hideContextualMode()
         appsViewModel.apply {
@@ -259,25 +266,27 @@ private fun FavoritesList(
                 mainAxisSpacing = 16.dp,
                 crossAxisSpacing = 12.dp,
             ) {
-                onlyFavoritesList.toAppWithIconList(context).forEach { favorite ->
-                    FavoriteItem(
-                        app = favorite,
-                        homeViewModel = homeViewModel,
-                        onClick = {
-                            when (currentContextMode) {
-                                FavoritesContextMode.Closed -> context.launchApp(favorite.toApp())
-                                FavoritesContextMode.Open -> Unit
-                                FavoritesContextMode.Remove -> appsViewModel.removeFromFavorites(favorite.toApp())
-                                FavoritesContextMode.Reorder -> homeViewModel.changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
-                                is FavoritesContextMode.ReorderPickPosition -> {
-                                    val contextMode = currentContextMode as FavoritesContextMode.ReorderPickPosition
-                                    appsViewModel.reorderFavorite(contextMode.app, favorite.toApp()) {
-                                        homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder)
+                favoritesWithAppIcon.forEach { favorite ->
+                    ReusableContent(key = favorite) {
+                        FavoriteItem(
+                            app = favorite,
+                            homeViewModel = homeViewModel,
+                            onClick = {
+                                when (currentContextMode) {
+                                    FavoritesContextMode.Closed -> context.launchApp(favorite.toApp())
+                                    FavoritesContextMode.Open -> Unit
+                                    FavoritesContextMode.Remove -> appsViewModel.removeFromFavorites(favorite.toApp())
+                                    FavoritesContextMode.Reorder -> homeViewModel.changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
+                                    is FavoritesContextMode.ReorderPickPosition -> {
+                                        val contextMode = currentContextMode as FavoritesContextMode.ReorderPickPosition
+                                        appsViewModel.reorderFavorite(contextMode.app, favorite.toApp()) {
+                                            homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Reorder)
+                                        }
                                     }
                                 }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
