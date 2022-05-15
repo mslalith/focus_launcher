@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -48,11 +49,13 @@ fun LauncherScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 1)
 
+    val focusManager = LocalFocusManager.current
     val viewManager = LocalLauncherViewManager.current
     val dialogProperties by viewManager.dialogPropertiesStateFlow.collectAsState()
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
+            focusManager.clearFocus()
             if (page != 1) homeViewModel.hideContextualMode()
         }
     }

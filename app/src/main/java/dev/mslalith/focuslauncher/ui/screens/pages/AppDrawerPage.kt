@@ -42,7 +42,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -52,7 +51,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -89,11 +88,19 @@ fun AppDrawerPage(
     appsViewModel: AppsViewModel,
     settingsViewModel: SettingsViewModel,
 ) {
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     val viewManager = LocalLauncherViewManager.current
 
     val appDrawerViewType by settingsViewModel.appDrawerViewTypeStateFlow.collectAsState()
 
+    fun onAppClick(app: AppWithIcon) {
+        focusManager.clearFocus()
+        context.launchApp(app.toApp())
+    }
+
     fun showMoreOptions(app: AppWithIcon) {
+        focusManager.clearFocus()
         viewManager.showBottomSheet(
             sheetType = BottomSheetContentType.MoreAppOptions(
                 properties = MoreAppOptionsProperties(
@@ -116,10 +123,12 @@ fun AppDrawerPage(
                 AppDrawerViewType.LIST -> AppsList(
                     appsViewModel = appsViewModel,
                     settingsViewModel = settingsViewModel,
+                    onAppClick = ::onAppClick,
                     onAppLongClick = ::showMoreOptions,
                 )
                 AppDrawerViewType.GRID -> AppsGrid(
                     appsViewModel = appsViewModel,
+                    onAppClick = ::onAppClick,
                     onAppLongClick = ::showMoreOptions,
                 )
             }
@@ -167,15 +176,14 @@ private fun ListFadeOutEdgeGradient(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun AppsGrid(
     appsViewModel: AppsViewModel,
+    onAppClick: (AppWithIcon) -> Unit,
     onAppLongClick: (AppWithIcon) -> Unit,
 ) {
     val columnCount = 4
     val context = LocalContext.current
-    val softwareKeyboardController = LocalSoftwareKeyboardController.current
 
     val configuration = LocalConfiguration.current
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
@@ -195,14 +203,8 @@ private fun AppsGrid(
         items(items = appsList) { app ->
             AppDrawerGridItem(
                 app = app,
-                onClick = {
-                    softwareKeyboardController?.hide()
-                    context.launchApp(it.toApp())
-                },
-                onLongClick = {
-                    softwareKeyboardController?.hide()
-                    onAppLongClick(app)
-                },
+                onClick = onAppClick,
+                onLongClick = onAppLongClick,
             )
         }
 
@@ -212,15 +214,14 @@ private fun AppsGrid(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun AppsList(
     appsViewModel: AppsViewModel,
     settingsViewModel: SettingsViewModel,
+    onAppClick: (AppWithIcon) -> Unit,
     onAppLongClick: (AppWithIcon) -> Unit,
 ) {
     val context = LocalContext.current
-    val softwareKeyboardController = LocalSoftwareKeyboardController.current
 
     val configuration = LocalConfiguration.current
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
@@ -259,14 +260,8 @@ private fun AppsList(
                     apps = apps,
                     character = character,
                     showAppGroupHeader = showAppGroupHeader && groupedApps.size != 1,
-                    onAppClick = {
-                        softwareKeyboardController?.hide()
-                        context.launchApp(it.toApp())
-                    },
-                    onAppLongClick = {
-                        softwareKeyboardController?.hide()
-                        onAppLongClick(it)
-                    },
+                    onAppClick = onAppClick,
+                    onAppLongClick = onAppLongClick,
                 )
             }
         }
