@@ -2,7 +2,9 @@ package dev.mslalith.focuslauncher.ui.screens
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ButtonDefaults
@@ -24,8 +26,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.data.model.SelectedApp
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
@@ -66,6 +66,7 @@ fun EditFavoritesScreen(
         }
     ) {
         FavoritesList(
+            modifier = Modifier.padding(it),
             scaffoldState = scaffoldState,
             appsViewModel = appsViewModel,
         )
@@ -102,6 +103,7 @@ private fun HiddenAppActionText(
 
 @Composable
 private fun FavoritesList(
+    modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState,
     appsViewModel: AppsViewModel,
 ) {
@@ -130,7 +132,7 @@ private fun FavoritesList(
         }
     }
 
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         items(
             items = favoritesList,
         ) { favorite ->

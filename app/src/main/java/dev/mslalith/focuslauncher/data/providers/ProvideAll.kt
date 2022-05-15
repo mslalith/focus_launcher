@@ -9,7 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.mslalith.focuslauncher.data.managers.LauncherViewManager
 import dev.mslalith.focuslauncher.data.utils.UpdateManager
@@ -19,26 +18,14 @@ fun ProvideAll(
     updateManager: UpdateManager,
     content: @Composable () -> Unit,
 ) {
-    ProviderWindowInsetsLocal {
-        ProvideNavController {
-            ProvideSystemUiController {
-                ProvideUpdateManager(updateManager) {
-                    ProvideBottomSheetManager {
-                        content()
-                    }
+    ProvideNavController {
+        ProvideSystemUiController {
+            ProvideUpdateManager(updateManager) {
+                ProvideBottomSheetManager {
+                    content()
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ProviderWindowInsetsLocal(
-    windowInsetsAnimationsEnabled: Boolean = true,
-    content: @Composable () -> Unit,
-) {
-    ProvideWindowInsets(windowInsetsAnimationsEnabled = windowInsetsAnimationsEnabled) {
-        content()
     }
 }
 

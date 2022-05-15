@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.ui.screens.pages
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,7 +50,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -60,7 +59,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import com.google.accompanist.insets.LocalWindowInsets
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
@@ -114,7 +112,9 @@ fun AppDrawerPage(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding(),
     ) {
         Box(
             modifier = Modifier.weight(weight = 1f),
@@ -137,15 +137,10 @@ fun AppDrawerPage(
             ListFadeOutEdgeGradient(position = Position.BOTTOM)
         }
 
-        val insets = LocalWindowInsets.current
-        val imeHeight = LocalDensity.current.run { (insets.ime.bottom - insets.navigationBars.bottom).toDp() }
-        val imeOffset by animateDpAsState(targetValue = imeHeight)
-
         SearchAppField(
             appsViewModel = appsViewModel,
             settingsViewModel = settingsViewModel,
         )
-        VerticalSpacer(spacing = imeOffset)
     }
 }
 

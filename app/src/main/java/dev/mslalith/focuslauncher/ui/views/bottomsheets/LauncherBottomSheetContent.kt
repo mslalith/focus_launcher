@@ -1,12 +1,12 @@
 package dev.mslalith.focuslauncher.ui.views.bottomsheets
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsPadding
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.MoreAppOptions
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Clock

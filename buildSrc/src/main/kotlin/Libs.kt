@@ -134,7 +134,6 @@ fun DependencyHandler.room() {
 fun DependencyHandler.accompanist() {
     implementation(Libs.accompanistPager)
     implementation(Libs.accompanistSystemUiController)
-    implementation(Libs.accompanistInsets)
     implementation(Libs.accompanistFlowLayout)
 }
 

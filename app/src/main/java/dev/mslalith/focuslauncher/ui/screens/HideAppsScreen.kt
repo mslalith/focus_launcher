@@ -2,6 +2,9 @@ package dev.mslalith.focuslauncher.ui.screens
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -15,8 +18,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.data.model.SelectedApp
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
@@ -57,12 +58,16 @@ fun HideAppsScreen(
             )
         }
     ) {
-        HiddenAppsList(appsViewModel = appsViewModel)
+        HiddenAppsList(
+            modifier = Modifier.padding(it),
+            appsViewModel = appsViewModel
+        )
     }
 }
 
 @Composable
 private fun HiddenAppsList(
+    modifier: Modifier = Modifier,
     appsViewModel: AppsViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -79,7 +84,7 @@ private fun HiddenAppsList(
         }
     }
 
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         items(
             items = hiddenAppsList,
         ) { hiddenApp ->
