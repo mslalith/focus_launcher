@@ -176,9 +176,9 @@ class AppsViewModel @Inject constructor(
     fun handleAppUninstall(packageName: String) {
         launch {
             appDrawerRepo.getAppBy(packageName)?.let { app ->
-                appDrawerRepo.removeApp(app)
                 removeFromFavorites(app)
                 removeFromHiddenApps(app)
+                appDrawerRepo.removeApp(app)
             }
         }
     }
