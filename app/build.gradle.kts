@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -75,6 +76,7 @@ android {
 
 dependencies {
     implementation(project(":data"))
+    testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     kotlin()
     google()
@@ -86,4 +88,11 @@ dependencies {
     hilt()
     dataStore()
     accompanist()
+    room()
+
+    junit(includeAndroid = false)
+    truth(includeAndroid = false)
+    kotlinxCoroutinesTest(includeAndroid = false)
+    turbine(includeAndroid = false)
+    robolectric()
 }

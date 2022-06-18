@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class AppsViewModel @Inject constructor(
@@ -178,8 +177,9 @@ class AppsViewModel @Inject constructor(
     fun handleAppUninstall(packageName: String) {
         launch {
             appDrawerRepo.getAppBy(packageName)?.let { app ->
-                removeFromFavorites(app)
-                removeFromHiddenApps(app)
+                // calling suspend repo methods to execute sequentially
+                favoritesRepo.removeFromFavorites(app.packageName)
+                hiddenAppsRepo.removeFromHiddenApps(app.packageName)
                 appDrawerRepo.removeApp(app)
             }
         }

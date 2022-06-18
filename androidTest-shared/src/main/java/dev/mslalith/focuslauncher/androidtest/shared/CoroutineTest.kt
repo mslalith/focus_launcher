@@ -15,7 +15,9 @@ open class CoroutineTest {
     @get:Rule
     val coroutineTestRule = MainCoroutineRule()
 
+    protected val testDispatcher = coroutineTestRule.newCoroutineScope()
+
     protected fun runCoroutineTest(
         testBody: suspend TestScope.() -> Unit
-    ) = runTest(testBody = testBody)
+    ) = testDispatcher.runTest(testBody = testBody)
 }
