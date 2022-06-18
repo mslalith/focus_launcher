@@ -58,7 +58,7 @@ tasks.register("clean", Delete::class) {
  */
 tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
     checkForGradleUpdate = false // not required to run on every build
-    gradleReleaseChannel = GradleReleaseChannel.NIGHTLY.id
+    gradleReleaseChannel = GradleReleaseChannel.RELEASE_CANDIDATE.id
     outputFormatter = "plain,html"
     outputDir = "build/dependencyUpdates"
     reportfileName = "dependency_update_report"
