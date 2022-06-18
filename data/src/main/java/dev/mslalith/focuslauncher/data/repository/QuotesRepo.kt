@@ -11,8 +11,8 @@ import dev.mslalith.focuslauncher.data.model.Quote
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.QUOTES_LIMIT
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
@@ -23,6 +23,7 @@ import javax.inject.Inject
 class QuotesRepo @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesDao: QuotesDao,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher,
     @QuoteToRoomMapperProvider private val quoteToRoomMapper: QuoteToRoomMapper,
     @QuoteResponseToRoomMapperProvider private val quoteResponseToRoomMapper: QuoteResponseToRoomMapper
 ) {
@@ -59,7 +60,7 @@ class QuotesRepo @Inject constructor(
     suspend fun fetchQuotes(maxPages: Int) {
         _isFetchingQuotesStateFlow.value = true
         repeat(maxPages) {
-            withContext(Dispatchers.IO) { fetchPageQuotes(page = it + 1) }
+            withContext(appCoroutineDispatcher.io) { fetchPageQuotes(page = it + 1) }
         }
         _isFetchingQuotesStateFlow.value = false
     }

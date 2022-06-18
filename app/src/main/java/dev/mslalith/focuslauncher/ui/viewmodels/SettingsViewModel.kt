@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
@@ -27,13 +28,11 @@ import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPh
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.extensions.isDefaultLauncher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -42,6 +41,7 @@ class SettingsViewModel @Inject constructor(
     private val clockSettingsRepo: ClockSettingsRepo,
     private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
     private val quotesSettingsRepo: QuotesSettingsRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     /**
@@ -99,9 +99,8 @@ class SettingsViewModel @Inject constructor(
     fun toggleShowQuotes() { launch { quotesSettingsRepo.toggleShowQuotes() } }
 
     private fun launch(
-        coroutineContext: CoroutineContext = Dispatchers.IO,
         run: suspend () -> Unit,
-    ) = viewModelScope.launch(coroutineContext) { run() }
+    ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
         initialValue: T

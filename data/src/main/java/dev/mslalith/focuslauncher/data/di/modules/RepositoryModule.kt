@@ -27,6 +27,7 @@ import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -90,11 +91,13 @@ object RepositoryModule {
     fun provideQuotesRepo(
         quotesApi: QuotesApi,
         quotesDao: QuotesDao,
+        appCoroutineDispatcher: AppCoroutineDispatcher,
         @QuoteToRoomMapperProvider quoteToRoomMapper: QuoteToRoomMapper,
         @QuoteResponseToRoomMapperProvider quoteResponseToRoomMapper: QuoteResponseToRoomMapper
     ): QuotesRepo = QuotesRepo(
         quotesApi = quotesApi,
         quotesDao = quotesDao,
+        appCoroutineDispatcher = appCoroutineDispatcher,
         quoteToRoomMapper = quoteToRoomMapper,
         quoteResponseToRoomMapper = quoteResponseToRoomMapper
     )

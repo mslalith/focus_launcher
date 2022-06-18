@@ -9,9 +9,9 @@ import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_STATE
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_STATE
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -19,13 +19,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class WidgetsViewModel @Inject constructor(
     private val clockRepo: ClockRepo,
     private val lunarPhaseRepo: LunarPhaseDetailsRepo,
-    private val quotesRepo: QuotesRepo
+    private val quotesRepo: QuotesRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     init {
@@ -68,9 +68,8 @@ class WidgetsViewModel @Inject constructor(
     }
 
     private fun launch(
-        coroutineContext: CoroutineContext = Dispatchers.IO,
         run: suspend CoroutineScope.() -> Unit
-    ) = viewModelScope.launch(coroutineContext) { run() }
+    ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
         initialValue: T

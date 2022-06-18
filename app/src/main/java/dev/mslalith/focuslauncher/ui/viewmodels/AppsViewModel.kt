@@ -11,7 +11,6 @@ import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -138,7 +137,7 @@ class AppsViewModel @Inject constructor(
         }
         launch {
             favoritesRepo.reorderFavorite(app, withApp)
-            withContext(Dispatchers.Main) {
+            withContext(appCoroutineDispatcher.main) {
                 onReordered()
             }
         }
