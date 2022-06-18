@@ -7,6 +7,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
 import dev.mslalith.focuslauncher.androidtest.shared.FakeQuotesApi
+import dev.mslalith.focuslauncher.androidtest.shared.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
@@ -35,6 +36,7 @@ class QuotesRepoTest : CoroutineTest() {
         quotesRepo = QuotesRepo(
             quotesApi = FakeQuotesApi(),
             quotesDao = database.quotesDao(),
+            appCoroutineDispatcher = TestAppCoroutineDispatcher(testDispatcher.coroutineContext),
             quoteToRoomMapper = QuoteToRoomMapper(database.quotesDao()),
             quoteResponseToRoomMapper = QuoteResponseToRoomMapper()
         )
