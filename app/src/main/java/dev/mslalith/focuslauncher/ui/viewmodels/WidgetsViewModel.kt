@@ -68,7 +68,7 @@ class WidgetsViewModel @Inject constructor(
     }
 
     private fun launch(
-        coroutineContext: CoroutineContext = Dispatchers.Main,
+        coroutineContext: CoroutineContext = Dispatchers.IO,
         run: suspend CoroutineScope.() -> Unit
     ) = viewModelScope.launch(coroutineContext) { run() }
 
