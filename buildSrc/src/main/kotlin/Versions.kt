@@ -16,7 +16,7 @@ object Versions {
 
     const val COMPOSE = "1.2.0-beta01"
     const val LIFECYCLE_RUNTIME_KTX = "2.5.0-rc01"
-    const val ACTIVITY_COMPOSE = "1.6.0-alpha03"
+    const val ACTIVITY_COMPOSE = "1.5.0-rc01"
     const val CONSTRAINT_LAYOUT_COMPOSE = "1.0.0"
     const val NAVIGATION_COMPOSE = "2.5.0-rc01"
     const val LIFECYCLE_VIEWMODEL_COMPOSE = "2.5.0-rc01"
