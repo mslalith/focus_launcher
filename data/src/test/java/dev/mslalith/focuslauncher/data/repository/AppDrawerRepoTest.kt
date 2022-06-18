@@ -3,15 +3,14 @@ package dev.mslalith.focuslauncher.data.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import app.cash.turbine.test
+import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
 import dev.mslalith.focuslauncher.androidtest.shared.TestApps
+import dev.mslalith.focuslauncher.androidtest.shared.awaitItemAndCancel
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceTimeBy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -43,18 +42,14 @@ class AppDrawerRepoTest : CoroutineTest() {
 
     @Test
     fun getAllAppsFlow() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Youtube)
-        val job = launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                expectNoEvents()
-            }
-        }
+        val testApps = listOf(TestApps.Chrome, TestApps.Youtube)
 
-        advanceTimeBy(100)
-        appDrawerRepo.addApps(apps)
-        job.join()
+        var apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        appDrawerRepo.addApps(testApps)
+        apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
     }
 
     @Test
@@ -67,56 +62,44 @@ class AppDrawerRepoTest : CoroutineTest() {
 
     @Test
     fun addApps() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Youtube)
-        val job = launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                expectNoEvents()
-            }
-        }
+        val testApps = listOf(TestApps.Chrome, TestApps.Youtube)
 
-        advanceTimeBy(100)
-        appDrawerRepo.addApps(apps)
-        job.join()
+        var apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        appDrawerRepo.addApps(testApps)
+        apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
     }
 
     @Test
     fun addApp() = runCoroutineTest {
-        val app = TestApps.Chrome
-        val job = launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(listOf(app))
-                expectNoEvents()
-            }
-        }
+        val testApp = TestApps.Chrome
 
-        advanceTimeBy(100)
-        appDrawerRepo.addApp(app)
-        job.join()
+        var apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        appDrawerRepo.addApp(testApp)
+        apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(listOf(testApp))
     }
 
     @Test
     fun removeApp() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Youtube)
-        val appToRemove = apps.first()
-        val appsAfterRemoving = apps.filter { it.packageName != appToRemove.packageName }
+        val testApps = listOf(TestApps.Chrome, TestApps.Youtube)
+        val appToRemove = testApps.first()
+        val appsAfterRemoving = testApps.filter { it.packageName != appToRemove.packageName }
 
-        val job = launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                assertThat(awaitItem()).isEqualTo(appsAfterRemoving)
-                expectNoEvents()
-            }
-        }
+        var apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
 
-        advanceTimeBy(100)
-        appDrawerRepo.addApps(apps)
-        advanceTimeBy(100)
+        appDrawerRepo.addApps(testApps)
+        apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
+
         appDrawerRepo.removeApp(appToRemove)
-        job.join()
+        apps = appDrawerRepo.allAppsFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(appsAfterRemoving)
     }
 
     @Test
