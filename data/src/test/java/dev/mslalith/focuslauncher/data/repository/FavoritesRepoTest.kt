@@ -3,16 +3,15 @@ package dev.mslalith.focuslauncher.data.repository
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import app.cash.turbine.test
+import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
 import dev.mslalith.focuslauncher.androidtest.shared.TestApps
+import dev.mslalith.focuslauncher.androidtest.shared.awaitItemAndCancel
 import dev.mslalith.focuslauncher.data.database.AppDatabase
 import dev.mslalith.focuslauncher.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.FavoriteToRoomMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceTimeBy
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -26,13 +25,13 @@ class FavoritesRepoTest : CoroutineTest() {
     private lateinit var database: AppDatabase
     private lateinit var favoritesRepo: FavoritesRepo
 
+    private val appToRoomMapper = AppToRoomMapper()
+
     @Before
-    fun setUp() = runCoroutineTest {
-        val appToRoomMapper = AppToRoomMapper()
+    fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .allowMainThreadQueries().build()
-        database.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
         favoritesRepo = FavoritesRepo(
             appsDao = database.appsDao(),
             favoriteAppsDao = database.favoriteAppsDao(),
@@ -49,104 +48,95 @@ class FavoritesRepoTest : CoroutineTest() {
         database.close()
     }
 
+    private suspend fun addTestApps() {
+        database.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
+    }
+
     @Test
     fun getOnlyFavoritesFlow() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Phone)
-        val job = launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                expectNoEvents()
-            }
-        }
+        addTestApps()
+        val testApps = listOf(TestApps.Chrome, TestApps.Phone)
 
-        advanceTimeBy(100)
-        favoritesRepo.addToFavorites(apps)
-        job.join()
+        var apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        favoritesRepo.addToFavorites(testApps)
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
     }
 
     @Test
     fun addToFavorites() = runCoroutineTest {
-        val app = TestApps.Chrome
-        val job = launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(listOf(app))
-                expectNoEvents()
-            }
-        }
+        addTestApps()
+        val testApp = TestApps.Chrome
 
-        advanceTimeBy(100)
-        favoritesRepo.addToFavorites(app)
-        job.join()
+        var apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        favoritesRepo.addToFavorites(testApp)
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(listOf(testApp))
     }
 
     @Test
     fun reorderFavorite() = runCoroutineTest {
+        addTestApps()
         val initialFavorites = listOf(TestApps.Chrome, TestApps.Phone, TestApps.Youtube)
         favoritesRepo.addToFavorites(initialFavorites)
         val reorderedFavorites = initialFavorites.asReversed()
 
-        val job = launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEqualTo(initialFavorites)
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(reorderedFavorites)
-                expectNoEvents()
-            }
-        }
+        var apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(initialFavorites)
 
-        advanceTimeBy(100)
         favoritesRepo.reorderFavorite(initialFavorites.first(), initialFavorites.last())
-        job.join()
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(reorderedFavorites)
     }
 
     @Test
     fun removeFromFavorites() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Phone)
-        val appToRemove = apps.first()
-        val appsAfterRemoving = apps.filter { it.packageName != appToRemove.packageName }
+        addTestApps()
+        val testApps = listOf(TestApps.Chrome, TestApps.Phone)
+        val appToRemove = testApps.first()
+        val appsAfterRemoving = testApps.filter { it.packageName != appToRemove.packageName }
 
-        val job = launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                assertThat(awaitItem()).isEqualTo(appsAfterRemoving)
-                expectNoEvents()
-            }
-        }
+        var apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
 
-        advanceTimeBy(100)
-        favoritesRepo.addToFavorites(apps)
-        advanceTimeBy(100)
+        favoritesRepo.addToFavorites(testApps)
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
+
         favoritesRepo.removeFromFavorites(appToRemove.packageName)
-        job.join()
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(appsAfterRemoving)
     }
 
     @Test
     fun clearFavorites() = runCoroutineTest {
-        val apps = listOf(TestApps.Chrome, TestApps.Youtube)
-        val job = launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps)
-                assertThat(awaitItem()).isEmpty()
-                expectNoEvents()
-            }
-        }
+        addTestApps()
+        val testApps = listOf(TestApps.Chrome, TestApps.Youtube)
 
-        advanceTimeBy(100)
-        favoritesRepo.addToFavorites(apps)
-        advanceTimeBy(100)
+        var apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
+
+        favoritesRepo.addToFavorites(testApps)
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEqualTo(testApps)
+
         favoritesRepo.clearFavorites()
-        job.join()
+        apps = favoritesRepo.onlyFavoritesFlow.testIn(this).awaitItemAndCancel()
+        assertThat(apps).isEmpty()
     }
 
     @Test
     fun isFavorite() = runCoroutineTest {
+        addTestApps()
         val app = TestApps.Chrome
+
         favoritesRepo.addToFavorites(app)
         assertThat(favoritesRepo.isFavorite(app.packageName)).isTrue()
+
         favoritesRepo.removeFromFavorites(app.packageName)
         assertThat(favoritesRepo.isFavorite(app.packageName)).isFalse()
     }
