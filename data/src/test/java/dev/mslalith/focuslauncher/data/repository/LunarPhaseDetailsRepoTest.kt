@@ -1,11 +1,10 @@
 package dev.mslalith.focuslauncher.data.repository
 
-import app.cash.turbine.test
+import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
+import dev.mslalith.focuslauncher.androidtest.shared.awaitItemAndCancel
 import dev.mslalith.focuslauncher.data.model.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -41,47 +40,33 @@ class LunarPhaseDetailsRepoTest {
     fun getLunarPhaseDetailsStateFlow() = runTest {
         val instants = getConsecutiveInstants(max = 2)
 
-        val job = launch {
-            lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.test {
-                assertThat(awaitItem()).isInstanceOf(State.Error::class.java)
-                instants.forEach { instant ->
-                    val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
-                    val lunarPhase = (awaitItem() as State.Success).value.lunarPhase
-                    assertThat(lunarPhase).isEqualTo(lunarPhaseDetails.lunarPhase)
-                }
-                expectNoEvents()
-            }
-        }
+        var lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
+        assertThat(lunarPhaseDetails).isInstanceOf(State.Error::class.java)
 
         instants.forEach { instant ->
-            delay(100)
             lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
+            lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
+            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
+
+            val lunarPhase = (lunarPhaseDetails as State.Success).value.lunarPhase
+            assertThat(lunarPhase).isEqualTo(actualLunarPhaseDetails.lunarPhase)
         }
-        job.join()
     }
 
     @Test
     fun getUpcomingLunarPhaseStateFlow() = runTest {
         val instants = getConsecutiveInstants(max = 1)
 
-        val job = launch {
-            lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.test {
-                assertThat(awaitItem()).isInstanceOf(State.Error::class.java)
-                instants.forEach { instant ->
-                    val lunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
-                    val upcomingLunarPhase =
-                        lunarPhaseDetailsRepo.findUpcomingMoonPhaseFor(lunarPhaseDetails.direction)
-                    val lunarPhase = (awaitItem() as State.Success).value.lunarPhase
-                    assertThat(lunarPhase).isEqualTo(upcomingLunarPhase.lunarPhase)
-                }
-                expectNoEvents()
-            }
-        }
+        var lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
+        assertThat(lunarPhaseDetails).isInstanceOf(State.Error::class.java)
 
         instants.forEach { instant ->
-            delay(100)
             lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
+            lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
+            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
+
+            val lunarPhase = (lunarPhaseDetails as State.Success).value.lunarPhase
+            assertThat(lunarPhase).isEqualTo(actualLunarPhaseDetails.lunarPhase)
         }
-        job.join()
     }
 }
