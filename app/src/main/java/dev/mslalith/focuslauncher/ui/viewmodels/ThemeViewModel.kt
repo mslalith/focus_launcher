@@ -9,18 +9,18 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.di.modules.ThemeProvider
 import dev.mslalith.focuslauncher.data.models.Theme
-import kotlinx.coroutines.Dispatchers
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    @ThemeProvider private val themeDataStore: DataStore<Preferences>
+    @ThemeProvider private val themeDataStore: DataStore<Preferences>,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     val currentThemeStateFlow = currentThemeFlow.withinScope(initialValue = null)
@@ -36,9 +36,8 @@ class ThemeViewModel @Inject constructor(
     }
 
     private fun launch(
-        coroutineContext: CoroutineContext = Dispatchers.IO,
         run: suspend () -> Unit,
-    ) = viewModelScope.launch(coroutineContext) { run() }
+    ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
         initialValue: T
