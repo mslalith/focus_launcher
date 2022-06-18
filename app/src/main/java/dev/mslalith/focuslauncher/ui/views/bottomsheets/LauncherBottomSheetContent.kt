@@ -35,7 +35,7 @@ fun LauncherBottomSheetContent() {
                 is Clock -> ClockSettingsSheet(properties = properties)
                 is LunarPhase -> LunarPhaseSettingsSheet(properties = properties)
                 is Quotes -> QuotesSettingsSheet(properties = properties)
-                null -> VerticalSpacer(spacing = 0.2.dp)
+                null -> VerticalSpacer(spacing = 0.5.dp)
             }
         }
     }

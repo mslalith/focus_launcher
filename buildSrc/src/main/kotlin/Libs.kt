@@ -54,12 +54,17 @@ object Libs {
     const val testTruth = "com.google.truth:truth:${Versions.TEST_TRUTH}"
     const val testAndroidXJUnit = "androidx.test.ext:junit:${Versions.TEST_ANDROIDX_JUNIT}"
     const val testAndroidXEspresso = "androidx.test.espresso:espresso-core:${Versions.TEST_ANDROIDX_ESPRESSO}"
-    const val testComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
     const val testKotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.TEST_KOTLIN_COROUTINES}"
     const val testTurbine = "app.cash.turbine:turbine:${Versions.TEST_TURBINE}"
     const val testAndroidxCoreKtx = "androidx.test:core-ktx:${Versions.TEST_ANDROIDX_CORE_KTX}"
     const val testAndroidxCoreTesting = "androidx.arch.core:core-testing:${Versions.TEST_ANDROIDX_CORE_TESTING}"
     const val testRobolectric = "org.robolectric:robolectric:${Versions.TEST_ROBOLECTRIC}"
+
+    const val testComposeUiTestJunit = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}"
+    const val testComposeUiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.COMPOSE}"
+
+    const val testHiltAndroidTesting = "com.google.dagger:hilt-android-testing:${Versions.HILT}"
+    const val testHiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
 }
 
 /**
@@ -142,6 +147,7 @@ fun DependencyHandler.junit(includeAndroid: Boolean) {
     if (includeAndroid) {
         androidTestImplementation(Libs.testAndroidXJUnit)
         androidTestImplementation(Libs.testAndroidXEspresso)
+        androidTestImplementation(Libs.testAndroidxCoreKtx)
     }
 }
 
@@ -165,12 +171,32 @@ fun DependencyHandler.turbine(includeAndroid: Boolean = true) {
     if (includeAndroid) androidTestImplementation(Libs.testTurbine)
 }
 
+fun DependencyHandler.composeTest(includeAndroid: Boolean = false) {
+    testImplementation(Libs.testComposeUiTestJunit)
+    if (includeAndroid) androidTestImplementation(Libs.testComposeUiTestJunit)
+    debugImplementation(Libs.testComposeUiTestManifest)
+    testImplementation(Libs.testAndroidXEspresso)
+    if (includeAndroid) androidTestImplementation(Libs.testAndroidXEspresso)
+    testImplementation(Libs.testAndroidxCoreTesting)
+    if (includeAndroid) androidTestImplementation(Libs.testAndroidxCoreTesting)
+}
+
+fun DependencyHandler.hiltTest(includeAndroid: Boolean = false) {
+    testImplementation(Libs.testHiltAndroidTesting)
+    if (includeAndroid) androidTestImplementation(Libs.testHiltAndroidTesting)
+    kaptTest(Libs.testHiltAndroidCompiler)
+}
+
 
 /**
  * Helper methods
  */
 private fun DependencyHandler.implementation(depName: String) {
     add("implementation", depName)
+}
+
+private fun DependencyHandler.kaptTest(depName: String) {
+    add("kaptTest", depName)
 }
 
 private fun DependencyHandler.kapt(depName: String) {
@@ -183,6 +209,10 @@ private fun DependencyHandler.ksp(depName: String) {
 
 private fun DependencyHandler.testImplementation(depName: String) {
     add("testImplementation", depName)
+}
+
+private fun DependencyHandler.debugImplementation(depName: String) {
+    add("debugImplementation", depName)
 }
 
 private fun DependencyHandler.androidTestImplementation(depName: String) {
