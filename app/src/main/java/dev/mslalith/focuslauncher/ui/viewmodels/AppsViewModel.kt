@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.data.model.SelectedApp
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,7 @@ class AppsViewModel @Inject constructor(
     private val appDrawerRepo: AppDrawerRepo,
     private val favoritesRepo: FavoritesRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     /**
@@ -108,7 +110,7 @@ class AppsViewModel @Inject constructor(
             }
 
     fun setAppsIfCacheEmpty(context: Context, checkCache: Boolean = true) {
-        viewModelScope.launch {
+        launch {
             appDrawerRepo.apply {
                 if (checkCache) {
                     if (areAppsEmptyInDatabase()) {
@@ -184,9 +186,8 @@ class AppsViewModel @Inject constructor(
     }
 
     private fun launch(
-        coroutineContext: CoroutineContext = Dispatchers.IO,
         run: suspend () -> Unit,
-    ) = viewModelScope.launch(coroutineContext) { run() }
+    ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
         initialValue: T,
