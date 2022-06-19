@@ -14,5 +14,5 @@ sealed class BottomSheetContentType {
 enum class WidgetType(val text: String) {
     CLOCK(text = "Clock"),
     LUNAR_PHASE(text = "Lunar Phase"),
-    QUOTES(text = "Quotes")
+    // QUOTES(text = "Quotes")
 }

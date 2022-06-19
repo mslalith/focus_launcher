@@ -41,7 +41,6 @@ import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
-import dev.mslalith.focuslauncher.data.models.QuotesSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
@@ -243,14 +242,14 @@ private fun Widgets(
                                 ),
                             )
                         }
-                        WidgetType.QUOTES -> onWidgetTypeClick {
-                            BottomSheetContentType.Widgets.Quotes(
-                                properties = QuotesSettingsProperties(
-                                    widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
-                                ),
-                            )
-                        }
+                        // WidgetType.QUOTES -> onWidgetTypeClick {
+                        //     BottomSheetContentType.Widgets.Quotes(
+                        //         properties = QuotesSettingsProperties(
+                        //             widgetsViewModel = widgetsViewModel,
+                        //             settingsViewModel = settingsViewModel,
+                        //         ),
+                        //     )
+                        // }
                     }
                 },
             )
