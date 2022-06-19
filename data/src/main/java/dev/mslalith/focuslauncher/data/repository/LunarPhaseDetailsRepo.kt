@@ -4,17 +4,20 @@ import androidx.annotation.VisibleForTesting
 import dev.mslalith.focuslauncher.data.model.LunarPhase
 import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
 import dev.mslalith.focuslauncher.data.model.LunarPhaseDirection
+import dev.mslalith.focuslauncher.data.model.RiseAndSetDetails
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.data.model.toLunarPhase
+import dev.mslalith.focuslauncher.data.extensions.toKotlinxLocalDateTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaInstant
 import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPhase
+import org.shredzone.commons.suncalc.MoonTimes
+import org.shredzone.commons.suncalc.SunTimes
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -46,14 +49,24 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     }
 
     @VisibleForTesting
-    fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails =
-        MoonIllumination.compute().on(instant.toJavaInstant()).execute().run {
-            LunarPhaseDetails(
-                lunarPhase = closestPhase.toLunarPhase(),
-                illumination = fraction,
-                phaseAngle = phase,
+    fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails {
+        val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
+        val moonTimes = MoonTimes.compute().today().at(17.6868, 83.2185).execute()
+        val sunTimes = SunTimes.compute().today().at(17.6868, 83.2185).execute()
+        return LunarPhaseDetails(
+            lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
+            illumination = moonIllumination.fraction,
+            phaseAngle = moonIllumination.phase,
+            moonRiseAndSetDetails = RiseAndSetDetails(
+                riseDateTime = moonTimes.rise?.toKotlinxLocalDateTime(),
+                setDateTime = moonTimes.set?.toKotlinxLocalDateTime()
+            ),
+            sunRiseAndSetDetails = RiseAndSetDetails(
+                riseDateTime = sunTimes.rise?.toKotlinxLocalDateTime(),
+                setDateTime = sunTimes.set?.toKotlinxLocalDateTime()
             )
-        }
+        )
+    }
 
     @VisibleForTesting
     fun findUpcomingMoonPhaseFor(lunarPhaseDirection: LunarPhaseDirection) =
@@ -64,15 +77,9 @@ class LunarPhaseDetailsRepo @Inject constructor() {
 
     private fun findUpcomingLunarPhaseOf(lunarPhase: LunarPhase): UpcomingLunarPhase {
         val moonPhase = MoonPhase.compute().phase(lunarPhase.toMoonPhase()).execute()
-        val localDateTime = try {
-            val isoString = moonPhase.time.toString().substringBefore(delimiter = ".")
-            LocalDateTime.parse(isoString)
-        } catch (ex: Exception) {
-            null
-        }
         return UpcomingLunarPhase(
             lunarPhase = lunarPhase,
-            dateTime = localDateTime,
+            dateTime = moonPhase.time.toKotlinxLocalDateTime(),
             isMicroMoon = moonPhase.isMicroMoon,
             isSuperMoon = moonPhase.isSuperMoon,
         )

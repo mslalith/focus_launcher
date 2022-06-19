@@ -1,7 +1,9 @@
-package dev.mslalith.focuslauncher.data.utils
+package dev.mslalith.focuslauncher.data.extensions
 
 import android.os.Handler
 import android.os.Looper
+import kotlinx.datetime.LocalDateTime
+import java.time.ZonedDateTime
 
 fun runAfter(delayMillis: Long, action: () -> Unit) = Handler(Looper.getMainLooper()).postDelayed(action, delayMillis)
 
@@ -16,4 +18,11 @@ fun waitAndRunAfter(
         delayMillis = waitTimeMillis,
         action = action,
     )
+}
+
+fun ZonedDateTime.toKotlinxLocalDateTime() = try {
+    val isoString = this.toString().substringBefore(delimiter = "+")
+    LocalDateTime.parse(isoString)
+} catch (ex: Exception) {
+    null
 }

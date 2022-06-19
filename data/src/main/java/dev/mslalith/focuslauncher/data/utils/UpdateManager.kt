@@ -10,6 +10,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallErrorCode
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import dev.mslalith.focuslauncher.data.extensions.waitAndRunAfter
 import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckForUpdates
 import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckingForUpdates
 import dev.mslalith.focuslauncher.data.utils.AppUpdateState.DownloadFailed

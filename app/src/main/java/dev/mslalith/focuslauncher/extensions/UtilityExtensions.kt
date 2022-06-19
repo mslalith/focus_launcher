@@ -2,8 +2,6 @@ package dev.mslalith.focuslauncher.extensions
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Handler
-import android.os.Looper
 import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import kotlinx.datetime.Clock
@@ -14,21 +12,6 @@ import kotlinx.datetime.toLocalDateTime
 import java.time.Month
 import java.time.ZonedDateTime
 import java.util.Locale
-
-fun runAfter(delayMillis: Long, action: () -> Unit) = Handler(Looper.getMainLooper()).postDelayed(action, delayMillis)
-
-fun waitAndRunAfter(
-    startTime: Long,
-    minTime: Long = 2000L,
-    action: () -> Unit,
-) {
-    val elapsedTime = System.currentTimeMillis() - startTime
-    val waitTimeMillis = if (elapsedTime < minTime) minTime - elapsedTime else 0
-    runAfter(
-        delayMillis = waitTimeMillis,
-        action = action,
-    )
-}
 
 fun Instant.formatToTime(): String {
     return toLocalDateTime(TimeZone.currentSystemDefault()).run {
@@ -73,6 +56,7 @@ fun LocalDateTime.inShortReadableFormat(): String {
 }
 
 fun Double.asPercent(precision: Int = 2) = "%.${precision}f".format(this) + "%"
+fun Double.limitDecimals(precision: Int = 2) = "%.${precision}f".format(this)
 
 fun Char.isAlphabet() = when (code) {
     in 65..90 -> true

@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateOffsetAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ fun LunarCalendar(
     height: Dp = 74.dp,
     iconSize: Dp = 40.dp,
     horizontalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null
 ) {
     val showLunarPhase by settingsViewModel.showLunarPhaseStateFlow.collectAsState()
     val showIlluminationPercent by settingsViewModel.showIlluminationPercentStateFlow.collectAsState()
@@ -67,6 +69,7 @@ fun LunarCalendar(
             height = height,
             iconSize = iconSize,
             horizontalPadding = horizontalPadding,
+            onClick = onClick
         )
     }
 }
@@ -81,10 +84,12 @@ fun LunarCalendarContent(
     height: Dp = 74.dp,
     iconSize: Dp = 40.dp,
     horizontalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null
 ) {
     ListItem(
         modifier = Modifier
             .height(height = height)
+            .clickable(enabled = onClick != null) { onClick?.invoke() }
             .padding(horizontal = horizontalPadding),
         icon = {
             lunarPhaseDetails.getOrNull()?.let {
@@ -116,7 +121,7 @@ fun LunarCalendarContent(
 }
 
 @Composable
-private fun LunarPhaseMoonIcon(
+fun LunarPhaseMoonIcon(
     modifier: Modifier = Modifier,
     lunarPhaseDetails: LunarPhaseDetails,
     moonSize: Dp = 40.dp,
