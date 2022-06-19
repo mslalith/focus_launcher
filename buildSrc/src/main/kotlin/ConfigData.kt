@@ -1,5 +1,5 @@
 object ConfigData {
-    const val MIN_SDK = 21
+    const val MIN_SDK = 26
     const val TARGET_SDK = 31
     const val BUILD_TOOLS = "30.0.3"
 
