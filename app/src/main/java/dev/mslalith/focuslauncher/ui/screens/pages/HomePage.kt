@@ -78,6 +78,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
+import dev.mslalith.focuslauncher.ui.views.dialogs.LunarPhaseDetailsDialog
 import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
@@ -108,6 +109,7 @@ fun HomePage(
 ) {
     val context = LocalContext.current
     val enablePullDownNotificationShade by settingsViewModel.notificationShadeStateFlow.collectAsState()
+    val showMoonCalendarDetailsDialog by widgetsViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsState()
 
     CompositionLocalProvider(LocalHomePadding provides HomePadding()) {
         val contentPaddingValues = LocalHomePadding.current.contentPaddingValues
@@ -132,6 +134,7 @@ fun HomePage(
                 SpacedMoonCalendar(
                     settingsViewModel = settingsViewModel,
                     widgetsViewModel = widgetsViewModel,
+                    onMoonCalendarClick = widgetsViewModel::showMoonCalendarDetailsDialog
                 )
                 Box(modifier = Modifier.weight(1f)) {
                     DecoratedQuote(
@@ -150,6 +153,13 @@ fun HomePage(
             }
         }
     }
+
+    if (showMoonCalendarDetailsDialog) {
+        LunarPhaseDetailsDialog(
+            widgetsViewModel = widgetsViewModel,
+            onClose = widgetsViewModel::hideMoonCalendarDetailsDialog
+        )
+    }
 }
 
 @Composable
@@ -157,6 +167,7 @@ private fun SpacedMoonCalendar(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
+    onMoonCalendarClick: () -> Unit
 ) {
     val homePadding = LocalHomePadding.current
     val startPadding = homePadding.contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
@@ -170,12 +181,13 @@ private fun SpacedMoonCalendar(
             widgetsViewModel = widgetsViewModel,
             iconSize = iconSize,
             horizontalPadding = startOffsetPadding,
+            onClick = onMoonCalendarClick
         )
     }
 }
 
 @Composable
-fun DecoratedQuote(
+private fun DecoratedQuote(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,

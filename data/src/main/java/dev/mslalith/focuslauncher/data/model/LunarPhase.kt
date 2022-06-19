@@ -13,10 +13,17 @@ import dev.mslalith.focuslauncher.data.model.LunarPhaseDirection.NEW_TO_FULL
 import kotlinx.datetime.LocalDateTime
 import org.shredzone.commons.suncalc.MoonPhase
 
+data class RiseAndSetDetails(
+    val riseDateTime: LocalDateTime?,
+    val setDateTime: LocalDateTime?
+)
+
 data class LunarPhaseDetails(
     val lunarPhase: LunarPhase,
     val illumination: Double,
     val phaseAngle: Double,
+    val moonRiseAndSetDetails: RiseAndSetDetails,
+    val sunRiseAndSetDetails: RiseAndSetDetails
 ) {
     val direction: LunarPhaseDirection
         get() = when (lunarPhase) {

@@ -13,7 +13,9 @@ import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -51,6 +53,18 @@ class WidgetsViewModel @Inject constructor(
      */
     val lunarPhaseDetailsStateFlow = lunarPhaseRepo.lunarPhaseDetailsStateFlow.withinScope(INITIAL_LUNAR_PHASE_DETAILS_STATE)
     val upcomingLunarPhaseStateFlow = lunarPhaseRepo.upcomingLunarPhaseStateFlow.withinScope(INITIAL_UPCOMING_LUNAR_PHASE_STATE)
+
+    private val _showMoonCalendarDetailsDialogStateFlow = MutableStateFlow(false)
+    val showMoonCalendarDetailsDialogStateFlow: StateFlow<Boolean>
+        get() = _showMoonCalendarDetailsDialogStateFlow
+
+    fun showMoonCalendarDetailsDialog() {
+        _showMoonCalendarDetailsDialogStateFlow.value = true
+    }
+
+    fun hideMoonCalendarDetailsDialog() {
+        _showMoonCalendarDetailsDialogStateFlow.value = false
+    }
 
     /**
      * Quotes
