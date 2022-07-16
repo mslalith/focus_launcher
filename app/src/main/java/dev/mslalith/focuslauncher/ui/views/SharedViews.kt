@@ -42,6 +42,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 
 @Composable
@@ -94,6 +97,21 @@ fun AppBarWithBackIcon(
         title = { Text(text = title) },
         actions = actions,
     )
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun PermissionRequired(
+    permissions: List<String>,
+    onPermissionDenied: (List<PermissionState>) -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val permissionsState = rememberMultiplePermissionsState(permissions = permissions)
+
+    when {
+        permissionsState.allPermissionsGranted -> content()
+        else -> onPermissionDenied(permissionsState.revokedPermissions)
+    }
 }
 
 @Composable

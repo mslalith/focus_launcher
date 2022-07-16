@@ -88,7 +88,12 @@ class SettingsViewModel @Inject constructor(
     val showIlluminationPercentStateFlow = lunarPhaseSettingsRepo.showIlluminationPercentFlow.withinScope(DEFAULT_SHOW_ILLUMINATION_PERCENT)
     val showUpcomingPhaseDetailsStateFlow = lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.withinScope(DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
 
-    fun toggleShowLunarPhase() { launch { lunarPhaseSettingsRepo.toggleShowLunarPhase() } }
+    fun showLunarPhase() {
+        launch { if (showLunarPhaseStateFlow.value.not()) lunarPhaseSettingsRepo.toggleShowLunarPhase() }
+    }
+    fun hideLunarPhase() {
+        launch { if (showLunarPhaseStateFlow.value) lunarPhaseSettingsRepo.toggleShowLunarPhase() }
+    }
     fun toggleShowIlluminationPercent() { launch { lunarPhaseSettingsRepo.toggleShowIlluminationPercent() } }
     fun toggleShowUpcomingPhaseDetails() { launch { lunarPhaseSettingsRepo.toggleShowUpcomingPhaseDetails() } }
 

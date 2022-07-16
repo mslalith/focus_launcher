@@ -59,6 +59,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.extensions.FillSpacer
@@ -77,6 +78,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
+import dev.mslalith.focuslauncher.ui.views.PermissionRequired
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
 import dev.mslalith.focuslauncher.ui.views.dialogs.LunarPhaseDetailsDialog
 import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
@@ -131,7 +133,7 @@ fun HomePage(
                     widgetsViewModel = widgetsViewModel,
                     horizontalPadding = horizontalPadding,
                 )
-                SpacedMoonCalendar(
+                PermissionProtectedMoonCalendar(
                     settingsViewModel = settingsViewModel,
                     widgetsViewModel = widgetsViewModel,
                     onMoonCalendarClick = widgetsViewModel::showMoonCalendarDetailsDialog
@@ -158,6 +160,30 @@ fun HomePage(
         LunarPhaseDetailsDialog(
             widgetsViewModel = widgetsViewModel,
             onClose = widgetsViewModel::hideMoonCalendarDetailsDialog
+        )
+    }
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun PermissionProtectedMoonCalendar(
+    modifier: Modifier = Modifier,
+    settingsViewModel: SettingsViewModel,
+    widgetsViewModel: WidgetsViewModel,
+    onMoonCalendarClick: () -> Unit
+) {
+    PermissionRequired(
+        permissions = listOf(
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+        ),
+        onPermissionDenied = { settingsViewModel.hideLunarPhase() }
+    ) {
+        SpacedMoonCalendar(
+            modifier = modifier,
+            settingsViewModel = settingsViewModel,
+            widgetsViewModel = widgetsViewModel,
+            onMoonCalendarClick = onMoonCalendarClick
         )
     }
 }
