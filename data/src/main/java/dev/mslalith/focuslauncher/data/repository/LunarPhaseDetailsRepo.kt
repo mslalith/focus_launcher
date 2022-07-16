@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.data.model.toLunarPhase
 import dev.mslalith.focuslauncher.data.extensions.toKotlinxLocalDateTime
+import dev.mslalith.focuslauncher.data.model.NextPhaseDetails
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -50,6 +51,8 @@ class LunarPhaseDetailsRepo @Inject constructor() {
 
     @VisibleForTesting
     fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails {
+        val nextNewMoon = MoonPhase.compute().phase(MoonPhase.Phase.NEW_MOON).execute()
+        val nextFullMoon = MoonPhase.compute().phase(MoonPhase.Phase.FULL_MOON).execute()
         val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
         val moonTimes = MoonTimes.compute().today().at(17.6868, 83.2185).execute()
         val sunTimes = SunTimes.compute().today().at(17.6868, 83.2185).execute()
@@ -57,6 +60,10 @@ class LunarPhaseDetailsRepo @Inject constructor() {
             lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
             illumination = moonIllumination.fraction,
             phaseAngle = moonIllumination.phase,
+            nextPhaseDetails = NextPhaseDetails(
+                newMoon = nextNewMoon.time?.toKotlinxLocalDateTime(),
+                fullMoon = nextFullMoon.time?.toKotlinxLocalDateTime()
+            ),
             moonRiseAndSetDetails = RiseAndSetDetails(
                 riseDateTime = moonTimes.rise?.toKotlinxLocalDateTime(),
                 setDateTime = moonTimes.set?.toKotlinxLocalDateTime()

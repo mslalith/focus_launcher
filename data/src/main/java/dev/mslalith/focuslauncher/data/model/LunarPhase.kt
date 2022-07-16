@@ -18,10 +18,16 @@ data class RiseAndSetDetails(
     val setDateTime: LocalDateTime?
 )
 
+data class NextPhaseDetails(
+    val newMoon: LocalDateTime?,
+    val fullMoon: LocalDateTime?
+)
+
 data class LunarPhaseDetails(
     val lunarPhase: LunarPhase,
     val illumination: Double,
     val phaseAngle: Double,
+    val nextPhaseDetails: NextPhaseDetails,
     val moonRiseAndSetDetails: RiseAndSetDetails,
     val sunRiseAndSetDetails: RiseAndSetDetails
 ) {
