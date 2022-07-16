@@ -40,7 +40,9 @@ fun ZonedDateTime.inShortReadableFormat(): String {
     return "$day$daySuffix $monthReadable"
 }
 
-fun LocalDateTime.inShortReadableFormat(): String {
+fun LocalDateTime.inShortReadableFormat(
+    shortMonthName: Boolean = false
+): String {
     val daySuffix = when (dayOfMonth) {
         1, 21, 31 -> "st"
         2, 22 -> "nd"
@@ -51,6 +53,7 @@ fun LocalDateTime.inShortReadableFormat(): String {
         month.toString()
             .lowercase(Locale.getDefault())
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            .run { if (shortMonthName) take(3) else this }
 
     return "$dayOfMonth$daySuffix $monthReadable"
 }

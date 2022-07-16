@@ -1,12 +1,15 @@
 package dev.mslalith.focuslauncher.ui.views.dialogs
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -26,11 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
+import dev.mslalith.focuslauncher.data.model.NextPhaseDetails
 import dev.mslalith.focuslauncher.data.model.getOrNull
 import dev.mslalith.focuslauncher.extensions.FillSpacer
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.asPercent
+import dev.mslalith.focuslauncher.extensions.inShortReadableFormat
 import dev.mslalith.focuslauncher.extensions.limitDecimals
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarPhaseMoonIcon
@@ -57,18 +62,24 @@ fun LunarPhaseDetailsDialog(
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(size = 12.dp))
                 .background(color = MaterialTheme.colors.primaryVariant)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 24.dp, vertical = 24.dp)
         ) {
             lunarPhaseDetails.getOrNull()?.let { phaseDetails ->
-                VerticalSpacer(spacing = 24.dp)
                 TodayLunarPhase(lunarPhaseDetails = phaseDetails)
 
-                VerticalSpacer(spacing = 24.dp)
-                Divider(color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f))
-                VerticalSpacer(spacing = 12.dp)
+                Divider(
+                    color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+
+                NextMajorPhaseDetails(phaseDetails.nextPhaseDetails)
+
+                Divider(
+                    color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
 
                 LunarRiseAndSetDetails(lunarPhaseDetails = phaseDetails)
-                VerticalSpacer(spacing = 24.dp)
             }
         }
     }
@@ -142,16 +153,109 @@ private fun TodayLunarMoonPhaseDetails(
 }
 
 @Composable
+private fun NextMajorPhaseDetails(
+    nextPhaseDetails: NextPhaseDetails,
+    textColor: Color = MaterialTheme.colors.onBackground,
+) {
+    Column {
+        Text(
+            text = "Upcoming Phases",
+            style = TextStyle(
+                color = textColor,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 1.2.sp,
+            ),
+        )
+
+        VerticalSpacer(spacing = 12.dp)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(intrinsicSize = IntrinsicSize.Min)
+        ) {
+            Box(modifier = Modifier.weight(weight = 1f)) {
+                NextSingleMajorPhaseDetails(
+                    illumination = 0.0,
+                    localDateTime = nextPhaseDetails.newMoon
+                )
+            }
+
+            HorizontalSpacer(spacing = 12.dp)
+
+            Box(modifier = Modifier.weight(weight = 1f)) {
+                NextSingleMajorPhaseDetails(
+                    illumination = 100.0,
+                    localDateTime = nextPhaseDetails.fullMoon
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun NextSingleMajorPhaseDetails(
+    illumination: Double,
+    localDateTime: LocalDateTime?,
+    textColor: Color = MaterialTheme.colors.onBackground,
+) {
+    val date = localDateTime?.inShortReadableFormat(shortMonthName = true) ?: "-"
+
+    val time = if (localDateTime != null) {
+        val javaInstant = localDateTime.toInstant(TimeZone.currentSystemDefault()).toJavaInstant()
+        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date.from(javaInstant))
+    } else "-"
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        LunarPhaseMoonIcon(
+            phaseAngle = 0.0,
+            illumination = illumination,
+            moonSize = 40.dp
+        )
+
+        HorizontalSpacer(spacing = 8.dp)
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = date,
+                style = TextStyle(
+                    color = textColor,
+                    fontSize = 14.sp,
+                    letterSpacing = 1.2.sp,
+                ),
+            )
+
+            VerticalSpacer(spacing = 4.dp)
+
+            Text(
+                text = time,
+                style = TextStyle(
+                    color = textColor,
+                    fontSize = 11.sp,
+                    letterSpacing = 1.2.sp,
+                ),
+            )
+        }
+    }
+}
+
+@Composable
 fun LunarRiseAndSetDetails(
     lunarPhaseDetails: LunarPhaseDetails,
 ) {
     RiseAndSetHeaders()
-    VerticalSpacer(spacing = 12.dp)
+    VerticalSpacer(spacing = 16.dp)
     RiseTimeDetails(
         moonRiseDateTime = lunarPhaseDetails.moonRiseAndSetDetails.riseDateTime,
         sunRiseDateTime = lunarPhaseDetails.sunRiseAndSetDetails.riseDateTime
     )
-    VerticalSpacer(spacing = 2.dp)
+    VerticalSpacer(spacing = 4.dp)
     SetTimeDetails(
         moonSetDateTime = lunarPhaseDetails.moonRiseAndSetDetails.setDateTime,
         sunSetDateTime = lunarPhaseDetails.sunRiseAndSetDetails.setDateTime
@@ -224,7 +328,7 @@ private fun RiseAndSetTime(
         text = time,
         style = TextStyle(
             color = textColor,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
             letterSpacing = 1.2.sp,
         ),
     )
