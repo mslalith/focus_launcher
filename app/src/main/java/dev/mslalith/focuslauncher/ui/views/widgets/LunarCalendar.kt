@@ -94,7 +94,8 @@ fun LunarCalendarContent(
         icon = {
             lunarPhaseDetails.getOrNull()?.let {
                 LunarPhaseMoonIcon(
-                    lunarPhaseDetails = it,
+                    phaseAngle = it.phaseAngle,
+                    illumination = it.illumination,
                     moonSize = iconSize,
                 )
             }
@@ -123,7 +124,8 @@ fun LunarCalendarContent(
 @Composable
 fun LunarPhaseMoonIcon(
     modifier: Modifier = Modifier,
-    lunarPhaseDetails: LunarPhaseDetails,
+    phaseAngle: Double,
+    illumination: Double,
     moonSize: Dp = 40.dp,
 ) {
     val illuminatedColor = Color(0xFFBCC1C5)
@@ -131,7 +133,7 @@ fun LunarPhaseMoonIcon(
     val moonSpotColor = Color(0xFF5B6876)
 
     val rotationDegrees by animateFloatAsState(
-        targetValue = when (lunarPhaseDetails.phaseAngle < 0) {
+        targetValue = when (phaseAngle < 0) {
             true -> 180f
             false -> 0f
         }
@@ -143,7 +145,7 @@ fun LunarPhaseMoonIcon(
         targetValue = lerp(
             start = startOffset,
             stop = endOffset,
-            fraction = lunarPhaseDetails.illumination.toFloat(),
+            fraction = illumination.toFloat(),
         )
     )
 

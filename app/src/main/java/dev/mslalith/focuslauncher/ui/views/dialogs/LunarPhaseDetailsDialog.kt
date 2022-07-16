@@ -98,7 +98,8 @@ private fun TodayLunarMoonIconAndPhase(
 ) {
     Column {
         LunarPhaseMoonIcon(
-            lunarPhaseDetails = lunarPhaseDetails,
+            phaseAngle = lunarPhaseDetails.phaseAngle,
+            illumination = lunarPhaseDetails.illumination,
             moonSize = moonSize * 0.3f
         )
     }
