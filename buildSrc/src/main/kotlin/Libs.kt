@@ -19,6 +19,7 @@ object Libs {
     const val googleMaterial = "com.google.android.material:material:${Versions.GOOGLE_MATERIAL}"
     const val googlePlayAppUpdate = "com.google.android.play:app-update:${Versions.GOOGLE_PLAY_APP_UPDATE}"
     const val googlePlayAppUpdateKtx = "com.google.android.play:app-update-ktx:${Versions.GOOGLE_PLAY_APP_UPDATE}"
+    const val googlePlayServicesLocation = "com.google.android.gms:play-services-location:${Versions.GOOGLE_PLAY_LOCATION}"
     const val paletteKtx = "androidx.palette:palette-ktx:${Versions.PALETTE_KTX}"
 
     const val composeMaterial = "androidx.compose.material:material:${Versions.COMPOSE}"
@@ -94,6 +95,7 @@ fun DependencyHandler.google() {
 fun DependencyHandler.playInAppUpdate() {
     implementation(Libs.googlePlayAppUpdate)
     implementation(Libs.googlePlayAppUpdateKtx)
+    implementation(Libs.googlePlayServicesLocation)
 }
 
 fun DependencyHandler.androidx() {

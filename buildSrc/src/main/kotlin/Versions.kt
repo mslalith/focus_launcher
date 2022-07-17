@@ -12,6 +12,7 @@ object Versions {
 
     const val GOOGLE_MATERIAL = "1.7.0-alpha01"
     const val GOOGLE_PLAY_APP_UPDATE = "2.0.0"
+    const val GOOGLE_PLAY_LOCATION = "20.0.0"
     const val PALETTE_KTX = "1.0.0"
 
     const val COMPOSE = "1.2.0-beta01"
