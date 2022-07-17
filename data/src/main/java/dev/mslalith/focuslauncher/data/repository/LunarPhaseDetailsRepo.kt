@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.data.model.NextPhaseDetails
 import dev.mslalith.focuslauncher.data.model.RiseAndSetDetails
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
+import dev.mslalith.focuslauncher.data.model.places.City
 import dev.mslalith.focuslauncher.data.model.toLunarPhase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,11 +36,11 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     val upcomingLunarPhaseStateFlow: StateFlow<State<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
-    suspend fun refreshLunarPhaseDetails(instant: Instant) {
+    suspend fun refreshLunarPhaseDetails(instant: Instant, city: City) {
         val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
         delay(delayInMillis)
 
-        val lunarPhaseDetails = findLunarPhaseDetails(instant)
+        val lunarPhaseDetails = findLunarPhaseDetails(instant, city)
         updateStateFlowsWith(lunarPhaseDetails)
     }
 
@@ -50,12 +51,12 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     }
 
     @VisibleForTesting
-    fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails {
+    fun findLunarPhaseDetails(instant: Instant, city: City): LunarPhaseDetails {
         val nextNewMoon = MoonPhase.compute().phase(MoonPhase.Phase.NEW_MOON).execute()
         val nextFullMoon = MoonPhase.compute().phase(MoonPhase.Phase.FULL_MOON).execute()
         val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
-        val moonTimes = MoonTimes.compute().today().at(17.6868, 83.2185).execute()
-        val sunTimes = SunTimes.compute().today().at(17.6868, 83.2185).execute()
+        val moonTimes = MoonTimes.compute().today().at(city.latitude, city.longitude).execute()
+        val sunTimes = SunTimes.compute().today().at(city.latitude, city.longitude).execute()
         return LunarPhaseDetails(
             lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
             illumination = moonIllumination.fraction,

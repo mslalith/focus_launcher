@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.data.utils
 
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.model.ClockAlignment
+import dev.mslalith.focuslauncher.data.model.places.City
 
 object Constants {
     object DataStore {
@@ -48,6 +49,12 @@ object Constants {
                 const val DEFAULT_SHOW_LUNAR_PHASE = false
                 const val DEFAULT_SHOW_ILLUMINATION_PERCENT = false
                 const val DEFAULT_SHOW_UPCOMING_PHASE_DETAILS = true
+                val DEFAULT_CURRENT_PLACE = City(
+                    id = -1,
+                    name = "-",
+                    latitude = 0.0,
+                    longitude = 0.0
+                )
             }
 
             object Quotes {
