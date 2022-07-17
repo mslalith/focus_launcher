@@ -10,6 +10,7 @@ import dev.mslalith.focuslauncher.data.model.RiseAndSetDetails
 import dev.mslalith.focuslauncher.data.model.State
 import dev.mslalith.focuslauncher.data.model.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.data.model.toLunarPhase
+import dev.mslalith.focuslauncher.data.utils.location.LocationManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,9 @@ import org.shredzone.commons.suncalc.SunTimes
 import javax.inject.Inject
 import kotlin.random.Random
 
-class LunarPhaseDetailsRepo @Inject constructor() {
+class LunarPhaseDetailsRepo @Inject constructor(
+    private val locationManager: LocationManager
+) {
     private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(
         INITIAL_LUNAR_PHASE_DETAILS_STATE
     )
@@ -50,12 +53,13 @@ class LunarPhaseDetailsRepo @Inject constructor() {
     }
 
     @VisibleForTesting
-    fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails {
+    suspend fun findLunarPhaseDetails(instant: Instant): LunarPhaseDetails {
         val nextNewMoon = MoonPhase.compute().phase(MoonPhase.Phase.NEW_MOON).execute()
         val nextFullMoon = MoonPhase.compute().phase(MoonPhase.Phase.FULL_MOON).execute()
         val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
-        val moonTimes = MoonTimes.compute().today().at(17.6868, 83.2185).execute()
-        val sunTimes = SunTimes.compute().today().at(17.6868, 83.2185).execute()
+        val (latitude, longitude) = locationManager.getCurrentLocation()
+        val moonTimes = MoonTimes.compute().today().at(latitude, longitude).execute()
+        val sunTimes = SunTimes.compute().today().at(latitude, longitude).execute()
         return LunarPhaseDetails(
             lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
             illumination = moonIllumination.fraction,

@@ -28,6 +28,7 @@ import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.data.utils.location.LocationManager
 import javax.inject.Singleton
 
 @Module
@@ -81,7 +82,9 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLunarPhaseDetailsRepo(): LunarPhaseDetailsRepo = LunarPhaseDetailsRepo()
+    fun provideLunarPhaseDetailsRepo(
+        locationManager: LocationManager
+    ): LunarPhaseDetailsRepo = LunarPhaseDetailsRepo(locationManager = locationManager)
 
     /**
      * API Repository providers
