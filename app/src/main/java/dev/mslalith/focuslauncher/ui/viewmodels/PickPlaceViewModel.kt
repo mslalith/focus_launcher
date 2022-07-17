@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,14 +28,9 @@ class PickPlaceViewModel @Inject constructor(
     val searchQueryStateFlow: StateFlow<String>
         get() = _searchQueryStateFlow
 
-    val citiesStateFlow = placesRepo.citiesFlow.combine(_searchQueryStateFlow) { cities, query ->
-        if (query.isEmpty()) return@combine cities
-        cities.filter { it.name.contains(query, ignoreCase = true) }
-    }.withinScope(emptyList())
-
-    private val _pickedCity = MutableStateFlow<City?>(null)
-    val pickedCity: StateFlow<City?>
-        get() = _pickedCity
+    private val _citiesStateFlow = MutableStateFlow<List<City>>(emptyList())
+    val citiesStateFlow: StateFlow<List<City>>
+        get() = _citiesStateFlow
 
     fun fetchCities() {
         launch { placesRepo.fetchCities() }
@@ -44,13 +38,15 @@ class PickPlaceViewModel @Inject constructor(
 
     fun updateSearch(query: String) {
         _searchQueryStateFlow.value = query
+        launch {
+            _citiesStateFlow.value = if (query.isEmpty()) placesRepo.getAllCities() else placesRepo.getCitiesByQuery(query)
+        }
     }
 
     fun pickCity(
         city: City,
         onPicked: () -> Unit
     ) {
-        _pickedCity.value = city
         launch {
             lunarPhaseSettingsRepo.updatePlace(city)
             withContext(appCoroutineDispatcher.main) { onPicked() }
