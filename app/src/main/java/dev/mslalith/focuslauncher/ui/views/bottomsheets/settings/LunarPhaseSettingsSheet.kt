@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
@@ -67,9 +68,9 @@ private fun PreviewLunarCalendar(
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
     showLunarPhase: Boolean,
+    horizontalPadding: Dp = 24.dp,
 ) {
     val height = 74.dp
-    val horizontalPadding = 24.dp
 
     Crossfade(
         targetState = showLunarPhase,

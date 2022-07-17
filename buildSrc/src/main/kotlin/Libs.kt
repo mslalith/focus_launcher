@@ -45,7 +45,6 @@ object Libs {
 
     const val accompanistPager = "com.google.accompanist:accompanist-pager:${Versions.ACCOMPANIST}"
     const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
-    const val accompanistInsets = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"
     const val accompanistFlowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.ACCOMPANIST}"
 
     const val thirdSunCalc = "org.shredzone.commons:commons-suncalc:${Versions.THIRD_SUNCALC}"
