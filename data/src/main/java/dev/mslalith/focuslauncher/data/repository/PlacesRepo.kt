@@ -1,20 +1,24 @@
 package dev.mslalith.focuslauncher.data.repository
 
+import dev.mslalith.focuslauncher.data.database.dao.CitiesDao
 import dev.mslalith.focuslauncher.data.dto.places.toCity
-import dev.mslalith.focuslauncher.data.model.places.City
+import dev.mslalith.focuslauncher.data.dto.places.toCityRoom
 import dev.mslalith.focuslauncher.data.network.api.PlacesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 class PlacesRepo @Inject constructor(
-    private val placesApi: PlacesApi
+    private val placesApi: PlacesApi,
+    private val citiesDao: CitiesDao
 ) {
-    private val _citiesStateFlow = MutableStateFlow<List<City>>(emptyList())
-    val citiesStateFlow: StateFlow<List<City>>
-        get() = _citiesStateFlow
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val citiesFlow = citiesDao.getCities().mapLatest { cities ->
+        cities.map { it.toCity() }
+    }
 
     suspend fun fetchCities() {
-        _citiesStateFlow.value = placesApi.getCities().map { it.toCity() }
+        val cities = placesApi.getCities()
+        citiesDao.insertCities(cities.map { it.toCityRoom() })
     }
 }

@@ -29,7 +29,7 @@ class PickPlaceViewModel @Inject constructor(
     val searchQueryStateFlow: StateFlow<String>
         get() = _searchQueryStateFlow
 
-    val citiesStateFlow = placesRepo.citiesStateFlow.combine(_searchQueryStateFlow) { cities, query ->
+    val citiesStateFlow = placesRepo.citiesFlow.combine(_searchQueryStateFlow) { cities, query ->
         if (query.isEmpty()) return@combine cities
         cities.filter { it.name.contains(query, ignoreCase = true) }
     }.withinScope(emptyList())

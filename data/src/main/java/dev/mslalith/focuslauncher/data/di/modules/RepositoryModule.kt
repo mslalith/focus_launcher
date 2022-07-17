@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
+import dev.mslalith.focuslauncher.data.database.dao.CitiesDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
@@ -29,6 +30,7 @@ import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import javax.inject.Singleton
 
@@ -106,7 +108,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providePlacesRepo(placesApi: PlacesApi) = PlacesRepo(placesApi = placesApi)
+    fun providePlacesRepo(placesApi: PlacesApi, citiesDao: CitiesDao) = PlacesRepo(placesApi, citiesDao)
 
     /**
      * Settings Repository providers
@@ -125,7 +127,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLunarPhaseSettingsRepo(@SettingsProvider settingsDataStore: DataStore<Preferences>) = LunarPhaseSettingsRepo(settingsDataStore)
+    fun provideLunarPhaseSettingsRepo(
+        @SettingsProvider settingsDataStore: DataStore<Preferences>,
+        cityJsonParser: CityJsonParser,
+    ) = LunarPhaseSettingsRepo(settingsDataStore, cityJsonParser)
 
     @Provides
     @Singleton
