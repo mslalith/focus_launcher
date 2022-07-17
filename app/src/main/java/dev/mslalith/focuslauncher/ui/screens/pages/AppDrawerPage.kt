@@ -70,6 +70,7 @@ import dev.mslalith.focuslauncher.extensions.launchApp
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
+import dev.mslalith.focuslauncher.ui.views.shared.SearchField
 
 private val ITEM_START_PADDING = 24.dp
 private val ITEM_END_PADDING = 8.dp
@@ -91,6 +92,8 @@ fun AppDrawerPage(
     val viewManager = LocalLauncherViewManager.current
 
     val appDrawerViewType by settingsViewModel.appDrawerViewTypeStateFlow.collectAsState()
+    val showSearchBar by settingsViewModel.searchBarVisibilityStateFlow.collectAsState()
+    val searchAppQuery by appsViewModel.searchAppStateFlow.collectAsState()
 
     fun onAppClick(app: AppWithIcon) {
         focusManager.clearFocus()
@@ -137,10 +140,13 @@ fun AppDrawerPage(
             ListFadeOutEdgeGradient(position = Position.BOTTOM)
         }
 
-        SearchAppField(
-            appsViewModel = appsViewModel,
-            settingsViewModel = settingsViewModel,
-        )
+        AnimatedVisibility(visible = showSearchBar) {
+            SearchField(
+                placeholder = "Search app...",
+                query = searchAppQuery,
+                onQueryChange = appsViewModel::searchAppQuery
+            )
+        }
     }
 }
 
