@@ -185,6 +185,9 @@ fun SettingsSelectableItem(
     val textColor by animateColorAsState(
         targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor,
     )
+    val subTextColor by animateColorAsState(
+        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(alpha = 0.6f),
+    )
 
     Column(
         modifier = modifier
@@ -228,7 +231,7 @@ fun SettingsSelectableItem(
                 Text(
                     text = it,
                     style = TextStyle(
-                        color = textColor.copy(alpha = 0.6f),
+                        color = subTextColor,
                         fontSize = 14.sp,
                     )
                 )
