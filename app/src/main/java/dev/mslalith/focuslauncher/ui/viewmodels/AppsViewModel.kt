@@ -14,6 +14,7 @@ import dev.mslalith.focuslauncher.extensions.appDrawerApps
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -33,13 +34,16 @@ class AppsViewModel @Inject constructor(
     /**
      * Search Apps
      */
-    private val searchAppFlow = MutableStateFlow("")
+    private val _searchAppStateFlow = MutableStateFlow("")
+    val searchAppStateFlow: StateFlow<String>
+        get() = _searchAppStateFlow
+
     fun searchAppQuery(query: String) {
-        searchAppFlow.value = query
+        _searchAppStateFlow.value = query
     }
 
     val isSearchQueryEmpty: Flow<Boolean>
-        get() = searchAppFlow.map { it.isEmpty() }
+        get() = _searchAppStateFlow.map { it.isEmpty() }
 
     /**
      * Show Hidden Apps In Favorites
@@ -62,7 +66,7 @@ class AppsViewModel @Inject constructor(
     private val appDrawerAppsFlow: Flow<List<App>>
         get() = appDrawerRepo.allAppsFlow.combine(hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
             allApps - hiddenApps.toSet()
-        }.combine(searchAppFlow) { filteredApps, query ->
+        }.combine(_searchAppStateFlow) { filteredApps, query ->
             when {
                 query.isNotEmpty() -> filteredApps.filter {
                     it.name.startsWith(
