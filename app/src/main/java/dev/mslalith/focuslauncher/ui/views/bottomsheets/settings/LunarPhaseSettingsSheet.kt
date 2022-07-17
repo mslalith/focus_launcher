@@ -41,6 +41,7 @@ fun LunarPhaseSettingsSheet(
         val showLunarPhase by settingsViewModel.showLunarPhaseStateFlow.collectAsState()
         val showIlluminationPercent by settingsViewModel.showIlluminationPercentStateFlow.collectAsState()
         val showUpcomingPhaseDetails by settingsViewModel.showUpcomingPhaseDetailsStateFlow.collectAsState()
+        val currentPlace by settingsViewModel.currentPlaceStateFlow.collectAsState()
 
         Column {
             PreviewLunarCalendar(
@@ -67,7 +68,7 @@ fun LunarPhaseSettingsSheet(
             )
             SettingsSelectableItem(
                 text = "Current Place",
-                subText = "India",
+                subText = currentPlace.name,
                 disabled = !showLunarPhase,
                 onClick = { navigateTo(Screen.PickPlaceForLunarPhase) }
             )
