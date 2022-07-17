@@ -33,6 +33,7 @@ fun PickPlaceForLunarPhaseScreen(
     fun goBack() = navController.popBackStack()
 
     LaunchedEffect(key1 = Unit) {
+        pickPlaceViewModel.updateSearch("")
         pickPlaceViewModel.fetchCities()
     }
 
