@@ -4,12 +4,16 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.mslalith.focuslauncher.data.di.modules.SettingsProvider
+import dev.mslalith.focuslauncher.data.model.places.City
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class LunarPhaseSettingsRepo @Inject constructor(
@@ -31,6 +35,12 @@ class LunarPhaseSettingsRepo @Inject constructor(
             it[PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS] ?: DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
         }
 
+    val currentPlaceFlow: Flow<City>
+        get() = settingsDataStore.data.map {
+            val string = it[PREFERENCES_CURRENT_PLACE] ?: return@map DEFAULT_CURRENT_PLACE
+            Json.decodeFromString(City.serializer(), string)
+        }
+
     suspend fun toggleShowLunarPhase() = toggleData(
         preference = PREFERENCES_SHOW_LUNAR_PHASE,
         defaultValue = DEFAULT_SHOW_LUNAR_PHASE,
@@ -45,6 +55,12 @@ class LunarPhaseSettingsRepo @Inject constructor(
         preference = PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS,
         defaultValue = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS,
     )
+
+    suspend fun updatePlace(city: City) {
+        settingsDataStore.edit {
+            it[PREFERENCES_CURRENT_PLACE] = Json.encodeToString(City.serializer(), city)
+        }
+    }
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
@@ -64,5 +80,8 @@ class LunarPhaseSettingsRepo @Inject constructor(
 
         private val PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS =
             booleanPreferencesKey("preferences_show_upcoming_phase_details")
+
+        private val PREFERENCES_CURRENT_PLACE =
+            stringPreferencesKey("preferences_current_place")
     }
 }

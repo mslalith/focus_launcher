@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_STATE
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_STATE
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,6 +28,7 @@ import javax.inject.Inject
 class WidgetsViewModel @Inject constructor(
     private val clockRepo: ClockRepo,
     private val lunarPhaseRepo: LunarPhaseDetailsRepo,
+    private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
     private val quotesRepo: QuotesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
@@ -35,8 +38,10 @@ class WidgetsViewModel @Inject constructor(
             quotesRepo.addInitialQuotesIfNeeded()
         }
         launch {
-            clockRepo.currentInstantStateFlow.collectLatest { instant ->
-                lunarPhaseRepo.refreshLunarPhaseDetails(instant)
+            clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, city ->
+                instant to city
+            }.collectLatest { (instant, city) ->
+                lunarPhaseRepo.refreshLunarPhaseDetails(instant, city)
             }
         }
     }

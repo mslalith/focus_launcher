@@ -4,6 +4,7 @@ import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.awaitItemAndCancel
 import dev.mslalith.focuslauncher.data.model.State
+import dev.mslalith.focuslauncher.data.model.places.City
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
@@ -17,6 +18,13 @@ import kotlin.time.Duration.Companion.seconds
 class LunarPhaseDetailsRepoTest {
 
     private lateinit var lunarPhaseDetailsRepo: LunarPhaseDetailsRepo
+
+    private val city = City(
+        id = -1,
+        name = "Test",
+        latitude = 34.345345,
+        longitude = 65.452342
+    )
 
     @Before
     fun setUp() {
@@ -44,9 +52,9 @@ class LunarPhaseDetailsRepoTest {
         assertThat(lunarPhaseDetails).isInstanceOf(State.Error::class.java)
 
         instants.forEach { instant ->
-            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
+            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant, city)
             lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
-            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
+            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant, city)
 
             val lunarPhase = (lunarPhaseDetails as State.Success).value.lunarPhase
             assertThat(lunarPhase).isEqualTo(actualLunarPhaseDetails.lunarPhase)
@@ -61,9 +69,9 @@ class LunarPhaseDetailsRepoTest {
         assertThat(lunarPhaseDetails).isInstanceOf(State.Error::class.java)
 
         instants.forEach { instant ->
-            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant)
+            lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant, city)
             lunarPhaseDetails = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.testIn(this).awaitItemAndCancel()
-            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant)
+            val actualLunarPhaseDetails = lunarPhaseDetailsRepo.findLunarPhaseDetails(instant, city)
 
             val lunarPhase = (lunarPhaseDetails as State.Success).value.lunarPhase
             assertThat(lunarPhase).isEqualTo(actualLunarPhaseDetails.lunarPhase)

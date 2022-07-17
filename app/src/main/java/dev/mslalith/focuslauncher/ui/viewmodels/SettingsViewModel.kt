@@ -23,6 +23,7 @@ import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
@@ -87,6 +88,7 @@ class SettingsViewModel @Inject constructor(
     val showLunarPhaseStateFlow = lunarPhaseSettingsRepo.showLunarPhaseFlow.withinScope(DEFAULT_SHOW_LUNAR_PHASE)
     val showIlluminationPercentStateFlow = lunarPhaseSettingsRepo.showIlluminationPercentFlow.withinScope(DEFAULT_SHOW_ILLUMINATION_PERCENT)
     val showUpcomingPhaseDetailsStateFlow = lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.withinScope(DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
+    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(DEFAULT_CURRENT_PLACE)
 
     fun toggleShowLunarPhase() { launch { lunarPhaseSettingsRepo.toggleShowLunarPhase() } }
     fun toggleShowIlluminationPercent() { launch { lunarPhaseSettingsRepo.toggleShowIlluminationPercent() } }
