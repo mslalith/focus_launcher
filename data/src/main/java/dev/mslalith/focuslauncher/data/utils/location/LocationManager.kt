@@ -11,7 +11,7 @@ import kotlin.coroutines.resumeWithException
 
 data class LocationData(
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
 )
 
 interface LocationManager {
@@ -25,8 +25,9 @@ internal class LocationManagerImpl(
     private val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
     override suspend fun getCurrentLocation(): LocationData = suspendCancellableCoroutine { continuation ->
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
             continuation.resume(LocationData(latitude = 0.0, longitude = 0.0))
             return@suspendCancellableCoroutine
         }
