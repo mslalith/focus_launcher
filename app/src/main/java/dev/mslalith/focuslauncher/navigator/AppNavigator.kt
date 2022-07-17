@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.ui.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.ui.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.ui.screens.LauncherScreen
+import dev.mslalith.focuslauncher.ui.screens.PickPlaceForLunarPhaseScreen
 
 @Composable
 fun AppNavigator() {
@@ -23,6 +24,7 @@ fun AppNavigator() {
         launcherScreen()
         editFavoritesScreen()
         hideAppsScreen()
+        pickPlaceForLunarPhase()
     }
 }
 
@@ -51,6 +53,14 @@ private fun NavGraphBuilder.hideAppsScreen() {
     composable(Screen.HideApps.id) {
         HideAppsScreen(
             appsViewModel = hiltViewModel(it),
+        )
+    }
+}
+
+private fun NavGraphBuilder.pickPlaceForLunarPhase() {
+    composable(Screen.PickPlaceForLunarPhase.id) {
+        PickPlaceForLunarPhaseScreen(
+            settingsViewModel = hiltViewModel(it),
         )
     }
 }
