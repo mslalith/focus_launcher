@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.data.network.api.PlacesApi
+import dev.mslalith.focuslauncher.data.network.api.PlacesApiImpl
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.network.api.QuotesApiKtorImpl
 import io.ktor.client.HttpClient
@@ -42,4 +44,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiKtorImpl(httpClient)
+
+    @Provides
+    @Singleton
+    fun providePlacesApi(httpClient: HttpClient): PlacesApi = PlacesApiImpl(httpClient)
 }

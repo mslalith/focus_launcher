@@ -15,12 +15,14 @@ import dev.mslalith.focuslauncher.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.HiddenToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
+import dev.mslalith.focuslauncher.data.network.api.PlacesApi
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
+import dev.mslalith.focuslauncher.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
@@ -101,6 +103,10 @@ object RepositoryModule {
         quoteToRoomMapper = quoteToRoomMapper,
         quoteResponseToRoomMapper = quoteResponseToRoomMapper
     )
+
+    @Provides
+    @Singleton
+    fun providePlacesRepo(placesApi: PlacesApi) = PlacesRepo(placesApi = placesApi)
 
     /**
      * Settings Repository providers
