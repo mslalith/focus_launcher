@@ -7,17 +7,18 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.mslalith.focuslauncher.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.data.model.places.City
+import dev.mslalith.focuslauncher.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class LunarPhaseSettingsRepo @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    private val cityJsonParser: CityJsonParser
 ) {
 
     val showLunarPhaseFlow: Flow<Boolean>
@@ -37,8 +38,8 @@ class LunarPhaseSettingsRepo @Inject constructor(
 
     val currentPlaceFlow: Flow<City>
         get() = settingsDataStore.data.map {
-            val string = it[PREFERENCES_CURRENT_PLACE] ?: return@map DEFAULT_CURRENT_PLACE
-            Json.decodeFromString(City.serializer(), string)
+            val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map DEFAULT_CURRENT_PLACE
+            cityJsonParser.fromJson(json)
         }
 
     suspend fun toggleShowLunarPhase() = toggleData(
@@ -58,7 +59,7 @@ class LunarPhaseSettingsRepo @Inject constructor(
 
     suspend fun updatePlace(city: City) {
         settingsDataStore.edit {
-            it[PREFERENCES_CURRENT_PLACE] = Json.encodeToString(City.serializer(), city)
+            it[PREFERENCES_CURRENT_PLACE] = cityJsonParser.toJson(city)
         }
     }
 
