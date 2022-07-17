@@ -60,7 +60,7 @@ private fun NavGraphBuilder.hideAppsScreen() {
 private fun NavGraphBuilder.pickPlaceForLunarPhase() {
     composable(Screen.PickPlaceForLunarPhase.id) {
         PickPlaceForLunarPhaseScreen(
-            settingsViewModel = hiltViewModel(it),
+            pickPlaceViewModel = hiltViewModel(it)
         )
     }
 }
