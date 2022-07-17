@@ -20,9 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
+import dev.mslalith.focuslauncher.data.models.Screen
+import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.ui.views.SettingsSelectableItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 
@@ -30,6 +33,10 @@ import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 fun LunarPhaseSettingsSheet(
     properties: LunarPhaseSettingsProperties,
 ) {
+    val navController = LocalNavController.current
+
+    fun navigateTo(screen: Screen) = navController.navigate(screen.id)
+
     properties.apply {
         val showLunarPhase by settingsViewModel.showLunarPhaseStateFlow.collectAsState()
         val showIlluminationPercent by settingsViewModel.showIlluminationPercentStateFlow.collectAsState()
@@ -57,6 +64,12 @@ fun LunarPhaseSettingsSheet(
                 checked = showUpcomingPhaseDetails,
                 disabled = !showLunarPhase,
                 onClick = { settingsViewModel.toggleShowUpcomingPhaseDetails() }
+            )
+            SettingsSelectableItem(
+                text = "Current Place",
+                subText = "India",
+                disabled = !showLunarPhase,
+                onClick = { navigateTo(Screen.PickPlaceForLunarPhase) }
             )
             VerticalSpacer(spacing = bottomSpacing)
         }
