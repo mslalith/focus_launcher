@@ -16,6 +16,7 @@ object Constants {
         const val FAVORITE_APPS_TABLE_NAME = "favorites_apps"
         const val HIDDEN_APPS_TABLE_NAME = "hidden_apps"
         const val QUOTES_TABLE_NAME = "quotes"
+        const val CITIES_TABLE_NAME = "cities"
     }
 
     object Defaults {
