@@ -41,14 +41,16 @@ object Constants {
             }
 
             object Clock {
-                const val DEFAULT_SHOW_CLOCK_24 = false
+                const val DEFAULT_SHOW_CLOCK_24 = true
                 val DEFAULT_CLOCK_ALIGNMENT = ClockAlignment.START
-                const val DEFAULT_CLOCK_24_ANIMATION_DURATION = 1200
+                val DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE = 300f..2400f
+                const val DEFAULT_CLOCK_24_ANIMATION_DURATION = 2100
+                val DEFAULT_CLOCK_24_ANIMATION_STEP = ((DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.endInclusive - DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start) / DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start).toInt() - 1
             }
 
             object LunarPhase {
-                const val DEFAULT_SHOW_LUNAR_PHASE = false
-                const val DEFAULT_SHOW_ILLUMINATION_PERCENT = false
+                const val DEFAULT_SHOW_LUNAR_PHASE = true
+                const val DEFAULT_SHOW_ILLUMINATION_PERCENT = true
                 const val DEFAULT_SHOW_UPCOMING_PHASE_DETAILS = true
                 val DEFAULT_CURRENT_PLACE = City(
                     id = -1,

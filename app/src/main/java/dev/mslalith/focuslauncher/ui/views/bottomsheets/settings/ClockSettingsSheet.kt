@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.data.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
@@ -23,6 +25,7 @@ import dev.mslalith.focuslauncher.ui.views.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
+import kotlin.math.roundToInt
 
 @Composable
 fun ClockSettingsSheet(
@@ -65,9 +68,9 @@ fun ClockSettingsSheet(
                 subText = "${clock24AnimationDuration}ms",
                 disabled = !showClock24,
                 value = clock24AnimationDuration.toFloat(),
-                onValueChangeFinished = { settingsViewModel.updateClock24AnimationDuration(it.toInt()) },
-                valueRange = 300f..2400f,
-                steps = 300,
+                onValueChangeFinished = { settingsViewModel.updateClock24AnimationDuration(it.roundToInt()) },
+                valueRange = DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE,
+                steps = DEFAULT_CLOCK_24_ANIMATION_STEP,
             )
             VerticalSpacer(spacing = bottomSpacing)
         }
