@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.androidtest.shared
 
-import app.cash.turbine.FlowTurbine
+import app.cash.turbine.ReceiveTurbine
 
-suspend fun <T> FlowTurbine<T>.awaitItemAndCancel(): T {
+suspend fun <T> ReceiveTurbine<T>.awaitItemAndCancel(): T {
     val item = awaitItem()
     cancel()
     return item
