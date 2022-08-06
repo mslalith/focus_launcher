@@ -4,5 +4,5 @@ object ConfigData {
     const val BUILD_TOOLS = "30.0.3"
 
     const val VERSION_CODE = 3
-    const val VERSION_NAME = "0.1.0"
+    const val VERSION_NAME = "0.1.1"
 }
