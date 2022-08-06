@@ -24,10 +24,9 @@ object Libs {
     const val composeMaterial = "androidx.compose.material:material:${Versions.COMPOSE}"
     const val composeUi = "androidx.compose.ui:ui:${Versions.COMPOSE}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
-    const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME_KTX}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
-    const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:${Versions.CONSTRAINT_LAYOUT_COMPOSE}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}"
+    const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME_KTX}"
     const val lifecycleViewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.LIFECYCLE_VIEWMODEL_COMPOSE}"
 
     const val dataStore = "androidx.datastore:datastore:${Versions.DATASTORE}"
@@ -107,7 +106,6 @@ fun DependencyHandler.androidxCoreKtx() {
 
 fun DependencyHandler.composeInterop() {
     implementation(Libs.activityCompose)
-    implementation(Libs.constraintLayoutCompose)
     implementation(Libs.navigationCompose)
     implementation(Libs.lifecycleViewModelCompose)
 }
