@@ -177,6 +177,7 @@ private fun ListFadeOutEdgeGradient(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AppsGrid(
     appsViewModel: AppsViewModel,
@@ -201,11 +202,15 @@ private fun AppsGrid(
             item { VerticalSpacer(spacing = topSpacing) }
         }
 
-        items(items = appsList) { app ->
+        items(
+            items = appsList,
+            key = { it.packageName }
+        ) { app ->
             AppDrawerGridItem(
                 app = app,
                 onClick = onAppClick,
                 onLongClick = onAppLongClick,
+                modifier = Modifier.animateItemPlacement()
             )
         }
 
@@ -215,6 +220,7 @@ private fun AppsGrid(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AppsList(
     appsViewModel: AppsViewModel,
@@ -254,7 +260,7 @@ private fun AppsList(
     ) {
         item { VerticalSpacer(spacing = spacing.first) }
 
-        for ((character, apps) in groupedApps) {
+        groupedApps.forEach { (character, apps) ->
             item(key = character) {
                 GroupedAppsList(
                     settingsViewModel = settingsViewModel,
@@ -263,6 +269,7 @@ private fun AppsList(
                     showAppGroupHeader = showAppGroupHeader && groupedApps.size != 1,
                     onAppClick = onAppClick,
                     onAppLongClick = onAppLongClick,
+                    modifier = Modifier.animateItemPlacement()
                 )
             }
         }
@@ -272,6 +279,7 @@ private fun AppsList(
 
 @Composable
 private fun GroupedAppsList(
+    modifier: Modifier,
     settingsViewModel: SettingsViewModel,
     apps: List<AppWithIcon>,
     character: Char,
@@ -280,7 +288,7 @@ private fun GroupedAppsList(
     onAppLongClick: (AppWithIcon) -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 20.dp)
     ) {
         if (showAppGroupHeader) {
@@ -332,6 +340,7 @@ private fun CharacterHeader(character: Char) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun AppDrawerGridItem(
+    modifier: Modifier,
     app: AppWithIcon,
     onClick: (AppWithIcon) -> Unit,
     onLongClick: (AppWithIcon) -> Unit,
@@ -341,7 +350,7 @@ private fun AppDrawerGridItem(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 0.dp, vertical = 4.dp)
             .clip(shape = MaterialTheme.shapes.small)
