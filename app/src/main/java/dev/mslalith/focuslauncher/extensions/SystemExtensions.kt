@@ -36,13 +36,7 @@ val Context.appDrawerApps: List<App>
 val Context.defaultDialerApp: App?
     get() {
         val manager = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            manager.defaultDialerPackage?.let { appNoIconModelOf(it) }
-        } else {
-            val dialingIntent = Intent(Intent.ACTION_DIAL).addCategory(Intent.CATEGORY_DEFAULT)
-            val resolveInfoList = packageManager.queryIntentActivities(dialingIntent, 0)
-            resolveInfoList[0].activityInfo.packageName?.let { appNoIconModelOf(it) }
-        }
+        return manager.defaultDialerPackage?.let { appNoIconModelOf(it) }
     }
 
 val Context.defaultMessagingApp: App?
@@ -54,20 +48,15 @@ val Context.defaultMessagingApp: App?
 val Context.isOnline: Boolean
     get() {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork ?: return false
-            val networkCapabilities =
-                connectivityManager.getNetworkCapabilities(network) ?: return false
-            val allNetworkConnectionTypes = listOf(
-                NetworkCapabilities.TRANSPORT_WIFI,
-                NetworkCapabilities.TRANSPORT_CELLULAR,
-                NetworkCapabilities.TRANSPORT_ETHERNET
-            )
-            allNetworkConnectionTypes.any { networkCapabilities.hasTransport(it) }
-        } else {
-            val networkInfo = connectivityManager.activeNetworkInfo ?: return false
-            networkInfo.isConnected
-        }
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities =
+            connectivityManager.getNetworkCapabilities(network) ?: return false
+        val allNetworkConnectionTypes = listOf(
+            NetworkCapabilities.TRANSPORT_WIFI,
+            NetworkCapabilities.TRANSPORT_CELLULAR,
+            NetworkCapabilities.TRANSPORT_ETHERNET
+        )
+        return allNetworkConnectionTypes.any { networkCapabilities.hasTransport(it) }
     }
 
 fun Context.iconOf(packageName: String): Drawable? = try {
