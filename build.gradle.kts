@@ -23,7 +23,7 @@ apply(plugin = "kover")
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.github.ben-manes.versions") version "0.42.0"
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.jetbrains.kotlinx.kover") version "0.6.0"
 }
 
 allprojects {
