@@ -3,5 +3,5 @@ object ConfigData {
     const val TARGET_SDK = 32
 
     const val VERSION_CODE = 4
-    const val VERSION_NAME = "0.2.0"
+    const val VERSION_NAME = "0.1.1"
 }

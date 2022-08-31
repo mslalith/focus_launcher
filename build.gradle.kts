@@ -20,7 +20,7 @@ apply(from = "./buildScripts/install-git-hooks.gradle.kts")
 apply(plugin = "kover")
 
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.github.ben-manes.versions") version "0.42.0"
     id("org.jetbrains.kotlinx.kover") version Versions.KOTLINX_KOVER
     id("com.google.devtools.ksp") version Versions.KSP
