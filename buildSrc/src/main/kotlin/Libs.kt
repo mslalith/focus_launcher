@@ -23,6 +23,7 @@ object Libs {
 
     const val composeMaterial = "androidx.compose.material:material:${Versions.COMPOSE}"
     const val composeUi = "androidx.compose.ui:ui:${Versions.COMPOSE}"
+    const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.COMPOSE_MATERIAL3}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}"
@@ -82,6 +83,7 @@ fun DependencyHandler.ktorClient() {
 fun DependencyHandler.compose() {
     implementation(Libs.composeMaterial)
     implementation(Libs.composeUi)
+    implementation(Libs.composeMaterial3)
     implementation(Libs.composeUiTooling)
 }
 
