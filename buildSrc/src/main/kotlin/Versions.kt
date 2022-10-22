@@ -1,7 +1,7 @@
 object Versions {
     const val KOTLIN = "1.7.20"
     const val GRADLE = "7.3.1"
-    const val KOTLINX_KOVER = "0.5.1"
+    const val KOTLINX_KOVER = "0.6.1"
 
     const val KSP = "1.7.20-1.0.7"
 

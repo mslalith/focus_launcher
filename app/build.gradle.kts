@@ -8,6 +8,8 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+apply(plugin = "kover")
+
 android {
     compileSdk = ConfigData.TARGET_SDK
     namespace = "dev.mslalith.focuslauncher"
@@ -63,7 +65,7 @@ android {
     testOptions {
         unitTests.all {
             it.extensions.configure(KoverTaskExtension::class) {
-                isDisabled = it.name != "testDebugUnitTest"
+                isDisabled.set(it.name != "testDebugUnitTest")
             }
         }
     }

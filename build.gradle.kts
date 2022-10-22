@@ -31,19 +31,28 @@ allprojects {
 }
 
 kover {
-    isDisabled = false
-    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+    isDisabled.set(false)
+    engine.set(kotlinx.kover.api.DefaultIntellijEngine)
 }
 
-tasks.koverMergedHtmlReport {
-    isEnabled = true
-    htmlReportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
-    excludes = listOf(
-        "jdk.internal.*",
-        "dagger.hilt.internal.aggregatedroot.codegen.**",
-        "hilt_aggregated_deps.**",
-        "dev.mslalith.focuslauncher.**.*_Factory"
-    )
+koverMerged {
+    enable()
+    htmlReport {
+        reportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
+        filters {
+            projects {
+                excludes += listOf(":androidTest-shared")
+            }
+            classes {
+                excludes += listOf(
+                    "jdk.internal.*",
+                    "dagger.hilt.internal.aggregatedroot.codegen.**",
+                    "hilt_aggregated_deps.**",
+                    "dev.mslalith.focuslauncher.**.*_Factory"
+                )
+            }
+        }
+    }
 }
 
 tasks.register("clean", Delete::class) {
