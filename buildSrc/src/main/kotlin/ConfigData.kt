@@ -1,6 +1,6 @@
 object ConfigData {
     const val MIN_SDK = 26
-    const val TARGET_SDK = 32
+    const val TARGET_SDK = 33
 
     const val VERSION_CODE = 5
     const val VERSION_NAME = "0.2.1"

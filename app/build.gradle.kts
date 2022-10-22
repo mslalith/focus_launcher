@@ -55,7 +55,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
     lint {
         error.add("VisibleForTests")
