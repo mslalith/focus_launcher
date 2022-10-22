@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import app.cash.turbine.test
 import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.CoroutineTest
@@ -79,52 +80,51 @@ class AppsViewModelTest : CoroutineTest() {
     fun `add to favorite behaviour`() = runCoroutineTest {
         addTestApps()
         val testApp = TestApps.Chrome
+
         val apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
         assertThat(apps).contains(testApp)
 
-        var favoriteApps = appsViewModel.onlyFavoritesStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(favoriteApps).isEmpty()
-
-        appsViewModel.addToFavorites(testApp)
-        favoriteApps = appsViewModel.onlyFavoritesStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(favoriteApps).isEqualTo(listOf(testApp))
+        appsViewModel.onlyFavoritesStateFlow.test {
+            assertThat(awaitItem()).isEmpty()
+            appsViewModel.addToFavorites(testApp)
+            assertThat(awaitItem()).isEqualTo(listOf(testApp))
+        }
     }
 
     @Test
     fun `hide app behaviour`() = runCoroutineTest {
         addTestApps()
         val testApp = TestApps.Chrome
+
         val apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
         assertThat(apps).contains(testApp)
 
-        var hiddenApps = hiddenAppsRepo.onlyHiddenAppsFlow.testIn(this).awaitItemAndCancel()
-        assertThat(hiddenApps).isEmpty()
-
-        appsViewModel.addToHiddenApps(testApp)
-        hiddenApps = hiddenAppsRepo.onlyHiddenAppsFlow.testIn(this).awaitItemAndCancel()
-        assertThat(hiddenApps).isEqualTo(listOf(testApp))
+        hiddenAppsRepo.onlyHiddenAppsFlow.test {
+            assertThat(awaitItem()).isEmpty()
+            appsViewModel.addToHiddenApps(testApp)
+            assertThat(awaitItem()).isEqualTo(listOf(testApp))
+        }
     }
 
     @Test
     fun `install app behaviour`() = runCoroutineTest {
         val testApp = TestApps.Chrome
-        var apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(apps).isEmpty()
-
-        appsViewModel.handleAppInstall(testApp)
-        apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(apps).contains(testApp)
+        appsViewModel.appDrawerAppsStateFlow.test {
+            assertThat(awaitItem()).isEmpty()
+            appsViewModel.handleAppInstall(testApp)
+            assertThat(awaitItem()).contains(testApp)
+        }
     }
 
     @Test
     fun `uninstall app behaviour`() = runCoroutineTest {
         addTestApps()
         val testApp = TestApps.Chrome
-        var apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(apps).contains(testApp)
 
-        appsViewModel.handleAppUninstall(testApp.packageName)
-        apps = appsViewModel.appDrawerAppsStateFlow.testIn(this).awaitItemAndCancel()
-        assertThat(apps).doesNotContain(testApp)
+        appsViewModel.appDrawerAppsStateFlow.test {
+            assertThat(awaitItem()).contains(testApp)
+            appsViewModel.handleAppUninstall(testApp.packageName)
+            assertThat(awaitItem()).doesNotContain(testApp)
+        }
     }
 }
