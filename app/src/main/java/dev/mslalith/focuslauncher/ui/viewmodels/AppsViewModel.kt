@@ -60,7 +60,12 @@ class AppsViewModel @Inject constructor(
      */
     val appDrawerAppsStateFlow = appDrawerAppsFlow.withinScope(emptyList())
     val favoritesStateFlow = favoritesFlow.withinScope(emptyList())
-    val onlyFavoritesStateFlow = favoritesRepo.onlyFavoritesFlow.withinScope(emptyList())
+    val onlyFavoritesStateFlow = appDrawerRepo.allAppsFlow
+        .combine(favoritesRepo.onlyFavoritesFlow) { allApps, onlyFavorites ->
+            allApps.filter { app ->
+                onlyFavorites.any { app.packageName == it.packageName }
+            }
+        }.withinScope(emptyList())
     val hiddenAppsStateFlow = hiddenAppsFlow.withinScope(emptyList())
 
     private val appDrawerAppsFlow: Flow<List<App>>
