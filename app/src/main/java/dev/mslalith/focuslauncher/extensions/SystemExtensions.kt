@@ -28,7 +28,12 @@ val Context.appDrawerApps: List<App>
                 val appName = loadLabel(packageManager).toString()
                 val appPackageName = packageName
                 val isSystem = isSystemApp(appPackageName)
-                return@map App(appName, appPackageName, isSystem)
+                return@map App(
+                    name = appName,
+                    displayName = appName,
+                    packageName = appPackageName,
+                    isSystem = isSystem
+                )
             }
         }.sortedBy { it.name }
     }
@@ -88,7 +93,12 @@ fun Context.appNoIconModelOf(packageName: String): App? = try {
         val info = getApplicationInfo(packageName, 0)
         val name = getApplicationLabel(info).toString()
         val isSystem = isSystemApp(packageName)
-        App(name, packageName, isSystem)
+        App(
+            name = name,
+            displayName = name,
+            packageName = packageName,
+            isSystem = isSystem
+        )
     }
 } catch (ex: PackageManager.NameNotFoundException) {
     null

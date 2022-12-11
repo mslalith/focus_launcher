@@ -125,6 +125,10 @@ class AppsViewModel @Inject constructor(
         }
     }
 
+    fun updateDisplayName(app: App, displayName: String) {
+        launch { appDrawerRepo.updateDisplayName(app, displayName) }
+    }
+
     /**
      * Favorites
      */

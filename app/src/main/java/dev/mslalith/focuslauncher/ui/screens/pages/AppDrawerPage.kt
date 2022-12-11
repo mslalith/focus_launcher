@@ -59,6 +59,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
+import dev.mslalith.focuslauncher.data.model.App
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
@@ -70,6 +71,7 @@ import dev.mslalith.focuslauncher.extensions.launchApp
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
+import dev.mslalith.focuslauncher.ui.views.dialogs.UpdateAppDisplayNameDialog
 import dev.mslalith.focuslauncher.ui.views.shared.SearchField
 
 private val ITEM_START_PADDING = 24.dp
@@ -95,6 +97,8 @@ fun AppDrawerPage(
     val showSearchBar by settingsViewModel.searchBarVisibilityStateFlow.collectAsState()
     val searchAppQuery by appsViewModel.searchAppStateFlow.collectAsState()
 
+    var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(null) }
+
     fun onAppClick(app: AppWithIcon) {
         focusManager.clearFocus()
         context.launchApp(app.toApp())
@@ -108,9 +112,18 @@ fun AppDrawerPage(
                     appsViewModel = appsViewModel,
                     settingsViewModel = settingsViewModel,
                     app = app,
+                    onUpdateDisplayNameClick = { updateAppDisplayAppDialog = app.toApp() },
                     onClose = { viewManager.hideBottomSheet() },
                 )
             ),
+        )
+    }
+
+    updateAppDisplayAppDialog?.let { updatedApp ->
+        UpdateAppDisplayNameDialog(
+            app = updatedApp,
+            onUpdateDisplayName = { appsViewModel.updateDisplayName(updatedApp, it) },
+            onClose = { updateAppDisplayAppDialog = null }
         )
     }
 
@@ -240,7 +253,7 @@ private fun AppsList(
     val groupedApps by remember(appsList) {
         derivedStateOf {
             appsList.groupBy { appModel ->
-                appModel.name.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
+                appModel.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
             }
         }
     }
@@ -366,14 +379,14 @@ private fun AppDrawerGridItem(
         ) {
             Image(
                 bitmap = iconBitmap,
-                contentDescription = app.name,
+                contentDescription = app.displayName,
                 modifier = Modifier
                     .fillMaxSize()
             )
         }
         VerticalSpacer(spacing = 8.dp)
         Text(
-            text = app.name,
+            text = app.displayName,
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -398,7 +411,7 @@ private fun AppDrawerListItem(
     val image: @Composable () -> Unit = {
         Image(
             bitmap = app.icon.toBitmap().asImageBitmap(),
-            contentDescription = app.name,
+            contentDescription = app.displayName,
             modifier = Modifier
                 .padding(start = ITEM_START_PADDING)
                 .size(ICON_SIZE)
@@ -421,7 +434,7 @@ private fun AppDrawerListItem(
         icon = if (showAppIcons) image else null,
         text = {
             Text(
-                text = app.name,
+                text = app.displayName,
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 18.sp
