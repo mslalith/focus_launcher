@@ -36,9 +36,9 @@ fun MoreOptionsBottomSheet(
         val isFavorite = runBlocking { appsViewModel.isFavorite(app.packageName) }
         val colors = MaterialTheme.colors
 
-        val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, app.name)
-        val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, app.name)
-        val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, app.name)
+        val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, app.displayName)
+        val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, app.displayName)
+        val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, app.displayName)
 
         fun closeAfterAction(action: () -> Unit) {
             action()
@@ -58,7 +58,7 @@ fun MoreOptionsBottomSheet(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             VerticalSpacer(spacing = 12.dp)
             Text(
-                text = app.name,
+                text = app.displayName,
                 style = TextStyle(
                     color = colors.onBackground,
                     fontSize = 20.sp
@@ -106,6 +106,13 @@ fun MoreOptionsBottomSheet(
                     }
                 )
             }
+            SelectableIconItem(
+                text = "Update Display Name",
+                iconRes = R.drawable.ic_app_display_name,
+                onClick = {
+                    closeAfterAction { onUpdateDisplayNameClick() }
+                }
+            )
             SelectableIconItem(
                 text = "App Info",
                 iconRes = R.drawable.ic_info,

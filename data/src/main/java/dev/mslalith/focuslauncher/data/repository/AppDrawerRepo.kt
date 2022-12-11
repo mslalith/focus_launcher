@@ -26,5 +26,10 @@ class AppDrawerRepo @Inject constructor(
     suspend fun addApp(app: App) = appsDao.addApp(appToRoomMapper.toEntity(app))
     suspend fun removeApp(app: App) = appsDao.removeApp(appToRoomMapper.toEntity(app))
 
+    suspend fun updateDisplayName(app: App, displayName: String) {
+        val newApp = app.copy(displayName = displayName)
+        appsDao.updateApp(appToRoomMapper.toEntity(newApp))
+    }
+
     suspend fun areAppsEmptyInDatabase() = appsDao.getAllApps().isEmpty()
 }

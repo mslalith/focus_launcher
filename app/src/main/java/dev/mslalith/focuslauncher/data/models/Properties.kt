@@ -29,6 +29,7 @@ data class MoreAppOptionsProperties(
     val settingsViewModel: SettingsViewModel,
     val app: AppWithIcon,
     val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
+    val onUpdateDisplayNameClick: () -> Unit,
     val onClose: () -> Unit,
 )
 

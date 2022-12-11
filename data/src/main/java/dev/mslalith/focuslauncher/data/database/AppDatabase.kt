@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.data.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -23,8 +24,8 @@ import dev.mslalith.focuslauncher.data.database.typeconverter.Converters
         QuoteRoom::class,
         CityRoom::class
     ],
-    version = 1,
-    exportSchema = false
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    version = 2,
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

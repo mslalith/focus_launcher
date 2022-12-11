@@ -438,7 +438,7 @@ private fun FavoriteItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = app.name,
+            text = app.displayName,
             style = TextStyle(color = textColor()),
         )
     }

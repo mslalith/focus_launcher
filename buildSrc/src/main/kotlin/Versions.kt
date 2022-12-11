@@ -16,6 +16,7 @@ object Versions {
 
     const val COMPOSE_COMPILER = "1.3.2"
     const val COMPOSE = "1.3.0-rc01"
+    const val COMPOSE_MATERIAL3 = "1.0.0-rc01"
     const val ACTIVITY_COMPOSE = "1.7.0-alpha01"
     const val NAVIGATION_COMPOSE = "2.6.0-alpha02"
     const val LIFECYCLE_RUNTIME_KTX = "2.6.0-alpha02"

@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import dev.mslalith.focuslauncher.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.data.utils.Constants.Database.APPS_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +30,9 @@ interface AppsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addApp(app: AppRoom)
+
+    @Update
+    suspend fun updateApp(app: AppRoom)
 
     @Delete
     suspend fun removeApp(app: AppRoom)
