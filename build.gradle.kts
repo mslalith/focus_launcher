@@ -21,7 +21,7 @@ apply(plugin = "kover")
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
-    id("com.github.ben-manes.versions") version "0.44.0"
+    id("com.github.ben-manes.versions") version "0.45.0"
     id("org.jetbrains.kotlinx.kover") version Versions.KOTLINX_KOVER
     id("com.google.devtools.ksp") version Versions.KSP
 }
