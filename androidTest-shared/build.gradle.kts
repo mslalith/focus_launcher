@@ -32,12 +32,15 @@ android {
 
 dependencies {
     implementation(project(":data"))
-    implementation(Libs.kotlinxCoroutines)
-    dataStore()
 
-    implementation(Libs.testJUnit)
-    implementation(Libs.testAndroidXJUnit)
-    implementation(Libs.testKotlinCoroutines)
-    implementation(Libs.testTurbine)
-    implementation(Libs.testAndroidxCoreTesting)
+    implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
+
+    implementation(libs.junit4)
+    implementation(libs.androidx.test.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.test.core.ktx)
 }

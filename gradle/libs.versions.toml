@@ -1,0 +1,70 @@
+[versions]
+accompanist = "0.26.5-rc"
+androidGradlePlugin = "7.3.1"
+androidxActivity = "1.7.0-alpha01"
+androidxCore = "1.9.0"
+androidxDataStore = "1.0.0"
+androidxHiltNavigationCompose = "1.0.0"
+androidxLifecycle = "2.6.0-alpha02"
+androidxLifecycleRuntime = "2.6.0-alpha02"
+androidxNavigation = "2.6.0-alpha02"
+androidxPalette = "1.0.0"
+androidxTestCore = "1.5.0-beta01"
+androidxTestJunit = "1.1.4-beta01"
+compose = "1.3.0-rc01"
+composeMaterial3 = "1.0.0-rc01"
+googlePlay = "2.0.0"
+googleMaterial = "1.8.0-alpha01"
+hilt = "2.44"
+junit4 = "4.13.2"
+kotlin = "1.7.20"
+kotlinxCoroutines = "1.6.4"
+kotlinxDatetime = "0.4.0"
+ksp = "1.7.20-1.0.7"
+ktorClient = "2.1.2"
+robolectric = "4.9"
+room = "2.5.0-beta01"
+suncalc = "3.5"
+truth = "1.1.3"
+turbine = "0.12.0"
+
+[libraries]
+accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
+accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
+accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
+androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+androidx-dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycleRuntime" }
+androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "androidxPalette" }
+androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTestCore" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestJunit" }
+google-play = { group = "com.google.android.play", name = "app-update", version.ref = "googlePlay" }
+google-play-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "googlePlay" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktorClient" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorClient" }
+ktor-client-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorClient" }
+ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version.ref = "suncalc" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }

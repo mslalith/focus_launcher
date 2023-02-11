@@ -62,19 +62,33 @@ android {
 dependencies {
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
-    androidxCoreKtx()
-    hiltAndroid()
-    room()
-    dataStore()
-    ktorClient()
-    playInAppUpdate()
+    implementation(libs.androidx.core.ktx)
 
-    implementation(Libs.kotlinxDateTime)
-    implementation(Libs.thirdSunCalc)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
-    junit(includeAndroid = false)
-    truth(includeAndroid = false)
-    kotlinxCoroutinesTest(includeAndroid = false)
-    turbine(includeAndroid = false)
-    robolectric()
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
+
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.serialization)
+
+    implementation(libs.google.play)
+    implementation(libs.google.play.ktx)
+
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.suncalc)
+
+    testImplementation(libs.junit4)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core.ktx)
 }
