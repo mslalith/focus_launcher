@@ -1,29 +1,20 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(Libs.buildToolsGradle)
-        classpath(Libs.buildToolsKotlinGradlePlugin)
-        classpath(Libs.buildToolsHiltAndroidGradlePlugin)
-        classpath(Libs.buildToolsKotlinSerialization)
-        classpath(Libs.buildToolsKotlinxKover)
-    }
-}
-
 apply(from = "./buildScripts/install-git-hooks.gradle.kts")
 apply(plugin = "kover")
 
 plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.kotlinx.kover)
     id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
     id("com.github.ben-manes.versions") version "0.45.0"
-    id("org.jetbrains.kotlinx.kover") version Versions.KOTLINX_KOVER
-    id("com.google.devtools.ksp") version Versions.KSP
 }
 
 allprojects {
