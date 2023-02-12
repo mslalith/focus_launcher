@@ -1,33 +1,23 @@
 import kotlinx.kover.api.KoverTaskExtension
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
+    id("focuslauncher.android.application")
+    id("focuslauncher.android.hilt")
+    id("focuslauncher.android.application.compose")
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 apply(plugin = "kover")
 
 android {
-    compileSdk = ConfigData.TARGET_SDK
     namespace = "dev.mslalith.focuslauncher"
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
-        minSdk = ConfigData.MIN_SDK
-        targetSdk = ConfigData.TARGET_SDK
-        versionCode = ConfigData.VERSION_CODE
-        versionName = ConfigData.VERSION_NAME
+        versionCode = 5
+        versionName = "0.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
     }
 
     sourceSets["main"].java.srcDir("src/main/kotlin")
@@ -45,22 +35,6 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
-    }
-    lint {
-        error.add("VisibleForTests")
     }
     testOptions {
         unitTests.all {
@@ -83,17 +57,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.palette.ktx)
 
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling)
-
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.androidx.dataStore.core)
@@ -103,14 +70,11 @@ dependencies {
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.systemuicontroller)
 
-    implementation(libs.room.ktx)
-    implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
-
     testImplementation(libs.junit4)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(libs.room.runtime)
 }
