@@ -24,7 +24,7 @@ jobs:
 
       - name: Notify on Slack
         id: slack
-        uses: slackapi/slack-github-action@v1.18.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           channel-id: 'C03CPGWLNAX'
           slack-message: "Dependency Update Report: ${{ job.status }} \n\n https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
