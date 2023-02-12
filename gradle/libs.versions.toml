@@ -28,7 +28,7 @@ robolectric = "4.9"
 room = "2.5.0"
 suncalc = "3.5"
 truth = "1.1.3"
-turbine = "0.12.0"
+turbine = "0.12.1"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
