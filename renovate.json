@@ -7,9 +7,6 @@
     "develop"
   ],
   "timezone": "Asia/Kolkata",
-  "schedule": [
-    "daily"
-  ],
   "assignees": [
     "mslalith"
   ]
