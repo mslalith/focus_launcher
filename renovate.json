@@ -3,7 +3,14 @@
   "extends": [
     "config:base"
   ],
-  "baseBranches": ["develop"],
+  "baseBranches": [
+    "develop"
+  ],
   "timezone": "Asia/Kolkata",
-  "schedule": ["every saturday"]
+  "schedule": [
+    "every saturday"
+  ],
+  "assignees": [
+    "mslalith"
+  ]
 }
