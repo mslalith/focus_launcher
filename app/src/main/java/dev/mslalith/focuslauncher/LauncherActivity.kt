@@ -15,19 +15,14 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.data.providers.ProvideAll
-import dev.mslalith.focuslauncher.data.utils.UpdateManager
 import dev.mslalith.focuslauncher.extensions.appNoIconModelOf
 import dev.mslalith.focuslauncher.extensions.canLaunch
 import dev.mslalith.focuslauncher.navigator.AppNavigator
 import dev.mslalith.focuslauncher.ui.theme.FocusLauncherTheme
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LauncherActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var mUpdateManager: UpdateManager
 
     private val mAppsViewModel by viewModels<AppsViewModel>()
 
@@ -40,9 +35,7 @@ class LauncherActivity : ComponentActivity() {
         mAppsViewModel.setAppsIfCacheEmpty(context = this, checkCache = false)
 
         setContent {
-            ProvideAll(
-                updateManager = mUpdateManager,
-            ) {
+            ProvideAll {
                 FocusLauncherTheme {
                     Surface(color = MaterialTheme.colors.background) {
                         AppNavigator()
