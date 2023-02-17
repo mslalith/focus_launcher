@@ -11,19 +11,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.mslalith.focuslauncher.data.managers.LauncherViewManager
-import dev.mslalith.focuslauncher.data.utils.UpdateManager
 
 @Composable
 fun ProvideAll(
-    updateManager: UpdateManager,
     content: @Composable () -> Unit,
 ) {
     ProvideNavController {
         ProvideSystemUiController {
-            ProvideUpdateManager(updateManager) {
-                ProvideBottomSheetManager {
-                    content()
-                }
+            ProvideBottomSheetManager {
+                content()
             }
         }
     }
@@ -45,16 +41,6 @@ private fun ProvideSystemUiController(
 ) {
     val systemUiController = rememberSystemUiController()
     CompositionLocalProvider(LocalSystemUiController provides systemUiController) {
-        content()
-    }
-}
-
-@Composable
-private fun ProvideUpdateManager(
-    updateManager: UpdateManager,
-    content: @Composable () -> Unit,
-) {
-    CompositionLocalProvider(LocalUpdateManager provides updateManager) {
         content()
     }
 }
