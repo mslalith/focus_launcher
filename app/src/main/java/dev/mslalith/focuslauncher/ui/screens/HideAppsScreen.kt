@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.SelectedApp
+import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.views.AppBarWithBackIcon

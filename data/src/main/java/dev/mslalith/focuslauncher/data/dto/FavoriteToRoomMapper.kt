@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.data.dto
 
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.entities.FavoriteAppRoom
 import dev.mslalith.focuslauncher.data.di.modules.AppToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 
 class FavoriteToRoomMapper @Inject constructor(

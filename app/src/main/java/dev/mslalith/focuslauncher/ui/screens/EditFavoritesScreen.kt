@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.SelectedApp
+import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.extensions.showSnackbar
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
