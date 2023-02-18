@@ -3,10 +3,10 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

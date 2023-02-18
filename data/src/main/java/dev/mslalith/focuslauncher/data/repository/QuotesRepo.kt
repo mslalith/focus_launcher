@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.State
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
@@ -11,7 +12,6 @@ import dev.mslalith.focuslauncher.data.dto.QuoteResponseToRoomMapper
 import dev.mslalith.focuslauncher.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.data.network.entities.QuoteResponse
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.QUOTES_LIMIT
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

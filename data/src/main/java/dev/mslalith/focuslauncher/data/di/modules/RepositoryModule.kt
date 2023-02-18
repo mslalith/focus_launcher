@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.data.database.dao.CitiesDao
 import dev.mslalith.focuslauncher.data.database.dao.FavoriteAppsDao
@@ -31,7 +32,6 @@ import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.data.serializers.CityJsonParser
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
