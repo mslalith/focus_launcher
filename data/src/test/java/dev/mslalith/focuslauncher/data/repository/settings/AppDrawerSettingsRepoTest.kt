@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.data.repository.settings
 
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.DataStoreTest
-import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.utils.Constants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

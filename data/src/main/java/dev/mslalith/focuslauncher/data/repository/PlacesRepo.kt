@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.data.repository
 
 import dev.mslalith.focuslauncher.data.database.dao.CitiesDao
-import dev.mslalith.focuslauncher.data.dto.places.toCity
-import dev.mslalith.focuslauncher.data.dto.places.toCityRoom
+import dev.mslalith.focuslauncher.data.dto.toCity
+import dev.mslalith.focuslauncher.data.dto.toCityRoom
 import dev.mslalith.focuslauncher.data.network.api.PlacesApi
 import javax.inject.Inject
 

@@ -5,8 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.data.di.modules.SettingsProvider
-import dev.mslalith.focuslauncher.data.model.places.City
 import dev.mslalith.focuslauncher.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT

@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.data.serializers
 
-import dev.mslalith.focuslauncher.data.model.places.City
+import dev.mslalith.focuslauncher.core.model.City
 import kotlinx.serialization.json.Json
 
 interface JsonParser<T> {

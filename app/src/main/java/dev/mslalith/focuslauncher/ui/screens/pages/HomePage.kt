@@ -60,7 +60,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.AppWithIcon
+import dev.mslalith.focuslauncher.data.models.AppWithIcon
 import dev.mslalith.focuslauncher.extensions.FillSpacer
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 import dev.mslalith.focuslauncher.extensions.defaultDialerApp

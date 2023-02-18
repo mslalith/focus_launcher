@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.data.utils
 
-import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.data.model.ClockAlignment
-import dev.mslalith.focuslauncher.data.model.places.City
+import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.model.ClockAlignment
 
 object Constants {
     object DataStore {

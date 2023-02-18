@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.model
+package dev.mslalith.focuslauncher.core.model
 
 data class Quote(
     val id: String,

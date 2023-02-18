@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.data.dto
 
+import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.data.database.entities.QuoteRoom
-import dev.mslalith.focuslauncher.data.model.Quote
 import javax.inject.Inject
 
 class QuoteToRoomMapper @Inject constructor(

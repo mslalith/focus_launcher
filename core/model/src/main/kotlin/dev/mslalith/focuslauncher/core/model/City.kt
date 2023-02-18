@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.model.places
+package dev.mslalith.focuslauncher.core.model
 
 import kotlinx.serialization.Serializable
 

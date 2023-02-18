@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.model
+package dev.mslalith.focuslauncher.core.model
 
 enum class AppDrawerViewType(val index: Int, val text: String) {
     LIST(index = 0, text = "List"),

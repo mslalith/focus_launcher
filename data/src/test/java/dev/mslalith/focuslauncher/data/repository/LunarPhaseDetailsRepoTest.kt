@@ -3,8 +3,8 @@ package dev.mslalith.focuslauncher.data.repository
 import app.cash.turbine.testIn
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.androidtest.shared.awaitItemAndCancel
+import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.data.model.State
-import dev.mslalith.focuslauncher.data.model.places.City
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock

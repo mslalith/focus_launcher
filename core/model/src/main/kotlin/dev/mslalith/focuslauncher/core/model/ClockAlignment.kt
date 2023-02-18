@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.model
+package dev.mslalith.focuslauncher.core.model
 
 enum class ClockAlignment(val index: Int, val text: String) {
     START(index = 0, text = "Start"),

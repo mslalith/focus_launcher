@@ -1,7 +1,7 @@
-package dev.mslalith.focuslauncher.data.dto.places
+package dev.mslalith.focuslauncher.data.dto
 
+import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.data.database.entities.CityRoom
-import dev.mslalith.focuslauncher.data.model.places.City
 import dev.mslalith.focuslauncher.data.network.entities.CityResponse
 
 fun CityResponse.toCityRoom() = CityRoom(

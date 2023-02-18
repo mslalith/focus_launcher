@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import dev.mslalith.focuslauncher.data.model.LunarPhaseDetails
-import dev.mslalith.focuslauncher.data.model.NextPhaseDetails
+import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
+import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
 import dev.mslalith.focuslauncher.data.model.getOrNull
 import dev.mslalith.focuslauncher.extensions.FillSpacer
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
