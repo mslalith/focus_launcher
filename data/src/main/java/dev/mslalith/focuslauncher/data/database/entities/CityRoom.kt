@@ -17,5 +17,5 @@ data class CityRoom(
     val countryName: String,
     val latitude: String,
     val longitude: String,
-    val wikiDataId: String?,
+    val wikiDataId: String?
 )

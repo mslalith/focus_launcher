@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 
 @Composable
 fun MoreOptionsBottomSheet(
-    properties: MoreAppOptionsProperties,
+    properties: MoreAppOptionsProperties
 ) {
     properties.apply {
         val context = LocalContext.current
@@ -36,9 +36,9 @@ fun MoreOptionsBottomSheet(
         val isFavorite = runBlocking { appsViewModel.isFavorite(app.packageName) }
         val colors = MaterialTheme.colors
 
-        val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, app.name)
-        val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, app.name)
-        val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, app.name)
+        val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, app.displayName)
+        val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, app.displayName)
+        val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, app.displayName)
 
         fun closeAfterAction(action: () -> Unit) {
             action()
@@ -58,7 +58,7 @@ fun MoreOptionsBottomSheet(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             VerticalSpacer(spacing = 12.dp)
             Text(
-                text = app.name,
+                text = app.displayName,
                 style = TextStyle(
                     color = colors.onBackground,
                     fontSize = 20.sp
@@ -78,24 +78,27 @@ fun MoreOptionsBottomSheet(
                 onClick = {
                     closeAfterAction {
                         val app = app.toApp()
-                        if (isFavorite) removeFromFavorites(app)
-                        else addToFavorites(app)
+                        if (isFavorite) {
+                            removeFromFavorites(app)
+                        } else {
+                            addToFavorites(app)
+                        }
                     }
-                },
+                }
             )
             if (isFavorite) {
                 ConfirmSelectableItem(
                     text = "Hide App",
                     confirmMessage = confirmToHideMessage,
                     itemType = ConfirmSelectableItemType.Icon(
-                        iconRes = R.drawable.ic_visibility_off,
+                        iconRes = R.drawable.ic_visibility_off
                     ),
                     confirmText = "Yes, Hide",
                     onConfirm = {
                         closeAfterAction {
                             if (it) appsViewModel.addToHiddenApps(app.toApp())
                         }
-                    },
+                    }
                 )
             } else {
                 SelectableIconItem(
@@ -106,6 +109,13 @@ fun MoreOptionsBottomSheet(
                     }
                 )
             }
+            SelectableIconItem(
+                text = "Update Display Name",
+                iconRes = R.drawable.ic_app_display_name,
+                onClick = {
+                    closeAfterAction { onUpdateDisplayNameClick() }
+                }
+            )
             SelectableIconItem(
                 text = "App Info",
                 iconRes = R.drawable.ic_info,

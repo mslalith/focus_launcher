@@ -97,7 +97,7 @@ private data class HomePadding(
         bottom = 22.dp
     ),
     val lunarPhaseIconSize: Dp = 40.dp,
-    val favoriteActionItemSize: Dp = 16.dp,
+    val favoriteActionItemSize: Dp = 16.dp
 )
 
 @Composable
@@ -105,7 +105,7 @@ fun HomePage(
     appsViewModel: AppsViewModel,
     homeViewModel: HomeViewModel,
     settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val context = LocalContext.current
     val enablePullDownNotificationShade by settingsViewModel.notificationShadeStateFlow.collectAsState()
@@ -120,7 +120,7 @@ fun HomePage(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .onSwipeDown(enabled = enablePullDownNotificationShade) { context.openNotificationShade() },
+                .onSwipeDown(enabled = enablePullDownNotificationShade) { context.openNotificationShade() }
         ) {
             Column(
                 verticalArrangement = Arrangement.Bottom
@@ -129,7 +129,7 @@ fun HomePage(
                 ClockWidget(
                     settingsViewModel = settingsViewModel,
                     widgetsViewModel = widgetsViewModel,
-                    horizontalPadding = horizontalPadding,
+                    horizontalPadding = horizontalPadding
                 )
                 SpacedMoonCalendar(
                     settingsViewModel = settingsViewModel,
@@ -140,7 +140,7 @@ fun HomePage(
                     DecoratedQuote(
                         modifier = Modifier.align(Alignment.Center),
                         settingsViewModel = settingsViewModel,
-                        widgetsViewModel = widgetsViewModel,
+                        widgetsViewModel = widgetsViewModel
                     )
                 }
                 FavoritesList(
@@ -190,7 +190,7 @@ private fun SpacedMoonCalendar(
 private fun DecoratedQuote(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val homePadding = LocalHomePadding.current
     val startPadding = homePadding.contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
@@ -200,10 +200,10 @@ private fun DecoratedQuote(
             .fillMaxWidth()
             .padding(
                 horizontal = startPadding,
-                vertical = 8.dp,
+                vertical = 8.dp
             ),
         settingsViewModel = settingsViewModel,
-        widgetsViewModel = widgetsViewModel,
+        widgetsViewModel = widgetsViewModel
     )
 }
 
@@ -212,7 +212,7 @@ private fun FavoritesList(
     appsViewModel: AppsViewModel,
     homeViewModel: HomeViewModel,
     settingsViewModel: SettingsViewModel,
-    contentPadding: Dp,
+    contentPadding: Dp
 ) {
     val context = LocalContext.current
     val currentContextMode by homeViewModel.favoritesContextualMode.collectAsState()
@@ -276,7 +276,7 @@ private fun FavoritesList(
                     .fillMaxWidth()
                     .padding(horizontal = contentPadding),
                 mainAxisSpacing = 16.dp,
-                crossAxisSpacing = 12.dp,
+                crossAxisSpacing = 12.dp
             ) {
                 favoritesWithAppIcon.forEach { favorite ->
                     ReusableContent(key = favorite) {
@@ -313,9 +313,8 @@ private fun FavoritesContextHeader(
     currentContextMode: FavoritesContextMode,
     changeContextModeToOpen: () -> Unit,
     onReorderClick: () -> Unit,
-    onRemoveClick: () -> Unit,
+    onRemoveClick: () -> Unit
 ) {
-
     fun handleReClickFor(contextMode: FavoritesContextMode, action: () -> Unit) {
         if (currentContextMode == contextMode) changeContextModeToOpen() else action()
     }
@@ -369,7 +368,7 @@ private fun FavoritesContextActionItem(
     contextModes: List<KClass<FavoritesContextMode>>,
     currentContextMode: FavoritesContextMode,
     iconType: IconType,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val backgroundColor = MaterialTheme.colors.background
     val onBackgroundColor = MaterialTheme.colors.onBackground
@@ -395,7 +394,7 @@ private fun FavoritesContextActionItem(
 private fun FavoriteItem(
     app: AppWithIcon,
     homeViewModel: HomeViewModel,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val backgroundColor = MaterialTheme.colors.background
     val onBackgroundColor = MaterialTheme.colors.onBackground
@@ -435,11 +434,11 @@ private fun FavoriteItem(
                 )
             }
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = app.name,
-            style = TextStyle(color = textColor()),
+            text = app.displayName,
+            style = TextStyle(color = textColor())
         )
     }
 }

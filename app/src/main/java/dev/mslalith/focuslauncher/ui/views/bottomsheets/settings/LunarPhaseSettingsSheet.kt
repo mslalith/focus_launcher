@@ -31,7 +31,7 @@ import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 
 @Composable
 fun LunarPhaseSettingsSheet(
-    properties: LunarPhaseSettingsProperties,
+    properties: LunarPhaseSettingsProperties
 ) {
     val navController = LocalNavController.current
 
@@ -47,7 +47,7 @@ fun LunarPhaseSettingsSheet(
             PreviewLunarCalendar(
                 settingsViewModel = settingsViewModel,
                 widgetsViewModel = widgetsViewModel,
-                showLunarPhase = showLunarPhase,
+                showLunarPhase = showLunarPhase
             )
             SettingsSelectableSwitchItem(
                 text = "Enable Lunar Phase",
@@ -82,7 +82,7 @@ private fun PreviewLunarCalendar(
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
     showLunarPhase: Boolean,
-    horizontalPadding: Dp = 24.dp,
+    horizontalPadding: Dp = 24.dp
 ) {
     val height = 74.dp
 
@@ -93,27 +93,27 @@ private fun PreviewLunarCalendar(
             .padding(horizontal = horizontalPadding)
             .padding(top = 16.dp, bottom = 16.dp)
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colors.secondaryVariant),
+            .background(color = MaterialTheme.colors.secondaryVariant)
     ) {
         if (it) {
             LunarCalendar(
                 settingsViewModel = settingsViewModel,
                 widgetsViewModel = widgetsViewModel,
-                height = height,
+                height = height
             )
         } else {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height = height),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Enable Lunar Phase to preview",
                     textAlign = TextAlign.Center,
                     style = TextStyle(
-                        color = MaterialTheme.colors.onBackground,
-                    ),
+                        color = MaterialTheme.colors.onBackground
+                    )
                 )
             }
         }

@@ -32,7 +32,7 @@ import kotlinx.coroutines.runBlocking
 
 @Composable
 fun HideAppsScreen(
-    appsViewModel: AppsViewModel,
+    appsViewModel: AppsViewModel
 ) {
     val navController = LocalNavController.current
     val scaffoldState = rememberScaffoldState()
@@ -68,7 +68,7 @@ fun HideAppsScreen(
 @Composable
 private fun HiddenAppsList(
     modifier: Modifier = Modifier,
-    appsViewModel: AppsViewModel,
+    appsViewModel: AppsViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -76,8 +76,9 @@ private fun HiddenAppsList(
 
     fun toggleHiddenApp(selectedApp: SelectedApp) {
         appsViewModel.apply {
-            if (selectedApp.isSelected) removeFromHiddenApps(selectedApp.app)
-            else {
+            if (selectedApp.isSelected) {
+                removeFromHiddenApps(selectedApp.app)
+            } else {
                 coroutineScope.launch { appsViewModel.addToHiddenApps(selectedApp.app) }
                 removeFromFavorites(selectedApp.app)
             }
@@ -86,7 +87,7 @@ private fun HiddenAppsList(
 
     LazyColumn(modifier = modifier) {
         items(
-            items = hiddenAppsList,
+            items = hiddenAppsList
         ) { hiddenApp ->
             val isFavorite = runBlocking { appsViewModel.isFavorite(hiddenApp.app.packageName) }
             HiddenAppListItem(
@@ -103,7 +104,7 @@ private fun HiddenAppsList(
 private fun HiddenAppListItem(
     selectedApp: SelectedApp,
     isFavorite: Boolean,
-    onAppClick: () -> Unit,
+    onAppClick: () -> Unit
 ) {
     val appName = selectedApp.app.name
     val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, appName)
@@ -113,18 +114,18 @@ private fun HiddenAppListItem(
             text = appName,
             confirmMessage = confirmToHideMessage,
             itemType = ConfirmSelectableItemType.Checkbox(
-                checked = selectedApp.isSelected,
+                checked = selectedApp.isSelected
             ),
             confirmText = "Yes, Hide",
             onConfirm = {
                 if (it) onAppClick()
-            },
+            }
         )
     } else {
         SelectableCheckboxItem(
             text = appName,
             checked = selectedApp.isSelected,
-            onClick = onAppClick,
+            onClick = onAppClick
         )
     }
 }

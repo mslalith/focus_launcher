@@ -75,6 +75,7 @@ private fun Int.to2Digit() = when {
 fun App.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packageName)?.let { icon ->
     AppWithIcon(
         name = name,
+        displayName = displayName,
         packageName = packageName,
         icon = icon,
         isSystem = isSystem

@@ -12,5 +12,5 @@ data class QuoteRoom(
     val author: String,
     val authorSlug: String,
     val length: Int,
-    val tags: List<String>,
+    val tags: List<String>
 )

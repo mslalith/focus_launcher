@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class QuotesSettingsRepo @Inject constructor(
-    @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) {
 
     val showQuotesFlow: Flow<Boolean>
@@ -21,12 +21,12 @@ class QuotesSettingsRepo @Inject constructor(
 
     suspend fun toggleShowQuotes() = toggleData(
         preference = PREFERENCES_SHOW_QUOTES,
-        defaultValue = DEFAULT_SHOW_QUOTES,
+        defaultValue = DEFAULT_SHOW_QUOTES
     )
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
-        defaultValue: Boolean,
+        defaultValue: Boolean
     ) {
         settingsDataStore.edit {
             val current = it[preference] ?: defaultValue

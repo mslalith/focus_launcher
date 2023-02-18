@@ -44,17 +44,17 @@ class LunarPhaseSettingsRepo @Inject constructor(
 
     suspend fun toggleShowLunarPhase() = toggleData(
         preference = PREFERENCES_SHOW_LUNAR_PHASE,
-        defaultValue = DEFAULT_SHOW_LUNAR_PHASE,
+        defaultValue = DEFAULT_SHOW_LUNAR_PHASE
     )
 
     suspend fun toggleShowIlluminationPercent() = toggleData(
         preference = PREFERENCES_SHOW_ILLUMINATION_PERCENT,
-        defaultValue = DEFAULT_SHOW_ILLUMINATION_PERCENT,
+        defaultValue = DEFAULT_SHOW_ILLUMINATION_PERCENT
     )
 
     suspend fun toggleShowUpcomingPhaseDetails() = toggleData(
         preference = PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS,
-        defaultValue = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS,
+        defaultValue = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
     )
 
     suspend fun updatePlace(city: City) {
@@ -65,7 +65,7 @@ class LunarPhaseSettingsRepo @Inject constructor(
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
-        defaultValue: Boolean,
+        defaultValue: Boolean
     ) {
         settingsDataStore.edit {
             val current = it[preference] ?: defaultValue

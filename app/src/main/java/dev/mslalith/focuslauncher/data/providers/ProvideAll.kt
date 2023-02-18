@@ -11,19 +11,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.mslalith.focuslauncher.data.managers.LauncherViewManager
-import dev.mslalith.focuslauncher.data.utils.UpdateManager
 
 @Composable
 fun ProvideAll(
-    updateManager: UpdateManager,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ProvideNavController {
         ProvideSystemUiController {
-            ProvideUpdateManager(updateManager) {
-                ProvideBottomSheetManager {
-                    content()
-                }
+            ProvideBottomSheetManager {
+                content()
             }
         }
     }
@@ -31,7 +27,7 @@ fun ProvideAll(
 
 @Composable
 private fun ProvideNavController(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val navController = rememberNavController()
     CompositionLocalProvider(LocalNavController provides navController) {
@@ -41,7 +37,7 @@ private fun ProvideNavController(
 
 @Composable
 private fun ProvideSystemUiController(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     CompositionLocalProvider(LocalSystemUiController provides systemUiController) {
@@ -49,20 +45,10 @@ private fun ProvideSystemUiController(
     }
 }
 
-@Composable
-private fun ProvideUpdateManager(
-    updateManager: UpdateManager,
-    content: @Composable () -> Unit,
-) {
-    CompositionLocalProvider(LocalUpdateManager provides updateManager) {
-        content()
-    }
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ProvideBottomSheetManager(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
@@ -72,7 +58,7 @@ private fun ProvideBottomSheetManager(
         LauncherViewManager(
             coroutineScope = coroutineScope,
             scaffoldState = scaffoldState,
-            bottomSheetState = modalBottomSheetState,
+            bottomSheetState = modalBottomSheetState
         )
     }
     CompositionLocalProvider(LocalLauncherViewManager provides viewManager) {

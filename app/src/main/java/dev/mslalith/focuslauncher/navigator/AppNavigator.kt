@@ -36,7 +36,7 @@ private fun NavGraphBuilder.launcherScreen() {
             homeViewModel = hiltViewModel(it),
             themeViewModel = hiltViewModel(it),
             settingsViewModel = hiltViewModel(it),
-            widgetsViewModel = hiltViewModel(it),
+            widgetsViewModel = hiltViewModel(it)
         )
     }
 }
@@ -44,7 +44,7 @@ private fun NavGraphBuilder.launcherScreen() {
 private fun NavGraphBuilder.editFavoritesScreen() {
     composable(Screen.EditFavorites.id) {
         EditFavoritesScreen(
-            appsViewModel = hiltViewModel(it),
+            appsViewModel = hiltViewModel(it)
         )
     }
 }
@@ -52,7 +52,7 @@ private fun NavGraphBuilder.editFavoritesScreen() {
 private fun NavGraphBuilder.hideAppsScreen() {
     composable(Screen.HideApps.id) {
         HideAppsScreen(
-            appsViewModel = hiltViewModel(it),
+            appsViewModel = hiltViewModel(it)
         )
     }
 }

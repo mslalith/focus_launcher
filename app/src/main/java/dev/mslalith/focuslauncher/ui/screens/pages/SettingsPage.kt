@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.ui.screens.pages
 
-import android.app.Activity
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
@@ -9,7 +8,6 @@ import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -26,10 +24,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -46,33 +42,23 @@ import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
-import dev.mslalith.focuslauncher.data.providers.LocalUpdateManager
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckForUpdates
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.CheckingForUpdates
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloaded
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Downloading
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.Installing
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.NoUpdateAvailable
-import dev.mslalith.focuslauncher.data.utils.AppUpdateState.TryAgain
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.onLifecycleEventChange
-import dev.mslalith.focuslauncher.ui.views.settings.LoadingSettingsItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsItem
-import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsPage(
     themeViewModel: ThemeViewModel,
     appsViewModel: AppsViewModel,
     settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val navController = LocalNavController.current
     val scrollState = rememberScrollState()
@@ -83,7 +69,7 @@ fun SettingsPage(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         SettingsHeader()
         VerticalSpacer(spacing = 12.dp)
@@ -96,7 +82,6 @@ fun SettingsPage(
         AppDrawer(appsViewModel, settingsViewModel)
         Widgets(widgetsViewModel, settingsViewModel)
         SetAsDefaultLauncher(settingsViewModel)
-        // CheckForUpdates()
 
         VerticalSpacer(spacing = 12.dp)
     }
@@ -110,7 +95,7 @@ private fun SettingsHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = usableHorizontalPadding),
+            .padding(horizontal = usableHorizontalPadding)
     ) {
         Text(
             text = "Settings",
@@ -121,12 +106,12 @@ private fun SettingsHeader() {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp),
+                .padding(bottom = 12.dp)
         )
 
         Divider(
             color = MaterialTheme.colors.onBackground,
-            modifier = Modifier.fillMaxWidth(fraction = 0.5f),
+            modifier = Modifier.fillMaxWidth(fraction = 0.5f)
         )
     }
 }
@@ -194,7 +179,7 @@ private fun PullDownNotifications(settingsViewModel: SettingsViewModel) {
 @Composable
 private fun AppDrawer(
     appsViewModel: AppsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
     SettingsItem(text = "App Drawer") {
@@ -202,9 +187,9 @@ private fun AppDrawer(
             sheetType = BottomSheetContentType.AppDrawer(
                 properties = AppDrawerSettingsProperties(
                     appsViewModel = appsViewModel,
-                    settingsViewModel = settingsViewModel,
-                ),
-            ),
+                    settingsViewModel = settingsViewModel
+                )
+            )
         )
     }
 }
@@ -212,7 +197,7 @@ private fun AppDrawer(
 @Composable
 private fun Widgets(
     widgetsViewModel: WidgetsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
 
@@ -230,7 +215,7 @@ private fun Widgets(
                             BottomSheetContentType.Widgets.Clock(
                                 properties = ClockSettingsProperties(
                                     widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
+                                    settingsViewModel = settingsViewModel
                                 )
                             )
                         }
@@ -238,8 +223,8 @@ private fun Widgets(
                             BottomSheetContentType.Widgets.LunarPhase(
                                 properties = LunarPhaseSettingsProperties(
                                     widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
-                                ),
+                                    settingsViewModel = settingsViewModel
+                                )
                             )
                         }
                         // WidgetType.QUOTES -> onWidgetTypeClick {
@@ -251,7 +236,7 @@ private fun Widgets(
                         //     )
                         // }
                     }
-                },
+                }
             )
         }
     }
@@ -292,45 +277,5 @@ private fun SetAsDefaultLauncher(
         SettingsItem(text = "Set as Default Launcher") {
             askToSetAsDefaultLauncher()
         }
-    }
-}
-
-@Composable
-private fun CheckForUpdates() {
-    val context = LocalContext.current
-    val viewManager = LocalLauncherViewManager.current
-    val updateManager = LocalUpdateManager.current
-    val coroutineScope = rememberCoroutineScope()
-    val appUpdateState by updateManager.appUpdateStateFlow.collectAsState()
-
-    LaunchedEffect(key1 = appUpdateState) {
-        if (appUpdateState is TryAgain || appUpdateState is NoUpdateAvailable) {
-            coroutineScope.launch { viewManager.showSnackbar(message = appUpdateState.message) }
-            updateManager.resetAppUpdateState()
-        }
-    }
-
-    Crossfade(targetState = appUpdateState) { state ->
-        val onClick: (() -> Unit)? = when (state) {
-            is CheckForUpdates -> {
-                { updateManager.checkForUpdate(context as Activity) }
-            }
-            Downloaded -> {
-                { updateManager.completeUpdate() }
-            }
-            CheckingForUpdates, Installing, is Downloading -> null
-            else -> {
-                {
-                    updateManager.resetAppUpdateState()
-                    coroutineScope.launch { viewManager.showSnackbar(message = state.message) }
-                }
-            }
-        }
-
-        LoadingSettingsItem(
-            text = state.message,
-            isLoading = state is CheckingForUpdates,
-            onClick = onClick,
-        )
     }
 }

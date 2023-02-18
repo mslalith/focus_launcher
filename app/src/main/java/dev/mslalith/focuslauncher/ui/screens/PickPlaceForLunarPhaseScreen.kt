@@ -25,7 +25,7 @@ import dev.mslalith.focuslauncher.ui.views.shared.SearchField
 
 @Composable
 fun PickPlaceForLunarPhaseScreen(
-    pickPlaceViewModel: PickPlaceViewModel,
+    pickPlaceViewModel: PickPlaceViewModel
 ) {
     val navController = LocalNavController.current
     val scaffoldState = rememberScaffoldState()
@@ -47,12 +47,12 @@ fun PickPlaceForLunarPhaseScreen(
                 title = "Pick a Place",
                 onBackPressed = { goBack() }
             )
-        },
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
         ) {
             SearchField(
                 placeholder = "Search city...",

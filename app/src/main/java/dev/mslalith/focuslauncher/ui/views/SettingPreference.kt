@@ -42,7 +42,7 @@ fun SettingsSelectableChooserItem(
     onItemSelected: (Int) -> Unit,
     disabled: Boolean = false,
     height: Dp = SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT,
-    horizontalPadding: Dp = 24.dp,
+    horizontalPadding: Dp = 24.dp
 ) {
     SettingsSelectableBottomContentItem(
         modifier = modifier,
@@ -50,13 +50,13 @@ fun SettingsSelectableChooserItem(
         subText = subText,
         disabled = disabled,
         height = height,
-        horizontalPadding = horizontalPadding,
+        horizontalPadding = horizontalPadding
     ) {
         ChooserGroup(
             textIconsList = textIconsList,
             onItemSelected = onItemSelected,
             selectedItem = selectedItem,
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = 8.dp)
         )
     }
 }
@@ -72,7 +72,7 @@ fun SettingsSelectableSliderItem(
     steps: Int = 0,
     disabled: Boolean = false,
     height: Dp = SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT,
-    horizontalPadding: Dp = 24.dp,
+    horizontalPadding: Dp = 24.dp
 ) {
     val thumbColor = MaterialTheme.colors.onBackground
     val inactiveColor = thumbColor.copy(alpha = 0.1f)
@@ -84,7 +84,7 @@ fun SettingsSelectableSliderItem(
         subText = subText,
         disabled = disabled,
         height = height,
-        horizontalPadding = horizontalPadding,
+        horizontalPadding = horizontalPadding
     ) {
         Slider(
             value = sliderValue,
@@ -98,8 +98,8 @@ fun SettingsSelectableSliderItem(
                 activeTrackColor = thumbColor,
                 inactiveTrackColor = inactiveColor,
                 activeTickColor = thumbColor,
-                inactiveTickColor = inactiveColor,
-            ),
+                inactiveTickColor = inactiveColor
+            )
         )
     }
 }
@@ -112,7 +112,7 @@ fun SettingsSelectableSwitchItem(
     disabled: Boolean = false,
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     horizontalPadding: Dp = 24.dp,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     SettingsSelectableItem(
         modifier = modifier,
@@ -124,7 +124,7 @@ fun SettingsSelectableSwitchItem(
         trailing = {
             RoundedSwitch(
                 checked = checked,
-                enabled = !disabled,
+                enabled = !disabled
             )
         }
     )
@@ -139,7 +139,7 @@ fun SettingsSelectableBottomContentItem(
     disabled: Boolean = false,
     height: Dp = SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT,
     horizontalPadding: Dp = SELECTABLE_ITEM_HORIZONTAL_PADDING,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     var showBottomContent by remember { mutableStateOf(false) }
 
@@ -162,7 +162,7 @@ fun SettingsSelectableBottomContentItem(
         )
         AnimatedVisibility(visible = showBottomContent) {
             Box(
-                modifier = Modifier.padding(horizontal = horizontalPadding),
+                modifier = Modifier.padding(horizontal = horizontalPadding)
             ) {
                 content()
             }
@@ -179,44 +179,44 @@ fun SettingsSelectableItem(
     disabled: Boolean = false,
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     horizontalPadding: Dp = SELECTABLE_ITEM_HORIZONTAL_PADDING,
-    onClick: (() -> Unit)?,
+    onClick: (() -> Unit)?
 ) {
     val onBackgroundColor = MaterialTheme.colors.onBackground
     val textColor by animateColorAsState(
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor,
+        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor
     )
     val subTextColor by animateColorAsState(
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(alpha = 0.6f),
+        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(alpha = 0.6f)
     )
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .height(height = height)
-            .clickable(enabled = !disabled && onClick != null) { onClick?.invoke() },
+            .clickable(enabled = !disabled && onClick != null) { onClick?.invoke() }
     ) {
         Row(
-            modifier = Modifier.weight(weight = 1f),
+            modifier = Modifier.weight(weight = 1f)
         ) {
             Box(
                 modifier = Modifier
                     .weight(weight = 1f)
                     .align(Alignment.CenterVertically)
-                    .padding(horizontal = horizontalPadding),
+                    .padding(horizontal = horizontalPadding)
             ) {
                 Text(
                     text = text,
                     style = TextStyle(
                         color = textColor,
-                        fontSize = 16.sp,
-                    ),
+                        fontSize = 16.sp
+                    )
                 )
             }
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(end = horizontalPadding),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 trailing()
             }
@@ -226,13 +226,13 @@ fun SettingsSelectableItem(
                 targetState = subText,
                 modifier = Modifier
                     .weight(weight = 1f)
-                    .padding(horizontal = horizontalPadding),
+                    .padding(horizontal = horizontalPadding)
             ) {
                 Text(
                     text = it,
                     style = TextStyle(
                         color = subTextColor,
-                        fontSize = 14.sp,
+                        fontSize = 14.sp
                     )
                 )
             }

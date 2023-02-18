@@ -53,7 +53,7 @@ fun SettingsExpandableItem(
     contentPadding: Dp = 40.dp,
     bottomPadding: Dp = 8.dp,
     curvyLineSurroundPadding: PaddingValues? = null,
-    content: @Composable (() -> Unit) -> Unit,
+    content: @Composable (() -> Unit) -> Unit
 ) {
     val durationMillis = 350
     val coroutineScope = rememberCoroutineScope()
@@ -64,7 +64,7 @@ fun SettingsExpandableItem(
     val dividerWidth = 3f
 
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column {
             SettingsItem(
@@ -88,8 +88,8 @@ fun SettingsExpandableItem(
                     .padding(
                         start = contentPadding,
                         end = ITEM_PADDING,
-                        bottom = bottomPadding,
-                    ),
+                        bottom = bottomPadding
+                    )
             ) {
                 Box(
                     modifier = Modifier
@@ -123,7 +123,7 @@ fun SettingsGridItem(
     verticalPadding: Dp = 8.dp,
     icon: ImageVector? = null,
     contentDescription: String? = null,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val density = LocalDensity.current
     val usableHorizontalPadding = horizontalPadding ?: ITEM_PADDING
@@ -140,25 +140,25 @@ fun SettingsGridItem(
             .clickable { onClick() }
             .padding(
                 horizontal = usableHorizontalPadding,
-                vertical = verticalPadding,
+                vertical = verticalPadding
             )
             .onSizeChanged {
                 density.run { contentHeight = it.height.toDp() }
             },
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         if (showIcon) {
             if (icon != null) {
                 Box(
                     modifier = Modifier
                         .padding(end = 12.dp)
-                        .then(iconModifier),
+                        .then(iconModifier)
                 ) {
                     Icon(
                         imageVector = icon,
                         contentDescription = contentDescription ?: text,
-                        tint = color,
+                        tint = color
                     )
                 }
             } else {
@@ -181,7 +181,7 @@ fun LoadingSettingsItem(
     isLoading: Boolean,
     horizontalPadding: Dp? = null,
     afterLeadingPadding: Dp = 20.dp,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     val density = LocalDensity.current
     var contentHeight by remember { mutableStateOf(0.dp) }
@@ -199,7 +199,9 @@ fun LoadingSettingsItem(
                     modifier = Modifier.size(size = contentHeight / 2)
                 )
             }
-        } else null,
+        } else {
+            null
+        },
         modifier = Modifier.onSizeChanged {
             contentHeight = density.run { it.height.toDp() }
         }
@@ -214,7 +216,7 @@ fun SettingsItem(
     verticalPadding: Dp = 12.dp,
     afterLeadingPadding: Dp = 20.dp,
     leading: (@Composable () -> Unit)? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     val usableHorizontalPadding = (horizontalPadding ?: ITEM_PADDING) * .75f
 
@@ -226,13 +228,13 @@ fun SettingsItem(
             .clickable(enabled = onClick != null) { onClick?.invoke() }
             .padding(
                 horizontal = usableHorizontalPadding,
-                vertical = verticalPadding,
+                vertical = verticalPadding
             ),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedVisibility(visible = leading != null) {
             Box(
-                modifier = Modifier.padding(end = afterLeadingPadding),
+                modifier = Modifier.padding(end = afterLeadingPadding)
             ) {
                 leading?.invoke()
             }
@@ -250,7 +252,7 @@ private fun Modifier.settingsContentCurve(
     dividerColor: Color,
     dividerWidth: Float = 3f,
     dividerCurveOffset: Float = 24f,
-    horizontalWidth: Float = 36f,
+    horizontalWidth: Float = 36f
 ) = this then Modifier.drawWithCache {
     onDrawBehind {
         val lineHalf = dividerWidth / 2

@@ -1,31 +1,23 @@
 import kotlinx.kover.api.KoverTaskExtension
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
+    id("focuslauncher.android.application")
+    id("focuslauncher.android.hilt")
+    id("focuslauncher.android.application.compose")
+    alias(libs.plugins.ksp)
 }
 
+apply(plugin = "kover")
+
 android {
-    compileSdk = ConfigData.TARGET_SDK
     namespace = "dev.mslalith.focuslauncher"
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
-        minSdk = ConfigData.MIN_SDK
-        targetSdk = ConfigData.TARGET_SDK
-        versionCode = ConfigData.VERSION_CODE
-        versionName = ConfigData.VERSION_NAME
+        versionCode = 6
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-            arg("room.incremental", "true")
-            arg("room.expandProjection", "true")
-        }
     }
 
     sourceSets["main"].java.srcDir("src/main/kotlin")
@@ -44,26 +36,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE
-    }
-    lint {
-        error.add("VisibleForTests")
-    }
     testOptions {
         unitTests.all {
             it.extensions.configure(KoverTaskExtension::class) {
-                isDisabled = it.name != "testDebugUnitTest"
+                isDisabled.set(it.name != "testDebugUnitTest")
             }
         }
     }
@@ -73,21 +49,32 @@ dependencies {
     implementation(project(":data"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
-    kotlin()
-    google()
-    androidx()
+    implementation(libs.kotlinx.datetime)
 
-    compose()
-    composeInterop()
+    implementation(libs.google.material)
 
-    hilt()
-    dataStore()
-    accompanist()
-    room()
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.palette.ktx)
 
-    junit(includeAndroid = false)
-    truth(includeAndroid = false)
-    kotlinxCoroutinesTest(includeAndroid = false)
-    turbine(includeAndroid = false)
-    robolectric()
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
+
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
+
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.flowlayout)
+    implementation(libs.accompanist.systemuicontroller)
+
+    testImplementation(libs.junit4)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(libs.room.runtime)
 }

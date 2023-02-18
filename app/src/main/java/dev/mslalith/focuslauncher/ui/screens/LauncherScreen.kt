@@ -44,7 +44,7 @@ fun LauncherScreen(
     homeViewModel: HomeViewModel,
     themeViewModel: ThemeViewModel,
     settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 1)
@@ -77,13 +77,13 @@ fun LauncherScreen(
         sheetBackgroundColor = MaterialTheme.colors.primaryVariant,
         sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         scrimColor = Color.Black.copy(alpha = 0.7f),
-        sheetContent = { LauncherBottomSheetContent() },
+        sheetContent = { LauncherBottomSheetContent() }
     ) {
         Scaffold(
             scaffoldState = viewManager.scaffoldState,
             modifier = Modifier
                 .statusBarsPadding()
-                .navigationBarsPadding(),
+                .navigationBarsPadding()
         ) {
             HorizontalPager(
                 count = 3,
@@ -95,17 +95,17 @@ fun LauncherScreen(
                         themeViewModel = themeViewModel,
                         appsViewModel = appsViewModel,
                         settingsViewModel = settingsViewModel,
-                        widgetsViewModel = widgetsViewModel,
+                        widgetsViewModel = widgetsViewModel
                     )
                     1 -> HomePage(
                         appsViewModel = appsViewModel,
                         homeViewModel = homeViewModel,
                         settingsViewModel = settingsViewModel,
-                        widgetsViewModel = widgetsViewModel,
+                        widgetsViewModel = widgetsViewModel
                     )
                     2 -> AppDrawerPage(
                         appsViewModel = appsViewModel,
-                        settingsViewModel = settingsViewModel,
+                        settingsViewModel = settingsViewModel
                     )
                 }
             }

@@ -59,7 +59,7 @@ fun LunarCalendar(
 
     AnimatedVisibility(
         visible = showLunarPhase,
-        modifier = modifier,
+        modifier = modifier
     ) {
         LunarCalendarContent(
             lunarPhaseDetails = lunarPhaseDetails,
@@ -96,7 +96,7 @@ fun LunarCalendarContent(
                 LunarPhaseMoonIcon(
                     phaseAngle = it.phaseAngle,
                     illumination = it.illumination,
-                    moonSize = iconSize,
+                    moonSize = iconSize
                 )
             }
         },
@@ -104,7 +104,7 @@ fun LunarCalendarContent(
             lunarPhaseDetails.getOrNull()?.let {
                 LunarPhaseName(
                     lunarPhaseDetails = it,
-                    showIlluminationPercent = showIlluminationPercent,
+                    showIlluminationPercent = showIlluminationPercent
                 )
             }
         },
@@ -117,7 +117,9 @@ fun LunarCalendarContent(
                     )
                 }
             }
-        } else null,
+        } else {
+            null
+        }
     )
 }
 
@@ -126,7 +128,7 @@ fun LunarPhaseMoonIcon(
     modifier: Modifier = Modifier,
     phaseAngle: Double,
     illumination: Double,
-    moonSize: Dp = 40.dp,
+    moonSize: Dp = 40.dp
 ) {
     val illuminatedColor = Color(0xFFBCC1C5)
     val moonColor = Color(0xFF66757F)
@@ -145,7 +147,7 @@ fun LunarPhaseMoonIcon(
         targetValue = lerp(
             start = startOffset,
             stop = endOffset,
-            fraction = illumination.toFloat(),
+            fraction = illumination.toFloat()
         )
     )
 
@@ -163,8 +165,8 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .2f,
                     center = Offset(
                         x = radius * .5f,
-                        y = radius * .5f,
-                    ),
+                        y = radius * .5f
+                    )
                 )
 
                 // diagonal center 2
@@ -174,7 +176,7 @@ fun LunarPhaseMoonIcon(
                         radius = it,
                         center = Offset(
                             x = radius + (it / 2f),
-                            y = radius - (it / 2f),
+                            y = radius - (it / 2f)
                         )
                     )
                 }
@@ -185,7 +187,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .2f,
                     center = Offset(
                         x = radius * 1.35f,
-                        y = radius * 1.55f,
+                        y = radius * 1.55f
                     )
                 )
 
@@ -195,7 +197,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .1f,
                     center = Offset(
                         x = radius * 1.2f,
-                        y = radius * .3f,
+                        y = radius * .3f
                     )
                 )
 
@@ -205,7 +207,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .06f,
                     center = Offset(
                         x = radius * 1.65f,
-                        y = radius * .55f,
+                        y = radius * .55f
                     )
                 )
 
@@ -215,7 +217,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .1f,
                     center = Offset(
                         x = radius * 1.7f,
-                        y = radius,
+                        y = radius
                     )
                 )
 
@@ -225,7 +227,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .06f,
                     center = Offset(
                         x = radius * .2f,
-                        y = radius,
+                        y = radius
                     )
                 )
 
@@ -235,7 +237,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .1f,
                     center = Offset(
                         x = radius * .65f,
-                        y = radius * 1.3f,
+                        y = radius * 1.3f
                     )
                 )
 
@@ -245,7 +247,7 @@ fun LunarPhaseMoonIcon(
                     radius = radius * .06f,
                     center = Offset(
                         x = radius * .8f,
-                        y = radius * 1.75f,
+                        y = radius * 1.75f
                     )
                 )
 
@@ -270,7 +272,7 @@ fun LunarPhaseMoonIcon(
                             x2 = size.width * percentOffset.x,
                             y2 = 0f,
                             x3 = size.width * .5f,
-                            y3 = 0f,
+                            y3 = 0f
                         )
                         close()
                     }
@@ -292,7 +294,7 @@ private fun LunarPhaseName(
     modifier: Modifier = Modifier,
     lunarPhaseDetails: LunarPhaseDetails,
     showIlluminationPercent: Boolean,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     val phaseNameAndIlluminationPercentPair = lunarPhaseDetails.run {
         lunarPhase.phaseName to (illumination * 100).asPercent()
@@ -302,7 +304,7 @@ private fun LunarPhaseName(
     }
     Crossfade(
         modifier = modifier,
-        targetState = text,
+        targetState = text
     ) {
         Text(
             text = it,
@@ -310,8 +312,8 @@ private fun LunarPhaseName(
                 color = textColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
     }
 }
@@ -320,7 +322,7 @@ private fun LunarPhaseName(
 private fun UpcomingLunarPhaseDetails(
     modifier: Modifier = Modifier,
     upcomingLunarPhase: UpcomingLunarPhase,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     val phaseName = upcomingLunarPhase.lunarPhase.phaseName
     val dateTime = upcomingLunarPhase.dateTime?.inShortReadableFormat() ?: return
@@ -328,15 +330,15 @@ private fun UpcomingLunarPhaseDetails(
 
     Crossfade(
         modifier = modifier,
-        targetState = nextPhaseOnText,
+        targetState = nextPhaseOnText
     ) {
         Text(
             text = it,
             style = TextStyle(
                 color = textColor,
                 fontSize = 12.sp,
-                letterSpacing = 0.9.sp,
-            ),
+                letterSpacing = 0.9.sp
+            )
         )
     }
 }

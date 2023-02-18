@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AppDrawerSettingsRepo @Inject constructor(
-    @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) {
     val appDrawerViewTypeFlow: Flow<AppDrawerViewType>
         get() = settingsDataStore.data.map { preferences ->
@@ -47,22 +47,22 @@ class AppDrawerSettingsRepo @Inject constructor(
 
     suspend fun toggleAppIconsVisibility() = toggleData(
         preference = PREFERENCES_APP_ICONS_VISIBILITY,
-        defaultValue = DEFAULT_APP_ICONS,
+        defaultValue = DEFAULT_APP_ICONS
     )
 
     suspend fun toggleSearchBarVisibility() = toggleData(
         preference = PREFERENCES_SEARCH_BAR_VISIBILITY,
-        defaultValue = DEFAULT_SEARCH_BAR,
+        defaultValue = DEFAULT_SEARCH_BAR
     )
 
     suspend fun toggleAppGroupHeaderVisibility() = toggleData(
         preference = PREFERENCES_APP_GROUP_HEADER_VISIBILITY,
-        defaultValue = DEFAULT_APP_GROUP_HEADER,
+        defaultValue = DEFAULT_APP_GROUP_HEADER
     )
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
-        defaultValue: Boolean,
+        defaultValue: Boolean
     ) {
         settingsDataStore.edit {
             val current = it[preference] ?: defaultValue

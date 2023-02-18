@@ -60,7 +60,12 @@ class AppsViewModel @Inject constructor(
      */
     val appDrawerAppsStateFlow = appDrawerAppsFlow.withinScope(emptyList())
     val favoritesStateFlow = favoritesFlow.withinScope(emptyList())
-    val onlyFavoritesStateFlow = favoritesRepo.onlyFavoritesFlow.withinScope(emptyList())
+    val onlyFavoritesStateFlow = appDrawerRepo.allAppsFlow
+        .combine(favoritesRepo.onlyFavoritesFlow) { allApps, onlyFavorites ->
+            allApps.filter { app ->
+                onlyFavorites.any { app.packageName == it.packageName }
+            }
+        }.withinScope(emptyList())
     val hiddenAppsStateFlow = hiddenAppsFlow.withinScope(emptyList())
 
     private val appDrawerAppsFlow: Flow<List<App>>
@@ -123,6 +128,10 @@ class AppsViewModel @Inject constructor(
                 addApps(context.appDrawerApps)
             }
         }
+    }
+
+    fun updateDisplayName(app: App, displayName: String) {
+        launch { appDrawerRepo.updateDisplayName(app, displayName) }
     }
 
     /**
@@ -189,11 +198,11 @@ class AppsViewModel @Inject constructor(
     }
 
     private fun launch(
-        run: suspend () -> Unit,
+        run: suspend () -> Unit
     ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
-        initialValue: T,
+        initialValue: T
     ) = stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,

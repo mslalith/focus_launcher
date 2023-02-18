@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GeneralSettingsRepo @Inject constructor(
-    @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) {
     val firstRunFlow: Flow<Boolean>
         get() = settingsDataStore.data.map {
@@ -42,12 +42,12 @@ class GeneralSettingsRepo @Inject constructor(
 
     suspend fun toggleStatusBarVisibility() = toggleData(
         preference = PREFERENCES_STATUS_BAR_VISIBILITY,
-        defaultValue = DEFAULT_STATUS_BAR,
+        defaultValue = DEFAULT_STATUS_BAR
     )
 
     suspend fun toggleNotificationShade() = toggleData(
         preference = PREFERENCES_NOTIFICATION_SHADE,
-        defaultValue = DEFAULT_NOTIFICATION_SHADE,
+        defaultValue = DEFAULT_NOTIFICATION_SHADE
     )
 
     suspend fun setIsDefaultLauncher(isDefault: Boolean) {
@@ -58,7 +58,7 @@ class GeneralSettingsRepo @Inject constructor(
 
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
-        defaultValue: Boolean,
+        defaultValue: Boolean
     ) {
         settingsDataStore.edit {
             val current = it[preference] ?: defaultValue

@@ -16,7 +16,7 @@ interface PlacesApi {
 }
 
 internal class PlacesApiImpl @Inject constructor(
-    private val httpClient: HttpClient,
+    private val httpClient: HttpClient
 ) : PlacesApi {
 
     private val baseUrl = "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master"

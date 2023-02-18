@@ -8,12 +8,12 @@ import androidx.compose.ui.composed
 
 inline fun Modifier.modifyIf(
     predicate: () -> Boolean,
-    block: Modifier.() -> Modifier,
+    block: Modifier.() -> Modifier
 ): Modifier = if (predicate()) this.then(block()) else this
 
 inline fun Modifier.onSwipeDown(
     enabled: Boolean = true,
-    crossinline action: () -> Unit,
+    crossinline action: () -> Unit
 ) = composed {
     val velocityThreshold = 600f
     var yStart = 0f
