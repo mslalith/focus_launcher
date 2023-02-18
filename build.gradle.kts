@@ -11,7 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlinx.kover)
-    id("org.jlleitschuh.gradle.ktlint") version "11.1.0"
+    alias(libs.plugins.ktlint)
     id("com.github.ben-manes.versions") version "0.45.0"
 }
 
