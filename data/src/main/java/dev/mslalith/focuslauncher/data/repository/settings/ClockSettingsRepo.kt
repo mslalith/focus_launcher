@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ClockSettingsRepo @Inject constructor(
-    @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) {
     val showClock24Flow: Flow<Boolean>
         get() = settingsDataStore.data.map {

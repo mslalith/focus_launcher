@@ -39,9 +39,6 @@ dependencies {
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.serialization)
 
-    implementation(libs.google.play)
-    implementation(libs.google.play.ktx)
-
     implementation(libs.kotlinx.datetime)
     implementation(libs.suncalc)
 

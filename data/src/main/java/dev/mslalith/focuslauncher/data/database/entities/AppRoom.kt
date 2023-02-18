@@ -12,5 +12,5 @@ data class AppRoom(
     val displayName: String,
     @PrimaryKey(autoGenerate = false)
     val packageName: String,
-    val isSystem: Boolean,
+    val isSystem: Boolean
 )

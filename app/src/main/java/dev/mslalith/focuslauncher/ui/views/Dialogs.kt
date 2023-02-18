@@ -16,7 +16,7 @@ import dev.mslalith.focuslauncher.data.models.ConfirmDialogProperties
 
 @Composable
 fun ConfirmDialog(
-    properties: ConfirmDialogProperties,
+    properties: ConfirmDialogProperties
 ) {
     properties.apply {
         AlertDialog(
@@ -34,12 +34,12 @@ fun ConfirmDialog(
                     Spacer(Modifier.weight(1f))
                     DialogActionButton(
                         text = cancelButtonText,
-                        onClick = onCancel,
+                        onClick = onCancel
                     )
                     Spacer(Modifier.width(8.dp))
                     DialogActionButton(
                         text = confirmButtonText,
-                        onClick = onConfirm,
+                        onClick = onConfirm
                     )
                 }
             }
@@ -52,13 +52,13 @@ private fun DialogActionButton(
     text: String,
     backgroundColor: Color = Color.Transparent,
     contentColor: Color = MaterialTheme.colors.onBackground,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     TextButton(
         text = text,
         backgroundColor = backgroundColor,
         textColor = contentColor,
         paddingValues = PaddingValues(horizontal = 16.dp, vertical = 2.dp),
-        onClick = onClick,
+        onClick = onClick
     )
 }

@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EditFavoritesScreen(
-    appsViewModel: AppsViewModel,
+    appsViewModel: AppsViewModel
 ) {
     val navController = LocalNavController.current
     val scaffoldState = rememberScaffoldState()
@@ -68,7 +68,7 @@ fun EditFavoritesScreen(
         FavoritesList(
             modifier = Modifier.padding(it),
             scaffoldState = scaffoldState,
-            appsViewModel = appsViewModel,
+            appsViewModel = appsViewModel
         )
     }
 }
@@ -105,7 +105,7 @@ private fun HiddenAppActionText(
 private fun FavoritesList(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState,
-    appsViewModel: AppsViewModel,
+    appsViewModel: AppsViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -116,8 +116,11 @@ private fun FavoritesList(
     fun toggleFavorite(selectedApp: SelectedApp, isHidden: Boolean) {
         if (!isHidden && selectedApp.isSelected) {
             appsViewModel.apply {
-                if (selectedApp.isSelected) removeFromFavorites(selectedApp.app)
-                else addToFavorites(selectedApp.app)
+                if (selectedApp.isSelected) {
+                    removeFromFavorites(selectedApp.app)
+                } else {
+                    addToFavorites(selectedApp.app)
+                }
             }
             return
         }
@@ -126,7 +129,7 @@ private fun FavoritesList(
             coroutineScope.launch {
                 scaffoldState.showSnackbar(
                     message = appHiddenMessage.replace("{}", selectedApp.app.name),
-                    discardIfShowing = true,
+                    discardIfShowing = true
                 )
             }
         }
@@ -134,7 +137,7 @@ private fun FavoritesList(
 
     LazyColumn(modifier = modifier) {
         items(
-            items = favoritesList,
+            items = favoritesList
         ) { favorite ->
             FavoriteListItem(
                 selectedApp = favorite,

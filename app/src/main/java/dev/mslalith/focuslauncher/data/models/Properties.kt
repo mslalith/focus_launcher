@@ -15,13 +15,13 @@ data class ConfirmDialogProperties(
     val confirmButtonText: String = "Confirm",
     val cancelButtonText: String = "Cancel",
     val onConfirm: () -> Unit,
-    val onCancel: () -> Unit,
+    val onCancel: () -> Unit
 )
 
 data class AppDrawerSettingsProperties(
     val appsViewModel: AppsViewModel,
     val settingsViewModel: SettingsViewModel,
-    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
+    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )
 
 data class MoreAppOptionsProperties(
@@ -30,23 +30,23 @@ data class MoreAppOptionsProperties(
     val app: AppWithIcon,
     val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
     val onUpdateDisplayNameClick: () -> Unit,
-    val onClose: () -> Unit,
+    val onClose: () -> Unit
 )
 
 data class ClockSettingsProperties(
     val widgetsViewModel: WidgetsViewModel,
     val settingsViewModel: SettingsViewModel,
-    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
+    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )
 
 data class LunarPhaseSettingsProperties(
     val widgetsViewModel: WidgetsViewModel,
     val settingsViewModel: SettingsViewModel,
-    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
+    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )
 
 data class QuotesSettingsProperties(
     val widgetsViewModel: WidgetsViewModel,
     val settingsViewModel: SettingsViewModel,
-    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING,
+    val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )

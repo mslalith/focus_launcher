@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class LauncherViewManager constructor(
     val coroutineScope: CoroutineScope,
     val scaffoldState: ScaffoldState,
-    val bottomSheetState: ModalBottomSheetState,
+    val bottomSheetState: ModalBottomSheetState
 ) {
 
     private val _sheetContentTypeFlow = MutableStateFlow<BottomSheetContentType?>(null)
@@ -68,6 +68,6 @@ class LauncherViewManager constructor(
         dismissVisibleSnackbar = dismissVisibleSnackbar,
         discardIfShowing = discardIfShowing,
         actionLabel = actionLabel,
-        onAction = onAction,
+        onAction = onAction
     )
 }

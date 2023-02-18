@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class HiddenToRoomMapper @Inject constructor(
     private val appsDao: AppsDao,
-    @AppToRoomMapperProvider private val appToRoomMapper: AppToRoomMapper,
+    @AppToRoomMapperProvider private val appToRoomMapper: AppToRoomMapper
 ) : Mapper<HiddenAppRoom, App> {
     override fun fromEntity(data: HiddenAppRoom): App {
         val app = appsDao.getAppBySync(data.packageName)

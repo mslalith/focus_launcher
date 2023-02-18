@@ -101,7 +101,7 @@ class SettingsViewModel @Inject constructor(
     fun toggleShowQuotes() { launch { quotesSettingsRepo.toggleShowQuotes() } }
 
     private fun launch(
-        run: suspend () -> Unit,
+        run: suspend () -> Unit
     ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(

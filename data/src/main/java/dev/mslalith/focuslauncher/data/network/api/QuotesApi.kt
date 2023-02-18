@@ -11,12 +11,12 @@ import javax.inject.Inject
 interface QuotesApi {
     suspend fun getQuotes(
         page: Int = 1,
-        limit: Int = Constants.Defaults.QUOTES_LIMIT_PER_PAGE,
+        limit: Int = Constants.Defaults.QUOTES_LIMIT_PER_PAGE
     ): QuotesApiResponse
 }
 
 internal class QuotesApiKtorImpl @Inject constructor(
-    private val httpClient: HttpClient,
+    private val httpClient: HttpClient
 ) : QuotesApi {
 
     private val baseUrl = "https://api.quotable.io"

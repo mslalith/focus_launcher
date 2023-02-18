@@ -87,7 +87,7 @@ private enum class Position {
 @Composable
 fun AppDrawerPage(
     appsViewModel: AppsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -113,9 +113,9 @@ fun AppDrawerPage(
                     settingsViewModel = settingsViewModel,
                     app = app,
                     onUpdateDisplayNameClick = { updateAppDisplayAppDialog = app.toApp() },
-                    onClose = { viewManager.hideBottomSheet() },
+                    onClose = { viewManager.hideBottomSheet() }
                 )
-            ),
+            )
         )
     }
 
@@ -130,22 +130,22 @@ fun AppDrawerPage(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding(),
+            .imePadding()
     ) {
         Box(
-            modifier = Modifier.weight(weight = 1f),
+            modifier = Modifier.weight(weight = 1f)
         ) {
             when (appDrawerViewType) {
                 AppDrawerViewType.LIST -> AppsList(
                     appsViewModel = appsViewModel,
                     settingsViewModel = settingsViewModel,
                     onAppClick = ::onAppClick,
-                    onAppLongClick = ::showMoreOptions,
+                    onAppLongClick = ::showMoreOptions
                 )
                 AppDrawerViewType.GRID -> AppsGrid(
                     appsViewModel = appsViewModel,
                     onAppClick = ::onAppClick,
-                    onAppLongClick = ::showMoreOptions,
+                    onAppLongClick = ::showMoreOptions
                 )
             }
 
@@ -166,7 +166,7 @@ fun AppDrawerPage(
 @Composable
 private fun ListFadeOutEdgeGradient(
     position: Position,
-    height: Dp = 14.dp,
+    height: Dp = 14.dp
 ) {
     val colors = listOf(MaterialTheme.colors.background, Color.Transparent).let {
         when (position) {
@@ -195,7 +195,7 @@ private fun ListFadeOutEdgeGradient(
 private fun AppsGrid(
     appsViewModel: AppsViewModel,
     onAppClick: (AppWithIcon) -> Unit,
-    onAppLongClick: (AppWithIcon) -> Unit,
+    onAppLongClick: (AppWithIcon) -> Unit
 ) {
     val columnCount = 4
     val context = LocalContext.current
@@ -209,7 +209,7 @@ private fun AppsGrid(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = columnCount),
-        modifier = Modifier.padding(horizontal = 24.dp),
+        modifier = Modifier.padding(horizontal = 24.dp)
     ) {
         repeat(columnCount) {
             item { VerticalSpacer(spacing = topSpacing) }
@@ -239,7 +239,7 @@ private fun AppsList(
     appsViewModel: AppsViewModel,
     settingsViewModel: SettingsViewModel,
     onAppClick: (AppWithIcon) -> Unit,
-    onAppLongClick: (AppWithIcon) -> Unit,
+    onAppLongClick: (AppWithIcon) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -269,7 +269,7 @@ private fun AppsList(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
             .fillMaxSize()
-            .height(150.dp),
+            .height(150.dp)
     ) {
         item { VerticalSpacer(spacing = spacing.first) }
 
@@ -298,7 +298,7 @@ private fun GroupedAppsList(
     character: Char,
     showAppGroupHeader: Boolean,
     onAppClick: (AppWithIcon) -> Unit,
-    onAppLongClick: (AppWithIcon) -> Unit,
+    onAppLongClick: (AppWithIcon) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -356,7 +356,7 @@ private fun AppDrawerGridItem(
     modifier: Modifier,
     app: AppWithIcon,
     onClick: (AppWithIcon) -> Unit,
-    onLongClick: (AppWithIcon) -> Unit,
+    onLongClick: (AppWithIcon) -> Unit
 ) {
     val iconBitmap = remember(key1 = app.packageName) {
         app.icon.toBitmap().asImageBitmap()
@@ -372,7 +372,7 @@ private fun AppDrawerGridItem(
                 onLongClick = { onLongClick(app) }
             )
             .padding(horizontal = 4.dp, vertical = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier.size(size = ICON_SIZE * 1.5f)
@@ -392,8 +392,8 @@ private fun AppDrawerGridItem(
             overflow = TextOverflow.Ellipsis,
             style = TextStyle(
                 color = MaterialTheme.colors.onBackground,
-                fontSize = 16.sp,
-            ),
+                fontSize = 16.sp
+            )
         )
     }
 }
@@ -404,7 +404,7 @@ private fun AppDrawerListItem(
     settingsViewModel: SettingsViewModel,
     app: AppWithIcon,
     onClick: (AppWithIcon) -> Unit,
-    onLongClick: (AppWithIcon) -> Unit,
+    onLongClick: (AppWithIcon) -> Unit
 ) {
     val showAppIcons by settingsViewModel.appIconsVisibilityStateFlow.collectAsState()
 
@@ -451,7 +451,7 @@ private fun AppDrawerListItem(
 private fun SearchAppField(
     modifier: Modifier = Modifier,
     appsViewModel: AppsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val showSearchBar by settingsViewModel.searchBarVisibilityStateFlow.collectAsState()
     var query by remember { mutableStateOf("") }
@@ -503,7 +503,7 @@ private fun SearchAppField(
                     ) {
                         Icon(
                             Icons.Rounded.Clear,
-                            contentDescription = "Clear",
+                            contentDescription = "Clear"
                         )
                     }
                 }

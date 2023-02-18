@@ -26,7 +26,7 @@ fun LauncherBottomSheetContent() {
     val bottomSheetContentType by viewManager.sheetContentTypeStateFlow.collectAsState()
 
     Box(
-        modifier = Modifier.navigationBarsPadding(),
+        modifier = Modifier.navigationBarsPadding()
     ) {
         bottomSheetContentType.run {
             when (this) {

@@ -62,7 +62,7 @@ fun ClockWidget(
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
     horizontalPadding: Dp,
-    centerVertically: Boolean = false,
+    centerVertically: Boolean = false
 ) {
     val currentTime by widgetsViewModel.currentTimeStateFlow.collectAsState()
     val showClock24 by settingsViewModel.showClock24StateFlow.collectAsState()
@@ -72,7 +72,7 @@ fun ClockWidget(
     val horizontalBias by animateFloatAsState(
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioLowBouncy,
-            stiffness = Spring.StiffnessLow,
+            stiffness = Spring.StiffnessLow
         ),
         targetValue = when (clockAlignment) {
             ClockAlignment.START -> -1f
@@ -93,22 +93,22 @@ fun ClockWidget(
         targetState = showClock24,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = horizontalPadding),
+            .padding(horizontal = horizontalPadding)
     ) {
         Column(
             horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             if (it) {
                 Clock24(
                     currentTime = currentTime,
                     offsetAnimationSpec = tween(durationMillis = clock24AnimationDuration),
-                    colorAnimationSpec = tween(durationMillis = clock24AnimationDuration),
+                    colorAnimationSpec = tween(durationMillis = clock24AnimationDuration)
                 )
             } else {
                 CurrentTime(
                     currentTime = currentTime,
-                    centerVertically = centerVertically,
+                    centerVertically = centerVertically
                 )
             }
         }
@@ -119,13 +119,13 @@ fun ClockWidget(
 private fun CurrentTime(
     modifier: Modifier = Modifier,
     currentTime: String,
-    centerVertically: Boolean = false,
+    centerVertically: Boolean = false
 ) {
     val newModifier = if (centerVertically) modifier.fillMaxHeight() else modifier
 
     Box(
         modifier = newModifier,
-        contentAlignment = if (centerVertically) Alignment.Center else Alignment.TopStart,
+        contentAlignment = if (centerVertically) Alignment.Center else Alignment.TopStart
     ) {
         Crossfade(targetState = currentTime) {
             Text(
@@ -134,7 +134,7 @@ private fun CurrentTime(
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
-                ),
+                )
             )
         }
     }
@@ -150,13 +150,13 @@ fun Clock24(
     handleColor: Color = MaterialTheme.colors.onBackground,
     handleWidth: Float = 4f,
     offsetAnimationSpec: AnimationSpec<Offset> = tween(durationMillis = 900),
-    colorAnimationSpec: AnimationSpec<Color> = tween(durationMillis = 900),
+    colorAnimationSpec: AnimationSpec<Color> = tween(durationMillis = 900)
 ) {
     val timeList = currentTime.toCharArray().filterNot { it == ':' }.map { it.toString().toInt() }
 
     Row(
         modifier = modifier.padding(vertical = 12.dp),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.Center
     ) {
         timeList.forEachIndexed { index, digit ->
             DigitWithAnalogClocks(
@@ -166,7 +166,7 @@ fun Clock24(
                 handleColor = handleColor,
                 handleWidth = handleWidth,
                 offsetAnimationSpec = offsetAnimationSpec,
-                colorAnimationSpec = colorAnimationSpec,
+                colorAnimationSpec = colorAnimationSpec
             )
             if (index != timeList.size - 1) {
                 HorizontalSpacer(spacing = digitSpacing)
@@ -183,7 +183,7 @@ private fun DigitWithAnalogClocks(
     handleColor: Color,
     handleWidth: Float,
     offsetAnimationSpec: AnimationSpec<Offset>,
-    colorAnimationSpec: AnimationSpec<Color>,
+    colorAnimationSpec: AnimationSpec<Color>
 ) {
     Column {
         digit.analogHandles.forEachIndexed { index, list ->
@@ -194,7 +194,7 @@ private fun DigitWithAnalogClocks(
                     handleColor = handleColor,
                     handleWidth = handleWidth,
                     offsetAnimationSpec = offsetAnimationSpec,
-                    colorAnimationSpec = colorAnimationSpec,
+                    colorAnimationSpec = colorAnimationSpec
                 )
                 HorizontalSpacer(spacing = analogClockSpacing)
                 AnalogClock(
@@ -203,7 +203,7 @@ private fun DigitWithAnalogClocks(
                     handleColor = handleColor,
                     handleWidth = handleWidth,
                     offsetAnimationSpec = offsetAnimationSpec,
-                    colorAnimationSpec = colorAnimationSpec,
+                    colorAnimationSpec = colorAnimationSpec
                 )
             }
             if (index != digit.analogHandles.size - 1) {
@@ -221,7 +221,7 @@ private fun AnalogClock(
     handleColor: Color,
     handleWidth: Float,
     offsetAnimationSpec: AnimationSpec<Offset>,
-    colorAnimationSpec: AnimationSpec<Color>,
+    colorAnimationSpec: AnimationSpec<Color>
 ) {
     val size = LocalDensity.current.run { radius.toDp() * 2 }
     val center = Offset(radius, radius)
@@ -229,24 +229,24 @@ private fun AnalogClock(
 
     fun offsetFromAngle(angle: Double) = Offset(
         x = radius * cos(Math.toRadians(angle)).toFloat(),
-        y = radius * sin(Math.toRadians(angle)).toFloat(),
+        y = radius * sin(Math.toRadians(angle)).toFloat()
     ) + center
 
     val endFirst by animateOffsetAsState(
         targetValue = offsetFromAngle(analogClockPhase.first.angle),
-        animationSpec = offsetAnimationSpec,
+        animationSpec = offsetAnimationSpec
     )
     val endSecond by animateOffsetAsState(
         targetValue = offsetFromAngle(analogClockPhase.second.angle),
-        animationSpec = offsetAnimationSpec,
+        animationSpec = offsetAnimationSpec
     )
     val handleColorFirst by animateColorAsState(
         targetValue = if (analogClockPhase.first == AnalogClockHandlePhase.NONE) disabledColor else handleColor,
-        animationSpec = colorAnimationSpec,
+        animationSpec = colorAnimationSpec
     )
     val handleColorSecond by animateColorAsState(
         targetValue = if (analogClockPhase.second == AnalogClockHandlePhase.NONE) disabledColor else handleColor,
-        animationSpec = colorAnimationSpec,
+        animationSpec = colorAnimationSpec
     )
 
     Canvas(modifier = modifier.size(size)) {
@@ -254,13 +254,13 @@ private fun AnalogClock(
             color = handleColorFirst,
             start = center,
             end = endFirst,
-            strokeWidth = handleWidth,
+            strokeWidth = handleWidth
         )
         drawLine(
             color = handleColorSecond,
             start = center,
             end = endSecond,
-            strokeWidth = handleWidth,
+            strokeWidth = handleWidth
         )
     }
 }
@@ -270,7 +270,7 @@ private enum class AnalogClockHandlePhase(val angle: Double) {
     TOP(angle = 270.0),
     RIGHT(angle = 0.0),
     BOTTOM(angle = 90.0),
-    LEFT(angle = 180.0),
+    LEFT(angle = 180.0)
 }
 
 private enum class AnalogClockPhase(val first: AnalogClockHandlePhase, val second: AnalogClockHandlePhase) {
@@ -283,7 +283,7 @@ private enum class AnalogClockPhase(val first: AnalogClockHandlePhase, val secon
     TOP_LEFT(first = AnalogClockHandlePhase.TOP, second = AnalogClockHandlePhase.LEFT),
     TOP_RIGHT(first = AnalogClockHandlePhase.TOP, second = AnalogClockHandlePhase.RIGHT),
     BOTTOM_LEFT(first = AnalogClockHandlePhase.BOTTOM, second = AnalogClockHandlePhase.LEFT),
-    BOTTOM_RIGHT(first = AnalogClockHandlePhase.BOTTOM, second = AnalogClockHandlePhase.RIGHT),
+    BOTTOM_RIGHT(first = AnalogClockHandlePhase.BOTTOM, second = AnalogClockHandlePhase.RIGHT)
 }
 
 private data class Digit(val analogHandles: List<List<AnalogClockPhase>>) {
@@ -292,70 +292,70 @@ private data class Digit(val analogHandles: List<List<AnalogClockPhase>>) {
             analogHandles = listOf(
                 listOf(BOTTOM_RIGHT, BOTTOM_LEFT),
                 listOf(VERTICAL, VERTICAL),
-                listOf(TOP_RIGHT, TOP_LEFT),
+                listOf(TOP_RIGHT, TOP_LEFT)
             )
         )
         val ONE = Digit(
             analogHandles = listOf(
                 listOf(NONE, BOTTOM),
                 listOf(NONE, VERTICAL),
-                listOf(NONE, TOP),
+                listOf(NONE, TOP)
             )
         )
         val TWO = Digit(
             analogHandles = listOf(
                 listOf(RIGHT, BOTTOM_LEFT),
                 listOf(BOTTOM_RIGHT, TOP_LEFT),
-                listOf(TOP_RIGHT, LEFT),
+                listOf(TOP_RIGHT, LEFT)
             )
         )
         val THREE = Digit(
             analogHandles = listOf(
                 listOf(RIGHT, BOTTOM_LEFT),
                 listOf(RIGHT, TOP_LEFT),
-                listOf(RIGHT, TOP_LEFT),
+                listOf(RIGHT, TOP_LEFT)
             )
         )
         val FOUR = Digit(
             analogHandles = listOf(
                 listOf(BOTTOM, BOTTOM),
                 listOf(TOP_RIGHT, TOP_LEFT),
-                listOf(NONE, TOP),
+                listOf(NONE, TOP)
             )
         )
         val FIVE = Digit(
             analogHandles = listOf(
                 listOf(BOTTOM_RIGHT, LEFT),
                 listOf(TOP_RIGHT, BOTTOM_LEFT),
-                listOf(RIGHT, TOP_LEFT),
+                listOf(RIGHT, TOP_LEFT)
             )
         )
         val SIX = Digit(
             analogHandles = listOf(
                 listOf(BOTTOM_RIGHT, LEFT),
                 listOf(VERTICAL, BOTTOM_LEFT),
-                listOf(TOP_RIGHT, TOP_LEFT),
+                listOf(TOP_RIGHT, TOP_LEFT)
             )
         )
         val SEVEN = Digit(
             analogHandles = listOf(
                 listOf(RIGHT, BOTTOM_LEFT),
                 listOf(NONE, VERTICAL),
-                listOf(NONE, TOP),
+                listOf(NONE, TOP)
             )
         )
         val EIGHT = Digit(
             analogHandles = listOf(
                 listOf(BOTTOM_RIGHT, BOTTOM_LEFT),
                 listOf(TOP_RIGHT, TOP_LEFT),
-                listOf(TOP_RIGHT, TOP_LEFT),
+                listOf(TOP_RIGHT, TOP_LEFT)
             )
         )
         val NINE = Digit(
             analogHandles = listOf(
                 listOf(BOTTOM_RIGHT, BOTTOM_LEFT),
                 listOf(TOP_RIGHT, VERTICAL),
-                listOf(RIGHT, TOP_LEFT),
+                listOf(RIGHT, TOP_LEFT)
             )
         )
         val ALL = listOf(ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE)

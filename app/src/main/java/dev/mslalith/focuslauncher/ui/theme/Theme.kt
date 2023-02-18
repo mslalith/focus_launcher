@@ -23,7 +23,7 @@ private val NotWhitePalette = lightColors(
     primary = notWhitePrimaryColorVariant,
     primaryVariant = notWhitePrimaryColorVariant,
     secondary = notWhiteSecondaryColorVariant,
-    secondaryVariant = notWhiteSecondaryColorVariant,
+    secondaryVariant = notWhiteSecondaryColorVariant
 )
 
 private val SaidDarkPalette = darkColors(
@@ -34,12 +34,12 @@ private val SaidDarkPalette = darkColors(
     primary = saidDarkPrimaryColorVariant,
     primaryVariant = saidDarkPrimaryColorVariant,
     secondary = saidDarkSecondaryColorVariant,
-    secondaryVariant = saidDarkSecondaryColorVariant,
+    secondaryVariant = saidDarkSecondaryColorVariant
 )
 
 @Composable
 fun FocusLauncherTheme(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val systemUiController = LocalSystemUiController.current
     val themeViewModel: ThemeViewModel = viewModel()

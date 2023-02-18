@@ -16,7 +16,7 @@ import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 
 @Composable
 fun AppDrawerSettingsSheet(
-    properties: AppDrawerSettingsProperties,
+    properties: AppDrawerSettingsProperties
 ) {
     properties.apply {
         val appDrawerViewType by settingsViewModel.appDrawerViewTypeStateFlow.collectAsState()
@@ -30,7 +30,7 @@ fun AppDrawerSettingsSheet(
 
         val textIconsList = listOf(
             AppDrawerViewType.LIST.text to R.drawable.ic_list,
-            AppDrawerViewType.GRID.text to R.drawable.ic_grid,
+            AppDrawerViewType.GRID.text to R.drawable.ic_grid
         )
 
         Column {
@@ -44,7 +44,7 @@ fun AppDrawerSettingsSheet(
                     val viewTypeName = textIconsList[index].first
                     val viewType = AppDrawerViewType.values().first { it.text == viewTypeName }
                     settingsViewModel.updateAppDrawerViewType(viewType)
-                },
+                }
             )
             SettingsSelectableSwitchItem(
                 text = "Show Search Bar",
