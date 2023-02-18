@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.data.repository
 
 import androidx.annotation.VisibleForTesting
 import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.extensions.toKotlinxLocalDateTime
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
@@ -10,7 +11,8 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.RiseAndSetDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.core.model.lunarphase.toLunarPhase
-import dev.mslalith.focuslauncher.data.extensions.toKotlinxLocalDateTime
+import javax.inject.Inject
+import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,8 +22,6 @@ import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPhase
 import org.shredzone.commons.suncalc.MoonTimes
 import org.shredzone.commons.suncalc.SunTimes
-import javax.inject.Inject
-import kotlin.random.Random
 
 class LunarPhaseDetailsRepo @Inject constructor() {
     private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.extensions
+package dev.mslalith.focuslauncher.core.common.extensions
 
 import android.os.Handler
 import android.os.Looper
