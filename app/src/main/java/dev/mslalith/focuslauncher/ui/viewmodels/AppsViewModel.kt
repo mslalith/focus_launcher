@@ -9,7 +9,7 @@ import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
-import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.extensions.appDrawerApps
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

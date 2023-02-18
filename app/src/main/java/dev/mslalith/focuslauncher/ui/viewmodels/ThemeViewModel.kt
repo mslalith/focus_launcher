@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.data.di.modules.ThemeProvider
 import dev.mslalith.focuslauncher.data.models.Theme
-import dev.mslalith.focuslauncher.data.utils.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
