@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
     implementation(project(":core:model"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 

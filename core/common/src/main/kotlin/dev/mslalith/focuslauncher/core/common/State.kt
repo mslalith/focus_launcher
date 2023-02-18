@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.model
+package dev.mslalith.focuslauncher.core.common
 
 sealed class State<out T> {
     object Initial : State<Nothing>()

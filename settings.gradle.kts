@@ -29,5 +29,6 @@ include(
     ":app",
     ":data",
     ":androidTest-shared",
+    ":core:common",
     ":core:model"
 )
