@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.model.SelectedApp
 import dev.mslalith.focuslauncher.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.data.repository.FavoritesRepo

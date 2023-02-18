@@ -28,5 +28,6 @@ rootProject.name = "Focus Launcher"
 include(
     ":app",
     ":data",
-    ":androidTest-shared"
+    ":androidTest-shared",
+    ":core:model"
 )

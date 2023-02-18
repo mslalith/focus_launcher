@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.data.dto
 
 import dev.mslalith.focuslauncher.data.database.entities.AppRoom
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 
 class AppToRoomMapper : Mapper<AppRoom, App> {
     override fun fromEntity(data: AppRoom) = App(

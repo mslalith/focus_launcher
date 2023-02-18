@@ -14,7 +14,7 @@ import android.os.Build
 import android.provider.Settings
 import android.provider.Telephony
 import android.telecom.TelecomManager
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import java.lang.reflect.Method
 
 val Context.appDrawerApps: List<App>

@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.extensions
 
 import android.content.Context
 import android.content.pm.PackageManager
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant

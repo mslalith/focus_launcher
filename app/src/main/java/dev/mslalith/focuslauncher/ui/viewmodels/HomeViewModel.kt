@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject

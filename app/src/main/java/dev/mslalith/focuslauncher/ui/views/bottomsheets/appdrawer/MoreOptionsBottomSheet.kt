@@ -15,7 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.extensions.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.showAppInfo

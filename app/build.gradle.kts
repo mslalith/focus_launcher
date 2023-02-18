@@ -47,6 +47,7 @@ android {
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":core:model"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     implementation(libs.kotlinx.datetime)

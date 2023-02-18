@@ -59,7 +59,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import dev.mslalith.focuslauncher.data.model.App
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.data.model.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType

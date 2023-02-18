@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     implementation(libs.androidx.core.ktx)
