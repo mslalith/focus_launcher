@@ -33,12 +33,11 @@ import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
 
 @Composable
 fun QuotesSettingsSheet(
-    properties: QuotesSettingsProperties,
+    properties: QuotesSettingsProperties
 ) {
     val context = LocalContext.current
 
     properties.apply {
-
         fun fetchQuotesIfRequired() {
             if (context.isOnline) widgetsViewModel.fetchQuotesIfRequired()
         }
@@ -53,11 +52,11 @@ fun QuotesSettingsSheet(
                         modifier = Modifier
                             .fillMaxHeight(fraction = 0.5f)
                             .aspectRatio(ratio = 1f),
-                        contentAlignment = Alignment.Center,
+                        contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(
                             color = MaterialTheme.colors.onBackground,
-                            strokeWidth = 2.dp,
+                            strokeWidth = 2.dp
                         )
                     }
                 }
@@ -70,7 +69,7 @@ fun QuotesSettingsSheet(
             PreviewQuotes(
                 settingsViewModel = settingsViewModel,
                 widgetsViewModel = widgetsViewModel,
-                showQuotes = showQuotes,
+                showQuotes = showQuotes
             )
             SettingsSelectableSwitchItem(
                 text = "Enable Quotes",
@@ -81,7 +80,7 @@ fun QuotesSettingsSheet(
                 text = "Fetch Quotes",
                 disabled = !showQuotes,
                 onClick = { fetchQuotesIfRequired() },
-                trailing = fetchQuotesTrailingIcon(),
+                trailing = fetchQuotesTrailingIcon()
             )
             VerticalSpacer(spacing = bottomSpacing)
         }
@@ -92,7 +91,7 @@ fun QuotesSettingsSheet(
 private fun PreviewQuotes(
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
-    showQuotes: Boolean,
+    showQuotes: Boolean
 ) {
     val height = 72.dp
     val horizontalPadding = 24.dp
@@ -104,7 +103,7 @@ private fun PreviewQuotes(
             .padding(horizontal = horizontalPadding)
             .padding(top = 16.dp, bottom = 16.dp)
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colors.secondaryVariant),
+            .background(color = MaterialTheme.colors.secondaryVariant)
     ) {
         if (it) {
             QuoteForYou(
@@ -117,14 +116,14 @@ private fun PreviewQuotes(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(height = height),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Enable Quotes to preview",
                     textAlign = TextAlign.Center,
                     style = TextStyle(
-                        color = MaterialTheme.colors.onBackground,
-                    ),
+                        color = MaterialTheme.colors.onBackground
+                    )
                 )
             }
         }

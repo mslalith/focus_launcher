@@ -36,14 +36,14 @@ fun QuoteForYou(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel,
-    backgroundColor: Color = MaterialTheme.colors.primaryVariant,
+    backgroundColor: Color = MaterialTheme.colors.primaryVariant
 ) {
     val showQuotes by settingsViewModel.showQuotesStateFlow.collectAsState()
     val currentQuoteState by widgetsViewModel.currentQuoteStateFlow.collectAsState()
 
     AnimatedVisibility(
         visible = showQuotes,
-        modifier = modifier,
+        modifier = modifier
     ) {
         val quote = currentQuoteState.getOrNull() ?: return@AnimatedVisibility
 
@@ -51,7 +51,7 @@ fun QuoteForYou(
             widgetsViewModel = widgetsViewModel,
             quote = quote,
             backgroundColor = backgroundColor,
-            preview = false,
+            preview = false
         )
     }
 }
@@ -61,7 +61,7 @@ fun QuoteForYouContent(
     widgetsViewModel: WidgetsViewModel,
     quote: Quote,
     backgroundColor: Color,
-    preview: Boolean,
+    preview: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -73,7 +73,7 @@ fun QuoteForYouContent(
             .padding(horizontal = 36.dp)
             .padding(
                 top = 16.dp,
-                bottom = 28.dp,
+                bottom = 28.dp
             )
             .animateContentSize()
     ) {
@@ -81,7 +81,7 @@ fun QuoteForYouContent(
             painter = painterResource(id = R.drawable.ic_format_quote),
             contentDescription = "Quotation",
             tint = MaterialTheme.colors.onBackground,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         VerticalSpacer(spacing = 12.dp)
         Crossfade(targetState = quote.quote) {
@@ -92,7 +92,7 @@ fun QuoteForYouContent(
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 14.sp,
-                    letterSpacing = 1.sp,
+                    letterSpacing = 1.sp
                 )
             )
         }
@@ -105,7 +105,7 @@ fun QuoteForYouContent(
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,
                     fontSize = 12.sp,
-                    letterSpacing = 1.sp,
+                    letterSpacing = 1.sp
                 )
             )
         }

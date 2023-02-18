@@ -36,7 +36,7 @@ class ThemeViewModel @Inject constructor(
     }
 
     private fun launch(
-        run: suspend () -> Unit,
+        run: suspend () -> Unit
     ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(

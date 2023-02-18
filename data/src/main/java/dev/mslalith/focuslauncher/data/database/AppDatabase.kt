@@ -25,7 +25,7 @@ import dev.mslalith.focuslauncher.data.database.typeconverter.Converters
         CityRoom::class
     ],
     autoMigrations = [AutoMigration(from = 1, to = 2)],
-    version = 2,
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

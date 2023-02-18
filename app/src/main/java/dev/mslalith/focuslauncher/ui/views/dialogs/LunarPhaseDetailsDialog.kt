@@ -50,7 +50,7 @@ import java.util.Locale
 @Composable
 fun LunarPhaseDetailsDialog(
     widgetsViewModel: WidgetsViewModel,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onClose
@@ -87,7 +87,7 @@ fun LunarPhaseDetailsDialog(
 
 @Composable
 private fun TodayLunarPhase(
-    lunarPhaseDetails: LunarPhaseDetails,
+    lunarPhaseDetails: LunarPhaseDetails
 ) {
     BoxWithConstraints {
         val width = maxWidth
@@ -105,7 +105,7 @@ private fun TodayLunarPhase(
 @Composable
 private fun TodayLunarMoonIconAndPhase(
     lunarPhaseDetails: LunarPhaseDetails,
-    moonSize: Dp,
+    moonSize: Dp
 ) {
     Column {
         LunarPhaseMoonIcon(
@@ -119,7 +119,7 @@ private fun TodayLunarMoonIconAndPhase(
 @Composable
 private fun TodayLunarMoonPhaseDetails(
     lunarPhaseDetails: LunarPhaseDetails,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     Column {
         Text(
@@ -128,8 +128,8 @@ private fun TodayLunarMoonPhaseDetails(
                 color = textColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
         VerticalSpacer(spacing = 8.dp)
         Text(
@@ -137,8 +137,8 @@ private fun TodayLunarMoonPhaseDetails(
             style = TextStyle(
                 color = textColor,
                 fontSize = 14.sp,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
         VerticalSpacer(spacing = 4.dp)
         Text(
@@ -146,8 +146,8 @@ private fun TodayLunarMoonPhaseDetails(
             style = TextStyle(
                 color = textColor,
                 fontSize = 14.sp,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
     }
 }
@@ -155,7 +155,7 @@ private fun TodayLunarMoonPhaseDetails(
 @Composable
 private fun NextMajorPhaseDetails(
     nextPhaseDetails: NextPhaseDetails,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     Column {
         Text(
@@ -164,8 +164,8 @@ private fun NextMajorPhaseDetails(
                 color = textColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
 
         VerticalSpacer(spacing = 12.dp)
@@ -198,14 +198,16 @@ private fun NextMajorPhaseDetails(
 private fun NextSingleMajorPhaseDetails(
     illumination: Double,
     localDateTime: LocalDateTime?,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     val date = localDateTime?.inShortReadableFormat(shortMonthName = true) ?: "-"
 
     val time = if (localDateTime != null) {
         val javaInstant = localDateTime.toInstant(TimeZone.currentSystemDefault()).toJavaInstant()
         SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date.from(javaInstant))
-    } else "-"
+    } else {
+        "-"
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -220,15 +222,15 @@ private fun NextSingleMajorPhaseDetails(
         HorizontalSpacer(spacing = 8.dp)
 
         Column(
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = date,
                 style = TextStyle(
                     color = textColor,
                     fontSize = 14.sp,
-                    letterSpacing = 1.2.sp,
-                ),
+                    letterSpacing = 1.2.sp
+                )
             )
 
             VerticalSpacer(spacing = 4.dp)
@@ -238,8 +240,8 @@ private fun NextSingleMajorPhaseDetails(
                 style = TextStyle(
                     color = textColor,
                     fontSize = 11.sp,
-                    letterSpacing = 1.2.sp,
-                ),
+                    letterSpacing = 1.2.sp
+                )
             )
         }
     }
@@ -247,7 +249,7 @@ private fun NextSingleMajorPhaseDetails(
 
 @Composable
 fun LunarRiseAndSetDetails(
-    lunarPhaseDetails: LunarPhaseDetails,
+    lunarPhaseDetails: LunarPhaseDetails
 ) {
     RiseAndSetHeaders()
     VerticalSpacer(spacing = 16.dp)
@@ -264,7 +266,7 @@ fun LunarRiseAndSetDetails(
 
 @Composable
 private fun RiseAndSetHeaders(
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     Row {
         Text(
@@ -273,8 +275,8 @@ private fun RiseAndSetHeaders(
                 color = textColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
         FillSpacer()
         Text(
@@ -283,8 +285,8 @@ private fun RiseAndSetHeaders(
                 color = textColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
     }
 }
@@ -292,7 +294,7 @@ private fun RiseAndSetHeaders(
 @Composable
 private fun RiseTimeDetails(
     moonRiseDateTime: LocalDateTime?,
-    sunRiseDateTime: LocalDateTime?,
+    sunRiseDateTime: LocalDateTime?
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         RiseAndSetTime(localDateTime = moonRiseDateTime)
@@ -304,7 +306,7 @@ private fun RiseTimeDetails(
 @Composable
 private fun SetTimeDetails(
     moonSetDateTime: LocalDateTime?,
-    sunSetDateTime: LocalDateTime?,
+    sunSetDateTime: LocalDateTime?
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         RiseAndSetTime(localDateTime = moonSetDateTime)
@@ -317,27 +319,29 @@ private fun SetTimeDetails(
 private fun RiseAndSetTime(
     modifier: Modifier = Modifier,
     localDateTime: LocalDateTime?,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     val time = if (localDateTime != null) {
         val javaInstant = localDateTime.toInstant(TimeZone.currentSystemDefault()).toJavaInstant()
         SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date.from(javaInstant))
-    } else "-"
+    } else {
+        "-"
+    }
     Text(
         modifier = modifier,
         text = time,
         style = TextStyle(
             color = textColor,
             fontSize = 14.sp,
-            letterSpacing = 1.2.sp,
-        ),
+            letterSpacing = 1.2.sp
+        )
     )
 }
 
 @Composable
 private fun RowScope.RiseAndSetIndicator(
     text: String,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     Box(
         modifier = Modifier.weight(weight = 1f),
@@ -348,8 +352,8 @@ private fun RowScope.RiseAndSetIndicator(
             style = TextStyle(
                 color = textColor,
                 fontSize = 12.sp,
-                letterSpacing = 1.2.sp,
-            ),
+                letterSpacing = 1.2.sp
+            )
         )
     }
 }

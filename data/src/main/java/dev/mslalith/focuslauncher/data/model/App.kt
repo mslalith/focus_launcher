@@ -4,11 +4,11 @@ data class App(
     val name: String,
     val displayName: String = name,
     val packageName: String,
-    val isSystem: Boolean,
+    val isSystem: Boolean
 )
 
 data class SelectedApp(
     val app: App,
     val isSelected: Boolean,
-    val disabled: Boolean = false,
+    val disabled: Boolean = false
 )

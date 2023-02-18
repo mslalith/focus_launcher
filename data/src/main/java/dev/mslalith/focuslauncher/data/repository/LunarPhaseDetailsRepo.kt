@@ -89,7 +89,7 @@ class LunarPhaseDetailsRepo @Inject constructor() {
             lunarPhase = lunarPhase,
             dateTime = moonPhase.time.toKotlinxLocalDateTime(),
             isMicroMoon = moonPhase.isMicroMoon,
-            isSuperMoon = moonPhase.isSuperMoon,
+            isSuperMoon = moonPhase.isSuperMoon
         )
     }
 

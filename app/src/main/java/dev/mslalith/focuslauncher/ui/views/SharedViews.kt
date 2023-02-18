@@ -47,7 +47,7 @@ import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
 @Composable
 fun BackPressHandler(
     enabled: Boolean,
-    onBack: () -> Unit,
+    onBack: () -> Unit
 ) {
     val currentOnBack by rememberUpdatedState(onBack)
     val backPressedCallback = remember {
@@ -74,7 +74,7 @@ fun BackPressHandler(
 fun AppBarWithBackIcon(
     title: String,
     onBackPressed: () -> Unit,
-    actions: @Composable RowScope.() -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {}
 ) {
     val colors = MaterialTheme.colors
 
@@ -92,7 +92,7 @@ fun AppBarWithBackIcon(
             }
         },
         title = { Text(text = title) },
-        actions = actions,
+        actions = actions
     )
 }
 
@@ -101,7 +101,7 @@ fun ExtendedMiniFab(
     text: String,
     icon: ImageVector,
     contentDescription: String? = null,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val colors = MaterialTheme.colors
 
@@ -111,7 +111,7 @@ fun ExtendedMiniFab(
             .clip(RoundedCornerShape(percent = 50))
             .clickable { onClick() }
             .background(colors.onBackground.copy(alpha = 0.85f))
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 12.dp)
     ) {
         val centerVerticallyModifier = Modifier.align(Alignment.CenterVertically)
 
@@ -119,15 +119,15 @@ fun ExtendedMiniFab(
             imageVector = icon,
             contentDescription = contentDescription ?: text,
             tint = colors.background,
-            modifier = centerVerticallyModifier.padding(vertical = 10.dp),
+            modifier = centerVerticallyModifier.padding(vertical = 10.dp)
         )
         Text(
             text = text,
             style = TextStyle(
                 color = colors.background,
-                fontSize = 13.sp,
+                fontSize = 13.sp
             ),
-            modifier = centerVerticallyModifier.padding(horizontal = 8.dp),
+            modifier = centerVerticallyModifier.padding(horizontal = 8.dp)
         )
     }
 }
@@ -139,7 +139,7 @@ fun TextButton(
     backgroundColor: Color = MaterialTheme.colors.secondaryVariant,
     textColor: Color = MaterialTheme.colors.onBackground,
     paddingValues: PaddingValues = PaddingValues(horizontal = 18.dp, vertical = 8.dp),
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -147,13 +147,13 @@ fun TextButton(
             .background(color = backgroundColor)
             .clickable { onClick() }
             .padding(paddingValues = paddingValues),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
             style = TextStyle(
-                color = textColor,
-            ),
+                color = textColor
+            )
         )
     }
 }
@@ -163,18 +163,18 @@ fun ChooserGroup(
     modifier: Modifier = Modifier,
     textIconsList: List<Pair<String, Int>>,
     selectedItem: String,
-    onItemSelected: (Int) -> Unit,
+    onItemSelected: (Int) -> Unit
 ) {
     val selectedColor = MaterialTheme.colors.secondaryVariant
 
     Row(
-        modifier = modifier,
+        modifier = modifier
     ) {
         textIconsList.forEachIndexed { index, textIcon ->
             val isSelected = selectedItem == textIcon.first
             val backgroundColorAlpha by animateFloatAsState(
                 targetValue = if (isSelected) 1f else 0f,
-                animationSpec = tween(durationMillis = 300),
+                animationSpec = tween(durationMillis = 300)
             )
 
             TextIconButton(
@@ -188,7 +188,7 @@ fun ChooserGroup(
                 },
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .weight(weight = 1f),
+                    .weight(weight = 1f)
             )
         }
     }
@@ -206,27 +206,27 @@ fun TextIconButton(
     ),
     afterIconSpacing: Dp = 14.dp,
     backgroundColor: Color = Color.Transparent,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor)
             .clickable { onClick() }
-            .padding(paddingValues = paddingValues),
+            .padding(paddingValues = paddingValues)
     ) {
         Icon(
             painter = icon,
             contentDescription = contentDescription ?: text,
-            tint = MaterialTheme.colors.onBackground,
+            tint = MaterialTheme.colors.onBackground
         )
         HorizontalSpacer(spacing = afterIconSpacing)
         Text(
             text = text,
             style = TextStyle(
                 color = MaterialTheme.colors.onBackground,
-                fontSize = 16.sp,
-            ),
+                fontSize = 16.sp
+            )
         )
     }
 }
@@ -234,7 +234,7 @@ fun TextIconButton(
 @Composable
 fun RoundedSwitch(
     checked: Boolean,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     val thumbColor = MaterialTheme.colors.onBackground
     val trackColor = thumbColor.copy(alpha = 0.3f)
@@ -256,7 +256,7 @@ fun RoundedSwitch(
             .background(color = animatedTrackColor)
             .padding(all = padding)
             .heightIn(min = thumbSize),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
         Box(
             modifier = Modifier
@@ -266,9 +266,9 @@ fun RoundedSwitch(
                 .align(
                     alignment = BiasAlignment(
                         horizontalBias = horizontalBias,
-                        verticalBias = 0f,
-                    ),
-                ),
+                        verticalBias = 0f
+                    )
+                )
         )
     }
 }

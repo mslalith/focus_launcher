@@ -58,7 +58,7 @@ fun SettingsPage(
     themeViewModel: ThemeViewModel,
     appsViewModel: AppsViewModel,
     settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val navController = LocalNavController.current
     val scrollState = rememberScrollState()
@@ -69,7 +69,7 @@ fun SettingsPage(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         SettingsHeader()
         VerticalSpacer(spacing = 12.dp)
@@ -95,7 +95,7 @@ private fun SettingsHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = usableHorizontalPadding),
+            .padding(horizontal = usableHorizontalPadding)
     ) {
         Text(
             text = "Settings",
@@ -106,12 +106,12 @@ private fun SettingsHeader() {
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp),
+                .padding(bottom = 12.dp)
         )
 
         Divider(
             color = MaterialTheme.colors.onBackground,
-            modifier = Modifier.fillMaxWidth(fraction = 0.5f),
+            modifier = Modifier.fillMaxWidth(fraction = 0.5f)
         )
     }
 }
@@ -179,7 +179,7 @@ private fun PullDownNotifications(settingsViewModel: SettingsViewModel) {
 @Composable
 private fun AppDrawer(
     appsViewModel: AppsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
     SettingsItem(text = "App Drawer") {
@@ -187,9 +187,9 @@ private fun AppDrawer(
             sheetType = BottomSheetContentType.AppDrawer(
                 properties = AppDrawerSettingsProperties(
                     appsViewModel = appsViewModel,
-                    settingsViewModel = settingsViewModel,
-                ),
-            ),
+                    settingsViewModel = settingsViewModel
+                )
+            )
         )
     }
 }
@@ -197,7 +197,7 @@ private fun AppDrawer(
 @Composable
 private fun Widgets(
     widgetsViewModel: WidgetsViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsViewModel: SettingsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
 
@@ -215,7 +215,7 @@ private fun Widgets(
                             BottomSheetContentType.Widgets.Clock(
                                 properties = ClockSettingsProperties(
                                     widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
+                                    settingsViewModel = settingsViewModel
                                 )
                             )
                         }
@@ -223,8 +223,8 @@ private fun Widgets(
                             BottomSheetContentType.Widgets.LunarPhase(
                                 properties = LunarPhaseSettingsProperties(
                                     widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
-                                ),
+                                    settingsViewModel = settingsViewModel
+                                )
                             )
                         }
                         // WidgetType.QUOTES -> onWidgetTypeClick {
@@ -236,7 +236,7 @@ private fun Widgets(
                         //     )
                         // }
                     }
-                },
+                }
             )
         }
     }

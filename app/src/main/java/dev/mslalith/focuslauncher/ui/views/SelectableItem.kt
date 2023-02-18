@@ -36,12 +36,12 @@ private val SELECTABLE_ITEM_ICON_WIDTH = 56.dp
 sealed class ConfirmSelectableItemType {
     data class Icon(
         @DrawableRes val iconRes: Int,
-        val contentDescription: String? = null,
+        val contentDescription: String? = null
     ) : ConfirmSelectableItemType()
 
     data class Checkbox(
         val checked: Boolean,
-        val disabled: Boolean = false,
+        val disabled: Boolean = false
     ) : ConfirmSelectableItemType()
 }
 
@@ -54,7 +54,7 @@ fun ConfirmSelectableItem(
     cancelText: String = "Cancel",
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     iconWidth: Dp = SELECTABLE_ITEM_ICON_WIDTH,
-    onConfirm: (Boolean) -> Unit,
+    onConfirm: (Boolean) -> Unit
 ) {
     var showConfirm by remember { mutableStateOf(false) }
 
@@ -79,15 +79,15 @@ fun ConfirmSelectableItem(
         }
         AnimatedVisibility(visible = showConfirm) {
             Column(
-                modifier = Modifier.padding(horizontal = 22.dp),
+                modifier = Modifier.padding(horizontal = 22.dp)
             ) {
                 Text(
                     text = confirmMessage,
                     style = TextStyle(
                         color = MaterialTheme.colors.onBackground,
                         fontSize = 14.sp,
-                        lineHeight = 20.sp,
-                    ),
+                        lineHeight = 20.sp
+                    )
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row {
@@ -123,7 +123,7 @@ fun SelectableCheckboxItem(
     disabled: Boolean = false,
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     iconWidth: Dp = SELECTABLE_ITEM_ICON_WIDTH,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val backgroundColor = MaterialTheme.colors.background
     val onBackgroundColor = MaterialTheme.colors.onBackground
@@ -142,11 +142,11 @@ fun SelectableCheckboxItem(
                 colors = CheckboxDefaults.colors(
                     checkedColor = if (disabled) disabledColor else onBackgroundColor,
                     uncheckedColor = if (disabled) disabledColor else onBackgroundColor,
-                    checkmarkColor = backgroundColor,
+                    checkmarkColor = backgroundColor
                 ),
                 modifier = Modifier
                     .padding(12.dp)
-                    .padding(start = 8.dp, end = 8.dp),
+                    .padding(start = 8.dp, end = 8.dp)
             )
         }
     )
@@ -160,7 +160,7 @@ fun SelectableIconItem(
     contentDescription: String? = null,
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     iconWidth: Dp = SELECTABLE_ITEM_ICON_WIDTH,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     SelectableItem(
         modifier = modifier,
@@ -172,7 +172,7 @@ fun SelectableIconItem(
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = contentDescription ?: text,
-                tint = MaterialTheme.colors.onBackground,
+                tint = MaterialTheme.colors.onBackground
             )
         }
     )
@@ -185,7 +185,7 @@ private fun SelectableItem(
     leading: @Composable () -> Unit,
     height: Dp = SELECTABLE_ITEM_HEIGHT,
     iconWidth: Dp = SELECTABLE_ITEM_ICON_WIDTH,
-    onClick: (() -> Unit)?,
+    onClick: (() -> Unit)?
 ) {
     Row(
         modifier = modifier
@@ -196,9 +196,9 @@ private fun SelectableItem(
         Box(
             modifier = Modifier.size(
                 width = iconWidth,
-                height = height,
+                height = height
             ),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             leading()
         }
@@ -206,11 +206,11 @@ private fun SelectableItem(
             text = text,
             style = TextStyle(
                 color = MaterialTheme.colors.onBackground,
-                fontSize = 16.sp,
+                fontSize = 16.sp
             ),
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(start = 8.dp, end = 8.dp),
+                .padding(start = 8.dp, end = 8.dp)
         )
     }
 }

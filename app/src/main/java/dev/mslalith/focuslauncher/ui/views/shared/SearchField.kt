@@ -73,7 +73,7 @@ fun SearchField(
                 ) {
                     Icon(
                         Icons.Rounded.Clear,
-                        contentDescription = "Clear",
+                        contentDescription = "Clear"
                     )
                 }
             }

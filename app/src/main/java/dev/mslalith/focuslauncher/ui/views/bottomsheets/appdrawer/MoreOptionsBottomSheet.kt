@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 
 @Composable
 fun MoreOptionsBottomSheet(
-    properties: MoreAppOptionsProperties,
+    properties: MoreAppOptionsProperties
 ) {
     properties.apply {
         val context = LocalContext.current
@@ -78,24 +78,27 @@ fun MoreOptionsBottomSheet(
                 onClick = {
                     closeAfterAction {
                         val app = app.toApp()
-                        if (isFavorite) removeFromFavorites(app)
-                        else addToFavorites(app)
+                        if (isFavorite) {
+                            removeFromFavorites(app)
+                        } else {
+                            addToFavorites(app)
+                        }
                     }
-                },
+                }
             )
             if (isFavorite) {
                 ConfirmSelectableItem(
                     text = "Hide App",
                     confirmMessage = confirmToHideMessage,
                     itemType = ConfirmSelectableItemType.Icon(
-                        iconRes = R.drawable.ic_visibility_off,
+                        iconRes = R.drawable.ic_visibility_off
                     ),
                     confirmText = "Yes, Hide",
                     onConfirm = {
                         closeAfterAction {
                             if (it) appsViewModel.addToHiddenApps(app.toApp())
                         }
-                    },
+                    }
                 )
             } else {
                 SelectableIconItem(

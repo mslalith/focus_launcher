@@ -42,12 +42,12 @@ data class UpcomingLunarPhase(
     val lunarPhase: LunarPhase,
     val dateTime: LocalDateTime?,
     val isMicroMoon: Boolean,
-    val isSuperMoon: Boolean,
+    val isSuperMoon: Boolean
 )
 
 enum class LunarPhaseDirection {
     NEW_TO_FULL,
-    FULL_TO_NEW,
+    FULL_TO_NEW
 }
 
 enum class LunarPhase(val phaseName: String) {

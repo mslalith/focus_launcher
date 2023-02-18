@@ -10,13 +10,13 @@ fun runAfter(delayMillis: Long, action: () -> Unit) = Handler(Looper.getMainLoop
 fun waitAndRunAfter(
     startTime: Long,
     minTime: Long = 2000L,
-    action: () -> Unit,
+    action: () -> Unit
 ) {
     val elapsedTime = System.currentTimeMillis() - startTime
     val waitTimeMillis = if (elapsedTime < minTime) minTime - elapsedTime else 0
     runAfter(
         delayMillis = waitTimeMillis,
-        action = action,
+        action = action
     )
 }
 

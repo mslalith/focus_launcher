@@ -35,7 +35,9 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     fun isAppAboutToReorder(app: App): Boolean = if (_favoritesContextualMode.value is FavoritesContextMode.ReorderPickPosition) {
         (_favoritesContextualMode.value as FavoritesContextMode.ReorderPickPosition).app.packageName != app.packageName
-    } else false
+    } else {
+        false
+    }
 
     fun hideContextualMode() {
         _favoritesContextualMode.value = FavoritesContextMode.Closed

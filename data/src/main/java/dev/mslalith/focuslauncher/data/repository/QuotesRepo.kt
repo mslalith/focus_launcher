@@ -39,8 +39,11 @@ class QuotesRepo @Inject constructor(
         if (quotesSize() == 0) addInitialQuotes()
 
         val quoteState = quotesDao.getQuotes().let {
-            if (it.isEmpty()) State.Initial
-            else State.Success(quoteToRoomMapper.fromEntity(it.random()))
+            if (it.isEmpty()) {
+                State.Initial
+            } else {
+                State.Success(quoteToRoomMapper.fromEntity(it.random()))
+            }
         }
         _currentQuoteStateFlow.value = quoteState
     }
@@ -50,8 +53,11 @@ class QuotesRepo @Inject constructor(
         if (quotesSize() == 0) addInitialQuotes()
 
         val quoteState = quotesDao.getQuotes().let {
-            if (it.isEmpty()) State.Initial
-            else State.Success(quoteToRoomMapper.fromEntity(it[index]))
+            if (it.isEmpty()) {
+                State.Initial
+            } else {
+                State.Success(quoteToRoomMapper.fromEntity(it[index]))
+            }
         }
         _currentQuoteStateFlow.value = quoteState
         return quoteState

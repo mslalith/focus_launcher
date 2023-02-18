@@ -21,7 +21,7 @@ import dev.mslalith.focuslauncher.data.model.App
 fun UpdateAppDisplayNameDialog(
     app: App,
     onUpdateDisplayName: (String) -> Unit,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     var displayName by remember { mutableStateOf(app.displayName) }
 
@@ -37,7 +37,7 @@ fun UpdateAppDisplayNameDialog(
         textContentColor = MaterialTheme.colors.onBackground,
         title = {
             Text(
-                text = "Update Display Name",
+                text = "Update Display Name"
             )
         },
         text = {

@@ -16,20 +16,20 @@ fun <T> SettingsGridContent(
     itemModifier: Modifier = Modifier,
     columnSize: Int = 2,
     items: List<T>,
-    content: @Composable (item: T) -> Unit,
+    content: @Composable (item: T) -> Unit
 ) {
     val chunkedItems by remember(items) {
         derivedStateOf { items.chunked(columnSize) }
     }
 
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth()
     ) {
         chunkedItems.forEach { rowItems ->
             Row {
                 rowItems.forEach { item ->
                     Box(
-                        modifier = itemModifier.weight(weight = 1f),
+                        modifier = itemModifier.weight(weight = 1f)
                     ) {
                         content(item)
                     }

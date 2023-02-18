@@ -198,11 +198,11 @@ class AppsViewModel @Inject constructor(
     }
 
     private fun launch(
-        run: suspend () -> Unit,
+        run: suspend () -> Unit
     ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
 
     private fun <T> Flow<T>.withinScope(
-        initialValue: T,
+        initialValue: T
     ) = stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,

@@ -129,7 +129,7 @@ object RepositoryModule {
     @Singleton
     fun provideLunarPhaseSettingsRepo(
         @SettingsProvider settingsDataStore: DataStore<Preferences>,
-        cityJsonParser: CityJsonParser,
+        cityJsonParser: CityJsonParser
     ) = LunarPhaseSettingsRepo(settingsDataStore, cityJsonParser)
 
     @Provides

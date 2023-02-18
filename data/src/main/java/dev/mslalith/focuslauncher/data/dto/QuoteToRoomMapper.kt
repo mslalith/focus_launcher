@@ -6,7 +6,7 @@ import dev.mslalith.focuslauncher.data.model.Quote
 import javax.inject.Inject
 
 class QuoteToRoomMapper @Inject constructor(
-    private val quotesDao: QuotesDao,
+    private val quotesDao: QuotesDao
 ) : Mapper<QuoteRoom, Quote> {
     override fun fromEntity(data: QuoteRoom) = Quote(
         id = data.id,

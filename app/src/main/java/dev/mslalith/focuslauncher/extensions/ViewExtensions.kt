@@ -44,7 +44,7 @@ suspend fun ScaffoldState.showSnackbar(
         val snackbarResult = showSnackbar(
             message = message,
             actionLabel = actionLabel,
-            duration = duration,
+            duration = duration
         )
         onAction?.invoke(snackbarResult)
     }

@@ -16,7 +16,7 @@ data class QuoteResponse(
     @SerialName(value = "length")
     val length: Int,
     @SerialName(value = "tags")
-    val tags: List<String>,
+    val tags: List<String>
 )
 
 @Serializable
@@ -32,5 +32,5 @@ data class QuotesApiResponse(
     @SerialName(value = "lastItemIndex")
     val lastItemIndex: Int,
     @SerialName(value = "results")
-    val results: List<QuoteResponse>,
+    val results: List<QuoteResponse>
 )

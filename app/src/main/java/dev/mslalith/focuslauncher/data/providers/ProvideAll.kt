@@ -14,7 +14,7 @@ import dev.mslalith.focuslauncher.data.managers.LauncherViewManager
 
 @Composable
 fun ProvideAll(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ProvideNavController {
         ProvideSystemUiController {
@@ -27,7 +27,7 @@ fun ProvideAll(
 
 @Composable
 private fun ProvideNavController(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val navController = rememberNavController()
     CompositionLocalProvider(LocalNavController provides navController) {
@@ -37,7 +37,7 @@ private fun ProvideNavController(
 
 @Composable
 private fun ProvideSystemUiController(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     CompositionLocalProvider(LocalSystemUiController provides systemUiController) {
@@ -48,7 +48,7 @@ private fun ProvideSystemUiController(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ProvideBottomSheetManager(
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
@@ -58,7 +58,7 @@ private fun ProvideBottomSheetManager(
         LauncherViewManager(
             coroutineScope = coroutineScope,
             scaffoldState = scaffoldState,
-            bottomSheetState = modalBottomSheetState,
+            bottomSheetState = modalBottomSheetState
         )
     }
     CompositionLocalProvider(LocalLauncherViewManager provides viewManager) {

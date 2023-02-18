@@ -26,5 +26,5 @@ data class CityResponse(
     @SerialName("longitude")
     val longitude: String,
     @SerialName("wikiDataId")
-    val wikiDataId: String?,
+    val wikiDataId: String?
 )
