@@ -39,6 +39,7 @@ import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
+import dev.mslalith.focuslauncher.data.models.QuotesSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
@@ -47,6 +48,7 @@ import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
+import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridItem
@@ -56,6 +58,7 @@ import dev.mslalith.focuslauncher.ui.views.settings.SettingsItem
 fun SettingsPage(
     themeViewModel: ThemeViewModel,
     appsViewModel: AppsViewModel,
+    widgetsViewModel: WidgetsViewModel,
     settingsViewModel: SettingsViewModel
 ) {
     val navController = LocalNavController.current
@@ -78,7 +81,7 @@ fun SettingsPage(
         ToggleStatusBar(settingsViewModel)
         PullDownNotifications(settingsViewModel)
         AppDrawer(appsViewModel, settingsViewModel)
-        Widgets(settingsViewModel)
+        Widgets(settingsViewModel, widgetsViewModel)
         SetAsDefaultLauncher(settingsViewModel)
 
         VerticalSpacer(spacing = 12.dp)
@@ -194,7 +197,8 @@ private fun AppDrawer(
 
 @Composable
 private fun Widgets(
-    settingsViewModel: SettingsViewModel
+    settingsViewModel: SettingsViewModel,
+    widgetsViewModel: WidgetsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
 
@@ -222,14 +226,14 @@ private fun Widgets(
                                 )
                             )
                         }
-                        // WidgetType.QUOTES -> onWidgetTypeClick {
-                        //     BottomSheetContentType.Widgets.Quotes(
-                        //         properties = QuotesSettingsProperties(
-                        //             widgetsViewModel = widgetsViewModel,
-                        //             settingsViewModel = settingsViewModel,
-                        //         ),
-                        //     )
-                        // }
+                        WidgetType.QUOTES -> onWidgetTypeClick {
+                            BottomSheetContentType.Widgets.Quotes(
+                                properties = QuotesSettingsProperties(
+                                    widgetsViewModel = widgetsViewModel,
+                                    settingsViewModel = settingsViewModel,
+                                ),
+                            )
+                        }
                     }
                 }
             )

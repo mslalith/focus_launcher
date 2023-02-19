@@ -94,6 +94,7 @@ fun LauncherScreen(
                     0 -> SettingsPage(
                         themeViewModel = themeViewModel,
                         appsViewModel = appsViewModel,
+                        widgetsViewModel = widgetsViewModel,
                         settingsViewModel = settingsViewModel
                     )
                     1 -> HomePage(

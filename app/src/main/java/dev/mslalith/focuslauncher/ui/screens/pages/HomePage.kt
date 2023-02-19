@@ -84,7 +84,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
-import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
+import dev.mslalith.focuslauncher.features.quoteforyou.QuoteForYou
 import kotlinx.coroutines.flow.first
 import kotlin.reflect.KClass
 
@@ -136,8 +136,6 @@ fun HomePage(
                 Box(modifier = Modifier.weight(1f)) {
                     DecoratedQuote(
                         modifier = Modifier.align(Alignment.Center),
-                        settingsViewModel = settingsViewModel,
-                        widgetsViewModel = widgetsViewModel
                     )
                 }
                 // FavoritesList(
@@ -203,8 +201,6 @@ private fun SpacedMoonCalendar(
 @Composable
 private fun DecoratedQuote(
     modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel
 ) {
     val homePadding = LocalHomePadding.current
     val startPadding = homePadding.contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
@@ -215,9 +211,7 @@ private fun DecoratedQuote(
             .padding(
                 horizontal = startPadding,
                 vertical = 8.dp
-            ),
-        settingsViewModel = settingsViewModel,
-        widgetsViewModel = widgetsViewModel
+            )
     )
 }
 

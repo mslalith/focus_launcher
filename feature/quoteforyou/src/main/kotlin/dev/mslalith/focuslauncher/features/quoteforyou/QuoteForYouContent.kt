@@ -1,6 +1,5 @@
-package dev.mslalith.focuslauncher.ui.views.widgets
+package dev.mslalith.focuslauncher.features.quoteforyou
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -12,8 +11,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,53 +20,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.R
-import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.extensions.modifyIf
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 
 @Composable
-fun QuoteForYou(
-    modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
-    backgroundColor: Color = MaterialTheme.colors.primaryVariant
-) {
-    val showQuotes by settingsViewModel.showQuotesStateFlow.collectAsState()
-    val currentQuoteState by widgetsViewModel.currentQuoteStateFlow.collectAsState()
-
-    AnimatedVisibility(
-        visible = showQuotes,
-        modifier = modifier
-    ) {
-        val quote = currentQuoteState.getOrNull() ?: return@AnimatedVisibility
-
-        QuoteForYouContent(
-            widgetsViewModel = widgetsViewModel,
-            quote = quote,
-            backgroundColor = backgroundColor,
-            preview = false
-        )
-    }
-}
-
-@Composable
-fun QuoteForYouContent(
-    widgetsViewModel: WidgetsViewModel,
+internal fun QuoteForYouContent(
     quote: Quote,
+    onQuoteClick: () -> Unit,
     backgroundColor: Color,
-    preview: Boolean
 ) {
     Column(
         modifier = Modifier
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor)
-            .modifyIf(predicate = { !preview }) {
-                clickable { widgetsViewModel.nextRandomQuote() }
-            }
+            .clickable { onQuoteClick() }
             .padding(horizontal = 36.dp)
             .padding(
                 top = 16.dp,
@@ -84,10 +48,10 @@ fun QuoteForYouContent(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         VerticalSpacer(spacing = 12.dp)
-        Crossfade(targetState = quote.quote) {
+        Crossfade(targetState = quote.quote) { quote ->
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = it,
+                text = quote,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,
@@ -97,10 +61,10 @@ fun QuoteForYouContent(
             )
         }
         VerticalSpacer(spacing = 16.dp)
-        Crossfade(targetState = quote.author) {
+        Crossfade(targetState = quote.author) { author ->
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "— $it",
+                text = "— $author",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = MaterialTheme.colors.onBackground,

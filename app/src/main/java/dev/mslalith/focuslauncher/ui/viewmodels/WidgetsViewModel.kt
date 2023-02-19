@@ -36,6 +36,7 @@ class WidgetsViewModel @Inject constructor(
     init {
         launch {
             quotesRepo.addInitialQuotesIfNeeded()
+            quotesRepo.nextRandomQuote()
         }
         launch {
             clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, city ->
@@ -82,6 +83,7 @@ class WidgetsViewModel @Inject constructor(
     fun fetchQuotesIfRequired() {
         launch {
             if (quotesRepo.hasQuotesReachedLimit()) return@launch
+            if (quotesRepo.isFetchingQuotesStateFlow.value) return@launch
             quotesRepo.fetchQuotes(maxPages = 2)
         }
     }

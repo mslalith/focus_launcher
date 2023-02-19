@@ -25,11 +25,9 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.QuotesSettingsProperties
 import dev.mslalith.focuslauncher.extensions.isOnline
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.features.quoteforyou.QuoteForYou
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
-import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
 
 @Composable
 fun QuotesSettingsSheet(
@@ -66,11 +64,7 @@ fun QuotesSettingsSheet(
         }
 
         Column {
-            PreviewQuotes(
-                settingsViewModel = settingsViewModel,
-                widgetsViewModel = widgetsViewModel,
-                showQuotes = showQuotes
-            )
+            PreviewQuotes(showQuotes = showQuotes)
             SettingsSelectableSwitchItem(
                 text = "Enable Quotes",
                 checked = showQuotes,
@@ -89,8 +83,6 @@ fun QuotesSettingsSheet(
 
 @Composable
 private fun PreviewQuotes(
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
     showQuotes: Boolean
 ) {
     val height = 72.dp
@@ -107,8 +99,6 @@ private fun PreviewQuotes(
     ) {
         if (it) {
             QuoteForYou(
-                settingsViewModel = settingsViewModel,
-                widgetsViewModel = widgetsViewModel,
                 backgroundColor = MaterialTheme.colors.secondaryVariant
             )
         } else {

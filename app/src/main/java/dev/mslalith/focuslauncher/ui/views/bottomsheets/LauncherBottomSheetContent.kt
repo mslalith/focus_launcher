@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
+import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.AppDrawer
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.MoreAppOptions
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Clock
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.LunarPhase
@@ -30,7 +30,7 @@ fun LauncherBottomSheetContent() {
     ) {
         bottomSheetContentType.run {
             when (this) {
-                is BottomSheetContentType.AppDrawer -> AppDrawerSettingsSheet(properties = properties)
+                is AppDrawer -> AppDrawerSettingsSheet(properties = properties)
                 is MoreAppOptions -> MoreOptionsBottomSheet(properties = properties)
                 is Clock -> ClockSettingsSheet(properties = properties)
                 is LunarPhase -> LunarPhaseSettingsSheet(properties = properties)
