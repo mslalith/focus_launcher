@@ -23,7 +23,7 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
-import dev.mslalith.focuslauncher.features.lunarcalendar.widget.LunarCalendar
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 

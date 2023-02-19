@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.mslalith.focuslauncher.features.clock24"
+    namespace = "dev.mslalith.focuslauncher.feature.clock24"
 }
 
 dependencies {

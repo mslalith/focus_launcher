@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.QuotesSettingsProperties
 import dev.mslalith.focuslauncher.extensions.isOnline
-import dev.mslalith.focuslauncher.features.quoteforyou.QuoteForYou
+import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
 

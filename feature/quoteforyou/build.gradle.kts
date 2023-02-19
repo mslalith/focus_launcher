@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-    namespace = "dev.mslalith.focuslauncher.features.quoteforyou"
+    namespace = "dev.mslalith.focuslauncher.feature.quoteforyou"
 }

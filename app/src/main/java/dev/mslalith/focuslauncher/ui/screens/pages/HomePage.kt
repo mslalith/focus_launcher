@@ -74,8 +74,8 @@ import dev.mslalith.focuslauncher.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
-import dev.mslalith.focuslauncher.features.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
-import dev.mslalith.focuslauncher.features.lunarcalendar.widget.LunarCalendar
+import dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.FavoritesContextMode
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
@@ -84,7 +84,7 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
-import dev.mslalith.focuslauncher.features.quoteforyou.QuoteForYou
+import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
 import kotlinx.coroutines.flow.first
 import kotlin.reflect.KClass
 

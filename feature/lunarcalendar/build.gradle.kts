@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.mslalith.focuslauncher.features.lunarcalendar"
+    namespace = "dev.mslalith.focuslauncher.feature.lunarcalendar"
 }
 
 dependencies {
