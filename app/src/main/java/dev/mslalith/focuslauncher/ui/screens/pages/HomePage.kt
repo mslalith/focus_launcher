@@ -43,6 +43,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,6 +61,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.R
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
 import dev.mslalith.focuslauncher.extensions.FillSpacer
 import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
@@ -143,10 +145,28 @@ fun HomePage(
                         widgetsViewModel = widgetsViewModel
                     )
                 }
-                FavoritesList(
-                    appsViewModel = appsViewModel,
-                    homeViewModel = homeViewModel,
-                    settingsViewModel = settingsViewModel,
+                // FavoritesList(
+                //     appsViewModel = appsViewModel,
+                //     homeViewModel = homeViewModel,
+                //     settingsViewModel = settingsViewModel,
+                //     contentPadding = horizontalPadding
+                // )
+                FavoritesListNew(
+                    favoritesList = appsViewModel.onlyFavoritesStateFlow.collectAsState().value,
+                    addDefaultAppsToFavorites = { defaultApps ->
+                        if (settingsViewModel.firstRunStateFlow.first()) {
+                            settingsViewModel.overrideFirstRun()
+                            defaultApps.forEach { appsViewModel.addToFavorites(it) }
+                        }
+                    },
+                    removeFromFavorites = appsViewModel::removeFromFavorites,
+                    reorderFavorite = appsViewModel::reorderFavorite,
+                    currentContextMode1 = homeViewModel.favoritesContextualMode.collectAsState().value,
+                    isInContextualMode = homeViewModel::isInContextualMode,
+                    isReordering = homeViewModel::isReordering,
+                    hideContextualMode = homeViewModel::hideContextualMode,
+                    changeFavoritesContextMode = homeViewModel::changeFavoritesContextMode,
+                    isAppAboutToReorder = homeViewModel::isAppAboutToReorder,
                     contentPadding = horizontalPadding
                 )
                 Spacer(modifier = Modifier.height(bottomPadding))
@@ -307,6 +327,105 @@ private fun FavoritesList(
     }
 }
 
+@Composable
+private fun FavoritesListNew(
+    favoritesList: List<App>,
+    addDefaultAppsToFavorites: suspend (List<App>) -> Unit,
+    removeFromFavorites: (App) -> Unit,
+    reorderFavorite: (App, App, () -> Unit) -> Unit,
+    currentContextMode1: FavoritesContextMode,
+    isInContextualMode: () -> Boolean,
+    isReordering: () -> Boolean,
+    hideContextualMode: () -> Unit,
+    changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
+    isAppAboutToReorder: (App) -> Boolean,
+    contentPadding: Dp
+) {
+    val context = LocalContext.current
+    val currentContextMode by rememberUpdatedState(newValue = currentContextMode1)
+    val favoritesWithAppIcon = remember(key1 = favoritesList) {
+        // derivedStateOf {
+        favoritesList.toAppWithIconList(context)
+        // }
+    }
+
+    LaunchedEffect(favoritesWithAppIcon.isEmpty()) {
+        if (favoritesWithAppIcon.isNotEmpty() || isReordering()) return@LaunchedEffect
+
+        hideContextualMode()
+        val defaultApps = listOfNotNull(context.defaultDialerApp, context.defaultMessagingApp)
+        if (defaultApps.isNotEmpty()) addDefaultAppsToFavorites(defaultApps)
+    }
+
+    BackPressHandler(enabled = isInContextualMode()) { hideContextualMode() }
+
+    val transition = updateTransition(targetState = currentContextMode, label = "Favorites Transition")
+    val outerPadding by transition.animateDp(label = "Outer Padding") { if (it.isInContextualMode()) 16.dp else 0.dp }
+    val innerPaddingBottom by transition.animateDp(label = "Inner Padding Bottom") { if (it.isInContextualMode()) 16.dp else 0.dp }
+    val borderOpacity by transition.animateFloat(label = "Border Opacity") { if (it.isInContextualMode()) 0.8f else 0f }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = outerPadding)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colors.onBackground.copy(alpha = borderOpacity),
+                shape = RoundedCornerShape(size = 12.dp)
+            )
+            .padding(bottom = innerPaddingBottom)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            AnimatedVisibility(
+                visible = isInContextualMode(),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp)
+            ) {
+                FavoritesContextHeader(
+                    currentContextMode = currentContextMode,
+                    changeContextModeToOpen = { changeFavoritesContextMode(FavoritesContextMode.Open) },
+                    onReorderClick = { changeFavoritesContextMode(FavoritesContextMode.Reorder) },
+                    onRemoveClick = { changeFavoritesContextMode(FavoritesContextMode.Remove) }
+                )
+            }
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = contentPadding),
+                mainAxisSpacing = 16.dp,
+                crossAxisSpacing = 12.dp
+            ) {
+                favoritesWithAppIcon.forEach { favorite ->
+                    ReusableContent(key = favorite) {
+                        FavoriteItemNew(
+                            app = favorite,
+                            isInContextualMode = isInContextualMode,
+                            isAppAboutToReorder = { isAppAboutToReorder(favorite.toApp()) },
+                            changeFavoritesContextMode = changeFavoritesContextMode,
+                            onClick = {
+                                when (currentContextMode) {
+                                    FavoritesContextMode.Closed -> context.launchApp(favorite.toApp())
+                                    FavoritesContextMode.Open -> Unit
+                                    FavoritesContextMode.Remove -> removeFromFavorites(favorite.toApp())
+                                    FavoritesContextMode.Reorder -> changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
+                                    is FavoritesContextMode.ReorderPickPosition -> {
+                                        val reorderPickPosition = currentContextMode as FavoritesContextMode.ReorderPickPosition
+                                        reorderFavorite(reorderPickPosition.app, favorite.toApp()) {
+                                            changeFavoritesContextMode(FavoritesContextMode.Reorder)
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun FavoritesContextHeader(
@@ -430,6 +549,59 @@ private fun FavoriteItem(
                     onLongPress = {
                         if (homeViewModel.isInContextualMode()) return@detectTapGestures
                         homeViewModel.changeFavoritesContextMode(FavoritesContextMode.Open)
+                    }
+                )
+            }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = app.displayName,
+            style = TextStyle(color = textColor())
+        )
+    }
+}
+
+@Composable
+private fun FavoriteItemNew(
+    app: AppWithIcon,
+    isInContextualMode: () -> Boolean,
+    isAppAboutToReorder: () -> Boolean,
+    changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
+    onClick: () -> Unit
+) {
+    val backgroundColor = MaterialTheme.colors.background
+    val onBackgroundColor = MaterialTheme.colors.onBackground
+
+    val color = remember(key1 = app) {
+        val appIconPalette = Palette.from(app.icon.toBitmap()).generate()
+        val extractedColor = Color(appIconPalette.getDominantColor(onBackgroundColor.toArgb()))
+        return@remember extractedColor.luminate(threshold = 0.36f, value = 0.6f)
+    }
+    val animatedColor by animateColorAsState(
+        targetValue = if (isAppAboutToReorder()) onBackgroundColor else color,
+        animationSpec = tween(durationMillis = 600)
+    )
+
+    fun backgroundColor(): Color = animatedColor.copy(alpha = if (isAppAboutToReorder()) 0.8f else 0.23f)
+
+    fun textColor(): Color = if (isAppAboutToReorder()) backgroundColor else animatedColor
+
+    Row(
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.small)
+            .background(color = backgroundColor())
+            .border(
+                width = 0.25.dp,
+                color = animatedColor,
+                shape = MaterialTheme.shapes.small
+            )
+            .pointerInput(isInContextualMode()) {
+                detectTapGestures(
+                    onTap = { onClick() },
+                    onLongPress = {
+                        if (isInContextualMode()) return@detectTapGestures
+                        changeFavoritesContextMode(FavoritesContextMode.Open)
                     }
                 )
             }
