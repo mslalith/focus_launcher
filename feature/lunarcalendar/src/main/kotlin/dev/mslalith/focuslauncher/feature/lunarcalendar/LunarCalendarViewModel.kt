@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
@@ -22,8 +23,8 @@ import kotlinx.coroutines.flow.onEach
 internal class LunarCalendarViewModel @Inject constructor(
     clockRepo: ClockRepo,
     lunarPhaseDetailsRepo: LunarPhaseDetailsRepo,
-    lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
-    appCoroutineDispatcher: AppCoroutineDispatcher
+    private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     init {
@@ -56,6 +57,26 @@ internal class LunarCalendarViewModel @Inject constructor(
         }.combine(lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow) { state, upcomingLunarPhase ->
             state.copy(upcomingLunarPhase = upcomingLunarPhase)
         }.withinScope(initialValue = defaultLunarCalendarState)
+
+    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(DEFAULT_CURRENT_PLACE)
+
+    fun toggleShowLunarPhase() {
+        appCoroutineDispatcher.launchInIO {
+            lunarPhaseSettingsRepo.toggleShowLunarPhase()
+        }
+    }
+
+    fun toggleShowIlluminationPercent() {
+        appCoroutineDispatcher.launchInIO {
+            lunarPhaseSettingsRepo.toggleShowIlluminationPercent()
+        }
+    }
+
+    fun toggleShowUpcomingPhaseDetails() {
+        appCoroutineDispatcher.launchInIO {
+            lunarPhaseSettingsRepo.toggleShowUpcomingPhaseDetails()
+        }
+    }
 
     companion object {
         val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error("Has no Lunar Phase details")

@@ -1,5 +1,7 @@
 package dev.mslalith.focuslauncher.data.models
 
+import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
+
 sealed class BottomSheetContentType {
     data class AppDrawer(val properties: AppDrawerSettingsProperties) : BottomSheetContentType()
     data class MoreAppOptions(val properties: MoreAppOptionsProperties) : BottomSheetContentType()

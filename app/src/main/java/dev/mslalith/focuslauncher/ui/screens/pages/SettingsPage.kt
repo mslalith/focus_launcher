@@ -39,12 +39,12 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
-import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
+import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
@@ -200,7 +200,9 @@ private fun Widgets(
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel
 ) {
+    val navController = LocalNavController.current
     val viewManager = LocalLauncherViewManager.current
+
     val widgetValues = remember {
         WidgetType.values().filter { it != WidgetType.QUOTES }
     }
@@ -225,7 +227,9 @@ private fun Widgets(
                         WidgetType.LUNAR_PHASE -> onWidgetTypeClick {
                             BottomSheetContentType.Widgets.LunarPhase(
                                 properties = LunarPhaseSettingsProperties(
-                                    settingsViewModel = settingsViewModel
+                                    navigateToPickPlaceForLunarPhase = {
+                                        navController.navigate(Screen.PickPlaceForLunarPhase.id)
+                                    }
                                 )
                             )
                         }
