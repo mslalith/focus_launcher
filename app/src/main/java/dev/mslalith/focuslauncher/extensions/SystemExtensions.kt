@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -48,20 +46,6 @@ val Context.defaultMessagingApp: App?
     get() {
         val packageName: String? = Telephony.Sms.getDefaultSmsPackage(this)
         return packageName?.let { appNoIconModelOf(packageName) }
-    }
-
-val Context.isOnline: Boolean
-    get() {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities =
-            connectivityManager.getNetworkCapabilities(network) ?: return false
-        val allNetworkConnectionTypes = listOf(
-            NetworkCapabilities.TRANSPORT_WIFI,
-            NetworkCapabilities.TRANSPORT_CELLULAR,
-            NetworkCapabilities.TRANSPORT_ETHERNET
-        )
-        return allNetworkConnectionTypes.any { networkCapabilities.hasTransport(it) }
     }
 
 fun Context.iconOf(packageName: String): Drawable? = try {

@@ -6,42 +6,27 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.extensions.isDefaultLauncher
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val appDrawerSettingsRepo: AppDrawerSettingsRepo,
-    private val clockSettingsRepo: ClockSettingsRepo,
-    private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
-    private val quotesSettingsRepo: QuotesSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
@@ -70,35 +55,6 @@ class SettingsViewModel @Inject constructor(
     fun toggleAppIconsVisibility() { launch { appDrawerSettingsRepo.toggleAppIconsVisibility() } }
     fun toggleSearchBarVisibility() { launch { appDrawerSettingsRepo.toggleSearchBarVisibility() } }
     fun toggleAppGroupHeaderVisibility() { launch { appDrawerSettingsRepo.toggleAppGroupHeaderVisibility() } }
-
-    /**
-     * Clock Settings
-     */
-    val showClock24StateFlow = clockSettingsRepo.showClock24Flow.withinScope(DEFAULT_SHOW_CLOCK_24)
-    val clockAlignmentStateFlow = clockSettingsRepo.clockAlignmentFlow.withinScope(DEFAULT_CLOCK_ALIGNMENT)
-    val clock24AnimationDurationStateFlow = clockSettingsRepo.clock24AnimationDurationFlow.withinScope(DEFAULT_CLOCK_24_ANIMATION_DURATION)
-
-    fun toggleClock24() { launch { clockSettingsRepo.toggleClock24() } }
-    fun updateClockAlignment(clockAlignment: ClockAlignment) { launch { clockSettingsRepo.updateClockAlignment(clockAlignment) } }
-    fun updateClock24AnimationDuration(duration: Int) { launch { clockSettingsRepo.updateClock24AnimationDuration(duration) } }
-
-    /**
-     * Lunar Phase Settings
-     */
-    val showLunarPhaseStateFlow = lunarPhaseSettingsRepo.showLunarPhaseFlow.withinScope(DEFAULT_SHOW_LUNAR_PHASE)
-    val showIlluminationPercentStateFlow = lunarPhaseSettingsRepo.showIlluminationPercentFlow.withinScope(DEFAULT_SHOW_ILLUMINATION_PERCENT)
-    val showUpcomingPhaseDetailsStateFlow = lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.withinScope(DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
-    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(DEFAULT_CURRENT_PLACE)
-
-    fun toggleShowLunarPhase() { launch { lunarPhaseSettingsRepo.toggleShowLunarPhase() } }
-    fun toggleShowIlluminationPercent() { launch { lunarPhaseSettingsRepo.toggleShowIlluminationPercent() } }
-    fun toggleShowUpcomingPhaseDetails() { launch { lunarPhaseSettingsRepo.toggleShowUpcomingPhaseDetails() } }
-
-    /**
-     * Quotes Settings
-     */
-    val showQuotesStateFlow = quotesSettingsRepo.showQuotesFlow.withinScope(DEFAULT_SHOW_QUOTES)
-    fun toggleShowQuotes() { launch { quotesSettingsRepo.toggleShowQuotes() } }
 
     private fun launch(
         run: suspend () -> Unit
