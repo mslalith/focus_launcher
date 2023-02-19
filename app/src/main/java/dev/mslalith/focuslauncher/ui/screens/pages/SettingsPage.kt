@@ -26,6 +26,7 @@ import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -201,13 +202,16 @@ private fun Widgets(
     widgetsViewModel: WidgetsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
+    val widgetValues = remember {
+        WidgetType.values().filter { it != WidgetType.QUOTES }
+    }
 
     fun onWidgetTypeClick(action: () -> BottomSheetContentType) {
         viewManager.showBottomSheet(action())
     }
 
     SettingsExpandableItem(text = "Widgets") {
-        SettingsGridContent(items = WidgetType.values().toList()) { widgetType ->
+        SettingsGridContent(items = widgetValues) { widgetType ->
             SettingsGridItem(
                 text = widgetType.text,
                 onClick = {
