@@ -30,5 +30,6 @@ include(
     ":data",
     ":androidTest-shared",
     ":core:common",
-    ":core:model"
+    ":core:model",
+    ":core:domain"
 )
