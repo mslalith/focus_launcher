@@ -26,7 +26,21 @@ import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 @Composable
 fun ClockWidget(
     modifier: Modifier = Modifier,
-    clock24ViewModel: Clock24ViewModel = hiltViewModel(),
+    horizontalPadding: Dp,
+    centerVertically: Boolean = false,
+) {
+    ClockWidget(
+        modifier = modifier,
+        clock24ViewModel = hiltViewModel(),
+        horizontalPadding = horizontalPadding,
+        centerVertically = centerVertically
+    )
+}
+
+@Composable
+internal fun ClockWidget(
+    modifier: Modifier = Modifier,
+    clock24ViewModel: Clock24ViewModel,
     horizontalPadding: Dp,
     centerVertically: Boolean = false,
 ) {

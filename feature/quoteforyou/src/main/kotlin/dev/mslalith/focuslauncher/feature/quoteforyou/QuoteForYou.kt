@@ -13,8 +13,20 @@ import dev.mslalith.focuslauncher.core.common.getOrNull
 @Composable
 fun QuoteForYou(
     modifier: Modifier = Modifier,
-    quoteForYouViewModel: QuoteForYouViewModel = hiltViewModel(),
     backgroundColor: Color = MaterialTheme.colors.primaryVariant,
+) {
+    QuoteForYou(
+        modifier = modifier,
+        quoteForYouViewModel = hiltViewModel(),
+        backgroundColor = backgroundColor
+    )
+}
+
+@Composable
+internal fun QuoteForYou(
+    modifier: Modifier = Modifier,
+    quoteForYouViewModel: QuoteForYouViewModel,
+    backgroundColor: Color,
 ) {
     val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsState()
 

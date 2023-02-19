@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.Clock
 
 @HiltViewModel
-class Clock24ViewModel @Inject constructor(
+internal class Clock24ViewModel @Inject constructor(
     private val clockRepo: ClockRepo,
     clockSettingsRepo: ClockSettingsRepo,
 ) : ViewModel() {

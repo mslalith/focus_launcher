@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
-class LunarCalendarViewModel @Inject constructor(
+internal class LunarCalendarViewModel @Inject constructor(
     clockRepo: ClockRepo,
     lunarPhaseDetailsRepo: LunarPhaseDetailsRepo,
     lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,

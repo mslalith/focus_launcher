@@ -14,10 +14,28 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarCalendarState
 @Composable
 fun LunarCalendar(
     modifier: Modifier = Modifier,
-    lunarCalendarViewModel: LunarCalendarViewModel = hiltViewModel(),
     height: Dp = 74.dp,
     iconSize: Dp = 40.dp,
     horizontalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null,
+) {
+    LunarCalendar(
+        modifier = modifier,
+        lunarCalendarViewModel = hiltViewModel(),
+        height = height,
+        iconSize = iconSize,
+        horizontalPadding = horizontalPadding,
+        onClick = onClick
+    )
+}
+
+@Composable
+internal fun LunarCalendar(
+    modifier: Modifier = Modifier,
+    lunarCalendarViewModel: LunarCalendarViewModel,
+    height: Dp,
+    iconSize: Dp,
+    horizontalPadding: Dp,
     onClick: (() -> Unit)? = null,
 ) {
     val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsState()

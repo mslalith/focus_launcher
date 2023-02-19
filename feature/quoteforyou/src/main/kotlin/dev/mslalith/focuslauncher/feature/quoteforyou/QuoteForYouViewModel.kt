@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 
 @HiltViewModel
-class QuoteForYouViewModel @Inject constructor(
+internal class QuoteForYouViewModel @Inject constructor(
     private val quotesRepo: QuotesRepo,
     quotesSettingsRepo: QuotesSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
