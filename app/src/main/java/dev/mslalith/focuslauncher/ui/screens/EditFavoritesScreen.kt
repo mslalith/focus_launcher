@@ -30,8 +30,8 @@ import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.ExtendedMiniFab
-import dev.mslalith.focuslauncher.data.providers.LocalNavController
-import dev.mslalith.focuslauncher.extensions.showSnackbar
+import dev.mslalith.focuslauncher.core.ui.extensions.showSnackbar
+import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.views.SelectableCheckboxItem
 import kotlinx.coroutines.launch

@@ -9,10 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.mslalith.focuslauncher.data.models.Theme
-import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
+import dev.mslalith.focuslauncher.core.model.Theme
+import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
+import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_THEME
+import dev.mslalith.focuslauncher.feature.settingspage.ThemeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
 import kotlinx.coroutines.flow.first
 
 private val NotWhitePalette = lightColors(
@@ -46,7 +47,7 @@ fun FocusLauncherTheme(
     val settingsViewModel: SettingsViewModel = viewModel()
 
     val currentTheme by themeViewModel.currentThemeStateFlow.collectAsState()
-    val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else ThemeViewModel.DEFAULT_THEME
+    val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else DEFAULT_THEME
 
     val colors = when (theme) {
         Theme.NOT_WHITE -> NotWhitePalette

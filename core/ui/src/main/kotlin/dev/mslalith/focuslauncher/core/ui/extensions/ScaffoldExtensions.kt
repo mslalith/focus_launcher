@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.extensions
+package dev.mslalith.focuslauncher.core.ui.extensions
 
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration

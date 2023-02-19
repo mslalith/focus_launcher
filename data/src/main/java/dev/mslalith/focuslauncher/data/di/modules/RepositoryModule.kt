@@ -26,6 +26,7 @@ import dev.mslalith.focuslauncher.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.data.repository.ThemeRepo
 import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
@@ -135,4 +136,11 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideQuotesSettingsRepo(@SettingsProvider settingsDataStore: DataStore<Preferences>) = QuotesSettingsRepo(settingsDataStore)
+
+    @Provides
+    fun provideThemeRepo(
+        @ThemeProvider themeDataStore: DataStore<Preferences>,
+    ): ThemeRepo = ThemeRepo(
+        themeDataStore = themeDataStore,
+    )
 }

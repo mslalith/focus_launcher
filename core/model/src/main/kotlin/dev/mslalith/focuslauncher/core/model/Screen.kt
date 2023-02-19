@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.models
+package dev.mslalith.focuslauncher.core.model
 
 sealed class Screen(val id: String) {
     object Launcher : Screen("screen_launcher")

@@ -6,8 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.mslalith.focuslauncher.data.models.Screen
-import dev.mslalith.focuslauncher.data.providers.LocalNavController
+import dev.mslalith.focuslauncher.core.model.Screen
+import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.ui.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.ui.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.ui.screens.LauncherScreen
@@ -34,7 +34,6 @@ private fun NavGraphBuilder.launcherScreen() {
         LauncherScreen(
             appsViewModel = hiltViewModel(it),
             homeViewModel = hiltViewModel(it),
-            themeViewModel = hiltViewModel(it),
             settingsViewModel = hiltViewModel(it),
             widgetsViewModel = hiltViewModel(it)
         )

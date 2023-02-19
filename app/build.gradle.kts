@@ -51,9 +51,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
-    implementation(project(":feature:clock24"))
-    implementation(project(":feature:lunarcalendar"))
-    implementation(project(":feature:quoteforyou"))
+    implementation(project(":feature:settingspage"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     implementation(libs.kotlinx.datetime)

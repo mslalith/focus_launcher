@@ -35,5 +35,6 @@ include(
     ":core:ui",
     ":feature:clock24",
     ":feature:lunarcalendar",
-    ":feature:quoteforyou"
+    ":feature:quoteforyou",
+    ":feature:settingspage"
 )

@@ -6,9 +6,9 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
-import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
-import dev.mslalith.focuslauncher.data.models.ConfirmDialogProperties
-import dev.mslalith.focuslauncher.extensions.showSnackbar
+import androidx.compose.runtime.Composable
+import dev.mslalith.focuslauncher.core.ui.extensions.showSnackbar
+import dev.mslalith.focuslauncher.core.ui.model.ConfirmDialogProperties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,7 @@ class LauncherViewManager constructor(
     val bottomSheetState: ModalBottomSheetState
 ) {
 
-    private val _sheetContentTypeFlow = MutableStateFlow<BottomSheetContentType?>(null)
+    private val _sheetContentTypeFlow = MutableStateFlow<(@Composable () -> Unit)?>(null)
     val sheetContentTypeStateFlow = _sheetContentTypeFlow.asStateFlow()
 
     private val _dialogPropertiesFlow = MutableStateFlow<ConfirmDialogProperties?>(null)
@@ -39,8 +39,8 @@ class LauncherViewManager constructor(
             .invokeOnCompletion { _sheetContentTypeFlow.value = null }
     }
 
-    fun showBottomSheet(sheetType: BottomSheetContentType) {
-        _sheetContentTypeFlow.value = sheetType
+    fun showBottomSheet(content: @Composable () -> Unit) {
+        _sheetContentTypeFlow.value = content
         coroutineScope.launch { bottomSheetState.animateTo(ModalBottomSheetValue.Expanded) }
     }
 

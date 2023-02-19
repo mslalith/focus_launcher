@@ -62,15 +62,15 @@ import androidx.core.graphics.drawable.toBitmap
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
-import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
-import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.extensions.isAlphabet
 import dev.mslalith.focuslauncher.extensions.launchApp
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
+import dev.mslalith.focuslauncher.ui.views.bottomsheets.appdrawer.MoreOptionsBottomSheet
 import dev.mslalith.focuslauncher.ui.views.dialogs.UpdateAppDisplayNameDialog
 import dev.mslalith.focuslauncher.ui.views.shared.SearchField
 
@@ -106,8 +106,8 @@ fun AppDrawerPage(
 
     fun showMoreOptions(app: AppWithIcon) {
         focusManager.clearFocus()
-        viewManager.showBottomSheet(
-            sheetType = BottomSheetContentType.MoreAppOptions(
+        viewManager.showBottomSheet {
+            MoreOptionsBottomSheet(
                 properties = MoreAppOptionsProperties(
                     appsViewModel = appsViewModel,
                     settingsViewModel = settingsViewModel,
@@ -116,7 +116,7 @@ fun AppDrawerPage(
                     onClose = { viewManager.hideBottomSheet() }
                 )
             )
-        )
+        }
     }
 
     updateAppDisplayAppDialog?.let { updatedApp ->

@@ -22,14 +22,13 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
-import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
 import dev.mslalith.focuslauncher.ui.screens.pages.AppDrawerPage
 import dev.mslalith.focuslauncher.ui.screens.pages.HomePage
-import dev.mslalith.focuslauncher.ui.screens.pages.SettingsPage
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.ConfirmDialog
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
@@ -42,7 +41,6 @@ import kotlinx.coroutines.launch
 fun LauncherScreen(
     appsViewModel: AppsViewModel,
     homeViewModel: HomeViewModel,
-    themeViewModel: ThemeViewModel,
     settingsViewModel: SettingsViewModel,
     widgetsViewModel: WidgetsViewModel
 ) {
@@ -91,11 +89,7 @@ fun LauncherScreen(
                 modifier = Modifier.padding(bottom = it.calculateBottomPadding())
             ) { page ->
                 when (page) {
-                    0 -> SettingsPage(
-                        themeViewModel = themeViewModel,
-                        appsViewModel = appsViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
+                    0 -> SettingsPage()
                     1 -> HomePage(
                         appsViewModel = appsViewModel,
                         homeViewModel = homeViewModel,
