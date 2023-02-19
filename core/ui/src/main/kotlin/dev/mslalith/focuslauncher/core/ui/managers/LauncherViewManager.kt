@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.managers
+package dev.mslalith.focuslauncher.core.ui.managers
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
