@@ -61,6 +61,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.R
+import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
@@ -73,6 +74,8 @@ import dev.mslalith.focuslauncher.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
+import dev.mslalith.focuslauncher.features.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
+import dev.mslalith.focuslauncher.features.lunarcalendar.widget.LunarCalendar
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.FavoritesContextMode
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
@@ -81,8 +84,6 @@ import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
-import dev.mslalith.focuslauncher.ui.views.dialogs.LunarPhaseDetailsDialog
-import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
 import kotlinx.coroutines.flow.first
 import kotlin.reflect.KClass
@@ -130,8 +131,6 @@ fun HomePage(
                 Spacer(modifier = Modifier.height(topPadding))
                 ClockWidget(horizontalPadding = horizontalPadding)
                 SpacedMoonCalendar(
-                    settingsViewModel = settingsViewModel,
-                    widgetsViewModel = widgetsViewModel,
                     onMoonCalendarClick = widgetsViewModel::showMoonCalendarDetailsDialog
                 )
                 Box(modifier = Modifier.weight(1f)) {
@@ -171,18 +170,19 @@ fun HomePage(
     }
 
     if (showMoonCalendarDetailsDialog) {
-        LunarPhaseDetailsDialog(
-            widgetsViewModel = widgetsViewModel,
-            onClose = widgetsViewModel::hideMoonCalendarDetailsDialog
-        )
+        val lunarPhaseDetailsState by widgetsViewModel.lunarPhaseDetailsStateFlow.collectAsState()
+        lunarPhaseDetailsState.getOrNull()?.let { phaseDetails ->
+            LunarPhaseDetailsDialog(
+                lunarPhaseDetails = phaseDetails,
+                onClose = widgetsViewModel::hideMoonCalendarDetailsDialog
+            )
+        }
     }
 }
 
 @Composable
 private fun SpacedMoonCalendar(
     modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
     onMoonCalendarClick: () -> Unit
 ) {
     val homePadding = LocalHomePadding.current
@@ -193,8 +193,6 @@ private fun SpacedMoonCalendar(
 
     Box(modifier = modifier) {
         LunarCalendar(
-            settingsViewModel = settingsViewModel,
-            widgetsViewModel = widgetsViewModel,
             iconSize = iconSize,
             horizontalPadding = startOffsetPadding,
             onClick = onMoonCalendarClick

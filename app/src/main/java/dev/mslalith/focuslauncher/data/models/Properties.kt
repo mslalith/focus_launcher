@@ -38,7 +38,6 @@ data class ClockSettingsProperties(
 )
 
 data class LunarPhaseSettingsProperties(
-    val widgetsViewModel: WidgetsViewModel,
     val settingsViewModel: SettingsViewModel,
     val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )

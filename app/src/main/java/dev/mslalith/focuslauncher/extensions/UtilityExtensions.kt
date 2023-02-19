@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import java.time.Month
+import java.time.ZonedDateTime
+import java.util.Locale
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import java.time.Month
-import java.time.ZonedDateTime
-import java.util.Locale
 
 fun ZonedDateTime.isSameAsToday(): Boolean {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -50,9 +50,6 @@ fun LocalDateTime.inShortReadableFormat(
 
     return "$dayOfMonth$daySuffix $monthReadable"
 }
-
-fun Double.asPercent(precision: Int = 2) = "%.${precision}f".format(this) + "%"
-fun Double.limitDecimals(precision: Int = 2) = "%.${precision}f".format(this)
 
 fun Char.isAlphabet() = when (code) {
     in 65..90 -> true

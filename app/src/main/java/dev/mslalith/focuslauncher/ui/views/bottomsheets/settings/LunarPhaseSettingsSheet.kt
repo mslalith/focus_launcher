@@ -23,11 +23,9 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.features.lunarcalendar.widget.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
-import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 
 @Composable
 fun LunarPhaseSettingsSheet(
@@ -45,8 +43,6 @@ fun LunarPhaseSettingsSheet(
 
         Column {
             PreviewLunarCalendar(
-                settingsViewModel = settingsViewModel,
-                widgetsViewModel = widgetsViewModel,
                 showLunarPhase = showLunarPhase
             )
             SettingsSelectableSwitchItem(
@@ -79,8 +75,6 @@ fun LunarPhaseSettingsSheet(
 
 @Composable
 private fun PreviewLunarCalendar(
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
     showLunarPhase: Boolean,
     horizontalPadding: Dp = 24.dp
 ) {
@@ -96,11 +90,7 @@ private fun PreviewLunarCalendar(
             .background(color = MaterialTheme.colors.secondaryVariant)
     ) {
         if (it) {
-            LunarCalendar(
-                settingsViewModel = settingsViewModel,
-                widgetsViewModel = widgetsViewModel,
-                height = height
-            )
+            LunarCalendar(height = height)
         } else {
             Box(
                 modifier = Modifier

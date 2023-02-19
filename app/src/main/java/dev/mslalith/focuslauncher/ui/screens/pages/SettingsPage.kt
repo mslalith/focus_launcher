@@ -47,7 +47,6 @@ import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridItem
@@ -57,8 +56,7 @@ import dev.mslalith.focuslauncher.ui.views.settings.SettingsItem
 fun SettingsPage(
     themeViewModel: ThemeViewModel,
     appsViewModel: AppsViewModel,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel
+    settingsViewModel: SettingsViewModel
 ) {
     val navController = LocalNavController.current
     val scrollState = rememberScrollState()
@@ -80,7 +78,7 @@ fun SettingsPage(
         ToggleStatusBar(settingsViewModel)
         PullDownNotifications(settingsViewModel)
         AppDrawer(appsViewModel, settingsViewModel)
-        Widgets(widgetsViewModel, settingsViewModel)
+        Widgets(settingsViewModel)
         SetAsDefaultLauncher(settingsViewModel)
 
         VerticalSpacer(spacing = 12.dp)
@@ -196,7 +194,6 @@ private fun AppDrawer(
 
 @Composable
 private fun Widgets(
-    widgetsViewModel: WidgetsViewModel,
     settingsViewModel: SettingsViewModel
 ) {
     val viewManager = LocalLauncherViewManager.current
@@ -221,7 +218,6 @@ private fun Widgets(
                         WidgetType.LUNAR_PHASE -> onWidgetTypeClick {
                             BottomSheetContentType.Widgets.LunarPhase(
                                 properties = LunarPhaseSettingsProperties(
-                                    widgetsViewModel = widgetsViewModel,
                                     settingsViewModel = settingsViewModel
                                 )
                             )

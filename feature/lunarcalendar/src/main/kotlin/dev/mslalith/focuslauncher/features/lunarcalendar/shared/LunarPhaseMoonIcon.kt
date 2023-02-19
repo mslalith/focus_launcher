@@ -1,21 +1,11 @@
-package dev.mslalith.focuslauncher.ui.views.widgets
+package dev.mslalith.focuslauncher.features.lunarcalendar.shared
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateOffsetAsState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,105 +16,11 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.core.common.State
-import dev.mslalith.focuslauncher.core.common.getOrNull
-import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
-import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
-import dev.mslalith.focuslauncher.extensions.asPercent
-import dev.mslalith.focuslauncher.extensions.inShortReadableFormat
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 
 @Composable
-fun LunarCalendar(
-    modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel,
-    height: Dp = 74.dp,
-    iconSize: Dp = 40.dp,
-    horizontalPadding: Dp = 0.dp,
-    onClick: (() -> Unit)? = null
-) {
-    val showLunarPhase by settingsViewModel.showLunarPhaseStateFlow.collectAsState()
-    val showIlluminationPercent by settingsViewModel.showIlluminationPercentStateFlow.collectAsState()
-    val showUpcomingPhaseDetails by settingsViewModel.showUpcomingPhaseDetailsStateFlow.collectAsState()
-
-    val lunarPhaseDetails by widgetsViewModel.lunarPhaseDetailsStateFlow.collectAsState()
-    val upcomingLunarPhase by widgetsViewModel.upcomingLunarPhaseStateFlow.collectAsState()
-
-    AnimatedVisibility(
-        visible = showLunarPhase,
-        modifier = modifier
-    ) {
-        LunarCalendarContent(
-            lunarPhaseDetails = lunarPhaseDetails,
-            upcomingLunarPhase = upcomingLunarPhase,
-            showIlluminationPercent = showIlluminationPercent,
-            showUpcomingPhaseDetails = showUpcomingPhaseDetails,
-            height = height,
-            iconSize = iconSize,
-            horizontalPadding = horizontalPadding,
-            onClick = onClick
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun LunarCalendarContent(
-    lunarPhaseDetails: State<LunarPhaseDetails>,
-    upcomingLunarPhase: State<UpcomingLunarPhase>,
-    showIlluminationPercent: Boolean,
-    showUpcomingPhaseDetails: Boolean,
-    height: Dp = 74.dp,
-    iconSize: Dp = 40.dp,
-    horizontalPadding: Dp = 0.dp,
-    onClick: (() -> Unit)? = null
-) {
-    ListItem(
-        modifier = Modifier
-            .height(height = height)
-            .clickable(enabled = onClick != null) { onClick?.invoke() }
-            .padding(horizontal = horizontalPadding),
-        icon = {
-            lunarPhaseDetails.getOrNull()?.let {
-                LunarPhaseMoonIcon(
-                    phaseAngle = it.phaseAngle,
-                    illumination = it.illumination,
-                    moonSize = iconSize
-                )
-            }
-        },
-        text = {
-            lunarPhaseDetails.getOrNull()?.let {
-                LunarPhaseName(
-                    lunarPhaseDetails = it,
-                    showIlluminationPercent = showIlluminationPercent
-                )
-            }
-        },
-        secondaryText = if (showUpcomingPhaseDetails) {
-            {
-                upcomingLunarPhase.getOrNull()?.let {
-                    UpcomingLunarPhaseDetails(
-                        upcomingLunarPhase = it,
-                        textColor = MaterialTheme.colors.onBackground.copy(alpha = 0.8f)
-                    )
-                }
-            }
-        } else {
-            null
-        }
-    )
-}
-
-@Composable
-fun LunarPhaseMoonIcon(
+internal fun LunarPhaseMoonIcon(
     modifier: Modifier = Modifier,
     phaseAngle: Double,
     illumination: Double,
@@ -287,58 +183,4 @@ fun LunarPhaseMoonIcon(
                     }
             }
     )
-}
-
-@Composable
-private fun LunarPhaseName(
-    modifier: Modifier = Modifier,
-    lunarPhaseDetails: LunarPhaseDetails,
-    showIlluminationPercent: Boolean,
-    textColor: Color = MaterialTheme.colors.onBackground
-) {
-    val phaseNameAndIlluminationPercentPair = lunarPhaseDetails.run {
-        lunarPhase.phaseName to (illumination * 100).asPercent()
-    }
-    val text = phaseNameAndIlluminationPercentPair.let {
-        it.first + if (showIlluminationPercent) " (${it.second})" else ""
-    }
-    Crossfade(
-        modifier = modifier,
-        targetState = text
-    ) {
-        Text(
-            text = it,
-            style = TextStyle(
-                color = textColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-                letterSpacing = 1.2.sp
-            )
-        )
-    }
-}
-
-@Composable
-private fun UpcomingLunarPhaseDetails(
-    modifier: Modifier = Modifier,
-    upcomingLunarPhase: UpcomingLunarPhase,
-    textColor: Color = MaterialTheme.colors.onBackground
-) {
-    val phaseName = upcomingLunarPhase.lunarPhase.phaseName
-    val dateTime = upcomingLunarPhase.dateTime?.inShortReadableFormat() ?: return
-    val nextPhaseOnText = "next $phaseName is on $dateTime"
-
-    Crossfade(
-        modifier = modifier,
-        targetState = nextPhaseOnText
-    ) {
-        Text(
-            text = it,
-            style = TextStyle(
-                color = textColor,
-                fontSize = 12.sp,
-                letterSpacing = 0.9.sp
-            )
-        )
-    }
 }

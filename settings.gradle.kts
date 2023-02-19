@@ -33,5 +33,6 @@ include(
     ":core:model",
     ":core:domain",
     ":core:ui",
-    ":feature:clock24"
+    ":feature:clock24",
+    ":feature:lunarcalendar"
 )
