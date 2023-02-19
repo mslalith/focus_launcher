@@ -230,8 +230,8 @@ private fun Widgets(
                             BottomSheetContentType.Widgets.Quotes(
                                 properties = QuotesSettingsProperties(
                                     widgetsViewModel = widgetsViewModel,
-                                    settingsViewModel = settingsViewModel,
-                                ),
+                                    settingsViewModel = settingsViewModel
+                                )
                             )
                         }
                     }
