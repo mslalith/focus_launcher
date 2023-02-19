@@ -2,7 +2,10 @@ package dev.mslalith.focuslauncher.feature.clock24
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.extensions.formatToTime
+import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.settings.ClockSettingsRepo
@@ -18,7 +21,8 @@ import kotlinx.datetime.Clock
 @HiltViewModel
 internal class Clock24ViewModel @Inject constructor(
     private val clockRepo: ClockRepo,
-    clockSettingsRepo: ClockSettingsRepo,
+    private val clockSettingsRepo: ClockSettingsRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     private val defaultClock24State = Clock24State(
@@ -40,4 +44,22 @@ internal class Clock24ViewModel @Inject constructor(
         }.withinScope(initialValue = defaultClock24State)
 
     fun refreshTime() = clockRepo.refreshTime()
+
+    fun toggleClock24() {
+        appCoroutineDispatcher.launchInIO {
+            clockSettingsRepo.toggleClock24()
+        }
+    }
+
+    fun updateClockAlignment(clockAlignment: ClockAlignment) {
+        appCoroutineDispatcher.launchInIO {
+            clockSettingsRepo.updateClockAlignment(clockAlignment)
+        }
+    }
+
+    fun updateClock24AnimationDuration(duration: Int) {
+        appCoroutineDispatcher.launchInIO {
+            clockSettingsRepo.updateClock24AnimationDuration(duration)
+        }
+    }
 }

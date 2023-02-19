@@ -11,14 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -58,49 +53,6 @@ fun SettingsSelectableChooserItem(
             onItemSelected = onItemSelected,
             selectedItem = selectedItem,
             modifier = Modifier.padding(vertical = 8.dp)
-        )
-    }
-}
-
-@Composable
-fun SettingsSelectableSliderItem(
-    modifier: Modifier = Modifier,
-    text: String,
-    subText: String,
-    value: Float,
-    onValueChangeFinished: (Float) -> Unit,
-    valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
-    steps: Int = 0,
-    disabled: Boolean = false,
-    height: Dp = SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT,
-    horizontalPadding: Dp = 24.dp
-) {
-    val thumbColor = MaterialTheme.colors.onBackground
-    val inactiveColor = thumbColor.copy(alpha = 0.1f)
-    var sliderValue by remember { mutableStateOf(value) }
-
-    SettingsSelectableBottomContentItem(
-        modifier = modifier,
-        text = text,
-        subText = subText,
-        disabled = disabled,
-        height = height,
-        horizontalPadding = horizontalPadding
-    ) {
-        Slider(
-            value = sliderValue,
-            onValueChange = { sliderValue = it },
-            onValueChangeFinished = { onValueChangeFinished(sliderValue) },
-            enabled = !disabled,
-            valueRange = valueRange,
-            steps = steps,
-            colors = SliderDefaults.colors(
-                thumbColor = thumbColor,
-                activeTrackColor = thumbColor,
-                inactiveTrackColor = inactiveColor,
-                activeTickColor = thumbColor,
-                inactiveTickColor = inactiveColor
-            )
         )
     }
 }

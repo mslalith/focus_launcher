@@ -38,7 +38,6 @@ import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
-import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
 import dev.mslalith.focuslauncher.data.models.Screen
 import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
@@ -48,7 +47,6 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettings
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridItem
@@ -58,7 +56,6 @@ import dev.mslalith.focuslauncher.ui.views.settings.SettingsItem
 fun SettingsPage(
     themeViewModel: ThemeViewModel,
     appsViewModel: AppsViewModel,
-    widgetsViewModel: WidgetsViewModel,
     settingsViewModel: SettingsViewModel
 ) {
     val navController = LocalNavController.current
@@ -81,7 +78,7 @@ fun SettingsPage(
         ToggleStatusBar(settingsViewModel)
         PullDownNotifications(settingsViewModel)
         AppDrawer(appsViewModel, settingsViewModel)
-        Widgets(settingsViewModel, widgetsViewModel)
+        Widgets()
         SetAsDefaultLauncher(settingsViewModel)
 
         VerticalSpacer(spacing = 12.dp)
@@ -196,10 +193,7 @@ private fun AppDrawer(
 }
 
 @Composable
-private fun Widgets(
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel
-) {
+private fun Widgets() {
     val navController = LocalNavController.current
     val viewManager = LocalLauncherViewManager.current
 
@@ -218,11 +212,7 @@ private fun Widgets(
                 onClick = {
                     when (widgetType) {
                         WidgetType.CLOCK -> onWidgetTypeClick {
-                            BottomSheetContentType.Widgets.Clock(
-                                properties = ClockSettingsProperties(
-                                    settingsViewModel = settingsViewModel
-                                )
-                            )
+                            BottomSheetContentType.Widgets.Clock
                         }
                         WidgetType.LUNAR_PHASE -> onWidgetTypeClick {
                             BottomSheetContentType.Widgets.LunarPhase(
