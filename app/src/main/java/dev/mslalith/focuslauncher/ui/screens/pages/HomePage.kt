@@ -62,9 +62,9 @@ import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
-import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.extensions.defaultDialerApp
 import dev.mslalith.focuslauncher.extensions.defaultMessagingApp
 import dev.mslalith.focuslauncher.extensions.launchApp

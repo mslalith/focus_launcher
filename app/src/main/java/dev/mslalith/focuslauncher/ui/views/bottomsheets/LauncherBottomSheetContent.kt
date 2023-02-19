@@ -7,13 +7,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.MoreAppOptions
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Clock
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.LunarPhase
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Quotes
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
-import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.appdrawer.MoreOptionsBottomSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.AppDrawerSettingsSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.ClockSettingsSheet

@@ -33,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
+import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.data.models.AppDrawerSettingsProperties
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
@@ -42,12 +44,10 @@ import dev.mslalith.focuslauncher.data.models.WidgetType
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.data.providers.LocalSystemUiController
-import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.ThemeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
-import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsExpandableItem
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridContent
 import dev.mslalith.focuslauncher.ui.views.settings.SettingsGridItem

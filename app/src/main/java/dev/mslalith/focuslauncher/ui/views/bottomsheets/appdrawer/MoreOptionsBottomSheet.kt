@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.extensions.showAppInfo
 import dev.mslalith.focuslauncher.extensions.toast
 import dev.mslalith.focuslauncher.extensions.uninstallApp
