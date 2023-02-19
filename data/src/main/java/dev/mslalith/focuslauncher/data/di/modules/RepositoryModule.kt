@@ -139,8 +139,6 @@ object RepositoryModule {
 
     @Provides
     fun provideThemeRepo(
-        @ThemeProvider themeDataStore: DataStore<Preferences>,
-    ): ThemeRepo = ThemeRepo(
-        themeDataStore = themeDataStore,
-    )
+        @ThemeProvider themeDataStore: DataStore<Preferences>
+    ): ThemeRepo = ThemeRepo(themeDataStore = themeDataStore)
 }
