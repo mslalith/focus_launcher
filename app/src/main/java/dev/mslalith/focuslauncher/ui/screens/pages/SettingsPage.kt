@@ -214,7 +214,6 @@ private fun Widgets(
                         WidgetType.CLOCK -> onWidgetTypeClick {
                             BottomSheetContentType.Widgets.Clock(
                                 properties = ClockSettingsProperties(
-                                    widgetsViewModel = widgetsViewModel,
                                     settingsViewModel = settingsViewModel
                                 )
                             )

@@ -33,7 +33,6 @@ data class MoreAppOptionsProperties(
 )
 
 data class ClockSettingsProperties(
-    val widgetsViewModel: WidgetsViewModel,
     val settingsViewModel: SettingsViewModel,
     val bottomSpacing: Dp = BOTTOM_SHEET_BOTTOM_SPACING
 )
