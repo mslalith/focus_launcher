@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.flowOf
 @HiltViewModel
 internal class QuoteForYouViewModel @Inject constructor(
     private val quotesRepo: QuotesRepo,
-    quotesSettingsRepo: QuotesSettingsRepo,
-    private val appCoroutineDispatcher: AppCoroutineDispatcher
+    private val quotesSettingsRepo: QuotesSettingsRepo,
+    private val networkMonitor: NetworkMonitor,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher,
 ) : ViewModel() {
 
     init {
@@ -40,9 +41,28 @@ internal class QuoteForYouViewModel @Inject constructor(
             state.copy(currentQuote = currentQuote)
         }.withinScope(initialValue = defaultQuoteForYouState)
 
+    val isFetchingQuotes = quotesRepo.isFetchingQuotesStateFlow.withinScope(false)
+
+    fun fetchQuotesIfRequired() {
+        if (!networkMonitor.isCurrentlyConnected()) return
+
+        appCoroutineDispatcher.launchInIO {
+            if (quotesRepo.hasQuotesReachedLimit()) return@launchInIO
+            if (quotesRepo.isFetchingQuotesStateFlow.value) return@launchInIO
+
+            quotesRepo.fetchQuotes(maxPages = 2)
+        }
+    }
+
     fun nextRandomQuote() {
         appCoroutineDispatcher.launchInIO {
             quotesRepo.nextRandomQuote()
+        }
+    }
+
+    fun toggleShowQuotes() {
+        appCoroutineDispatcher.launchInIO {
+            quotesSettingsRepo.toggleShowQuotes()
         }
     }
 }

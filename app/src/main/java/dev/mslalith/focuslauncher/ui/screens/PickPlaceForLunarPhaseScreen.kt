@@ -18,9 +18,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.ui.viewmodels.PickPlaceViewModel
-import dev.mslalith.focuslauncher.ui.views.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.ui.views.shared.SearchField
 
 @Composable

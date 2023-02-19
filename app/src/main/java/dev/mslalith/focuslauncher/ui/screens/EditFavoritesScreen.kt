@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.core.model.SelectedApp
+import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
+import dev.mslalith.focuslauncher.core.ui.ExtendedMiniFab
 import dev.mslalith.focuslauncher.data.providers.LocalNavController
 import dev.mslalith.focuslauncher.extensions.showSnackbar
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
-import dev.mslalith.focuslauncher.ui.views.AppBarWithBackIcon
-import dev.mslalith.focuslauncher.ui.views.ExtendedMiniFab
 import dev.mslalith.focuslauncher.ui.views.SelectableCheckboxItem
 import kotlinx.coroutines.launch
 

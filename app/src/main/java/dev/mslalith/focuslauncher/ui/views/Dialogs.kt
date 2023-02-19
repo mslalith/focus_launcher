@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.ui.TextButton
 import dev.mslalith.focuslauncher.data.models.ConfirmDialogProperties
 
 @Composable

@@ -14,11 +14,11 @@ import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Clo
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.LunarPhase
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Quotes
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.appdrawer.MoreOptionsBottomSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.AppDrawerSettingsSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.ClockSettingsSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.LunarPhaseSettingsSheet
-import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.QuotesSettingsSheet
 
 @Composable
 fun LauncherBottomSheetContent() {
@@ -34,7 +34,7 @@ fun LauncherBottomSheetContent() {
                 is MoreAppOptions -> MoreOptionsBottomSheet(properties = properties)
                 is Clock -> ClockSettingsSheet(properties = properties)
                 is LunarPhase -> LunarPhaseSettingsSheet(properties = properties)
-                is Quotes -> QuotesSettingsSheet(properties = properties)
+                is Quotes -> QuotesSettingsSheet()
                 null -> VerticalSpacer(spacing = 0.5.dp)
             }
         }

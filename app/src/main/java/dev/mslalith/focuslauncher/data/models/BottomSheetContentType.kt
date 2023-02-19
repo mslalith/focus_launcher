@@ -7,7 +7,7 @@ sealed class BottomSheetContentType {
     sealed class Widgets : BottomSheetContentType() {
         data class Clock(val properties: ClockSettingsProperties) : Widgets()
         data class LunarPhase(val properties: LunarPhaseSettingsProperties) : Widgets()
-        data class Quotes(val properties: QuotesSettingsProperties) : Widgets()
+        object Quotes : Widgets()
     }
 }
 

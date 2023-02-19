@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.ui.views
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
@@ -16,7 +15,6 @@ import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +25,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.mslalith.focuslauncher.core.ui.ChooserGroup
+import dev.mslalith.focuslauncher.core.ui.RoundedSwitch
+import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableBottomContentItem
 
 private val SELECTABLE_ITEM_HEIGHT = 48.dp
 private val SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT = 56.dp
@@ -128,46 +129,6 @@ fun SettingsSelectableSwitchItem(
             )
         }
     )
-}
-
-@Composable
-fun SettingsSelectableBottomContentItem(
-    modifier: Modifier = Modifier,
-    text: String,
-    subText: String,
-    trailing: @Composable () -> Unit = {},
-    disabled: Boolean = false,
-    height: Dp = SELECTABLE_BOTTOM_CONTENT_ITEM_HEIGHT,
-    horizontalPadding: Dp = SELECTABLE_ITEM_HORIZONTAL_PADDING,
-    content: @Composable () -> Unit
-) {
-    var showBottomContent by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = disabled) {
-        if (disabled) {
-            showBottomContent = false
-        }
-    }
-
-    Column {
-        SettingsSelectableItem(
-            modifier = modifier,
-            text = text,
-            subText = subText,
-            trailing = trailing,
-            disabled = disabled,
-            height = height,
-            horizontalPadding = horizontalPadding,
-            onClick = { showBottomContent = !showBottomContent }
-        )
-        AnimatedVisibility(visible = showBottomContent) {
-            Box(
-                modifier = Modifier.padding(horizontal = horizontalPadding)
-            ) {
-                content()
-            }
-        }
-    }
 }
 
 @Composable
