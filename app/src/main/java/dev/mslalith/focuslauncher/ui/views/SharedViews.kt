@@ -42,7 +42,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
+import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 
 @Composable
 fun BackPressHandler(

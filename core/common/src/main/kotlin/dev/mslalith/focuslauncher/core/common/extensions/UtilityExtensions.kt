@@ -4,6 +4,20 @@ import android.os.Handler
 import android.os.Looper
 import kotlinx.datetime.LocalDateTime
 import java.time.ZonedDateTime
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+
+fun Instant.formatToTime(): String {
+    return toLocalDateTime(TimeZone.currentSystemDefault()).run {
+        listOf(hour, minute).map { it.to2Digit() }.joinToString(separator = ":")
+    }
+}
+
+fun Int.to2Digit() = when {
+    this < 10 -> "0$this"
+    else -> this
+}
 
 fun runAfter(delayMillis: Long, action: () -> Unit) = Handler(Looper.getMainLooper()).postDelayed(action, delayMillis)
 

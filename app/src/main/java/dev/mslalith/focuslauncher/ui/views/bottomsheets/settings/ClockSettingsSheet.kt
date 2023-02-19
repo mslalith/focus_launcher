@@ -18,13 +18,11 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.data.models.ClockSettingsProperties
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
-import dev.mslalith.focuslauncher.extensions.VerticalSpacer
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.ui.views.SettingsSelectableSwitchItem
-import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
 import kotlin.math.roundToInt
 
 @Composable
@@ -43,10 +41,7 @@ fun ClockSettingsSheet(
         )
 
         Column {
-            PreviewClock(
-                widgetsViewModel = widgetsViewModel,
-                settingsViewModel = settingsViewModel
-            )
+            PreviewClock()
             SettingsSelectableChooserItem(
                 text = "Clock Position",
                 subText = clockAlignment.text,
@@ -78,10 +73,7 @@ fun ClockSettingsSheet(
 }
 
 @Composable
-private fun PreviewClock(
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel
-) {
+private fun PreviewClock() {
     val height = 134.dp
     val horizontalPadding = 24.dp
 
@@ -95,8 +87,6 @@ private fun PreviewClock(
             .background(color = MaterialTheme.colors.secondaryVariant)
     ) {
         ClockWidget(
-            settingsViewModel = settingsViewModel,
-            widgetsViewModel = widgetsViewModel,
             horizontalPadding = 22.dp,
             centerVertically = true
         )

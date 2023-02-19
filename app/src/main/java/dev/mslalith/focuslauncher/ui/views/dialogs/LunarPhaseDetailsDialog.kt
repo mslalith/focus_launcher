@@ -31,9 +31,9 @@ import androidx.compose.ui.window.Dialog
 import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
-import dev.mslalith.focuslauncher.extensions.FillSpacer
-import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
-import dev.mslalith.focuslauncher.extensions.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.FillSpacer
+import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.asPercent
 import dev.mslalith.focuslauncher.extensions.inShortReadableFormat
 import dev.mslalith.focuslauncher.extensions.limitDecimals

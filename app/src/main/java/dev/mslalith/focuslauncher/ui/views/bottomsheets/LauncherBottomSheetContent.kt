@@ -13,7 +13,7 @@ import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Clo
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.LunarPhase
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType.Widgets.Quotes
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
-import dev.mslalith.focuslauncher.extensions.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.appdrawer.MoreOptionsBottomSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.AppDrawerSettingsSheet
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.settings.ClockSettingsSheet

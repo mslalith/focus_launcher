@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.extensions.formatToTime
 import dev.mslalith.focuslauncher.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_LUNAR_PHASE_DETAILS_STATE
 import dev.mslalith.focuslauncher.data.repository.LunarPhaseDetailsRepo.Companion.INITIAL_UPCOMING_LUNAR_PHASE_STATE
 import dev.mslalith.focuslauncher.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.extensions.formatToTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

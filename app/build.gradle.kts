@@ -49,7 +49,9 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
+    implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":feature:clock24"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     implementation(libs.kotlinx.datetime)

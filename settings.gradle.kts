@@ -31,5 +31,7 @@ include(
     ":androidTest-shared",
     ":core:common",
     ":core:model",
-    ":core:domain"
+    ":core:domain",
+    ":core:ui",
+    ":feature:clock24"
 )

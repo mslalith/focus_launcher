@@ -62,9 +62,9 @@ import androidx.palette.graphics.Palette
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.R
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
-import dev.mslalith.focuslauncher.extensions.FillSpacer
-import dev.mslalith.focuslauncher.extensions.HorizontalSpacer
+import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.extensions.defaultDialerApp
 import dev.mslalith.focuslauncher.extensions.defaultMessagingApp
 import dev.mslalith.focuslauncher.extensions.launchApp
@@ -72,6 +72,7 @@ import dev.mslalith.focuslauncher.extensions.luminate
 import dev.mslalith.focuslauncher.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList
+import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.FavoritesContextMode
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
@@ -81,7 +82,6 @@ import dev.mslalith.focuslauncher.ui.views.BackPressHandler
 import dev.mslalith.focuslauncher.ui.views.IconType
 import dev.mslalith.focuslauncher.ui.views.RoundIcon
 import dev.mslalith.focuslauncher.ui.views.dialogs.LunarPhaseDetailsDialog
-import dev.mslalith.focuslauncher.ui.views.widgets.ClockWidget
 import dev.mslalith.focuslauncher.ui.views.widgets.LunarCalendar
 import dev.mslalith.focuslauncher.ui.views.widgets.QuoteForYou
 import kotlinx.coroutines.flow.first
@@ -128,11 +128,7 @@ fun HomePage(
                 verticalArrangement = Arrangement.Bottom
             ) {
                 Spacer(modifier = Modifier.height(topPadding))
-                ClockWidget(
-                    settingsViewModel = settingsViewModel,
-                    widgetsViewModel = widgetsViewModel,
-                    horizontalPadding = horizontalPadding
-                )
+                ClockWidget(horizontalPadding = horizontalPadding)
                 SpacedMoonCalendar(
                     settingsViewModel = settingsViewModel,
                     widgetsViewModel = widgetsViewModel,

@@ -4,20 +4,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.data.models.AppWithIcon
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import java.time.Month
 import java.time.ZonedDateTime
 import java.util.Locale
-
-fun Instant.formatToTime(): String {
-    return toLocalDateTime(TimeZone.currentSystemDefault()).run {
-        listOf(hour, minute).map { it.to2Digit() }.joinToString(separator = ":")
-    }
-}
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 fun ZonedDateTime.isSameAsToday(): Boolean {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -65,11 +58,6 @@ fun Char.isAlphabet() = when (code) {
     in 65..90 -> true
     in 97..122 -> true
     else -> false
-}
-
-private fun Int.to2Digit() = when {
-    this < 10 -> "0$this"
-    else -> this
 }
 
 fun App.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packageName)?.let { icon ->

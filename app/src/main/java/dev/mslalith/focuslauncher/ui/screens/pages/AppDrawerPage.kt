@@ -65,7 +65,7 @@ import dev.mslalith.focuslauncher.data.models.AppWithIcon
 import dev.mslalith.focuslauncher.data.models.BottomSheetContentType
 import dev.mslalith.focuslauncher.data.models.MoreAppOptionsProperties
 import dev.mslalith.focuslauncher.data.providers.LocalLauncherViewManager
-import dev.mslalith.focuslauncher.extensions.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.extensions.isAlphabet
 import dev.mslalith.focuslauncher.extensions.launchApp
 import dev.mslalith.focuslauncher.extensions.toAppWithIconList

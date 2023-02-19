@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.ui.views
+package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 
 @Composable
-fun onLifecycleEventChange(
+fun OnLifecycleEventChange(
     onEvent: (Lifecycle.Event) -> Unit
 ) {
     val updatedOnEvent by rememberUpdatedState(newValue = onEvent)
