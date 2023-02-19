@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 apply(from = "./buildScripts/install-git-hooks.gradle.kts")
 apply(plugin = "kover")
 
@@ -13,6 +15,16 @@ plugins {
 
 allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+}
+
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
+    additionalEditorconfigFile.set(file(".editorconfig"))
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.JSON)
+    }
 }
 
 kover {

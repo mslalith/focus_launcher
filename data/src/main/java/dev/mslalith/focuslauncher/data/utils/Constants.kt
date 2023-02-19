@@ -45,7 +45,9 @@ object Constants {
                 val DEFAULT_CLOCK_ALIGNMENT = ClockAlignment.START
                 val DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE = 300f..2400f
                 const val DEFAULT_CLOCK_24_ANIMATION_DURATION = 2100
-                val DEFAULT_CLOCK_24_ANIMATION_STEP = ((DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.endInclusive - DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start) / DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start).toInt() - 1
+                val DEFAULT_CLOCK_24_ANIMATION_STEP = (
+                    (DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.endInclusive - DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start) / DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE.start
+                    ).toInt() - 1
             }
 
             object LunarPhase {
