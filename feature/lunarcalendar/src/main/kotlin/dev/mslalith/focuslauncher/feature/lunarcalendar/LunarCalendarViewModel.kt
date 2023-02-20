@@ -15,9 +15,9 @@ import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPh
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarCalendarState
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 internal class LunarCalendarViewModel @Inject constructor(
@@ -31,7 +31,7 @@ internal class LunarCalendarViewModel @Inject constructor(
         appCoroutineDispatcher.launchInIO {
             clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, city ->
                 instant to city
-            }.onEach { (instant, city) ->
+            }.collectLatest { (instant, city) ->
                 lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant, city)
             }
         }
