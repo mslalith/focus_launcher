@@ -13,7 +13,6 @@ import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_THEME
 import dev.mslalith.focuslauncher.feature.settingspage.ThemeViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import kotlinx.coroutines.flow.first
 
 private val NotWhitePalette = lightColors(
@@ -44,7 +43,6 @@ fun FocusLauncherTheme(
 ) {
     val systemUiController = LocalSystemUiController.current
     val themeViewModel: ThemeViewModel = viewModel()
-    val settingsViewModel: SettingsViewModel = viewModel()
 
     val currentTheme by themeViewModel.currentThemeStateFlow.collectAsState()
     val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else DEFAULT_THEME
@@ -56,7 +54,7 @@ fun FocusLauncherTheme(
     systemUiController.setSystemBarsColor(color = colors.background)
 
     LaunchedEffect(Unit) {
-        if (settingsViewModel.firstRunStateFlow.first()) {
+        if (themeViewModel.firstRunStateFlow.first()) {
             themeViewModel.changeTheme(theme)
         }
     }

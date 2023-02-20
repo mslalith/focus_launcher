@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.providers
+package dev.mslalith.focuslauncher.providers
 
 import androidx.compose.runtime.Composable
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager

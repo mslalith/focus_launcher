@@ -7,15 +7,12 @@ import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltViewModel
 class PickPlaceViewModel @Inject constructor(
@@ -56,12 +53,4 @@ class PickPlaceViewModel @Inject constructor(
     private fun launch(
         run: suspend CoroutineScope.() -> Unit
     ) = viewModelScope.launch(appCoroutineDispatcher.io) { run() }
-
-    private fun <T> Flow<T>.withinScope(
-        initialValue: T
-    ) = stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Lazily,
-        initialValue = initialValue
-    )
 }

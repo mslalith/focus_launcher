@@ -31,11 +31,7 @@ fun AppNavigator() {
 @OptIn(ExperimentalMaterialApi::class)
 private fun NavGraphBuilder.launcherScreen() {
     composable(Screen.Launcher.id) {
-        LauncherScreen(
-            appsViewModel = hiltViewModel(it),
-            homeViewModel = hiltViewModel(it),
-            settingsViewModel = hiltViewModel(it)
-        )
+        LauncherScreen()
     }
 }
 

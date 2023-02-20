@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,19 +24,33 @@ import dev.mslalith.focuslauncher.feature.homepage.favorites.FavoritesList
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
 import dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun HomePage() {
-    HomePage(homePageViewModel = hiltViewModel())
+fun HomePage(
+    pagerCurrentPage: Flow<Int>
+) {
+    HomePage(
+        homePageViewModel = hiltViewModel(),
+        pagerCurrentPage = pagerCurrentPage
+    )
 }
 
 @Composable
 internal fun HomePage(
     homePageViewModel: HomePageViewModel,
+    pagerCurrentPage: Flow<Int>
 ) {
     val context = LocalContext.current
     val homePageState by homePageViewModel.homePageState.collectAsState()
     val showMoonCalendarDetailsDialog by homePageViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsState()
+
+    LaunchedEffect(key1 = pagerCurrentPage) {
+        pagerCurrentPage.collectLatest { page ->
+            if (page != 1) homePageViewModel.hideContextualMode()
+        }
+    }
 
     CompositionLocalProvider(LocalHomePadding provides HomePadding()) {
         val contentPaddingValues = LocalHomePadding.current.contentPaddingValues

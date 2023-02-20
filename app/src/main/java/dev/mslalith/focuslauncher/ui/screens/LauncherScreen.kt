@@ -9,14 +9,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -27,34 +25,18 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
 import dev.mslalith.focuslauncher.feature.homepage.HomePage
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
-import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun LauncherScreen(
-    appsViewModel: AppsViewModel,
-    homeViewModel: HomeViewModel,
-    settingsViewModel: SettingsViewModel
-) {
+fun LauncherScreen() {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 1)
 
-    val focusManager = LocalFocusManager.current
     val viewManager = LocalLauncherViewManager.current
     val dialogProperties by viewManager.dialogPropertiesStateFlow.collectAsState()
-
-    LaunchedEffect(key1 = pagerState) {
-        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-            focusManager.clearFocus()
-            if (page != 1) homeViewModel.hideContextualMode()
-        }
-    }
 
     BackPressHandler(enabled = true) {
         viewManager.apply {
@@ -88,7 +70,9 @@ fun LauncherScreen(
             ) { page ->
                 when (page) {
                     0 -> SettingsPage()
-                    1 -> HomePage()
+                    1 -> HomePage(
+                        pagerCurrentPage = snapshotFlow { pagerState.currentPage }
+                    )
                     2 -> AppDrawerPage()
                 }
             }
