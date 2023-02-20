@@ -15,9 +15,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.common.extensions.appNoIconModelOf
-import dev.mslalith.focuslauncher.providers.ProvideAll
 import dev.mslalith.focuslauncher.extensions.canLaunch
 import dev.mslalith.focuslauncher.navigator.AppNavigator
+import dev.mslalith.focuslauncher.providers.ProvideAll
 import dev.mslalith.focuslauncher.ui.theme.FocusLauncherTheme
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 
