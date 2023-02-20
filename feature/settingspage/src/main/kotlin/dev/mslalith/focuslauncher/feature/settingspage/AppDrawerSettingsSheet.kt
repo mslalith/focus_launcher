@@ -14,12 +14,12 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 
 @Composable
 internal fun AppDrawerSettingsSheet(
-    settingsViewModel: SettingsViewModel,
+    settingsPageViewModel: SettingsPageViewModel,
 ) {
-    val appDrawerViewType by settingsViewModel.appDrawerViewTypeStateFlow.collectAsState()
-    val showAppIcons by settingsViewModel.appIconsVisibilityStateFlow.collectAsState()
-    val showAppGroupHeader by settingsViewModel.appGroupHeaderVisibilityStateFlow.collectAsState()
-    val showSearchBar by settingsViewModel.searchBarVisibilityStateFlow.collectAsState()
+    val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsState()
+    val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsState()
+    val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsState()
+    val showSearchBar by settingsPageViewModel.searchBarVisibilityStateFlow.collectAsState()
 
     val isViewTypeGrid by remember {
         derivedStateOf { appDrawerViewType == AppDrawerViewType.GRID }
@@ -40,25 +40,25 @@ internal fun AppDrawerSettingsSheet(
             onItemSelected = { index ->
                 val viewTypeName = textIconsList[index].first
                 val viewType = AppDrawerViewType.values().first { it.text == viewTypeName }
-                settingsViewModel.updateAppDrawerViewType(viewType)
+                settingsPageViewModel.updateAppDrawerViewType(viewType)
             }
         )
         SettingsSelectableSwitchItem(
             text = "Show Search Bar",
             checked = showSearchBar,
-            onClick = { settingsViewModel.toggleSearchBarVisibility() }
+            onClick = { settingsPageViewModel.toggleSearchBarVisibility() }
         )
         SettingsSelectableSwitchItem(
             text = "Group Apps by Character",
             checked = showAppGroupHeader,
             disabled = isViewTypeGrid,
-            onClick = { settingsViewModel.toggleAppGroupHeaderVisibility() }
+            onClick = { settingsPageViewModel.toggleAppGroupHeaderVisibility() }
         )
         SettingsSelectableSwitchItem(
             text = "Show App Icons",
             checked = showAppIcons,
             disabled = isViewTypeGrid,
-            onClick = { settingsViewModel.toggleAppIconsVisibility() }
+            onClick = { settingsPageViewModel.toggleAppIconsVisibility() }
         )
         VerticalSpacer(spacing = 12.dp)
     }

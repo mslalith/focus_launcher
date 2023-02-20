@@ -37,7 +37,7 @@ fun SettingsPage() {
 
     SettingsPage(
         themeViewModel = hiltViewModel(),
-        settingsViewModel = hiltViewModel(),
+        settingsPageViewModel = hiltViewModel(),
         navigateTo = { navController.navigate(it.id) }
     )
 }
@@ -45,7 +45,7 @@ fun SettingsPage() {
 @Composable
 internal fun SettingsPage(
     themeViewModel: ThemeViewModel,
-    settingsViewModel: SettingsViewModel,
+    settingsPageViewModel: SettingsPageViewModel,
     navigateTo: (Screen) -> Unit
 ) {
     val context = LocalContext.current
@@ -71,25 +71,25 @@ internal fun SettingsPage(
         HideApps { navigateTo(Screen.HideApps) }
 
         ToggleStatusBar(
-            showStatusBar = settingsViewModel.statusBarVisibilityStateFlow.collectAsState().value,
-            onClick = settingsViewModel::toggleStatusBarVisibility
+            showStatusBar = settingsPageViewModel.statusBarVisibilityStateFlow.collectAsState().value,
+            onClick = settingsPageViewModel::toggleStatusBarVisibility
         )
         PullDownNotifications(
-            enableNotificationShade = settingsViewModel.notificationShadeStateFlow.collectAsState().value,
-            onClick = settingsViewModel::toggleNotificationShade
+            enableNotificationShade = settingsPageViewModel.notificationShadeStateFlow.collectAsState().value,
+            onClick = settingsPageViewModel::toggleNotificationShade
         )
 
         AppDrawer {
             viewManager.showBottomSheet {
-                AppDrawerSettingsSheet(settingsViewModel = settingsViewModel)
+                AppDrawerSettingsSheet(settingsPageViewModel = settingsPageViewModel)
             }
         }
 
         Widgets(viewManager = viewManager)
 
         SetAsDefaultLauncher(
-            isDefaultLauncher = settingsViewModel.isDefaultLauncherStateFlow.collectAsState().value,
-            refreshIsDefaultLauncher = { settingsViewModel.refreshIsDefaultLauncher(context) }
+            isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsState().value,
+            refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context) }
         )
 
         VerticalSpacer(spacing = 12.dp)

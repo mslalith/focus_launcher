@@ -35,6 +35,7 @@ include(
     ":core:ui",
     ":feature:homepage",
     ":feature:settingspage",
+    ":feature:appdrawerpage",
     ":feature:clock24",
     ":feature:lunarcalendar",
     ":feature:quoteforyou"

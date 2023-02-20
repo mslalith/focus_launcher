@@ -4,9 +4,7 @@ import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 import dev.mslalith.focuslauncher.core.common.extensions.isSystemApp
 import dev.mslalith.focuslauncher.core.model.App
 
@@ -51,19 +49,4 @@ fun Context.isDefaultLauncher(): Boolean = if (Build.VERSION.SDK_INT >= Build.VE
     roleManager.isRoleAvailable(RoleManager.ROLE_HOME) && roleManager.isRoleHeld(RoleManager.ROLE_HOME)
 } else {
     isAppDefaultLauncher()
-}
-
-fun Context.showAppInfo(packageName: String) {
-    with(Intent()) {
-        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        data = Uri.fromParts("package", packageName, null)
-        startActivity(this)
-    }
-}
-
-fun Context.uninstallApp(app: App) {
-    with(Intent(Intent.ACTION_DELETE)) {
-        data = Uri.parse("package:${app.packageName}")
-        startActivity(this)
-    }
 }

@@ -46,9 +46,3 @@ fun LocalDateTime.inShortReadableFormat(
 
     return "$dayOfMonth$daySuffix $monthReadable"
 }
-
-fun Char.isAlphabet() = when (code) {
-    in 65..90 -> true
-    in 97..122 -> true
-    else -> false
-}

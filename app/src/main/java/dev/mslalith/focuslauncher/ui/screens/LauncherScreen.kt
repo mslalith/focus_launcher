@@ -22,14 +22,14 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
+import dev.mslalith.focuslauncher.core.ui.ConfirmDialog
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
 import dev.mslalith.focuslauncher.feature.homepage.HomePage
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
-import dev.mslalith.focuslauncher.ui.screens.pages.AppDrawerPage
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.views.ConfirmDialog
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -89,10 +89,7 @@ fun LauncherScreen(
                 when (page) {
                     0 -> SettingsPage()
                     1 -> HomePage()
-                    2 -> AppDrawerPage(
-                        appsViewModel = appsViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
+                    2 -> AppDrawerPage()
                 }
             }
         }
