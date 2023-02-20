@@ -1,16 +1,12 @@
 package dev.mslalith.focuslauncher.extensions
 
-import android.content.Context
-import android.content.pm.PackageManager
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.data.models.AppWithIcon
+import java.time.Month
+import java.time.ZonedDateTime
+import java.util.Locale
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import java.time.Month
-import java.time.ZonedDateTime
-import java.util.Locale
 
 fun ZonedDateTime.isSameAsToday(): Boolean {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
@@ -56,22 +52,3 @@ fun Char.isAlphabet() = when (code) {
     in 97..122 -> true
     else -> false
 }
-
-fun App.toAppWithIcon(context: Context): AppWithIcon? = context.iconOf(packageName)?.let { icon ->
-    AppWithIcon(
-        name = name,
-        displayName = displayName,
-        packageName = packageName,
-        icon = icon,
-        isSystem = isSystem
-    )
-}
-
-fun List<App>.toAppWithIconList(context: Context) =
-    mapNotNull {
-        try {
-            it.toAppWithIcon(context)
-        } catch (ex: PackageManager.NameNotFoundException) {
-            null
-        }
-    }

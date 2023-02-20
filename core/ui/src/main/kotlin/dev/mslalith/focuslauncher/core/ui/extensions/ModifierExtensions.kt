@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.extensions
+package dev.mslalith.focuslauncher.core.ui.extensions
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable

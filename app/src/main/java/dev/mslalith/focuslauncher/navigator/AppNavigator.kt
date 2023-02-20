@@ -34,8 +34,7 @@ private fun NavGraphBuilder.launcherScreen() {
         LauncherScreen(
             appsViewModel = hiltViewModel(it),
             homeViewModel = hiltViewModel(it),
-            settingsViewModel = hiltViewModel(it),
-            widgetsViewModel = hiltViewModel(it)
+            settingsViewModel = hiltViewModel(it)
         )
     }
 }

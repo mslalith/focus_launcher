@@ -8,14 +8,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
+import dev.mslalith.focuslauncher.feature.lunarcalendar.LunarCalendarViewModel
 
 @Composable
 fun LunarPhaseDetailsDialog(
+    onClose: () -> Unit,
+) {
+    LunarPhaseDetailsDialog(
+        lunarCalendarViewModel = hiltViewModel(),
+        onClose = onClose
+    )
+}
+
+@Composable
+internal fun LunarPhaseDetailsDialog(
+    lunarCalendarViewModel: LunarCalendarViewModel,
+    onClose: () -> Unit,
+) {
+    val lunarPhaseDetailsState by lunarCalendarViewModel.lunarCalendarState.collectAsState()
+    lunarPhaseDetailsState.lunarPhaseDetails.getOrNull()?.let { phaseDetails ->
+        LunarPhaseDetailsDialog(
+            lunarPhaseDetails = phaseDetails,
+            onClose = onClose
+        )
+    }
+}
+
+@Composable
+internal fun LunarPhaseDetailsDialog(
     lunarPhaseDetails: LunarPhaseDetails,
     onClose: () -> Unit,
 ) {

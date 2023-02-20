@@ -19,16 +19,9 @@ internal class SettingsViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val firstRunStateFlow = generalSettingsRepo.firstRunFlow.withinScope(Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN)
     val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR)
     val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE)
     val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER)
-
-    fun overrideFirstRun() {
-        appCoroutineDispatcher.launchInIO {
-            generalSettingsRepo.overrideFirstRun()
-        }
-    }
 
     fun toggleStatusBarVisibility() {
         appCoroutineDispatcher.launchInIO {

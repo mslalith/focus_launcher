@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.data.models
+package dev.mslalith.focuslauncher.core.ui.model
 
 import android.graphics.drawable.Drawable
 import dev.mslalith.focuslauncher.core.model.App

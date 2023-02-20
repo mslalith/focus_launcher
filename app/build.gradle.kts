@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":feature:homepage"))
     implementation(project(":feature:settingspage"))
     testImplementation(project(mapOf("path" to ":androidTest-shared")))
 

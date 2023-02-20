@@ -1,19 +1,14 @@
 package dev.mslalith.focuslauncher.extensions
 
-import android.annotation.SuppressLint
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.provider.Telephony
-import android.telecom.TelecomManager
+import dev.mslalith.focuslauncher.core.common.extensions.isSystemApp
 import dev.mslalith.focuslauncher.core.model.App
-import java.lang.reflect.Method
 
 val Context.appDrawerApps: List<App>
     get() {
@@ -36,33 +31,6 @@ val Context.appDrawerApps: List<App>
         }.sortedBy { it.name }
     }
 
-val Context.defaultDialerApp: App?
-    get() {
-        val manager = getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-        return manager.defaultDialerPackage?.let { appNoIconModelOf(it) }
-    }
-
-val Context.defaultMessagingApp: App?
-    get() {
-        val packageName: String? = Telephony.Sms.getDefaultSmsPackage(this)
-        return packageName?.let { appNoIconModelOf(packageName) }
-    }
-
-fun Context.iconOf(packageName: String): Drawable? = try {
-    packageManager.getApplicationIcon(packageName)
-} catch (ex: PackageManager.NameNotFoundException) {
-    null
-}
-
-fun Context.isSystemApp(packageName: String) = try {
-    (
-        packageManager.getApplicationInfo(packageName, 0).flags and
-            (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)
-        ) != 0
-} catch (ex: PackageManager.NameNotFoundException) {
-    false
-}
-
 fun Context.canLaunch(packageName: String): Boolean {
     val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
 
@@ -70,30 +38,6 @@ fun Context.canLaunch(packageName: String): Boolean {
     return list.any { resolveInfo ->
         packageName == resolveInfo?.activityInfo?.packageName
     }
-}
-
-fun Context.appNoIconModelOf(packageName: String): App? = try {
-    with(packageManager) {
-        val info = getApplicationInfo(packageName, 0)
-        val name = getApplicationLabel(info).toString()
-        val isSystem = isSystemApp(packageName)
-        App(
-            name = name,
-            displayName = name,
-            packageName = packageName,
-            isSystem = isSystem
-        )
-    }
-} catch (ex: PackageManager.NameNotFoundException) {
-    null
-}
-
-@SuppressLint("WrongConstant")
-fun Context.openNotificationShade() {
-    val statusBarService = getSystemService("statusbar")
-    val statusBarManager: Class<*> = Class.forName("android.app.StatusBarManager")
-    val method: Method = statusBarManager.getMethod("expandNotificationsPanel")
-    method.invoke(statusBarService)
 }
 
 fun Context.isAppDefaultLauncher(): Boolean {
@@ -107,13 +51,6 @@ fun Context.isDefaultLauncher(): Boolean = if (Build.VERSION.SDK_INT >= Build.VE
     roleManager.isRoleAvailable(RoleManager.ROLE_HOME) && roleManager.isRoleHeld(RoleManager.ROLE_HOME)
 } else {
     isAppDefaultLauncher()
-}
-
-fun Context.launchApp(app: App) {
-    packageManager.getLaunchIntentForPackage(app.packageName)?.let {
-        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(it)
-    }
 }
 
 fun Context.showAppInfo(packageName: String) {

@@ -33,8 +33,9 @@ include(
     ":core:model",
     ":core:domain",
     ":core:ui",
+    ":feature:homepage",
+    ":feature:settingspage",
     ":feature:clock24",
     ":feature:lunarcalendar",
-    ":feature:quoteforyou",
-    ":feature:settingspage"
+    ":feature:quoteforyou"
 )

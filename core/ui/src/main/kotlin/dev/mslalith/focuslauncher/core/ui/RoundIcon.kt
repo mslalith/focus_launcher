@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.ui.views
+package dev.mslalith.focuslauncher.core.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

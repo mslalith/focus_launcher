@@ -23,13 +23,12 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
+import dev.mslalith.focuslauncher.feature.homepage.HomePage
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
 import dev.mslalith.focuslauncher.ui.screens.pages.AppDrawerPage
-import dev.mslalith.focuslauncher.ui.screens.pages.HomePage
 import dev.mslalith.focuslauncher.ui.viewmodels.AppsViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.HomeViewModel
 import dev.mslalith.focuslauncher.ui.viewmodels.SettingsViewModel
-import dev.mslalith.focuslauncher.ui.viewmodels.WidgetsViewModel
 import dev.mslalith.focuslauncher.ui.views.ConfirmDialog
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
 import kotlinx.coroutines.flow.collectLatest
@@ -41,8 +40,7 @@ import kotlinx.coroutines.launch
 fun LauncherScreen(
     appsViewModel: AppsViewModel,
     homeViewModel: HomeViewModel,
-    settingsViewModel: SettingsViewModel,
-    widgetsViewModel: WidgetsViewModel
+    settingsViewModel: SettingsViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 1)
@@ -90,12 +88,7 @@ fun LauncherScreen(
             ) { page ->
                 when (page) {
                     0 -> SettingsPage()
-                    1 -> HomePage(
-                        appsViewModel = appsViewModel,
-                        homeViewModel = homeViewModel,
-                        settingsViewModel = settingsViewModel,
-                        widgetsViewModel = widgetsViewModel
-                    )
+                    1 -> HomePage()
                     2 -> AppDrawerPage(
                         appsViewModel = appsViewModel,
                         settingsViewModel = settingsViewModel
