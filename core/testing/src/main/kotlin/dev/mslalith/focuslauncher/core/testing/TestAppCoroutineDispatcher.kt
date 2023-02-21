@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.androidtest.shared
+package dev.mslalith.focuslauncher.core.testing
 
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import kotlin.coroutines.CoroutineContext

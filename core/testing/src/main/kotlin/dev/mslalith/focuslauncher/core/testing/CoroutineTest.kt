@@ -1,6 +1,8 @@
-package dev.mslalith.focuslauncher.androidtest.shared
+package dev.mslalith.focuslauncher.core.testing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import dev.mslalith.focuslauncher.core.testing.rules.TestCoroutineRule
+import dev.mslalith.focuslauncher.core.testing.rules.newCoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -13,7 +15,7 @@ open class CoroutineTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutineTestRule = MainCoroutineRule()
+    val coroutineTestRule = TestCoroutineRule()
 
     protected val testDispatcher = coroutineTestRule.newCoroutineScope()
 

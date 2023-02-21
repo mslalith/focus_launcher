@@ -38,7 +38,7 @@ koverMerged {
         reportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
         filters {
             projects {
-                excludes += listOf(":androidTest-shared")
+                excludes += listOf(":core:testing")
             }
             classes {
                 excludes += listOf(

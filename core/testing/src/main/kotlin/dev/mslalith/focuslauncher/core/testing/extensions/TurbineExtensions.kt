@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.androidtest.shared
+package dev.mslalith.focuslauncher.core.testing.extensions
 
 import app.cash.turbine.ReceiveTurbine
 

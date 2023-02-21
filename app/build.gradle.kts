@@ -54,7 +54,6 @@ dependencies {
     implementation(project(":feature:homepage"))
     implementation(project(":feature:settingspage"))
     implementation(project(":feature:appdrawerpage"))
-    testImplementation(project(mapOf("path" to ":androidTest-shared")))
 
     implementation(libs.kotlinx.datetime)
 
