@@ -25,6 +25,10 @@ gradlePlugin {
             id = "focuslauncher.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidFeature") {
+            id = "focuslauncher.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
         register("androidRoom") {
             id = "focuslauncher.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
@@ -36,6 +40,10 @@ gradlePlugin {
         register("androidApplicationCompose") {
             id = "focuslauncher.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "focuslauncher.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
     }
 }

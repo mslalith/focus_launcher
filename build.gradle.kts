@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 apply(from = "./buildScripts/install-git-hooks.gradle.kts")
 apply(plugin = "kover")
 
@@ -15,6 +17,16 @@ allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
 
+ktlint {
+    verbose.set(true)
+    outputToConsole.set(true)
+    additionalEditorconfigFile.set(file(".editorconfig"))
+    reporters {
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.JSON)
+    }
+}
+
 kover {
     isDisabled.set(false)
     engine.set(kotlinx.kover.api.DefaultIntellijEngine)
@@ -26,7 +38,7 @@ koverMerged {
         reportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
         filters {
             projects {
-                excludes += listOf(":androidTest-shared")
+                excludes += listOf(":core:testing")
             }
             classes {
                 excludes += listOf(

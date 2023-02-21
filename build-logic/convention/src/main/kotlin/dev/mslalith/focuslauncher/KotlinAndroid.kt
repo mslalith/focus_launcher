@@ -21,6 +21,7 @@ internal fun Project.configureKotlinAndroid(
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
+        freeCompilerArgs = listOf("-Xcontext-receivers")
     }
     lint {
         error.add("VisibleForTests")
