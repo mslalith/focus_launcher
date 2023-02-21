@@ -20,8 +20,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets["main"].java.srcDir("src/main/kotlin")
-
     buildTypes {
         getByName("debug") {
             applicationIdSuffix = ".debug"
