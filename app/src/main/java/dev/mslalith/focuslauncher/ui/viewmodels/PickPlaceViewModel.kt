@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
+import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.model.City
-import dev.mslalith.focuslauncher.data.repository.PlacesRepo
-import dev.mslalith.focuslauncher.data.repository.settings.LunarPhaseSettingsRepo
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltViewModel
 class PickPlaceViewModel @Inject constructor(

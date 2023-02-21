@@ -3,12 +3,12 @@ package dev.mslalith.focuslauncher.feature.settingspage
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.data.repository.ThemeRepo
+import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import dev.mslalith.focuslauncher.data.repository.ThemeRepo
-import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
 import javax.inject.Inject
 
 @HiltViewModel

@@ -8,6 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
+    implementation(project(":core:data"))
     implementation(project(":core:model"))
 }

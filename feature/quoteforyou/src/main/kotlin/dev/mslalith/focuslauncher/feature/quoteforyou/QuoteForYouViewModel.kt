@@ -5,11 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.State
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
+import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.core.data.repository.settings.QuotesSettingsRepo
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import dev.mslalith.focuslauncher.data.repository.QuotesRepo
-import dev.mslalith.focuslauncher.data.repository.settings.QuotesSettingsRepo
-import dev.mslalith.focuslauncher.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.feature.quoteforyou.model.QuoteForYouState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.combine

@@ -7,12 +7,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
-import dev.mslalith.focuslauncher.data.utils.Constants
 import dev.mslalith.focuslauncher.feature.clock24.Clock24ViewModel
 import dev.mslalith.focuslauncher.feature.clock24.R
 import kotlin.math.roundToInt
@@ -62,8 +63,8 @@ internal fun ClockSettingsSheet(
             disabled = !clock24State.showClock24,
             value = clock24State.clock24AnimationDuration.toFloat(),
             onValueChangeFinished = { clock24ViewModel.updateClock24AnimationDuration(it.roundToInt()) },
-            valueRange = Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE,
-            steps = Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
+            valueRange = DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE,
+            steps = DEFAULT_CLOCK_24_ANIMATION_STEP
         )
         VerticalSpacer(spacing = 12.dp)
     }

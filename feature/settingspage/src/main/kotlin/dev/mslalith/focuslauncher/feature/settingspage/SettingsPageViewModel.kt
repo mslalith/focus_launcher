@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
+import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import dev.mslalith.focuslauncher.data.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.data.utils.Constants
 import javax.inject.Inject
 
 @HiltViewModel

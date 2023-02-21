@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.data.utils.Constants
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockHandlePhase
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase
 import dev.mslalith.focuslauncher.feature.clock24.model.Digit
@@ -32,7 +32,7 @@ import kotlin.math.sin
 fun Clock24(
     modifier: Modifier = Modifier,
     currentTime: String,
-    analogClockRadius: Float = Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS,
+    analogClockRadius: Float = DEFAULT_CLOCK_24_ANALOG_RADIUS,
     analogClockSpacing: Dp = 4.dp,
     digitSpacing: Dp = 4.dp,
     handleColor: Color = MaterialTheme.colors.onBackground,

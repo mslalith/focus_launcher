@@ -27,11 +27,11 @@ buildCache {
 rootProject.name = "Focus Launcher"
 include(
     ":app",
-    ":data",
     ":androidTest-shared",
     ":core:common",
     ":core:model",
     ":core:domain",
+    ":core:data",
     ":core:ui",
     ":feature:homepage",
     ":feature:settingspage",
