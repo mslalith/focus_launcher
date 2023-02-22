@@ -1,7 +1,5 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
@@ -9,7 +7,6 @@ import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Ap
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.testing.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -19,16 +16,6 @@ import org.robolectric.RobolectricTestRunner
 internal class AppDrawerSettingsRepoImplTest : DataStoreTest<AppDrawerSettingsRepoImpl>(
     setupRepo = { AppDrawerSettingsRepoImpl(settingsDataStore = it) }
 ) {
-
-    private suspend fun <T> verifyChange(
-        flow: Flow<T>,
-        initialItem: T,
-        mutate: suspend () -> T
-    ) = flow.test {
-        assertThat(awaitItem()).isEqualTo(initialItem)
-        val newItem = mutate()
-        assertThat(awaitItem()).isEqualTo(newItem)
-    }
 
     @Test
     fun `verify app drawer view type change`() = runCoroutineTest {
