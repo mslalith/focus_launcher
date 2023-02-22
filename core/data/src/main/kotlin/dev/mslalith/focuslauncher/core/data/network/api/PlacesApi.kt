@@ -14,19 +14,3 @@ import kotlinx.serialization.json.decodeFromStream
 internal interface PlacesApi {
     suspend fun getCities(): List<CityResponse>
 }
-
-internal class PlacesApiImpl @Inject constructor(
-    private val httpClient: HttpClient
-) : PlacesApi {
-
-    private val baseUrl = "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master"
-
-    @OptIn(ExperimentalSerializationApi::class)
-    override suspend fun getCities(): List<CityResponse> {
-        val responseString = httpClient.get("$baseUrl/cities.json").bodyAsChannel()
-        return Json.decodeFromStream(
-            deserializer = ListSerializer(elementSerializer = CityResponse.serializer()),
-            stream = responseString.toInputStream()
-        )
-    }
-}

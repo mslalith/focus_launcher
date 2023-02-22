@@ -14,17 +14,3 @@ internal interface QuotesApi {
         limit: Int = QUOTES_LIMIT_PER_PAGE
     ): QuotesApiResponse
 }
-
-internal class QuotesApiKtorImpl @Inject constructor(
-    private val httpClient: HttpClient
-) : QuotesApi {
-
-    private val baseUrl = "https://api.quotable.io"
-
-    override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {
-        return httpClient.get("$baseUrl/quotes") {
-            parameter("page", page)
-            parameter("limit", limit)
-        }.body()
-    }
-}

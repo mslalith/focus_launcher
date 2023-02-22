@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.data.network.api.PlacesApi
-import dev.mslalith.focuslauncher.core.data.network.api.PlacesApiImpl
 import dev.mslalith.focuslauncher.core.data.network.api.QuotesApi
-import dev.mslalith.focuslauncher.core.data.network.api.QuotesApiKtorImpl
+import dev.mslalith.focuslauncher.core.data.network.api.impl.PlacesApiImpl
+import dev.mslalith.focuslauncher.core.data.network.api.impl.QuotesApiImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpTimeout
@@ -43,7 +43,7 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiKtorImpl(httpClient)
+    fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiImpl(httpClient)
 
     @Provides
     @Singleton
