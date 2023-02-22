@@ -10,11 +10,13 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
 
-    implementation(libs.junit4)
+    api(libs.junit4)
     implementation(libs.androidx.test.junit)
-    implementation(libs.kotlinx.coroutines.test)
+    api(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.core.testing)
-    implementation(libs.turbine)
+    api(libs.truth)
+    api(libs.turbine)
+    api(libs.robolectric)
 
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)

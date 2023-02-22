@@ -15,7 +15,6 @@ android {
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
     testOptions {
         unitTests.all {
@@ -43,10 +42,5 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.suncalc)
 
-    testImplementation(libs.junit4)
-    testImplementation(libs.truth)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(project(":core:testing"))
 }
