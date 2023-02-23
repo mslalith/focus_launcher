@@ -1,15 +1,13 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
+import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.core.data.verifyChange
 import dev.mslalith.focuslauncher.core.model.City
-import dev.mslalith.focuslauncher.core.data.base.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,11 +15,11 @@ import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-internal class LunarPhaseSettingsRepoImplTest : DataStoreTest<LunarPhaseSettingsRepoImpl>() {
+internal class LunarPhaseSettingsRepoImplTest : RepoTest<LunarPhaseSettingsRepoImpl>() {
 
-    override fun provideRepo(dataStore: DataStore<Preferences>) = LunarPhaseSettingsRepoImpl(
-        settingsDataStore = dataStore,
-        cityJsonParser = CityJsonParser()
+    override fun provideRepo(testComponents: TestComponents) = LunarPhaseSettingsRepoImpl(
+        settingsDataStore = testComponents.dataStore,
+        cityJsonParser = testComponents.cityJsonParser
     )
 
     @Test

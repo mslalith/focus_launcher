@@ -1,14 +1,13 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import dev.mslalith.focuslauncher.core.data.verifyChange
+import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+import dev.mslalith.focuslauncher.core.data.verifyChange
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.data.base.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,9 +15,9 @@ import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-internal class AppDrawerSettingsRepoImplTest : DataStoreTest<AppDrawerSettingsRepoImpl>() {
+internal class AppDrawerSettingsRepoImplTest : RepoTest<AppDrawerSettingsRepoImpl>() {
 
-    override fun provideRepo(dataStore: DataStore<Preferences>) = AppDrawerSettingsRepoImpl(settingsDataStore = dataStore)
+    override fun provideRepo(testComponents: TestComponents) = AppDrawerSettingsRepoImpl(settingsDataStore = testComponents.dataStore)
 
     @Test
     fun `verify app drawer view type change`() = runCoroutineTest {

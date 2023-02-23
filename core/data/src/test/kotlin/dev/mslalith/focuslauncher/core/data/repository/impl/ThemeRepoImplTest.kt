@@ -1,10 +1,9 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.verifyChange
 import dev.mslalith.focuslauncher.core.model.Theme
-import dev.mslalith.focuslauncher.core.data.base.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,9 +11,9 @@ import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-internal class ThemeRepoImplTest : DataStoreTest<ThemeRepoImpl>() {
+internal class ThemeRepoImplTest : RepoTest<ThemeRepoImpl>() {
 
-    override fun provideRepo(dataStore: DataStore<Preferences>) = ThemeRepoImpl(themeDataStore = dataStore)
+    override fun provideRepo(testComponents: TestComponents) = ThemeRepoImpl(themeDataStore = testComponents.dataStore)
 
     @Test
     fun `verify theme change`() = runCoroutineTest {
