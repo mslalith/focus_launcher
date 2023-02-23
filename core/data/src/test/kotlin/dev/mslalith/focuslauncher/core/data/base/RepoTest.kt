@@ -45,7 +45,7 @@ internal abstract class RepoTest<T> : SystemUnderTest<T>() {
     private val testComponents by lazy {
         TestComponents(
             database = database,
-            mapperComponents = MapperComponents(
+            mappers = MapperComponents(
                 appToRoomMapper = AppToRoomMapper(),
                 favoriteToRoomMapper = FavoriteToRoomMapper(appsDao = database.appsDao(), appToRoomMapper = AppToRoomMapper()),
                 hiddenToRoomMapper = HiddenToRoomMapper(appsDao = database.appsDao(), appToRoomMapper = AppToRoomMapper()),

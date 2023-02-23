@@ -10,7 +10,7 @@ import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 
 internal data class TestComponents(
     val database: AppDatabase,
-    val mapperComponents: MapperComponents,
+    val mappers: MapperComponents,
     val dataStore: DataStore<Preferences>,
     val cityJsonParser: CityJsonParser
 )
