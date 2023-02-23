@@ -14,6 +14,7 @@ androidxNavigation = "2.6.0-alpha06"
 androidxPalette = "1.0.0"
 androidxTestCore = "1.5.0"
 androidxTestJunit = "1.1.5"
+androidxTestRunner = "1.5.2"
 googleMaterial = "1.8.0"
 hilt = "2.45"
 junit4 = "4.13.2"
@@ -52,6 +53,7 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestJunit" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }

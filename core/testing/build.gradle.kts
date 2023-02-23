@@ -18,6 +18,6 @@ dependencies {
     api(libs.turbine)
     api(libs.robolectric)
 
-    implementation(libs.androidx.dataStore.core)
-    implementation(libs.androidx.dataStore.preferences)
+    api(libs.androidx.test.runner)
+    api(libs.hilt.android.testing)
 }
