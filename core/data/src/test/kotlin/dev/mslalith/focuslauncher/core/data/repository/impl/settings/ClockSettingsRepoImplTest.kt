@@ -1,11 +1,13 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import dev.mslalith.focuslauncher.core.data.verifyChange
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
+import dev.mslalith.focuslauncher.core.data.verifyChange
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
-import dev.mslalith.focuslauncher.core.testing.DataStoreTest
+import dev.mslalith.focuslauncher.core.data.base.DataStoreTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,9 +15,9 @@ import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-internal class ClockSettingsRepoImplTest : DataStoreTest<ClockSettingsRepoImpl>(
-    setupRepo = { ClockSettingsRepoImpl(settingsDataStore = it) }
-) {
+internal class ClockSettingsRepoImplTest : DataStoreTest<ClockSettingsRepoImpl>() {
+
+    override fun provideRepo(dataStore: DataStore<Preferences>) = ClockSettingsRepoImpl(settingsDataStore = dataStore)
 
     @Test
     fun `verify show clock24 change`() = runCoroutineTest {

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.testing
+package dev.mslalith.focuslauncher.core.data.base
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -6,33 +6,30 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
-import androidx.test.core.app.ApplicationProvider
+import dev.mslalith.focuslauncher.core.testing.SystemUnderTest
 import dev.mslalith.focuslauncher.core.testing.rules.newCoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Before
 
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class DataStoreTest<T>(
-    setupRepo: (DataStore<Preferences>) -> T
-) : CoroutineTest() {
+abstract class DataStoreTest<T> : SystemUnderTest<T>() {
 
-    private val context = ApplicationProvider.getApplicationContext<Context>()
     private val testCoroutineScope = coroutineTestRule.newCoroutineScope()
     private val dataStore: DataStore<Preferences> = PreferenceDataStoreFactory.create(
         scope = testCoroutineScope,
         produceFile = { context.preferencesDataStoreFile("test_settings_datastore") }
     )
-    protected val repo = setupRepo(dataStore)
+    protected val repo: T
+        get() = systemUnderTest
 
-    @Before
-    fun setUp() {
-    }
+    abstract fun provideRepo(dataStore: DataStore<Preferences>): T
+
+    override fun provideSystemUnderTest(context: Context): T = provideRepo(dataStore)
 
     @After
-    fun tearDown() {
+    override fun tearDown() {
         testCoroutineScope.runTest {
             dataStore.edit { it.clear() }
         }
