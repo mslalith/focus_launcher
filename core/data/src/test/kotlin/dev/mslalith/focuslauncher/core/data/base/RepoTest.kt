@@ -39,10 +39,10 @@ internal abstract class RepoTest<T> : SystemUnderTest<T>() {
         Room.inMemoryDatabaseBuilder(
             context = context,
             klass = AppDatabase::class.java
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 
-    private val testComponents by lazy {
+    protected val testComponents by lazy {
         TestComponents(
             database = database,
             mappers = MapperComponents(
