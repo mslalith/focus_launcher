@@ -1,11 +1,11 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
 import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
 import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
-import dev.mslalith.focuslauncher.core.data.verifyChange
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test

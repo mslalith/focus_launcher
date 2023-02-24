@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
 import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
 import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
-import dev.mslalith.focuslauncher.core.data.verifyChange
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test
 import org.junit.runner.RunWith
