@@ -6,13 +6,19 @@ import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.HiddenToRoomMapper
+import dev.mslalith.focuslauncher.core.data.fakes.FakePlacesApi
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 
 internal data class TestComponents(
     val database: AppDatabase,
+    val apis: ApiComponents,
     val mappers: MapperComponents,
     val dataStore: DataStore<Preferences>,
     val cityJsonParser: CityJsonParser
+)
+
+internal data class ApiComponents(
+    val placesApi: FakePlacesApi
 )
 
 internal data class MapperComponents(

@@ -11,6 +11,8 @@ import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.HiddenToRoomMapper
+import dev.mslalith.focuslauncher.core.data.fakes.FakePlacesApi
+import dev.mslalith.focuslauncher.core.data.model.ApiComponents
 import dev.mslalith.focuslauncher.core.data.model.MapperComponents
 import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
@@ -45,6 +47,9 @@ internal abstract class RepoTest<T> : SystemUnderTest<T>() {
     protected val testComponents by lazy {
         TestComponents(
             database = database,
+            apis = ApiComponents(
+                placesApi = FakePlacesApi()
+            ),
             mappers = MapperComponents(
                 appToRoomMapper = AppToRoomMapper(),
                 favoriteToRoomMapper = FavoriteToRoomMapper(appsDao = database.appsDao(), appToRoomMapper = AppToRoomMapper()),
@@ -61,6 +66,7 @@ internal abstract class RepoTest<T> : SystemUnderTest<T>() {
 
     @After
     override fun tearDown() {
+        database.close()
         testCoroutineScope.runTest {
             dataStore.edit { it.clear() }
         }
