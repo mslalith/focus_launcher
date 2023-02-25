@@ -60,13 +60,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set TimeZone
-        uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: "UTC"
-          timezoneMacos: "UTC"
-          timezoneWindows: "UTC"
-
       - uses: gradle/gradle-build-action@v2
         with:
           arguments: testDebug --stacktrace
@@ -89,13 +82,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-
-      - name: Set TimeZone
-        uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: "UTC"
-          timezoneMacos: "UTC"
-          timezoneWindows: "UTC"
 
       - name: Gradle cache
         uses: gradle/gradle-build-action@v2
