@@ -37,21 +37,20 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
         delay(delayInMillis)
 
         val lunarPhaseDetails = findLunarPhaseDetails(instant, city)
-        updateStateFlowsWith(lunarPhaseDetails)
+        updateStateFlowsWith(instant, lunarPhaseDetails)
     }
 
-    private fun updateStateFlowsWith(lunarPhaseDetails: LunarPhaseDetails) {
+    private fun updateStateFlowsWith(instant: Instant, lunarPhaseDetails: LunarPhaseDetails) {
         _lunarPhaseDetailsStateFlow.value = State.Success(lunarPhaseDetails)
-        _upcomingLunarPhaseStateFlow.value =
-            State.Success(findUpcomingMoonPhaseFor(lunarPhaseDetails.direction))
+        _upcomingLunarPhaseStateFlow.value = State.Success(findUpcomingMoonPhaseFor(instant, lunarPhaseDetails.direction))
     }
 
     private fun findLunarPhaseDetails(instant: Instant, city: City): LunarPhaseDetails {
-        val nextNewMoon = MoonPhase.compute().phase(MoonPhase.Phase.NEW_MOON).execute()
-        val nextFullMoon = MoonPhase.compute().phase(MoonPhase.Phase.FULL_MOON).execute()
-        val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
-        val moonTimes = MoonTimes.compute().today().at(city.latitude, city.longitude).execute()
-        val sunTimes = SunTimes.compute().today().at(city.latitude, city.longitude).execute()
+        val nextNewMoon = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(MoonPhase.Phase.NEW_MOON).execute()
+        val nextFullMoon = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(MoonPhase.Phase.FULL_MOON).execute()
+        val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).midnight().on(instant.toJavaInstant()).execute()
+        val moonTimes = MoonTimes.compute().on(instant.toJavaInstant()).midnight().today().at(city.latitude, city.longitude).execute()
+        val sunTimes = SunTimes.compute().on(instant.toJavaInstant()).midnight().at(city.latitude, city.longitude).execute()
         return LunarPhaseDetails(
             lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
             illumination = moonIllumination.fraction,
@@ -71,14 +70,14 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
         )
     }
 
-    private fun findUpcomingMoonPhaseFor(lunarPhaseDirection: LunarPhaseDirection) =
+    private fun findUpcomingMoonPhaseFor(instant: Instant, lunarPhaseDirection: LunarPhaseDirection) =
         when (lunarPhaseDirection) {
-            LunarPhaseDirection.NEW_TO_FULL -> findUpcomingLunarPhaseOf(LunarPhase.FULL_MOON)
-            LunarPhaseDirection.FULL_TO_NEW -> findUpcomingLunarPhaseOf(LunarPhase.NEW_MOON)
+            LunarPhaseDirection.NEW_TO_FULL -> findUpcomingLunarPhaseOf(instant, LunarPhase.FULL_MOON)
+            LunarPhaseDirection.FULL_TO_NEW -> findUpcomingLunarPhaseOf(instant, LunarPhase.NEW_MOON)
         }
 
-    private fun findUpcomingLunarPhaseOf(lunarPhase: LunarPhase): UpcomingLunarPhase {
-        val moonPhase = MoonPhase.compute().phase(lunarPhase.toMoonPhase()).execute()
+    private fun findUpcomingLunarPhaseOf(instant: Instant, lunarPhase: LunarPhase): UpcomingLunarPhase {
+        val moonPhase = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(lunarPhase.toMoonPhase()).execute()
         return UpcomingLunarPhase(
             lunarPhase = lunarPhase,
             dateTime = moonPhase.time.toKotlinxLocalDateTime(),

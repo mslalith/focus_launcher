@@ -7,7 +7,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import dev.mslalith.focuslauncher.core.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -18,23 +21,23 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
 ) : AppDrawerSettingsRepo {
     override val appDrawerViewTypeFlow: Flow<AppDrawerViewType>
         get() = settingsDataStore.data.map { preferences ->
-            val index = preferences[PREFERENCES_APP_DRAWER_VIEW_TYPE] ?: Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE.index
+            val index = preferences[PREFERENCES_APP_DRAWER_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_VIEW_TYPE.index
             AppDrawerViewType.values().first { it.index == index }
         }
 
     override val appIconsVisibilityFlow: Flow<Boolean>
         get() = settingsDataStore.data.map {
-            it[PREFERENCES_APP_ICONS_VISIBILITY] ?: Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
+            it[PREFERENCES_APP_ICONS_VISIBILITY] ?: DEFAULT_APP_ICONS
         }
 
     override val searchBarVisibilityFlow: Flow<Boolean>
         get() = settingsDataStore.data.map {
-            it[PREFERENCES_SEARCH_BAR_VISIBILITY] ?: Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+            it[PREFERENCES_SEARCH_BAR_VISIBILITY] ?: DEFAULT_SEARCH_BAR
         }
 
     override val appGroupHeaderVisibilityFlow: Flow<Boolean>
         get() = settingsDataStore.data.map {
-            it[PREFERENCES_APP_GROUP_HEADER_VISIBILITY] ?: Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
+            it[PREFERENCES_APP_GROUP_HEADER_VISIBILITY] ?: DEFAULT_APP_GROUP_HEADER
         }
 
     override suspend fun updateAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
@@ -45,17 +48,17 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
 
     override suspend fun toggleAppIconsVisibility() = toggleData(
         preference = PREFERENCES_APP_ICONS_VISIBILITY,
-        defaultValue = Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
+        defaultValue = DEFAULT_APP_ICONS
     )
 
     override suspend fun toggleSearchBarVisibility() = toggleData(
         preference = PREFERENCES_SEARCH_BAR_VISIBILITY,
-        defaultValue = Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+        defaultValue = DEFAULT_SEARCH_BAR
     )
 
     override suspend fun toggleAppGroupHeaderVisibility() = toggleData(
         preference = PREFERENCES_APP_GROUP_HEADER_VISIBILITY,
-        defaultValue = Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
+        defaultValue = DEFAULT_APP_GROUP_HEADER
     )
 
     private suspend fun toggleData(
