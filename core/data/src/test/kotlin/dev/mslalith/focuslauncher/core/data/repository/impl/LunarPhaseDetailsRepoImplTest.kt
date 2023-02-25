@@ -40,12 +40,12 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
             illumination = 0.9981534868284623,
             phaseAngle = 4.9256389938282545,
             nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-03-21T22:55:46.770"),
+                newMoon = LocalDateTime.parse("2023-02-20T12:38:17.496"),
                 fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
             ),
             moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-24T15:09:16"),
-                setDateTime = LocalDateTime.parse("2023-02-24T02:44:26")
+                riseDateTime = LocalDateTime.parse("2023-02-25T15:57:02"),
+                setDateTime = LocalDateTime.parse("2023-02-25T03:32:03")
             ),
             sunRiseAndSetDetails = RiseAndSetDetails(
                 riseDateTime = LocalDateTime.parse("2023-02-06T11:40:34"),
@@ -54,9 +54,9 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
         )
         val expectedUpcomingLunarPhase = UpcomingLunarPhase(
             lunarPhase = LunarPhase.NEW_MOON,
-            dateTime = LocalDateTime.parse("2023-03-21T22:55:46.771"),
+            dateTime = LocalDateTime.parse("2023-02-20T12:38:17.496"),
             isMicroMoon = false,
-            isSuperMoon = false
+            isSuperMoon = true
         )
 
         repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
@@ -73,12 +73,12 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
             illumination = 0.001589384074297484,
             phaseAngle = -175.43035810796886,
             nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-03-21T22:55:46.771"),
+                newMoon = LocalDateTime.parse("2023-02-20T12:38:17.496"),
                 fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
             ),
             moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-24T15:09:16"),
-                setDateTime = LocalDateTime.parse("2023-02-24T02:44:26")
+                riseDateTime = LocalDateTime.parse("2023-02-25T15:57:02"),
+                setDateTime = LocalDateTime.parse("2023-02-25T03:32:03")
             ),
             sunRiseAndSetDetails = RiseAndSetDetails(
                 riseDateTime = LocalDateTime.parse("2023-02-20T11:40:22"),
@@ -110,8 +110,8 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
                 fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
             ),
             moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-24T15:09:16"),
-                setDateTime = LocalDateTime.parse("2023-02-24T02:44:26")
+                riseDateTime = LocalDateTime.parse("2023-02-25T15:57:02"),
+                setDateTime = LocalDateTime.parse("2023-02-25T03:32:03")
             ),
             sunRiseAndSetDetails = RiseAndSetDetails(
                 riseDateTime = LocalDateTime.parse("2023-02-27T11:39:25"),
@@ -139,12 +139,12 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
             illumination = 0.5538529537384493,
             phaseAngle = 83.81691199458245,
             nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-03-21T22:55:46.771"),
+                newMoon = LocalDateTime.parse("2023-02-20T12:38:17.496"),
                 fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
             ),
             moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-24T15:09:16"),
-                setDateTime = LocalDateTime.parse("2023-02-24T02:44:26")
+                riseDateTime = LocalDateTime.parse("2023-02-25T15:57:02"),
+                setDateTime = LocalDateTime.parse("2023-02-25T03:32:03")
             ),
             sunRiseAndSetDetails = RiseAndSetDetails(
                 riseDateTime = LocalDateTime.parse("2023-02-13T11:40:46"),
@@ -153,9 +153,9 @@ internal class LunarPhaseDetailsRepoImplTest : RepoTest<LunarPhaseDetailsRepoImp
         )
         val expectedUpcomingLunarPhase = UpcomingLunarPhase(
             lunarPhase = LunarPhase.NEW_MOON,
-            dateTime = LocalDateTime.parse("2023-03-21T22:55:46.771"),
+            dateTime = LocalDateTime.parse("2023-02-20T12:38:17.496"),
             isMicroMoon = false,
-            isSuperMoon = false
+            isSuperMoon = true
         )
 
         repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
