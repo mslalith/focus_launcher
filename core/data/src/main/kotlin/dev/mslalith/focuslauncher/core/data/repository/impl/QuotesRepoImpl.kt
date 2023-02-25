@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
-internal class QuotesRepoImpl @Inject constructor(
+internal open class QuotesRepoImpl @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesDao: QuotesDao,
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
@@ -42,7 +42,7 @@ internal class QuotesRepoImpl @Inject constructor(
             if (it.isEmpty()) {
                 State.Initial
             } else {
-                State.Success(quoteToRoomMapper.fromEntity(it.random()))
+                State.Success(quoteToRoomMapper.fromEntity(it.elementAt(index = getRandomIndex(it.size))))
             }
         }
         _currentQuoteStateFlow.value = quoteState

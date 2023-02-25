@@ -11,12 +11,16 @@ import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.HiddenToRoomMapper
+import dev.mslalith.focuslauncher.core.data.dto.QuoteResponseToRoomMapper
+import dev.mslalith.focuslauncher.core.data.dto.QuoteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.fakes.FakePlacesApi
+import dev.mslalith.focuslauncher.core.data.fakes.FakeQuotesApi
 import dev.mslalith.focuslauncher.core.data.model.ApiComponents
 import dev.mslalith.focuslauncher.core.data.model.MapperComponents
 import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.core.testing.SystemUnderTest
+import dev.mslalith.focuslauncher.core.testing.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.testing.rules.newCoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -48,15 +52,19 @@ internal abstract class RepoTest<T> : SystemUnderTest<T>() {
         TestComponents(
             database = database,
             apis = ApiComponents(
-                placesApi = FakePlacesApi()
+                placesApi = FakePlacesApi(),
+                quotesApi = FakeQuotesApi()
             ),
             mappers = MapperComponents(
                 appToRoomMapper = AppToRoomMapper(),
                 favoriteToRoomMapper = FavoriteToRoomMapper(appsDao = database.appsDao(), appToRoomMapper = AppToRoomMapper()),
                 hiddenToRoomMapper = HiddenToRoomMapper(appsDao = database.appsDao(), appToRoomMapper = AppToRoomMapper()),
+                quoteResponseToRoomMapper = QuoteResponseToRoomMapper(),
+                quoteToRoomMapper = QuoteToRoomMapper(quotesDao = database.quotesDao())
             ),
             dataStore = dataStore,
-            cityJsonParser = CityJsonParser()
+            cityJsonParser = CityJsonParser(),
+            appCoroutineDispatcher = TestAppCoroutineDispatcher(testDispatcher.coroutineContext)
         )
     }
 
