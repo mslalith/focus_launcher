@@ -1,10 +1,9 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl
+package dev.mslalith.focuslauncher.core.data.repository
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.repository.ThemeRepo
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject

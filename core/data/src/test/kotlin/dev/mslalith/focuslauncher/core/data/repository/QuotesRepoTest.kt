@@ -1,15 +1,14 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl
+package dev.mslalith.focuslauncher.core.data.repository
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.helpers.dummyQuoteFor
-import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.QUOTES_LIMIT_PER_PAGE
+import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -54,15 +53,15 @@ internal class QuotesRepoTest : CoroutineTest() {
     fun `fetch quotes and make sure they are added to database`() = runCoroutineTest {
         val job = launch {
             repo.isFetchingQuotesStateFlow.test {
-                assertThat(awaitItem()).isTrue()
-                assertThat(awaitItem()).isFalse()
+                Truth.assertThat(awaitItem()).isTrue()
+                Truth.assertThat(awaitItem()).isFalse()
             }
         }
         repo.fetchQuotes(maxPages = 1)
         repo.nextRandomQuote()
 
         val quote = repo.currentQuoteStateFlow.awaitItem().getOrNull()
-        assertThat(quote).isEqualTo(dummyQuoteFor(index = 0))
+        Truth.assertThat(quote).isEqualTo(dummyQuoteFor(index = 0))
 
         job.cancelAndJoin()
     }
@@ -77,25 +76,25 @@ internal class QuotesRepoTest : CoroutineTest() {
         )
 
         val quote = repo.currentQuoteStateFlow.awaitItem().getOrNull()
-        assertThat(quote).isEqualTo(expected)
+        Truth.assertThat(quote).isEqualTo(expected)
     }
 
     @Test
     fun `when one page of quotes are added, quotes size must be same`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
         repo.nextRandomQuote()
-        assertThat(repo.quotesSize()).isEqualTo(QUOTES_LIMIT_PER_PAGE)
+        Truth.assertThat(repo.quotesSize()).isEqualTo(Constants.Defaults.QUOTES_LIMIT_PER_PAGE)
     }
 
     @Test
     fun `when quotes size is less than limit, hasQuotesReachedLimit must return false`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
-        assertThat(repo.hasQuotesReachedLimit()).isFalse()
+        Truth.assertThat(repo.hasQuotesReachedLimit()).isFalse()
     }
 
     @Test
     fun `when quotes size is greater than limit, hasQuotesReachedLimit must return true`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 2)
-        assertThat(repo.hasQuotesReachedLimit()).isTrue()
+        Truth.assertThat(repo.hasQuotesReachedLimit()).isTrue()
     }
 }

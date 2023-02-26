@@ -1,13 +1,12 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl
+package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
-import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -50,7 +49,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `initially favorites must be empty`() = runCoroutineTest {
         val items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -59,7 +58,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
     }
 
     @Test
@@ -68,7 +67,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(apps)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(apps)
+        Truth.assertThat(items).isEqualTo(apps)
     }
 
     @Test
@@ -77,13 +76,13 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(app)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         repo.removeFromFavorites(app.packageName)
 
         items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).doesNotContain(app)
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).doesNotContain(app)
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -92,12 +91,12 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(apps)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(apps)
+        Truth.assertThat(items).isEqualTo(apps)
 
         repo.clearFavorites()
 
         items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -106,10 +105,10 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val isHidden = repo.isFavorite(app.packageName)
-        assertThat(isHidden).isTrue()
+        Truth.assertThat(isHidden).isTrue()
     }
 
     @Test
@@ -118,10 +117,10 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val isHidden = repo.isFavorite(TestApps.Phone.packageName)
-        assertThat(isHidden).isFalse()
+        Truth.assertThat(isHidden).isFalse()
     }
 
     @Test
@@ -130,13 +129,13 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(appsBeforeReorder)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(appsBeforeReorder)
+        Truth.assertThat(items).isEqualTo(appsBeforeReorder)
 
         repo.reorderFavorite(TestApps.Youtube, TestApps.Phone)
         val appsAfterReorder = listOf(TestApps.Youtube, TestApps.Phone)
 
         items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(appsAfterReorder)
+        Truth.assertThat(items).isEqualTo(appsAfterReorder)
     }
 
     @Test
@@ -145,12 +144,12 @@ internal class FavoritesRepoTest : CoroutineTest() {
         repo.addToFavorites(appsBeforeReorder)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(appsBeforeReorder)
+        Truth.assertThat(items).isEqualTo(appsBeforeReorder)
 
         repo.reorderFavorite(TestApps.Youtube, TestApps.Phone)
         val appsAfterReorder = listOf(TestApps.Youtube, TestApps.Chrome, TestApps.Phone)
 
         items = repo.onlyFavoritesFlow.awaitItem()
-        assertThat(items).isEqualTo(appsAfterReorder)
+        Truth.assertThat(items).isEqualTo(appsAfterReorder)
     }
 }

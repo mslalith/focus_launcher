@@ -1,10 +1,9 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl
+package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -37,7 +36,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
     @Test
     fun `initially app drawer list must be empty`() = runCoroutineTest {
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -46,7 +45,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
     }
 
     @Test
@@ -55,7 +54,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApps(apps)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(apps)
+        Truth.assertThat(items).isEqualTo(apps)
     }
 
     @Test
@@ -64,25 +63,25 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         var items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         repo.removeApp(app)
 
         items = repo.allAppsFlow.awaitItem()
-        assertThat(items).doesNotContain(app)
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).doesNotContain(app)
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
     fun `when apps are present in app drawer, list should not be empty`() = runCoroutineTest {
         repo.addApps(TestApps.all)
-        assertThat(repo.areAppsEmptyInDatabase()).isFalse()
+        Truth.assertThat(repo.areAppsEmptyInDatabase()).isFalse()
     }
 
     @Test
     fun `when apps are not present in app drawer, list should be empty`() = runCoroutineTest {
-        assertThat(repo.allAppsFlow.awaitItem()).isEmpty()
-        assertThat(repo.areAppsEmptyInDatabase()).isTrue()
+        Truth.assertThat(repo.allAppsFlow.awaitItem()).isEmpty()
+        Truth.assertThat(repo.areAppsEmptyInDatabase()).isTrue()
     }
 
     @Test
@@ -91,10 +90,10 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val fetchedApp = repo.getAppBy(app.packageName)
-        assertThat(fetchedApp).isEqualTo(app)
+        Truth.assertThat(fetchedApp).isEqualTo(app)
     }
 
     @Test
@@ -103,10 +102,10 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val fetchedApp = repo.getAppBy("some.package")
-        assertThat(fetchedApp).isNull()
+        Truth.assertThat(fetchedApp).isNull()
     }
 
     @Test
@@ -115,14 +114,14 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val displayName = "You Tube"
         repo.updateDisplayName(app, displayName)
 
         val fetchedApp = repo.getAppBy(app.packageName)
-        assertThat(fetchedApp).isNotNull()
-        assertThat(fetchedApp?.displayName).isEqualTo(displayName)
+        Truth.assertThat(fetchedApp).isNotNull()
+        Truth.assertThat(fetchedApp?.displayName).isEqualTo(displayName)
     }
 
     @Test
@@ -131,6 +130,6 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        assertThat(items.map { it.displayName }).isEqualTo(listOf(app.displayName))
+        Truth.assertThat(items.map { it.displayName }).isEqualTo(listOf(app.displayName))
     }
 }

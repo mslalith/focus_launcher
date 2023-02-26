@@ -1,13 +1,12 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl
+package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
-import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -50,7 +49,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `initially hidden apps must be empty`() = runCoroutineTest {
         val items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -59,7 +58,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
     }
 
     @Test
@@ -68,7 +67,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(apps)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(apps)
+        Truth.assertThat(items).isEqualTo(apps)
     }
 
     @Test
@@ -77,13 +76,13 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(app)
 
         var items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         repo.removeFromHiddenApps(app.packageName)
 
         items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).doesNotContain(app)
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).doesNotContain(app)
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -92,12 +91,12 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(apps)
 
         var items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(apps)
+        Truth.assertThat(items).isEqualTo(apps)
 
         repo.clearHiddenApps()
 
         items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEmpty()
+        Truth.assertThat(items).isEmpty()
     }
 
     @Test
@@ -106,10 +105,10 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val isHidden = repo.isHidden(app.packageName)
-        assertThat(isHidden).isTrue()
+        Truth.assertThat(isHidden).isTrue()
     }
 
     @Test
@@ -118,9 +117,9 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
         repo.addToHiddenApps(app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
-        assertThat(items).isEqualTo(listOf(app))
+        Truth.assertThat(items).isEqualTo(listOf(app))
 
         val isHidden = repo.isHidden(TestApps.Phone.packageName)
-        assertThat(isHidden).isFalse()
+        Truth.assertThat(isHidden).isFalse()
     }
 }
