@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcherImpl
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.impl.AppCoroutineDispatcherImpl
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.random.RandomNumber

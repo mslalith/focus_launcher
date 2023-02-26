@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.core.data.model
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper

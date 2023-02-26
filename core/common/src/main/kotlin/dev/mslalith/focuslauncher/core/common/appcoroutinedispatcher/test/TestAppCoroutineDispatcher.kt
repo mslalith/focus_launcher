@@ -1,6 +1,6 @@
-package dev.mslalith.focuslauncher.core.testing
+package dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test
 
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import kotlin.coroutines.CoroutineContext
 
 class TestAppCoroutineDispatcher(coroutineContext: CoroutineContext) : AppCoroutineDispatcher {

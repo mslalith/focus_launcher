@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
@@ -20,7 +21,6 @@ import dev.mslalith.focuslauncher.core.data.model.MapperComponents
 import dev.mslalith.focuslauncher.core.data.model.TestComponents
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.core.testing.SystemUnderTest
-import dev.mslalith.focuslauncher.core.testing.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.testing.rules.newCoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
