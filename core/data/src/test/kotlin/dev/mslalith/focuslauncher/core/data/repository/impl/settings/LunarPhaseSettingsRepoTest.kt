@@ -1,26 +1,41 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.model.TestComponents
+import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.testing.CoroutineTest
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-internal class LunarPhaseSettingsRepoImplTest : RepoTest<LunarPhaseSettingsRepoImpl>() {
+@Config(application = HiltTestApplication::class)
+internal class LunarPhaseSettingsRepoTest : CoroutineTest() {
 
-    override fun provideRepo(testComponents: TestComponents) = LunarPhaseSettingsRepoImpl(
-        settingsDataStore = testComponents.dataStore,
-        cityJsonParser = testComponents.cityJsonParser
-    )
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var repo: LunarPhaseSettingsRepo
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
 
     @Test
     fun `verify show lunar phase change`() = runCoroutineTest {
