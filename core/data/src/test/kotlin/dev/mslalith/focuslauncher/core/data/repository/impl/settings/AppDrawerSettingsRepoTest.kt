@@ -1,23 +1,41 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl.settings
 
-import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.model.TestComponents
+import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.testing.CoroutineTest
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-internal class AppDrawerSettingsRepoImplTest : RepoTest<AppDrawerSettingsRepoImpl>() {
+@Config(application = HiltTestApplication::class)
+internal class AppDrawerSettingsRepoTest : CoroutineTest() {
 
-    override fun provideRepo(testComponents: TestComponents) = AppDrawerSettingsRepoImpl(settingsDataStore = testComponents.dataStore)
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var repo: AppDrawerSettingsRepo
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
 
     @Test
     fun `verify app drawer view type change`() = runCoroutineTest {
