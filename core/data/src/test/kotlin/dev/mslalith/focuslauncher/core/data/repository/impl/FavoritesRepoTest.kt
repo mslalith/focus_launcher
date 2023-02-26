@@ -7,6 +7,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -30,7 +31,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var repo: FavoritesRepoImpl
+    lateinit var repo: FavoritesRepo
 
     @Inject
     lateinit var appsDao: AppsDao

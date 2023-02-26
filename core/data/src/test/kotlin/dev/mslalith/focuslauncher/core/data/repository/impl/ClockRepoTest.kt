@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import javax.inject.Inject
@@ -25,7 +26,7 @@ internal class ClockRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var repo: ClockRepoImpl
+    lateinit var repo: ClockRepo
 
     @Before
     fun setup() {

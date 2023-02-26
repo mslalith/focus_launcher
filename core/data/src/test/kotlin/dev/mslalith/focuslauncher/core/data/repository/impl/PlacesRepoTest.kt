@@ -5,6 +5,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.dummyCityFor
+import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
@@ -27,7 +28,7 @@ internal class PlacesRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var repo: PlacesRepoImpl
+    lateinit var repo: PlacesRepo
 
     @Before
     fun setup() {

@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -26,7 +27,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var repo: AppDrawerRepoImpl
+    lateinit var repo: AppDrawerRepo
 
     @Before
     fun setup() {
