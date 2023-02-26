@@ -14,7 +14,7 @@ android {
     namespace = "dev.mslalith.focuslauncher.core.data"
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "dev.mslalith.focuslauncher.core.testing.HiltTestRunner"
     }
     testOptions {
         unitTests.all {
@@ -42,5 +42,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.suncalc)
 
+    implementation(libs.hilt.android.testing)
     testImplementation(project(":core:testing"))
 }
