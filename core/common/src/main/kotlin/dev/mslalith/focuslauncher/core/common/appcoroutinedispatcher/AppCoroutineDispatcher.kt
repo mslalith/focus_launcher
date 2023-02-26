@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher
 
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface AppCoroutineDispatcher {
-    val main: CoroutineContext
-    val io: CoroutineContext
+    val main: CoroutineDispatcher
+    val io: CoroutineDispatcher
 }

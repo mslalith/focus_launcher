@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test
 
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineDispatcher
 
-class TestAppCoroutineDispatcher(coroutineContext: CoroutineContext) : AppCoroutineDispatcher {
-    override val main: CoroutineContext = coroutineContext
-    override val io: CoroutineContext = coroutineContext
+class TestAppCoroutineDispatcher(coroutineDispatcher: CoroutineDispatcher) : AppCoroutineDispatcher {
+    override val main: CoroutineDispatcher = coroutineDispatcher
+    override val io: CoroutineDispatcher = coroutineDispatcher
 }
