@@ -1,10 +1,9 @@
-package dev.mslalith.focuslauncher.core.data.repository.impl.settings
+package dev.mslalith.focuslauncher.core.data.repository.settings
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
