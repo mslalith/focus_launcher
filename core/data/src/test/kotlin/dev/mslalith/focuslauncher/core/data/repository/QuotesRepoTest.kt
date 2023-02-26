@@ -7,8 +7,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
-import dev.mslalith.focuslauncher.core.data.helpers.dummyQuoteFor
 import dev.mslalith.focuslauncher.core.data.utils.Constants
+import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem

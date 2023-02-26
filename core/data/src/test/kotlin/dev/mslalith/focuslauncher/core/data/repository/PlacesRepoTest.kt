@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.data.helpers.dummyCityFor
+import dev.mslalith.focuslauncher.core.data.utils.dummyCityFor
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
