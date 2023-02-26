@@ -1,5 +1,6 @@
-package dev.mslalith.focuslauncher.core.common.random
+package dev.mslalith.focuslauncher.core.common.random.impl
 
+import dev.mslalith.focuslauncher.core.common.random.RandomNumber
 import java.util.Random
 import javax.inject.Inject
 

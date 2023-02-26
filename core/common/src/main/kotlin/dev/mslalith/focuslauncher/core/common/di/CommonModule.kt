@@ -11,7 +11,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.impl.AppCor
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.random.RandomNumber
-import dev.mslalith.focuslauncher.core.common.random.RandomNumberImpl
+import dev.mslalith.focuslauncher.core.common.random.impl.RandomNumberImpl
 import javax.inject.Singleton
 
 @Module
