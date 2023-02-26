@@ -2,34 +2,52 @@ package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
-import dev.mslalith.focuslauncher.core.data.base.RepoTest
+import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.helpers.dummyQuoteFor
-import dev.mslalith.focuslauncher.core.data.model.TestComponents
+import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.QUOTES_LIMIT_PER_PAGE
 import dev.mslalith.focuslauncher.core.model.Quote
+import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-internal class QuotesRepoImplTest : RepoTest<QuotesRepoImpl>() {
+@Config(application = HiltTestApplication::class)
+internal class QuotesRepoTest : CoroutineTest() {
 
-    override fun provideRepo(testComponents: TestComponents): QuotesRepoImpl {
-        return object : QuotesRepoImpl(
-            quotesApi = testComponents.apis.quotesApi,
-            quotesDao = testComponents.database.quotesDao(),
-            appCoroutineDispatcher = testComponents.appCoroutineDispatcher,
-            quoteResponseToRoomMapper = testComponents.mappers.quoteResponseToRoomMapper,
-            quoteToRoomMapper = testComponents.mappers.quoteToRoomMapper
-        ) {
-            override fun getRandomIndex(size: Int) = 0
-        }
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var repo: QuotesRepo
+
+    @Inject
+    lateinit var appDatabase: AppDatabase
+
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
+
+    @After
+    fun teardown() {
+        appDatabase.close()
     }
 
     @Test
