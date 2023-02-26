@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
-internal class PlacesRepoImplTest : CoroutineTest() {
+internal class PlacesRepoTest : CoroutineTest() {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

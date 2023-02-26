@@ -24,10 +24,10 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
-internal class HiddenAppsRepoImplTest : CoroutineTest() {
+internal class HiddenAppsRepoTest : CoroutineTest() {
 
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    val hiltRule = HiltAndroidRule(this)
 
     @Inject
     lateinit var repo: HiddenAppsRepoImpl
