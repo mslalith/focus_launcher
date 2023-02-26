@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,7 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.core.ui.SystemBroadcastReceiver
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
+import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 
 @Composable
 fun ClockWidget(
@@ -97,12 +99,14 @@ internal fun ClockWidget(
         ) {
             if (it) {
                 Clock24(
+                    modifier = Modifier.testTag(tag = TestTags.TAG_CLOCK24),
                     currentTime = clock24State.currentTime,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
                     colorAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration)
                 )
             } else {
                 CurrentTime(
+                    modifier = Modifier.testTag(tag = TestTags.TAG_REGULAR_CLOCK),
                     currentTime = clock24State.currentTime,
                     centerVertically = centerVertically
                 )
