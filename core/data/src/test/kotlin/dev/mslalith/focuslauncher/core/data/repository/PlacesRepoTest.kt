@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -38,18 +38,18 @@ internal class PlacesRepoTest : CoroutineTest() {
     @Test
     fun `when fetchCities is called, make sure cities are updated to database`() = runCoroutineTest {
         val expectedCities = List(size = 6) { dummyCityFor(index = it) }
-        Truth.assertThat(repo.getAllCities()).isEqualTo(expectedCities)
+        assertThat(repo.getAllCities()).isEqualTo(expectedCities)
     }
 
     @Test
     fun `when fetch for an existing city, make sure city is returned`() = runCoroutineTest {
         val expectedCity = dummyCityFor(index = 2)
-        Truth.assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(listOf(expectedCity))
+        assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(listOf(expectedCity))
     }
 
     @Test
     fun `when fetch for a non-existing city, make sure city is not returned`() = runCoroutineTest {
         val expectedCity = dummyCityFor(index = 23)
-        Truth.assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(emptyList<City>())
+        assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(emptyList<City>())
     }
 }

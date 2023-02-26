@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -36,7 +36,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
     @Test
     fun `initially app drawer list must be empty`() = runCoroutineTest {
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEmpty()
+        assertThat(items).isEmpty()
     }
 
     @Test
@@ -45,7 +45,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(listOf(app))
+        assertThat(items).isEqualTo(listOf(app))
     }
 
     @Test
@@ -54,7 +54,7 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApps(apps)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(apps)
+        assertThat(items).isEqualTo(apps)
     }
 
     @Test
@@ -63,25 +63,25 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         var items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(listOf(app))
+        assertThat(items).isEqualTo(listOf(app))
 
         repo.removeApp(app)
 
         items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).doesNotContain(app)
-        Truth.assertThat(items).isEmpty()
+        assertThat(items).doesNotContain(app)
+        assertThat(items).isEmpty()
     }
 
     @Test
     fun `when apps are present in app drawer, list should not be empty`() = runCoroutineTest {
         repo.addApps(TestApps.all)
-        Truth.assertThat(repo.areAppsEmptyInDatabase()).isFalse()
+        assertThat(repo.areAppsEmptyInDatabase()).isFalse()
     }
 
     @Test
     fun `when apps are not present in app drawer, list should be empty`() = runCoroutineTest {
-        Truth.assertThat(repo.allAppsFlow.awaitItem()).isEmpty()
-        Truth.assertThat(repo.areAppsEmptyInDatabase()).isTrue()
+        assertThat(repo.allAppsFlow.awaitItem()).isEmpty()
+        assertThat(repo.areAppsEmptyInDatabase()).isTrue()
     }
 
     @Test
@@ -90,10 +90,10 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(listOf(app))
+        assertThat(items).isEqualTo(listOf(app))
 
         val fetchedApp = repo.getAppBy(app.packageName)
-        Truth.assertThat(fetchedApp).isEqualTo(app)
+        assertThat(fetchedApp).isEqualTo(app)
     }
 
     @Test
@@ -102,10 +102,10 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(listOf(app))
+        assertThat(items).isEqualTo(listOf(app))
 
         val fetchedApp = repo.getAppBy("some.package")
-        Truth.assertThat(fetchedApp).isNull()
+        assertThat(fetchedApp).isNull()
     }
 
     @Test
@@ -114,14 +114,14 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items).isEqualTo(listOf(app))
+        assertThat(items).isEqualTo(listOf(app))
 
         val displayName = "You Tube"
         repo.updateDisplayName(app, displayName)
 
         val fetchedApp = repo.getAppBy(app.packageName)
-        Truth.assertThat(fetchedApp).isNotNull()
-        Truth.assertThat(fetchedApp?.displayName).isEqualTo(displayName)
+        assertThat(fetchedApp).isNotNull()
+        assertThat(fetchedApp?.displayName).isEqualTo(displayName)
     }
 
     @Test
@@ -130,6 +130,6 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         repo.addApp(app)
 
         val items = repo.allAppsFlow.awaitItem()
-        Truth.assertThat(items.map { it.displayName }).isEqualTo(listOf(app.displayName))
+        assertThat(items.map { it.displayName }).isEqualTo(listOf(app.displayName))
     }
 }

@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -38,6 +38,6 @@ internal class ClockRepoTest : CoroutineTest() {
         repo.refreshTime()
 
         val newTime = repo.currentInstantStateFlow.awaitItem()
-        Truth.assertThat(newTime).isGreaterThan(oldTime)
+        assertThat(newTime).isGreaterThan(oldTime)
     }
 }
