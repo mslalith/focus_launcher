@@ -1,33 +1,49 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.core.data.base.RepoTest
-import dev.mslalith.focuslauncher.core.data.model.TestComponents
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
+import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-internal class HiddenAppsRepoImplTest : RepoTest<HiddenAppsRepoImpl>() {
+@Config(application = HiltTestApplication::class)
+internal class HiddenAppsRepoImplTest : CoroutineTest() {
 
-    override fun provideRepo(testComponents: TestComponents): HiddenAppsRepoImpl {
-        return HiddenAppsRepoImpl(
-            appsDao = testComponents.database.appsDao(),
-            hiddenAppsDao = testComponents.database.hiddenAppsDao(),
-            appToRoomMapper = testComponents.mappers.appToRoomMapper,
-            hiddenToRoomMapper = testComponents.mappers.hiddenToRoomMapper
-        )
-    }
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var repo: HiddenAppsRepoImpl
+
+    @Inject
+    lateinit var appsDao: AppsDao
+
+    @BindValue
+    val appToRoomMapper: AppToRoomMapper = AppToRoomMapper()
 
     @Before
-    override fun setUp() = runBlocking {
-        testComponents.database.appsDao().addApps(TestApps.all.map(testComponents.mappers.appToRoomMapper::toEntity))
+    fun setup() {
+        hiltRule.inject()
+        runBlocking {
+            appsDao.addApps(TestApps.all.map(appToRoomMapper::toEntity))
+        }
     }
 
     @Test
