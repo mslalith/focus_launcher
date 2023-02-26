@@ -42,6 +42,5 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.suncalc)
 
-    implementation(libs.hilt.android.testing)
     testImplementation(project(":core:testing"))
 }
