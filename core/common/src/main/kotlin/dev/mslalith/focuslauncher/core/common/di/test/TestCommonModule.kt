@@ -1,22 +1,26 @@
-package dev.mslalith.focuslauncher.core.common.di
+package dev.mslalith.focuslauncher.core.common.di.test
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcherImpl
+import dev.mslalith.focuslauncher.core.common.di.CommonModule
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.random.RandomNumber
-import dev.mslalith.focuslauncher.core.common.random.RandomNumberImpl
+import dev.mslalith.focuslauncher.core.common.random.test.TestRandomNumber
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object CommonModule {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [CommonModule::class]
+)
+internal object TestCommonModule {
 
     @Provides
     @Singleton
@@ -24,7 +28,7 @@ object CommonModule {
 
     @Provides
     @Singleton
-    fun provideRandomNumber(): RandomNumber = RandomNumberImpl()
+    fun provideRandomNumber(): RandomNumber = TestRandomNumber()
 
     @Provides
     @Singleton
