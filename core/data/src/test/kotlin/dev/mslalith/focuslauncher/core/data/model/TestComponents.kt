@@ -9,8 +9,8 @@ import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.HiddenToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.QuoteResponseToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.QuoteToRoomMapper
-import dev.mslalith.focuslauncher.core.data.fakes.FakePlacesApi
-import dev.mslalith.focuslauncher.core.data.fakes.FakeQuotesApi
+import dev.mslalith.focuslauncher.core.data.network.api.fakes.FakePlacesApi
+import dev.mslalith.focuslauncher.core.data.network.api.fakes.FakeQuotesApi
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 
 internal data class TestComponents(
