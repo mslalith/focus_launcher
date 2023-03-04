@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.testing.rules
 
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -27,4 +28,4 @@ class TestCoroutineRule(
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun TestCoroutineRule.newCoroutineScope(): TestScope = TestScope(testDispatcher)
+fun TestCoroutineRule.newCoroutineScope(): TestScope = TestScope(testDispatcher as CoroutineContext)
