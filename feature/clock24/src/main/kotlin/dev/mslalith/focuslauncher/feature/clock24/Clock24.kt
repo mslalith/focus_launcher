@@ -29,7 +29,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun Clock24(
+internal fun Clock24(
     modifier: Modifier = Modifier,
     currentTime: String,
     analogClockRadius: Float = DEFAULT_CLOCK_24_ANALOG_RADIUS,

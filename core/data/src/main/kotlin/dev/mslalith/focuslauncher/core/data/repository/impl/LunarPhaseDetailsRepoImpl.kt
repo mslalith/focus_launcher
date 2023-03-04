@@ -46,11 +46,11 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
     }
 
     private fun findLunarPhaseDetails(instant: Instant, city: City): LunarPhaseDetails {
-        val nextNewMoon = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(MoonPhase.Phase.NEW_MOON).execute()
-        val nextFullMoon = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(MoonPhase.Phase.FULL_MOON).execute()
-        val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).midnight().on(instant.toJavaInstant()).execute()
-        val moonTimes = MoonTimes.compute().on(instant.toJavaInstant()).midnight().today().at(city.latitude, city.longitude).execute()
-        val sunTimes = SunTimes.compute().on(instant.toJavaInstant()).midnight().at(city.latitude, city.longitude).execute()
+        val nextNewMoon = MoonPhase.compute().on(instant.toJavaInstant()).phase(MoonPhase.Phase.NEW_MOON).execute()
+        val nextFullMoon = MoonPhase.compute().on(instant.toJavaInstant()).phase(MoonPhase.Phase.FULL_MOON).execute()
+        val moonIllumination = MoonIllumination.compute().on(instant.toJavaInstant()).execute()
+        val moonTimes = MoonTimes.compute().on(instant.toJavaInstant()).at(city.latitude, city.longitude).execute()
+        val sunTimes = SunTimes.compute().on(instant.toJavaInstant()).at(city.latitude, city.longitude).execute()
         return LunarPhaseDetails(
             lunarPhase = moonIllumination.closestPhase.toLunarPhase(),
             illumination = moonIllumination.fraction,
@@ -77,7 +77,7 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
         }
 
     private fun findUpcomingLunarPhaseOf(instant: Instant, lunarPhase: LunarPhase): UpcomingLunarPhase {
-        val moonPhase = MoonPhase.compute().on(instant.toJavaInstant()).midnight().phase(lunarPhase.toMoonPhase()).execute()
+        val moonPhase = MoonPhase.compute().on(instant.toJavaInstant()).phase(lunarPhase.toMoonPhase()).execute()
         return UpcomingLunarPhase(
             lunarPhase = lunarPhase,
             dateTime = moonPhase.time.toKotlinxLocalDateTime(),

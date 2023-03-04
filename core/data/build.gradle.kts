@@ -14,7 +14,7 @@ android {
     namespace = "dev.mslalith.focuslauncher.core.data"
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "dev.mslalith.focuslauncher.core.testing.HiltTestRunner"
     }
     testOptions {
         unitTests.all {

@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.feature.quoteforyou
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.QuotesSettingsRepo

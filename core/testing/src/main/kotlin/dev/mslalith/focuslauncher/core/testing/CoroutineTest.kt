@@ -11,10 +11,10 @@ import org.junit.Rule
 @OptIn(ExperimentalCoroutinesApi::class)
 open class CoroutineTest {
 
-    @get:Rule
+    @get:Rule(order = 1)
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @get:Rule
+    @get:Rule(order = 2)
     val coroutineTestRule = TestCoroutineRule()
 
     protected val testDispatcher = coroutineTestRule.newCoroutineScope()

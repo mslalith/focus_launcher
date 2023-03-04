@@ -6,10 +6,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.AppCoroutineDispatcherImpl
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.impl.AppCoroutineDispatcherImpl
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
+import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
+import dev.mslalith.focuslauncher.core.common.providers.clock.impl.ClockProviderImpl
+import dev.mslalith.focuslauncher.core.common.random.RandomNumber
+import dev.mslalith.focuslauncher.core.common.random.impl.RandomNumberImpl
 import javax.inject.Singleton
 
 @Module
@@ -25,4 +29,12 @@ object CommonModule {
     fun provideNetworkMonitor(
         @ApplicationContext context: Context
     ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+
+    @Provides
+    @Singleton
+    fun provideRandomNumber(): RandomNumber = RandomNumberImpl()
+
+    @Provides
+    @Singleton
+    fun provideClockProvider(): ClockProvider = ClockProviderImpl()
 }
