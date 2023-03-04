@@ -10,6 +10,8 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.impl.AppCoroutineDispatcherImpl
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
+import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
+import dev.mslalith.focuslauncher.core.common.providers.clock.impl.ClockProviderImpl
 import dev.mslalith.focuslauncher.core.common.random.RandomNumber
 import dev.mslalith.focuslauncher.core.common.random.impl.RandomNumberImpl
 import javax.inject.Singleton
@@ -24,11 +26,15 @@ object CommonModule {
 
     @Provides
     @Singleton
+    fun provideNetworkMonitor(
+        @ApplicationContext context: Context
+    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+
+    @Provides
+    @Singleton
     fun provideRandomNumber(): RandomNumber = RandomNumberImpl()
 
     @Provides
     @Singleton
-    fun provideNetworkMonitor(
-        @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+    fun provideClockProvider(): ClockProvider = ClockProviderImpl()
 }

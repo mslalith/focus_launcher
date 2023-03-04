@@ -16,7 +16,6 @@ import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.datetime.Clock
 
 @HiltViewModel
 internal class Clock24ViewModel @Inject constructor(
@@ -26,7 +25,7 @@ internal class Clock24ViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val defaultClock24State = Clock24State(
-        currentTime = Clock.System.now().formatToTime(),
+        currentTime = "",
         showClock24 = DEFAULT_SHOW_CLOCK_24,
         clockAlignment = DEFAULT_CLOCK_ALIGNMENT,
         clock24AnimationDuration = DEFAULT_CLOCK_24_ANIMATION_DURATION

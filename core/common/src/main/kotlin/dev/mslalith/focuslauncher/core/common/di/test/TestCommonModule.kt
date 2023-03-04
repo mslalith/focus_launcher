@@ -11,6 +11,8 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAp
 import dev.mslalith.focuslauncher.core.common.di.CommonModule
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
+import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
+import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
 import dev.mslalith.focuslauncher.core.common.random.RandomNumber
 import dev.mslalith.focuslauncher.core.common.random.test.TestRandomNumber
 import javax.inject.Singleton
@@ -22,7 +24,7 @@ import kotlinx.coroutines.Dispatchers
     components = [SingletonComponent::class],
     replaces = [CommonModule::class]
 )
-internal object TestCommonModule {
+object TestCommonModule {
 
     @Provides
     @Singleton
@@ -30,11 +32,19 @@ internal object TestCommonModule {
 
     @Provides
     @Singleton
+    fun provideNetworkMonitor(
+        @ApplicationContext context: Context
+    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+
+    @Provides
+    @Singleton
     fun provideRandomNumber(): RandomNumber = TestRandomNumber()
 
     @Provides
     @Singleton
-    fun provideNetworkMonitor(
-        @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+    fun provideClockProvider(testClockProvider: TestClockProvider): ClockProvider = testClockProvider
+
+    @Provides
+    @Singleton
+    fun provideTestClockProvider(): TestClockProvider = TestClockProvider()
 }

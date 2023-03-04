@@ -14,13 +14,11 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.RiseAndSetDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import java.time.Month
+import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -181,16 +179,6 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
         repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
     }
 }
-
-private fun instantOf(dayOfMonth: Int, hour: Int, minute: Int) = LocalDateTime(
-    year = 2023,
-    month = Month.FEBRUARY,
-    dayOfMonth = dayOfMonth,
-    hour = hour,
-    minute = minute,
-    second = 0,
-    nanosecond = 0
-).toInstant(timeZone = TimeZone.UTC)
 
 context (CoroutineScope)
 private suspend fun LunarPhaseDetailsRepo.assertLunarPhaseDetailsWith(expected: LunarPhaseDetails) {

@@ -5,12 +5,14 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
 import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -28,6 +30,9 @@ internal class Clock24ViewModelTest : CoroutineTest() {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var clockProvider: TestClockProvider
 
     @Inject
     lateinit var clockRepo: ClockRepo
@@ -81,5 +86,16 @@ internal class Clock24ViewModelTest : CoroutineTest() {
 
         viewModel.updateClock24AnimationDuration(duration = 1800)
         viewModel.clock24State.assertFor(expected = 1800) { it.clock24AnimationDuration }
+    }
+
+    @Test
+    fun `on update time, verify state change`() = runCoroutineTest {
+        clockProvider.setInstant(instantOf(hour = 23, minute = 4))
+        viewModel.refreshTime()
+        viewModel.clock24State.assertFor(expected = "04:34") { it.currentTime }
+
+        clockProvider.setInstant(instantOf(hour = 9, minute = 54))
+        viewModel.refreshTime()
+        viewModel.clock24State.assertFor(expected = "15:24") { it.currentTime }
     }
 }
