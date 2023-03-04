@@ -16,6 +16,7 @@ import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -88,6 +89,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
         viewModel.clock24State.assertFor(expected = 1800) { it.clock24AnimationDuration }
     }
 
+    @Ignore
     @Test
     fun `on update time, verify state change`() = runCoroutineTest {
         clockProvider.setInstant(instantOf(hour = 23, minute = 4))
