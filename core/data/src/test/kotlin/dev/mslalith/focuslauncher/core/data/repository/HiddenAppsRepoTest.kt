@@ -5,7 +5,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
+import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
@@ -13,6 +13,7 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +34,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     lateinit var repo: HiddenAppsRepo
 
     @Inject
-    lateinit var appsDao: AppsDao
+    lateinit var appDatabase: AppDatabase
 
     @BindValue
     val appToRoomMapper: AppToRoomMapper = AppToRoomMapper()
@@ -42,8 +43,13 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         runBlocking {
-            appsDao.addApps(TestApps.all.map(appToRoomMapper::toEntity))
+            appDatabase.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
         }
+    }
+
+    @After
+    fun teardown() {
+        appDatabase.close()
     }
 
     @Test
