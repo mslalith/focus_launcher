@@ -105,7 +105,6 @@ internal fun ClockWidget(
         ) {
             if (it) {
                 Clock24(
-                    modifier = Modifier.testSemantics(tag = TestTags.TAG_CLOCK24),
                     currentTime = clock24State.currentTime,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
                     colorAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration)
