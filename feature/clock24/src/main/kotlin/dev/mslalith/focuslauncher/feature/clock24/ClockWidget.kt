@@ -112,7 +112,6 @@ internal fun ClockWidget(
                 )
             } else {
                 CurrentTime(
-                    modifier = Modifier.testSemantics(tag = TestTags.TAG_REGULAR_CLOCK),
                     currentTime = clock24State.currentTime,
                     centerVertically = centerVertically
                 )

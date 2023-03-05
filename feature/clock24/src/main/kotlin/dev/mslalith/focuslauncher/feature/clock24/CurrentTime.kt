@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
+import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 
 @Composable
 internal fun CurrentTime(
@@ -21,10 +23,13 @@ internal fun CurrentTime(
     val newModifier = if (centerVertically) modifier.fillMaxHeight() else modifier
 
     Box(
-        modifier = newModifier,
+        modifier = newModifier.testSemantics(tag = TestTags.TAG_REGULAR_CLOCK),
         contentAlignment = if (centerVertically) Alignment.Center else Alignment.TopStart
     ) {
-        Crossfade(targetState = currentTime) {
+        Crossfade(
+            label = "Current Time CrossFade",
+            targetState = currentTime
+        ) {
             Text(
                 text = it,
                 style = TextStyle(
