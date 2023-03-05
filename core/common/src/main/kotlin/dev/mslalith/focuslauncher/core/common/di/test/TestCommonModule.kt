@@ -13,8 +13,8 @@ import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetwork
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
-import dev.mslalith.focuslauncher.core.common.random.test.TestRandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumber
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers

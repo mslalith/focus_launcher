@@ -12,8 +12,8 @@ import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetwork
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.clock.impl.ClockProviderImpl
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
-import dev.mslalith.focuslauncher.core.common.random.impl.RandomNumberImpl
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.impl.RandomNumberImpl
 import javax.inject.Singleton
 
 @Module

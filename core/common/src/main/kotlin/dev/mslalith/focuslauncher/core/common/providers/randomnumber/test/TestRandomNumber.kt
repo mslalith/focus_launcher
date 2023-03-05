@@ -1,6 +1,6 @@
-package dev.mslalith.focuslauncher.core.common.random.test
+package dev.mslalith.focuslauncher.core.common.providers.randomnumber.test
 
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumber
 import javax.inject.Inject
 
 class TestRandomNumber @Inject constructor() : RandomNumber {

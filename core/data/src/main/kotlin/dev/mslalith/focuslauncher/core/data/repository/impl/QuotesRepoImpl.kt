@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import dev.mslalith.focuslauncher.core.common.State
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumber
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.core.data.di.modules.QuoteResponseToRoomMapperProvider
