@@ -10,16 +10,20 @@ class AndroidLibraryComposeTestingConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply("com.android.library")
 
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
             with(extensions.getByType<LibraryExtension>()) {
                 testOptions {
                     unitTests.isIncludeAndroidResources = true
                 }
             }
 
-            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 add("testImplementation", libs.findLibrary("androidx-compose-ui-test").get())
                 add("debugImplementation", libs.findLibrary("androidx-compose-ui-testManifest").get())
+
+                add("implementation", project(":core:testing-compose"))
+                add("testImplementation", project(":core:testing-compose"))
             }
         }
     }

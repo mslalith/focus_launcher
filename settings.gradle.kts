@@ -33,6 +33,7 @@ include(
     ":core:data",
     ":core:ui",
     ":core:testing",
+    ":core:testing-compose",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",
