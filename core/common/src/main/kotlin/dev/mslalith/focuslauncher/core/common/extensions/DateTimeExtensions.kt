@@ -49,7 +49,7 @@ fun LocalDateTime.inShortReadableFormat(
 }
 
 fun ZonedDateTime.toKotlinxLocalDateTime() = try {
-    val isoString = this.toString().substringBefore(delimiter = "+")
+    val isoString = toLocalDateTime().toString().substringBefore(delimiter = "+")
     LocalDateTime.parse(isoString)
 } catch (ex: Exception) {
     null
