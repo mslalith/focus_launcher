@@ -6,7 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
-import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor
@@ -34,7 +34,7 @@ internal class QuotesRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var testRandomNumber: TestRandomNumber
+    lateinit var testRandomNumberProvider: TestRandomNumberProvider
 
     @Inject
     lateinit var repo: QuotesRepo
@@ -62,7 +62,7 @@ internal class QuotesRepoTest : CoroutineTest() {
         }
         repo.fetchQuotes(maxPages = 1)
 
-        testRandomNumber.setRandomNumber(randomNumber = 6)
+        testRandomNumberProvider.setRandomNumber(randomNumber = 6)
         repo.nextRandomQuote()
 
         val quote = repo.currentQuoteStateFlow.awaitItem().getOrNull()
@@ -71,7 +71,7 @@ internal class QuotesRepoTest : CoroutineTest() {
 
     @Test
     fun `when quotes are empty, initial quotes must be added`() = runCoroutineTest {
-        testRandomNumber.setRandomNumber(randomNumber = 3)
+        testRandomNumberProvider.setRandomNumber(randomNumber = 3)
         repo.nextRandomQuote()
 
         assertThat(repo.currentQuoteStateFlow.awaitItem().getOrNull()).isEqualTo(
@@ -82,7 +82,7 @@ internal class QuotesRepoTest : CoroutineTest() {
             )
         )
 
-        testRandomNumber.setRandomNumber(randomNumber = 0)
+        testRandomNumberProvider.setRandomNumber(randomNumber = 0)
         repo.nextRandomQuote()
 
         assertThat(repo.currentQuoteStateFlow.awaitItem().getOrNull()).isEqualTo(

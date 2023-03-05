@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.core.common.providers.randomnumber.test
 
-import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
 import javax.inject.Inject
 
-class TestRandomNumber @Inject constructor() : RandomNumber {
+class TestRandomNumberProvider @Inject constructor() : RandomNumberProvider {
     private var randomNumber = 0
 
     override fun random(till: Int): Int = randomNumber

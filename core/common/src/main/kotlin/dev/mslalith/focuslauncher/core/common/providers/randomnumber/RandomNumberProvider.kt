@@ -1,5 +1,5 @@
 package dev.mslalith.focuslauncher.core.common.providers.randomnumber
 
-interface RandomNumber {
+interface RandomNumberProvider {
     fun random(till: Int): Int
 }
