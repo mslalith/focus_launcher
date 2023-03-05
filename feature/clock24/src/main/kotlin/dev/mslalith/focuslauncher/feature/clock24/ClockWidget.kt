@@ -15,11 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.core.ui.SystemBroadcastReceiver
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
@@ -68,6 +68,7 @@ internal fun ClockWidget(
     val updatedRefreshTime by rememberUpdatedState(newValue = refreshTime)
 
     val horizontalBias by animateFloatAsState(
+        label = "Clock Alignment",
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioLowBouncy,
             stiffness = Spring.StiffnessLow
@@ -88,6 +89,7 @@ internal fun ClockWidget(
     }
 
     Crossfade(
+        label = "Show Clock 24 CrossFade",
         targetState = clock24State.showClock24,
         modifier = modifier
             .fillMaxWidth()
@@ -95,18 +97,20 @@ internal fun ClockWidget(
     ) {
         Column(
             horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .testSemantics(tag = TestTags.TAG_CLOCK_COLUMN) {
+                    testBiasAlignment(BiasAlignment.Horizontal(horizontalBias))
+                }
         ) {
             if (it) {
                 Clock24(
-                    modifier = Modifier.testTag(tag = TestTags.TAG_CLOCK24),
                     currentTime = clock24State.currentTime,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
                     colorAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration)
                 )
             } else {
                 CurrentTime(
-                    modifier = Modifier.testTag(tag = TestTags.TAG_REGULAR_CLOCK),
                     currentTime = clock24State.currentTime,
                     centerVertically = centerVertically
                 )

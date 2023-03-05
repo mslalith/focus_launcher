@@ -6,6 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor
@@ -14,7 +15,6 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Before
@@ -34,6 +34,9 @@ internal class QuotesRepoTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
+    lateinit var testRandomNumberProvider: TestRandomNumberProvider
+
+    @Inject
     lateinit var repo: QuotesRepo
 
     @Inject
@@ -51,38 +54,49 @@ internal class QuotesRepoTest : CoroutineTest() {
 
     @Test
     fun `fetch quotes and make sure they are added to database`() = runCoroutineTest {
-        val job = launch {
+        backgroundScope.launch {
             repo.isFetchingQuotesStateFlow.test {
                 assertThat(awaitItem()).isTrue()
                 assertThat(awaitItem()).isFalse()
             }
         }
         repo.fetchQuotes(maxPages = 1)
+
+        testRandomNumberProvider.setRandomNumber(randomNumber = 6)
         repo.nextRandomQuote()
 
         val quote = repo.currentQuoteStateFlow.awaitItem().getOrNull()
-        assertThat(quote).isEqualTo(dummyQuoteFor(index = 0))
-
-        job.cancelAndJoin()
+        assertThat(quote).isEqualTo(dummyQuoteFor(index = 6))
     }
 
     @Test
     fun `when quotes are empty, initial quotes must be added`() = runCoroutineTest {
+        testRandomNumberProvider.setRandomNumber(randomNumber = 3)
         repo.nextRandomQuote()
-        val expected = Quote(
-            id = "vuGBuD1oaev3",
-            quote = "Do not go where the path may lead, go instead where there is no path and leave a trail.",
-            author = "Ralph Waldo Emerson"
+
+        assertThat(repo.currentQuoteStateFlow.awaitItem().getOrNull()).isEqualTo(
+            Quote(
+                id = "2C-BAEVx44Os",
+                quote = "I walk slowly, but I never walk backward.",
+                author = "Abraham Lincoln"
+            )
         )
 
-        val quote = repo.currentQuoteStateFlow.awaitItem().getOrNull()
-        assertThat(quote).isEqualTo(expected)
+        testRandomNumberProvider.setRandomNumber(randomNumber = 0)
+        repo.nextRandomQuote()
+
+        assertThat(repo.currentQuoteStateFlow.awaitItem().getOrNull()).isEqualTo(
+            Quote(
+                id = "vuGBuD1oaev3",
+                quote = "Do not go where the path may lead, go instead where there is no path and leave a trail.",
+                author = "Ralph Waldo Emerson"
+            )
+        )
     }
 
     @Test
     fun `when one page of quotes are added, quotes size must be same`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
-        repo.nextRandomQuote()
         assertThat(repo.quotesSize()).isEqualTo(Constants.Defaults.QUOTES_LIMIT_PER_PAGE)
     }
 

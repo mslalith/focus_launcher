@@ -13,8 +13,8 @@ import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetwork
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
-import dev.mslalith.focuslauncher.core.common.random.test.TestRandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,11 @@ object TestCommonModule {
 
     @Provides
     @Singleton
-    fun provideRandomNumber(): RandomNumber = TestRandomNumber()
+    fun provideRandomNumberProvider(testRandomNumber: TestRandomNumberProvider): RandomNumberProvider = testRandomNumber
+
+    @Provides
+    @Singleton
+    fun provideTestRandomNumberProvider(): TestRandomNumberProvider = TestRandomNumberProvider()
 
     @Provides
     @Singleton

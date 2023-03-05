@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import dev.mslalith.focuslauncher.core.common.State
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.random.RandomNumber
+import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.core.data.di.modules.QuoteResponseToRoomMapperProvider
@@ -25,7 +25,7 @@ internal open class QuotesRepoImpl @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesDao: QuotesDao,
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
-    private val randomNumber: RandomNumber,
+    private val randomNumberProvider: RandomNumberProvider,
     @QuoteToRoomMapperProvider private val quoteToRoomMapper: QuoteToRoomMapper,
     @QuoteResponseToRoomMapperProvider private val quoteResponseToRoomMapper: QuoteResponseToRoomMapper
 ) : QuotesRepo {
@@ -44,7 +44,7 @@ internal open class QuotesRepoImpl @Inject constructor(
             if (it.isEmpty()) {
                 State.Initial
             } else {
-                State.Success(quoteToRoomMapper.fromEntity(it.elementAt(index = randomNumber.random(it.size))))
+                State.Success(quoteToRoomMapper.fromEntity(it.elementAt(index = randomNumberProvider.random(it.size))))
             }
         }
         _currentQuoteStateFlow.value = quoteState

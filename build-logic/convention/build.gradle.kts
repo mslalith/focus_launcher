@@ -45,5 +45,9 @@ gradlePlugin {
             id = "focuslauncher.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+        register("androidLibraryComposeTesting") {
+            id = "focuslauncher.android.library.compose.testing"
+            implementationClass = "AndroidLibraryComposeTestingConventionPlugin"
+        }
     }
 }
