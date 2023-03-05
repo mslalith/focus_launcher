@@ -38,7 +38,11 @@ object TestCommonModule {
 
     @Provides
     @Singleton
-    fun provideRandomNumber(): RandomNumber = TestRandomNumber()
+    fun provideRandomNumber(testRandomNumber: TestRandomNumber): RandomNumber = testRandomNumber
+
+    @Provides
+    @Singleton
+    fun provideTestRandomNumber(): TestRandomNumber = TestRandomNumber()
 
     @Provides
     @Singleton
