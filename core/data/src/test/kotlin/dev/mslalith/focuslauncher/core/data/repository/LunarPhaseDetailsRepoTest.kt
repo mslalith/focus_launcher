@@ -15,12 +15,12 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
+import dev.mslalith.focuslauncher.core.testing.extensions.withTimeZone
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.datetime.LocalDateTime
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +31,6 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
-@Ignore
 internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
 
     @get:Rule(order = 0)
@@ -49,134 +48,142 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
 
     @Test
     fun `given full moon date, verify phase is full moon`() = runCoroutineTest {
-        val instant = instantOf(dayOfMonth = 5, hour = 18, minute = 30)
-        repo.refreshLunarPhaseDetails(instant = instant, city = city)
+        withTimeZone {
+            val instant = instantOf(dayOfMonth = 5, hour = 18, minute = 30)
+            repo.refreshLunarPhaseDetails(instant = instant, city = city)
 
-        val expectedLunarPhaseDetails = LunarPhaseDetails(
-            lunarPhase = LunarPhase.FULL_MOON,
-            illumination = 0.9981534868284623,
-            phaseAngle = 4.9256389938282545,
-            nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-02-20T12:38:17.496"),
-                fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            ),
-            moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-07T00:34:47"),
-                setDateTime = LocalDateTime.parse("2023-02-06T12:12:09")
-            ),
-            sunRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-06T11:40:34"),
-                setDateTime = LocalDateTime.parse("2023-02-06T23:47:36")
+            val expectedLunarPhaseDetails = LunarPhaseDetails(
+                lunarPhase = LunarPhase.FULL_MOON,
+                illumination = 0.9981534868284623,
+                phaseAngle = 4.9256389938282545,
+                nextPhaseDetails = NextPhaseDetails(
+                    newMoon = LocalDateTime.parse("2023-02-20T07:08:17.496"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                ),
+                moonRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-05T18:20:24"),
+                    setDateTime = LocalDateTime.parse("2023-02-05T05:56:36")
+                ),
+                sunRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-05T06:10:28"),
+                    setDateTime = LocalDateTime.parse("2023-02-05T18:17:32")
+                )
             )
-        )
-        val expectedUpcomingLunarPhase = UpcomingLunarPhase(
-            lunarPhase = LunarPhase.NEW_MOON,
-            dateTime = LocalDateTime.parse("2023-02-20T12:38:17.496"),
-            isMicroMoon = false,
-            isSuperMoon = true
-        )
+            val expectedUpcomingLunarPhase = UpcomingLunarPhase(
+                lunarPhase = LunarPhase.NEW_MOON,
+                dateTime = LocalDateTime.parse("2023-02-20T07:08:17.496"),
+                isMicroMoon = false,
+                isSuperMoon = true
+            )
 
-        repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-        repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+        }
     }
 
     @Test
     fun `given new moon date, verify phase is new moon`() = runCoroutineTest {
-        val instant = instantOf(dayOfMonth = 20, hour = 7, minute = 9)
-        repo.refreshLunarPhaseDetails(instant = instant, city = city)
+        withTimeZone {
+            val instant = instantOf(dayOfMonth = 20, hour = 7, minute = 9)
+            repo.refreshLunarPhaseDetails(instant = instant, city = city)
 
-        val expectedLunarPhaseDetails = LunarPhaseDetails(
-            lunarPhase = LunarPhase.NEW_MOON,
-            illumination = 0.001589384074297484,
-            phaseAngle = -175.43035810796886,
-            nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-03-21T22:55:46.770"),
-                fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            ),
-            moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-21T12:43:01"),
-                setDateTime = LocalDateTime.parse("2023-02-21T00:15:18")
-            ),
-            sunRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-21T11:40:15"),
-                setDateTime = LocalDateTime.parse("2023-02-20T23:47:10")
+            val expectedLunarPhaseDetails = LunarPhaseDetails(
+                lunarPhase = LunarPhase.NEW_MOON,
+                illumination = 0.001589384074297484,
+                phaseAngle = -175.43035810796886,
+                nextPhaseDetails = NextPhaseDetails(
+                    newMoon = LocalDateTime.parse("2023-03-21T17:25:46.770"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.982"),
+                ),
+                moonRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-20T06:19:22"),
+                    setDateTime = LocalDateTime.parse("2023-02-20T18:45:18")
+                ),
+                sunRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-20T06:10:21"),
+                    setDateTime = LocalDateTime.parse("2023-02-20T18:17:10")
+                )
             )
-        )
-        val expectedUpcomingLunarPhase = UpcomingLunarPhase(
-            lunarPhase = LunarPhase.FULL_MOON,
-            dateTime = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            isMicroMoon = false,
-            isSuperMoon = false
-        )
+            val expectedUpcomingLunarPhase = UpcomingLunarPhase(
+                lunarPhase = LunarPhase.FULL_MOON,
+                dateTime = LocalDateTime.parse("2023-03-07T12:39:47.982"),
+                isMicroMoon = false,
+                isSuperMoon = false
+            )
 
-        repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-        repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+        }
     }
 
     @Test
     fun `given first quarter date, verify phase is first quarter`() = runCoroutineTest {
-        val instant = instantOf(dayOfMonth = 27, hour = 8, minute = 6)
-        repo.refreshLunarPhaseDetails(instant = instant, city = city)
+        withTimeZone {
+            val instant = instantOf(dayOfMonth = 27, hour = 8, minute = 6)
+            repo.refreshLunarPhaseDetails(instant = instant, city = city)
 
-        val expectedLunarPhaseDetails = LunarPhaseDetails(
-            lunarPhase = LunarPhase.FIRST_QUARTER,
-            illumination = 0.499714382113712,
-            phaseAngle = -90.03272940065548,
-            nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-03-21T22:55:46.771"),
-                fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            ),
-            moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-27T17:35:51"),
-                setDateTime = LocalDateTime.parse("2023-02-28T06:00:33")
-            ),
-            sunRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-28T11:39:14"),
-                setDateTime = LocalDateTime.parse("2023-02-27T23:46:07")
+            val expectedLunarPhaseDetails = LunarPhaseDetails(
+                lunarPhase = LunarPhase.FIRST_QUARTER,
+                illumination = 0.499714382113712,
+                phaseAngle = -90.03272940065548,
+                nextPhaseDetails = NextPhaseDetails(
+                    newMoon = LocalDateTime.parse("2023-03-21T17:25:46.771"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                ),
+                moonRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-27T12:05:52"),
+                    setDateTime = LocalDateTime.parse("2023-02-28T00:30:33")
+                ),
+                sunRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-27T06:09:24"),
+                    setDateTime = LocalDateTime.parse("2023-02-27T18:16:07")
+                )
             )
-        )
-        val expectedUpcomingLunarPhase = UpcomingLunarPhase(
-            lunarPhase = LunarPhase.FULL_MOON,
-            dateTime = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            isMicroMoon = false,
-            isSuperMoon = false
-        )
+            val expectedUpcomingLunarPhase = UpcomingLunarPhase(
+                lunarPhase = LunarPhase.FULL_MOON,
+                dateTime = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                isMicroMoon = false,
+                isSuperMoon = false
+            )
 
-        repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-        repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+        }
     }
 
     @Test
     fun `given last quarter date, verify phase is last quarter`() = runCoroutineTest {
-        val instant = instantOf(dayOfMonth = 13, hour = 4, minute = 3)
-        repo.refreshLunarPhaseDetails(instant = instant, city = city)
+        withTimeZone {
+            val instant = instantOf(dayOfMonth = 13, hour = 4, minute = 3)
+            repo.refreshLunarPhaseDetails(instant = instant, city = city)
 
-        val expectedLunarPhaseDetails = LunarPhaseDetails(
-            lunarPhase = LunarPhase.LAST_QUARTER,
-            illumination = 0.5538529537384493,
-            phaseAngle = 83.81691199458245,
-            nextPhaseDetails = NextPhaseDetails(
-                newMoon = LocalDateTime.parse("2023-02-20T12:38:17.496"),
-                fullMoon = LocalDateTime.parse("2023-03-07T18:09:47.981"),
-            ),
-            moonRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-14T05:41:42"),
-                setDateTime = LocalDateTime.parse("2023-02-13T17:14:22")
-            ),
-            sunRiseAndSetDetails = RiseAndSetDetails(
-                riseDateTime = LocalDateTime.parse("2023-02-13T11:40:46"),
-                setDateTime = LocalDateTime.parse("2023-02-13T23:47:40")
+            val expectedLunarPhaseDetails = LunarPhaseDetails(
+                lunarPhase = LunarPhase.LAST_QUARTER,
+                illumination = 0.5538529537384493,
+                phaseAngle = 83.81691199458245,
+                nextPhaseDetails = NextPhaseDetails(
+                    newMoon = LocalDateTime.parse("2023-02-20T07:08:17.492"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                ),
+                moonRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-14T00:11:42"),
+                    setDateTime = LocalDateTime.parse("2023-02-13T11:44:22")
+                ),
+                sunRiseAndSetDetails = RiseAndSetDetails(
+                    riseDateTime = LocalDateTime.parse("2023-02-13T06:10:46"),
+                    setDateTime = LocalDateTime.parse("2023-02-13T18:17:41")
+                )
             )
-        )
-        val expectedUpcomingLunarPhase = UpcomingLunarPhase(
-            lunarPhase = LunarPhase.NEW_MOON,
-            dateTime = LocalDateTime.parse("2023-02-20T12:38:17.496"),
-            isMicroMoon = false,
-            isSuperMoon = true
-        )
+            val expectedUpcomingLunarPhase = UpcomingLunarPhase(
+                lunarPhase = LunarPhase.NEW_MOON,
+                dateTime = LocalDateTime.parse("2023-02-20T07:08:17.492"),
+                isMicroMoon = false,
+                isSuperMoon = true
+            )
 
-        repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-        repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+        }
     }
 }
 
