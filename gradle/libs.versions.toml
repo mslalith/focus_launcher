@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.28.0"
+accompanist = "0.30.0"
 androidGradlePlugin = "7.4.2"
 androidxActivity = "1.7.0"
 androidxComposeBom = "2023.01.00"
