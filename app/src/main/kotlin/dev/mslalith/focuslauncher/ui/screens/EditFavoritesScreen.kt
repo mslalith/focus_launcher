@@ -114,18 +114,13 @@ private fun FavoritesList(
     val appHiddenMessage = stringResource(R.string.app_hidden_message)
 
     fun toggleFavorite(selectedApp: SelectedApp, isHidden: Boolean) {
-        if (!isHidden && selectedApp.isSelected) {
-            appsViewModel.apply {
-                if (selectedApp.isSelected) {
-                    removeFromFavorites(selectedApp.app)
-                } else {
-                    addToFavorites(selectedApp.app)
-                }
+        if (!isHidden) {
+            if (selectedApp.isSelected) {
+                appsViewModel.removeFromFavorites(selectedApp.app)
+            } else {
+                appsViewModel.addToFavorites(selectedApp.app)
             }
-            return
-        }
-
-        if (isHidden) {
+        } else {
             coroutineScope.launch {
                 scaffoldState.showSnackbar(
                     message = appHiddenMessage.replace("{}", selectedApp.app.name),

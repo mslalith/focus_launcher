@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
@@ -29,13 +30,13 @@ import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 fun ClockWidget(
     modifier: Modifier = Modifier,
     horizontalPadding: Dp,
-    centerVertically: Boolean = false,
+    verticalPadding: Dp = 0.dp,
 ) {
     ClockWidget(
         modifier = modifier,
         clock24ViewModel = hiltViewModel(),
         horizontalPadding = horizontalPadding,
-        centerVertically = centerVertically
+        verticalPadding = verticalPadding
     )
 }
 
@@ -44,7 +45,7 @@ internal fun ClockWidget(
     modifier: Modifier = Modifier,
     clock24ViewModel: Clock24ViewModel,
     horizontalPadding: Dp,
-    centerVertically: Boolean = false,
+    verticalPadding: Dp = 0.dp,
 ) {
     val clock24State by clock24ViewModel.clock24State.collectAsState()
 
@@ -53,7 +54,7 @@ internal fun ClockWidget(
         clock24State = clock24State,
         refreshTime = clock24ViewModel::refreshTime,
         horizontalPadding = horizontalPadding,
-        centerVertically = centerVertically
+        verticalPadding = verticalPadding
     )
 }
 
@@ -63,7 +64,7 @@ internal fun ClockWidget(
     clock24State: Clock24State,
     refreshTime: () -> Unit,
     horizontalPadding: Dp,
-    centerVertically: Boolean = false,
+    verticalPadding: Dp = 0.dp,
 ) {
     val updatedRefreshTime by rememberUpdatedState(newValue = refreshTime)
 
@@ -112,7 +113,7 @@ internal fun ClockWidget(
             } else {
                 CurrentTime(
                     currentTime = clock24State.currentTime,
-                    centerVertically = centerVertically
+                    modifier = Modifier.padding(vertical = verticalPadding)
                 )
             }
         }
