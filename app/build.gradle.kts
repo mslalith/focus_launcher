@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":screens:editfavourites"))
     implementation(project(":feature:homepage"))
     implementation(project(":feature:settingspage"))
     implementation(project(":feature:appdrawerpage"))
