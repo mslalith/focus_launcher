@@ -36,4 +36,7 @@ internal interface AppsDao {
 
     @Delete
     suspend fun removeApp(app: AppRoom)
+
+    @Query("DELETE FROM $APPS_TABLE_NAME")
+    suspend fun clearApps()
 }

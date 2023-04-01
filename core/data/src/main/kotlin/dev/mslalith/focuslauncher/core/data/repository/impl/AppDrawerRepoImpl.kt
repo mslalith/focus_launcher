@@ -26,6 +26,7 @@ internal class AppDrawerRepoImpl @Inject constructor(
     override suspend fun addApps(apps: List<App>) = appsDao.addApps(apps.map(appToRoomMapper::toEntity))
     override suspend fun addApp(app: App) = appsDao.addApp(appToRoomMapper.toEntity(app))
     override suspend fun removeApp(app: App) = appsDao.removeApp(appToRoomMapper.toEntity(app))
+    override suspend fun clearApps() = appsDao.clearApps()
 
     override suspend fun updateDisplayName(app: App, displayName: String) {
         val newApp = app.copy(displayName = displayName)
