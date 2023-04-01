@@ -2,7 +2,6 @@ package dev.mslalith.focuslauncher.core.ui.managers
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
@@ -41,7 +40,7 @@ class LauncherViewManager constructor(
 
     fun showBottomSheet(content: @Composable () -> Unit) {
         _sheetContentTypeFlow.value = content
-        coroutineScope.launch { bottomSheetState.animateTo(ModalBottomSheetValue.Expanded) }
+        coroutineScope.launch { bottomSheetState.show() }
     }
 
     fun hideDialog() {
