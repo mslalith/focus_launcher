@@ -1,8 +1,11 @@
 package dev.mslalith.focuslauncher.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -16,9 +19,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.core.ui.ConfirmDialog
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
@@ -28,8 +28,8 @@ import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun LauncherScreen() {
     val coroutineScope = rememberCoroutineScope()
@@ -64,7 +64,7 @@ fun LauncherScreen() {
                 .navigationBarsPadding()
         ) {
             HorizontalPager(
-                count = 3,
+                pageCount = 3,
                 state = pagerState,
                 modifier = Modifier.padding(bottom = it.calculateBottomPadding())
             ) { page ->
