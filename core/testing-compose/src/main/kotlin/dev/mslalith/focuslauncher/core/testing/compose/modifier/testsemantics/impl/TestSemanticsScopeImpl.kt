@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.i
 
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.TestSemanticsProperties
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.TestSemanticsScope
 
@@ -19,5 +20,9 @@ internal class TestSemanticsScopeImpl(
         biasAlignment: BiasAlignment.Vertical
     ) = with(semanticsPropertyReceiver) {
         this[TestSemanticsProperties.BiasAlignmentVertical] = biasAlignment
+    }
+
+    override fun testSelectedApp(selectedApp: SelectedApp) = with(semanticsPropertyReceiver) {
+        this[TestSemanticsProperties.SelectedApp] = selectedApp
     }
 }
