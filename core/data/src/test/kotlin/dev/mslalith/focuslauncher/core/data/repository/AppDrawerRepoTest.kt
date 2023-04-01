@@ -132,4 +132,18 @@ internal class AppDrawerRepoTest : CoroutineTest() {
         val items = repo.allAppsFlow.awaitItem()
         assertThat(items.map { it.displayName }).isEqualTo(listOf(app.displayName))
     }
+
+    @Test
+    fun `when apps are cleared, list should be empty`() = runCoroutineTest {
+        val apps = listOf(TestApps.Chrome, TestApps.Phone)
+        repo.addApps(apps)
+
+        var items = repo.allAppsFlow.awaitItem()
+        assertThat(items).isEqualTo(apps)
+
+        repo.clearApps()
+
+        items = repo.allAppsFlow.awaitItem()
+        assertThat(items).isEmpty()
+    }
 }

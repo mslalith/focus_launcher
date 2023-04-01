@@ -8,10 +8,18 @@ import dev.mslalith.focuslauncher.core.testing.compose.TestSemanticsProperties
 
 fun SemanticsNodeInteraction.assertBiasAlignment(
     biasAlignment: BiasAlignment.Horizontal
-): SemanticsNodeInteraction =
-    assert(SemanticsMatcher.expectValue(TestSemanticsProperties.BiasAlignmentHorizontal, biasAlignment))
+): SemanticsNodeInteraction = assert(
+    matcher = SemanticsMatcher.expectValue(
+        key = TestSemanticsProperties.BiasAlignmentHorizontal,
+        expectedValue = biasAlignment
+    )
+)
 
 fun SemanticsNodeInteraction.assertBiasAlignment(
     biasAlignment: BiasAlignment.Vertical
-): SemanticsNodeInteraction =
-    assert(SemanticsMatcher.expectValue(TestSemanticsProperties.BiasAlignmentVertical, biasAlignment))
+): SemanticsNodeInteraction = assert(
+    matcher = SemanticsMatcher.expectValue(
+        key = TestSemanticsProperties.BiasAlignmentVertical,
+        expectedValue = biasAlignment
+    )
+)

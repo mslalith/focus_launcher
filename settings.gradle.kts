@@ -34,6 +34,7 @@ include(
     ":core:ui",
     ":core:testing",
     ":core:testing-compose",
+    ":screens:editfavorites",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",

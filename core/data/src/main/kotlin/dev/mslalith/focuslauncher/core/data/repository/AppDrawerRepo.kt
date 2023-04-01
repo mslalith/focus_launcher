@@ -10,6 +10,7 @@ interface AppDrawerRepo {
     suspend fun addApps(apps: List<App>)
     suspend fun addApp(app: App)
     suspend fun removeApp(app: App)
+    suspend fun clearApps()
     suspend fun updateDisplayName(app: App, displayName: String)
     suspend fun areAppsEmptyInDatabase(): Boolean
 }
