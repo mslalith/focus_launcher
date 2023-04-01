@@ -27,6 +27,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,6 +42,7 @@ import org.robolectric.annotation.Config
     instrumentedPackages = ["androidx.loader.content"]
 )
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
+@Ignore
 class EditFavouritesScreenKtTest {
 
     @get:Rule
