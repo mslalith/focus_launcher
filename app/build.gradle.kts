@@ -57,6 +57,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.accompanist.pager)
     implementation(libs.accompanist.systemuicontroller)
 }
