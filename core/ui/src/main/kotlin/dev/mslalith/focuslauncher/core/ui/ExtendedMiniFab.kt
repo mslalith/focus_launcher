@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ExtendedMiniFab(
+    modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
     contentDescription: String? = null,
@@ -28,7 +29,7 @@ fun ExtendedMiniFab(
     val colors = MaterialTheme.colors
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .height(40.dp)
             .clip(RoundedCornerShape(percent = 50))
             .clickable { onClick() }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_hidden_message">Unhide {} to mark it as favorite</string>
+</resources>
