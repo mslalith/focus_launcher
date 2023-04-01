@@ -45,7 +45,7 @@ internal fun ClockWidget(
     modifier: Modifier = Modifier,
     clock24ViewModel: Clock24ViewModel,
     horizontalPadding: Dp,
-    verticalPadding: Dp,
+    verticalPadding: Dp = 0.dp,
 ) {
     val clock24State by clock24ViewModel.clock24State.collectAsState()
 
@@ -64,7 +64,7 @@ internal fun ClockWidget(
     clock24State: Clock24State,
     refreshTime: () -> Unit,
     horizontalPadding: Dp,
-    verticalPadding: Dp,
+    verticalPadding: Dp = 0.dp,
 ) {
     val updatedRefreshTime by rememberUpdatedState(newValue = refreshTime)
 
