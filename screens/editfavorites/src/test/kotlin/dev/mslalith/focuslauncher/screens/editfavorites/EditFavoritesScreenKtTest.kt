@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites
+package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.filterToOne
@@ -21,7 +21,7 @@ import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForSelectedAppsToUpdate
-import dev.mslalith.focuslauncher.screens.editfavourites.utils.TestTags
+import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -43,7 +43,7 @@ import org.robolectric.annotation.Config
 )
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @Ignore
-class EditFavouritesScreenKtTest {
+class EditFavoritesScreenKtTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -55,7 +55,7 @@ class EditFavouritesScreenKtTest {
     lateinit var appDrawerRepo: AppDrawerRepo
 
     @Inject
-    lateinit var favouritesRepo: FavoritesRepo
+    lateinit var favoritesRepo: FavoritesRepo
 
     @Inject
     lateinit var hiddenAppsRepo: HiddenAppsRepo
@@ -66,14 +66,14 @@ class EditFavouritesScreenKtTest {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
-    private lateinit var viewModel: EditFavouritesViewModel
+    private lateinit var viewModel: EditFavoritesViewModel
 
     @Before
     fun setup() {
         hiltRule.inject()
-        viewModel = EditFavouritesViewModel(
+        viewModel = EditFavoritesViewModel(
             appDrawerRepo = appDrawerRepo,
-            favouritesRepo = favouritesRepo,
+            favoritesRepo = favoritesRepo,
             hiddenAppsRepo = hiddenAppsRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
         )
@@ -81,8 +81,8 @@ class EditFavouritesScreenKtTest {
             appDrawerRepo.addApps(TestApps.all)
         }
         composeTestRule.setContent {
-            EditFavouritesScreen(
-                editFavouritesViewModel = viewModel,
+            EditFavoritesScreen(
+                editFavoritesViewModel = viewModel,
                 goBack = {}
             )
         }
@@ -91,7 +91,7 @@ class EditFavouritesScreenKtTest {
     @After
     fun teardown() {
         runBlocking {
-            favouritesRepo.clearFavorites()
+            favoritesRepo.clearFavorites()
             hiddenAppsRepo.clearHiddenApps()
             appDrawerRepo.clearApps()
             closeDatabase()
@@ -99,8 +99,8 @@ class EditFavouritesScreenKtTest {
     }
 
     @Test
-    fun `1 - initially favourites must not be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVOURITES_LIST_ITEM)
+    fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         TestApps.all.forEach {
             favoriteNodes.filterToOne(hasText(it.displayName)).assertSelectedApp(
                 selectedApp = it.toSelectedAppWith(isSelected = false)
@@ -109,8 +109,8 @@ class EditFavouritesScreenKtTest {
     }
 
     @Test
-    fun `2 - when all apps are added to favourite, every item in the list must be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVOURITES_LIST_ITEM)
+    fun `2 - when all apps are added to favorite, every item in the list must be selected`() = with(composeTestRule) {
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
             favoriteNodes[index].performClick()
         }
@@ -128,7 +128,7 @@ class EditFavouritesScreenKtTest {
 
     @Test
     fun `3 - when favorites are cleared, every item in the list must not be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVOURITES_LIST_ITEM)
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
             favoriteNodes[index].performClick()
         }
@@ -143,7 +143,7 @@ class EditFavouritesScreenKtTest {
             )
         }
 
-        onNodeWithTag(testTag = TestTags.TAG_CLEAR_FAVOURITES_FAB).performClick()
+        onNodeWithTag(testTag = TestTags.TAG_CLEAR_FAVORITES_FAB).performClick()
 
         favoriteNodes.waitForSelectedAppsToUpdate(
             selectedApps = TestApps.all.toSelectedAppWith(isSelected = false)
@@ -164,7 +164,7 @@ class EditFavouritesScreenKtTest {
             hiddenAppsRepo.addToHiddenApps(hiddenApps)
         }
 
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVOURITES_LIST_ITEM)
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
             favoriteNodes[index].performClick()
         }
@@ -189,7 +189,7 @@ class EditFavouritesScreenKtTest {
         }
         viewModel.shouldShowHiddenAppsInFavorites(value = true)
 
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVOURITES_LIST_ITEM)
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
             favoriteNodes[index].performClick()
         }

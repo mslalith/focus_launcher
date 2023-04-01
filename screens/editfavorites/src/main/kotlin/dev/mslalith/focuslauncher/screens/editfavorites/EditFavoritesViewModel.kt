@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites
+package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
 @HiltViewModel
-internal class EditFavouritesViewModel @Inject constructor(
+internal class EditFavoritesViewModel @Inject constructor(
     appDrawerRepo: AppDrawerRepo,
-    private val favouritesRepo: FavoritesRepo,
+    private val favoritesRepo: FavoritesRepo,
     hiddenAppsRepo: HiddenAppsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
@@ -32,9 +32,9 @@ internal class EditFavouritesViewModel @Inject constructor(
         _showHiddenAppsInFavorites.value = value
     }
 
-    val favouritesStateFlow: StateFlow<List<SelectedApp>> = appDrawerRepo.allAppsFlow
+    val favoritesStateFlow: StateFlow<List<SelectedApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedApp(app = app, isSelected = false) } }
-        .combine(favouritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
+        .combine(favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { selectedApp ->
                 val isSelected = onlyFavoritesList.any { it.packageName == selectedApp.app.packageName }
                 selectedApp.copy(isSelected = isSelected)
@@ -53,15 +53,15 @@ internal class EditFavouritesViewModel @Inject constructor(
             }
         }.withinScope(initialValue = emptyList())
 
-    fun addToFavourites(app: App) {
-        appCoroutineDispatcher.launchInIO { favouritesRepo.addToFavorites(app) }
+    fun addToFavorites(app: App) {
+        appCoroutineDispatcher.launchInIO { favoritesRepo.addToFavorites(app) }
     }
 
     fun removeFromFavorites(app: App) {
-        appCoroutineDispatcher.launchInIO { favouritesRepo.removeFromFavorites(app.packageName) }
+        appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(app.packageName) }
     }
 
-    fun clearFavourites() {
-        appCoroutineDispatcher.launchInIO { favouritesRepo.clearFavorites() }
+    fun clearFavorites() {
+        appCoroutineDispatcher.launchInIO { favoritesRepo.clearFavorites() }
     }
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.mslalith.focuslauncher.screens.editfavourites"
+    namespace = "dev.mslalith.focuslauncher.screens.editfavorites"
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites.ui
+package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

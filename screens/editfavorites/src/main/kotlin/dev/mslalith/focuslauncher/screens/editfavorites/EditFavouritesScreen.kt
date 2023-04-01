@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites
+package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -15,23 +15,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.ExtendedMiniFab
-import dev.mslalith.focuslauncher.screens.editfavourites.ui.FavoritesList
-import dev.mslalith.focuslauncher.screens.editfavourites.ui.HiddenAppActionText
-import dev.mslalith.focuslauncher.screens.editfavourites.utils.TestTags
+import dev.mslalith.focuslauncher.screens.editfavorites.ui.FavoritesList
+import dev.mslalith.focuslauncher.screens.editfavorites.ui.HiddenAppActionText
+import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 
 @Composable
-fun EditFavouritesScreen(
+fun EditFavoritesScreen(
     goBack: () -> Unit
 ) {
-    EditFavouritesScreen(
-        editFavouritesViewModel = hiltViewModel(),
+    EditFavoritesScreen(
+        editFavoritesViewModel = hiltViewModel(),
         goBack = goBack
     )
 }
 
 @Composable
-internal fun EditFavouritesScreen(
-    editFavouritesViewModel: EditFavouritesViewModel,
+internal fun EditFavoritesScreen(
+    editFavoritesViewModel: EditFavoritesViewModel,
     goBack: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -46,32 +46,32 @@ internal fun EditFavouritesScreen(
                 title = "Favorites",
                 onBackPressed = { goBack() },
                 actions = @Composable {
-                    val showHiddenApps by editFavouritesViewModel.showHiddenAppsInFavorites.collectAsState()
+                    val showHiddenApps by editFavoritesViewModel.showHiddenAppsInFavorites.collectAsState()
 
                     HiddenAppActionText(
                         showHiddenApps = showHiddenApps,
-                        onToggleHiddenApps = editFavouritesViewModel::shouldShowHiddenAppsInFavorites
+                        onToggleHiddenApps = editFavoritesViewModel::shouldShowHiddenAppsInFavorites
                     )
                 }
             )
         },
         floatingActionButton = {
             ExtendedMiniFab(
-                modifier = Modifier.testSemantics(tag = TestTags.TAG_CLEAR_FAVOURITES_FAB),
+                modifier = Modifier.testSemantics(tag = TestTags.TAG_CLEAR_FAVORITES_FAB),
                 text = "Clear Favorites",
                 icon = Icons.Rounded.Refresh,
-                onClick = editFavouritesViewModel::clearFavourites
+                onClick = editFavoritesViewModel::clearFavorites
             )
         }
     ) { paddingValues ->
-        val favorites by editFavouritesViewModel.favouritesStateFlow.collectAsState()
+        val favorites by editFavoritesViewModel.favoritesStateFlow.collectAsState()
 
         FavoritesList(
             modifier = Modifier.padding(paddingValues),
             scaffoldState = scaffoldState,
             favorites = favorites,
-            onAddToFavorites = { editFavouritesViewModel.addToFavourites(it) },
-            onRemoveFromFavorites = { editFavouritesViewModel.removeFromFavorites(it) }
+            onAddToFavorites = { editFavoritesViewModel.addToFavorites(it) },
+            onRemoveFromFavorites = { editFavoritesViewModel.removeFromFavorites(it) }
         )
     }
 }

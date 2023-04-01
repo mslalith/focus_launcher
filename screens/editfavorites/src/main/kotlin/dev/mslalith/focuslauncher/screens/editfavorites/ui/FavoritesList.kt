@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites.ui
+package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -14,8 +14,8 @@ import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.extensions.showSnackbar
-import dev.mslalith.focuslauncher.screens.editfavourites.R
-import dev.mslalith.focuslauncher.screens.editfavourites.utils.TestTags
+import dev.mslalith.focuslauncher.screens.editfavorites.R
+import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import kotlinx.coroutines.launch
 
 @Composable
@@ -48,13 +48,13 @@ internal fun FavoritesList(
     }
 
     LazyColumn(
-        modifier = modifier.testSemantics(tag = TestTags.TAG_FAVOURITES_LIST)
+        modifier = modifier.testSemantics(tag = TestTags.TAG_FAVORITES_LIST)
     ) {
         items(
             items = favorites
         ) { favorite ->
             FavoriteListItem(
-                modifier = Modifier.testSemantics(tag = TestTags.TAG_FAVOURITES_LIST_ITEM) {
+                modifier = Modifier.testSemantics(tag = TestTags.TAG_FAVORITES_LIST_ITEM) {
                     testSelectedApp(selectedApp = favorite)
                 },
                 selectedApp = favorite,

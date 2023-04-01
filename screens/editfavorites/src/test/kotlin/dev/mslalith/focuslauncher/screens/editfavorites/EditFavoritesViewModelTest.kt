@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites
+package dev.mslalith.focuslauncher.screens.editfavorites
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
@@ -31,7 +31,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-class EditFavouritesViewModelTest : CoroutineTest() {
+class EditFavoritesViewModelTest : CoroutineTest() {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -40,7 +40,7 @@ class EditFavouritesViewModelTest : CoroutineTest() {
     lateinit var appDrawerRepo: AppDrawerRepo
 
     @Inject
-    lateinit var favouritesRepo: FavoritesRepo
+    lateinit var favoritesRepo: FavoritesRepo
 
     @Inject
     lateinit var hiddenAppsRepo: HiddenAppsRepo
@@ -48,14 +48,14 @@ class EditFavouritesViewModelTest : CoroutineTest() {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
-    private lateinit var viewModel: EditFavouritesViewModel
+    private lateinit var viewModel: EditFavoritesViewModel
 
     @Before
     fun setup() {
         hiltRule.inject()
-        viewModel = EditFavouritesViewModel(
+        viewModel = EditFavoritesViewModel(
             appDrawerRepo = appDrawerRepo,
-            favouritesRepo = favouritesRepo,
+            favoritesRepo = favoritesRepo,
             hiddenAppsRepo = hiddenAppsRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
         )
@@ -65,9 +65,9 @@ class EditFavouritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `1 - initially favourites must not be selected`() = runCoroutineTest {
+    fun `1 - initially favorites must not be selected`() = runCoroutineTest {
         backgroundScope.launch {
-            viewModel.favouritesStateFlow.test {
+            viewModel.favoritesStateFlow.test {
                 assertThat(awaitItem()).isEmpty()
                 assertThat(awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
             }
@@ -75,17 +75,17 @@ class EditFavouritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `2 - when all apps are added to favourite, every item in the list must be selected`() = runCoroutineTest {
+    fun `2 - when all apps are added to favorite, every item in the list must be selected`() = runCoroutineTest {
         val apps = TestApps.all
 
         backgroundScope.launch {
-            viewModel.favouritesStateFlow.test {
+            viewModel.favoritesStateFlow.test {
                 assertThat(awaitItem()).isEmpty()
                 assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
             }
         }
 
-        apps.forEach { viewModel.addToFavourites(it) }
+        apps.forEach { viewModel.addToFavorites(it) }
     }
 
     @Test
@@ -93,15 +93,15 @@ class EditFavouritesViewModelTest : CoroutineTest() {
         val apps = TestApps.all
 
         backgroundScope.launch {
-            viewModel.favouritesStateFlow.test {
+            viewModel.favoritesStateFlow.test {
                 assertThat(awaitItem()).isEmpty()
                 assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
                 assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = false))
             }
         }
 
-        apps.forEach { viewModel.addToFavourites(it) }
-        viewModel.clearFavourites()
+        apps.forEach { viewModel.addToFavorites(it) }
+        viewModel.clearFavorites()
     }
 
     @Test
@@ -110,7 +110,7 @@ class EditFavouritesViewModelTest : CoroutineTest() {
         val apps = TestApps.all - hiddenApps.toSet()
 
         backgroundScope.launch {
-            viewModel.favouritesStateFlow.test {
+            viewModel.favoritesStateFlow.test {
                 assertThat(awaitItem()).isEmpty()
 
                 val actualApps = awaitItem()
@@ -129,7 +129,7 @@ class EditFavouritesViewModelTest : CoroutineTest() {
         val apps = totalApps - hiddenApps.toSet()
 
         backgroundScope.launch {
-            viewModel.favouritesStateFlow.test {
+            viewModel.favoritesStateFlow.test {
                 assertThat(awaitItem()).isEmpty()
 
                 var actualApps = awaitItem()

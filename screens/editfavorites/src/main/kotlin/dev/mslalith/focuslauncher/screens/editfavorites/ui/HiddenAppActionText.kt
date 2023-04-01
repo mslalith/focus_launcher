@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.editfavourites.ui
+package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
