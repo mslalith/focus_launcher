@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.screens.launcher
 
-import android.content.Context
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -12,16 +11,11 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import dev.mslalith.focuslauncher.screens.launcher.utils.appDrawerApps
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.unmockkAll
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -53,23 +47,20 @@ class LauncherViewModelTest : CoroutineTest() {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
+    private val launcherAppsManager = TestLauncherAppsManager()
+
     private lateinit var viewModel: LauncherViewModel
 
     @Before
     fun setup() {
-        mockkStatic("dev.mslalith.focuslauncher.screens.launcher.utils.SystemExtensionsKt")
         hiltRule.inject()
         viewModel = LauncherViewModel(
+            launcherAppsManager = launcherAppsManager,
             appDrawerRepo = appDrawerRepo,
             favoritesRepo = favoritesRepo,
             hiddenAppsRepo = hiddenAppsRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
         )
-    }
-
-    @After
-    fun teardown() {
-        unmockkAll()
     }
 
     @Test
@@ -86,9 +77,7 @@ class LauncherViewModelTest : CoroutineTest() {
             }
         }
 
-        val context = mockk<Context>()
-        every { context.appDrawerApps } returns TestApps.all
-        viewModel.setAppsIfCacheEmpty(context, checkCache = false)
+        viewModel.loadApps()
     }
 
     @Test

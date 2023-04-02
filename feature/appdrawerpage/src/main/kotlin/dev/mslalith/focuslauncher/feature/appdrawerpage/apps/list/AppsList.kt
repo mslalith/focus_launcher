@@ -11,37 +11,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.extensions.isAlphabet
-import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.core.ui.extensions.toAppWithIconList
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppsList(
-    apps: List<App>,
+    apps: List<AppWithIcon>,
     showAppIcons: Boolean,
     showAppGroupHeader: Boolean,
     isSearchQueryEmpty: Boolean,
     onAppClick: (AppWithIcon) -> Unit,
     onAppLongClick: (AppWithIcon) -> Unit
 ) {
-    val context = LocalContext.current
-
     val configuration = LocalConfiguration.current
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
     val bottomSpacing = configuration.screenHeightDp.dp * 0.05f
 
-    val appsList = remember(key1 = apps) {
-        apps.toAppWithIconList(context)
-    }
-
-    val groupedApps by remember(appsList) {
+    val groupedApps by remember(apps) {
         derivedStateOf {
-            appsList.groupBy { appModel ->
+            apps.groupBy { appModel ->
                 appModel.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
             }
         }

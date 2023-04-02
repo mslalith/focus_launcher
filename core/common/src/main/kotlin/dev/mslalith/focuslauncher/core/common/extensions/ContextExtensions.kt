@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.Settings
 import android.provider.Telephony
@@ -24,12 +23,6 @@ fun Context.openNotificationShade() {
     val statusBarManager: Class<*> = Class.forName("android.app.StatusBarManager")
     val method: Method = statusBarManager.getMethod("expandNotificationsPanel")
     method.invoke(statusBarService)
-}
-
-fun Context.iconOf(packageName: String): Drawable? = try {
-    packageManager.getApplicationIcon(packageName)
-} catch (ex: PackageManager.NameNotFoundException) {
-    null
 }
 
 fun Context.appNoIconModelOf(packageName: String): App? = try {

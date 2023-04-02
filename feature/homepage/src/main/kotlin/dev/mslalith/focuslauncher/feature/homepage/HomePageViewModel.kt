@@ -3,24 +3,29 @@ package dev.mslalith.focuslauncher.feature.homepage
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePageState
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class HomePageViewModel @Inject constructor(
+    private val launcherAppsManager: LauncherAppsManager,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -34,10 +39,22 @@ internal class HomePageViewModel @Inject constructor(
         favoritesList = emptyList()
     )
 
+    private val onlyFavoritesWithIcon: Flow<List<AppWithIcon>> = favoritesRepo.onlyFavoritesFlow.map { apps ->
+        apps.map { app ->
+            AppWithIcon(
+                name = app.name,
+                displayName = app.displayName,
+                packageName = app.packageName,
+                icon = launcherAppsManager.iconFor(app.packageName),
+                isSystem = app.isSystem
+            )
+        }
+    }
+
     val homePageState = flowOf(defaultHomePageState)
         .combine(generalSettingsRepo.notificationShadeFlow) { state, isPullDownNotificationShadeEnabled ->
             state.copy(isPullDownNotificationShadeEnabled = isPullDownNotificationShadeEnabled)
-        }.combine(favoritesRepo.onlyFavoritesFlow) { state, favorites ->
+        }.combine(onlyFavoritesWithIcon) { state, favorites ->
             state.copy(favoritesList = favorites)
         }.combine(_favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
@@ -60,14 +77,8 @@ internal class HomePageViewModel @Inject constructor(
             val isFirstRun = generalSettingsRepo.firstRunFlow.first()
             if (isFirstRun) {
                 generalSettingsRepo.overrideFirstRun()
-                defaultApps.forEach { addToFavorites(it) }
+                defaultApps.forEach { favoritesRepo.addToFavorites(it) }
             }
-        }
-    }
-
-    fun addToFavorites(app: App) {
-        appCoroutineDispatcher.launchInIO {
-            favoritesRepo.addToFavorites(app)
         }
     }
 

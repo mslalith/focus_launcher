@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -14,15 +15,18 @@ import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Ap
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 internal class AppDrawerPageViewModel @Inject constructor(
+    private val launcherAppsManager: LauncherAppsManager,
     appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val appDrawerRepo: AppDrawerRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
@@ -56,6 +60,18 @@ internal class AppDrawerPageViewModel @Inject constructor(
             }
         }
 
+    private val appsWithIconFlow: Flow<List<AppWithIcon>> = appDrawerAppsFlow.map { apps ->
+        apps.map { app ->
+            AppWithIcon(
+                name = app.name,
+                displayName = app.displayName,
+                packageName = app.packageName,
+                icon = launcherAppsManager.iconFor(app.packageName),
+                isSystem = app.isSystem
+            )
+        }
+    }
+
     val appDrawerPageState = flowOf(defaultAppDrawerPageState)
         .combine(appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
             state.copy(appDrawerViewType = appDrawerViewType)
@@ -67,7 +83,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
             state.copy(showSearchBar = showSearchBar)
         }.combine(searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
-        }.combine(appDrawerAppsFlow) { state, apps ->
+        }.combine(appsWithIconFlow) { state, apps ->
             state.copy(allApps = apps)
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
