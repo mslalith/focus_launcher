@@ -7,5 +7,5 @@ object TestApps {
     val Youtube = App(name = "Youtube", packageName = "com.android.youtube", isSystem = false)
     val Phone = App(name = "Phone", packageName = "com.android.phone", isSystem = true)
 
-    val all = listOf(Chrome, Youtube, Phone)
+    val all = listOf(Chrome, Phone, Youtube)
 }
