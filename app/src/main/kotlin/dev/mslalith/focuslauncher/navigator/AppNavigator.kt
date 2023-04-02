@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.navigator
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -10,8 +9,9 @@ import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
 import dev.mslalith.focuslauncher.screens.hideapps.HideAppsScreen
-import dev.mslalith.focuslauncher.ui.screens.LauncherScreen
+import dev.mslalith.focuslauncher.screens.launcher.LauncherScreen
 import dev.mslalith.focuslauncher.ui.screens.PickPlaceForLunarPhaseScreen
+import dev.mslalith.focuslauncher.ui.views.MainContent
 
 @Composable
 fun AppNavigator() {
@@ -28,10 +28,11 @@ fun AppNavigator() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 private fun NavGraphBuilder.launcherScreen() {
     composable(Screen.Launcher.id) {
-        LauncherScreen()
+        MainContent {
+            LauncherScreen()
+        }
     }
 }
 

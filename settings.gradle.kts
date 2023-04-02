@@ -34,6 +34,7 @@ include(
     ":core:ui",
     ":core:testing",
     ":core:testing-compose",
+    ":screens:launcher",
     ":screens:editfavorites",
     ":screens:hideapps",
     ":feature:homepage",

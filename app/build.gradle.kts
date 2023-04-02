@@ -45,19 +45,16 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
-    implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":screens:launcher"))
     implementation(project(":screens:editfavorites"))
     implementation(project(":screens:hideapps"))
-    implementation(project(":feature:homepage"))
     implementation(project(":feature:settingspage"))
-    implementation(project(":feature:appdrawerpage"))
 
     implementation(libs.google.material)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.accompanist.systemuicontroller)
 }

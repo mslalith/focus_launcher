@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.extensions
+package dev.mslalith.focuslauncher.screens.launcher.utils
 
 import android.content.Context
 import android.content.Intent
@@ -35,3 +35,4 @@ fun Context.canLaunch(packageName: String): Boolean {
         packageName == resolveInfo?.activityInfo?.packageName
     }
 }
+
