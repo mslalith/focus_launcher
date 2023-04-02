@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:theme="@style/Theme.FocusLauncher">
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
         <activity
             android:name=".LauncherActivity"
             android:clearTaskOnLaunch="true"

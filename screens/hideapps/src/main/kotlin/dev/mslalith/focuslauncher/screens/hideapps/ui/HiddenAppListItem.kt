@@ -2,10 +2,10 @@ package dev.mslalith.focuslauncher.screens.hideapps.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableCheckboxItem
 import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
-import dev.mslalith.focuslauncher.screens.hideapps.R
 import dev.mslalith.focuslauncher.screens.hideapps.model.HiddenApp
 
 @Composable
