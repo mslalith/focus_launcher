@@ -32,6 +32,7 @@ include(
     ":core:domain",
     ":core:data",
     ":core:ui",
+    ":core:resources",
     ":core:testing",
     ":core:testing-compose",
     ":screens:launcher",

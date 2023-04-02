@@ -32,7 +32,13 @@ fun AppBarWithBackIcon(
                 )
             }
         },
-        title = { Text(text = title) },
+        title = {
+            Text(
+                text = title,
+                color = MaterialTheme.colors.onBackground,
+                fontSize = MaterialTheme.typography.h6.fontSize
+            )
+        },
         actions = actions
     )
 }

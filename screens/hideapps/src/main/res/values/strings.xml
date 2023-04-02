@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hide_favorite_app_message">You marked %s as favorite. By hiding, this will be removed from favorites also</string>
-</resources>
