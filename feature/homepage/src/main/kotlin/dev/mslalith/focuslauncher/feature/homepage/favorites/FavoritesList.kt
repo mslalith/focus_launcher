@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,12 +27,12 @@ import dev.mslalith.focuslauncher.core.common.extensions.defaultMessagingApp
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
-import dev.mslalith.focuslauncher.core.ui.extensions.toAppWithIconList
+import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
 
 @Composable
 internal fun FavoritesList(
-    favoritesList: List<App>,
+    favoritesList: List<AppWithIcon>,
     addDefaultAppsToFavorites: (List<App>) -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
@@ -47,14 +46,9 @@ internal fun FavoritesList(
 ) {
     val context = LocalContext.current
     val currentContextMode by rememberUpdatedState(newValue = currentContextMode1)
-    val favoritesWithAppIcon = remember(key1 = favoritesList) {
-        // derivedStateOf {
-        favoritesList.toAppWithIconList(context)
-        // }
-    }
 
-    LaunchedEffect(favoritesWithAppIcon.isEmpty()) {
-        if (favoritesWithAppIcon.isNotEmpty() || isReordering()) return@LaunchedEffect
+    LaunchedEffect(favoritesList.isEmpty()) {
+        if (favoritesList.isNotEmpty() || isReordering()) return@LaunchedEffect
 
         hideContextualMode()
         val defaultApps = listOfNotNull(context.defaultDialerApp, context.defaultMessagingApp)
@@ -101,7 +95,7 @@ internal fun FavoritesList(
                 mainAxisSpacing = 16.dp,
                 crossAxisSpacing = 12.dp
             ) {
-                favoritesWithAppIcon.forEach { favorite ->
+                favoritesList.forEach { favorite ->
                     ReusableContent(key = favorite) {
                         FavoriteItem(
                             app = favorite,
