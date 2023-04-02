@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun SystemBroadcastReceiver(
     systemAction: String,
+    configure: IntentFilter.() -> Unit = {},
     onSystemEvent: (intent: Intent?) -> Unit
 ) {
     val context = LocalContext.current
@@ -20,6 +21,8 @@ fun SystemBroadcastReceiver(
 
     DisposableEffect(context, systemAction) {
         val intentFilter = IntentFilter(systemAction)
+        intentFilter.configure()
+
         val broadcast = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 currentOnSystemEvent(intent)

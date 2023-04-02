@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.androidx.core.testing)
     api(libs.truth)
     api(libs.turbine)
+    api(libs.mockk)
     api(libs.robolectric)
     implementation(libs.kotlinx.datetime)
 
