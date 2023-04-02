@@ -1,13 +1,11 @@
 package dev.mslalith.focuslauncher.core.testing
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.model.App
 
-class TestLauncherAppsManager(
-    private val context: Context
-) : LauncherAppsManager {
+class TestLauncherAppsManager : LauncherAppsManager {
+
     override fun loadAllApps(): List<App> = TestApps.all
 
     override fun loadApp(packageName: String): App = App(
@@ -17,6 +15,6 @@ class TestLauncherAppsManager(
     )
 
     override fun iconFor(packageName: String): Drawable {
-        return context.getDrawable(android.R.drawable.ic_delete)!!
+        return Drawable.createFromPath("M11,2l2,0l0,5l8,0l0,3l-8,0l0,4l5,0l0,3l-5,0l0,5l-2,0l0,-5l-5,0l0,-3l5,0l0,-4l-8,0l0,-3l8,0z")!!
     }
 }
