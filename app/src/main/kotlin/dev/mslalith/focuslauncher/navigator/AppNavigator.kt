@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
-import dev.mslalith.focuslauncher.ui.screens.HideAppsScreen
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsScreen
 import dev.mslalith.focuslauncher.ui.screens.LauncherScreen
 import dev.mslalith.focuslauncher.ui.screens.PickPlaceForLunarPhaseScreen
 
@@ -46,8 +46,9 @@ private fun NavGraphBuilder.editFavoritesScreen() {
 
 private fun NavGraphBuilder.hideAppsScreen() {
     composable(Screen.HideApps.id) {
+        val navController = LocalNavController.current
         HideAppsScreen(
-            appsViewModel = hiltViewModel(it)
+            goBack = navController::popBackStack
         )
     }
 }
