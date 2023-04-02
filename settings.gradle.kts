@@ -35,6 +35,7 @@ include(
     ":core:testing",
     ":core:testing-compose",
     ":screens:editfavorites",
+    ":screens:hideapps",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",
