@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.core.common.launcherapps.impl
 import android.content.Context
 import android.content.pm.LauncherApps
 import android.graphics.drawable.Drawable
+import android.os.Process
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.model.App
@@ -18,12 +19,10 @@ internal class LauncherAppsManagerImpl @Inject constructor(
     override fun loadAllApps(): List<App> {
         val appsList = mutableListOf<App>()
 
-        val userHandle = launcherApps.profiles.firstOrNull() ?: return appsList
-
-        for (launcherActivityInfo in launcherApps.getActivityList(null, userHandle)) {
+        for (launcherActivityInfo in launcherApps.getActivityList(null, Process.myUserHandle())) {
             val packageName = launcherActivityInfo.applicationInfo.packageName
             val app = App(
-                name = launcherActivityInfo.label.toString(),
+                name = launcherActivityInfo.applicationInfo.loadLabel(context.packageManager).toString(),
                 packageName = packageName,
                 isSystem = false,
             )
@@ -36,8 +35,7 @@ internal class LauncherAppsManagerImpl @Inject constructor(
     }
 
     override fun loadApp(packageName: String): App? {
-        val userHandle = launcherApps.profiles.firstOrNull() ?: return null
-        val launcherActivityInfo = launcherApps.getActivityList(packageName, userHandle).firstOrNull() ?: return null
+        val launcherActivityInfo = launcherApps.getActivityList(packageName, Process.myUserHandle()).firstOrNull() ?: return null
         val app = App(
             name = launcherActivityInfo.label.toString(),
             packageName = packageName,
