@@ -27,6 +27,11 @@
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <profileable
+            android:shell="true"
+            tools:targetApi="q" />
+
         <activity
             android:name=".LauncherActivity"
             android:clearTaskOnLaunch="true"

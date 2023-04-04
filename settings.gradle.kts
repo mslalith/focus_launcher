@@ -27,6 +27,7 @@ buildCache {
 rootProject.name = "Focus Launcher"
 include(
     ":app",
+    ":benchmark",
     ":core:common",
     ":core:model",
     ":core:domain",

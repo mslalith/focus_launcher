@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 allprojects {
