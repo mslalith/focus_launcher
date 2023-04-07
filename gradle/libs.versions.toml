@@ -1,6 +1,7 @@
 [versions]
 accompanist = "0.30.1"
 androidGradlePlugin = "7.4.2"
+androidTest = "7.4.2"
 androidxActivity = "1.7.0"
 androidxComposeBom = "2023.04.00"
 androidxComposeCompiler = "1.4.2"
@@ -12,9 +13,12 @@ androidxLifecycle = "2.6.1"
 androidxLifecycleRuntime = "2.6.1"
 androidxNavigation = "2.6.0-alpha09"
 androidxPalette = "1.0.0"
+androidxProfileInstaller = "1.3.0"
 androidxTestCore = "1.5.0"
 androidxTestJunit = "1.1.5"
 androidxTestRunner = "1.5.2"
+benchmarkMacroJunit4 = "1.1.1"
+espressoCore = "3.5.1"
 googleMaterial = "1.8.0"
 hilt = "2.45"
 hiltCompiler = "1.0.0"
@@ -33,6 +37,7 @@ room = "2.5.1"
 suncalc = "3.5"
 truth = "1.1.3"
 turbine = "0.12.3"
+uiautomator = "2.2.0"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -88,9 +93,16 @@ kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serializ
 kotlinx-kover = { group = "org.jetbrains.kotlinx", name = "kover", version.ref = "kover" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
+# Benchmark libs
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-profile-installer = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidxProfileInstaller" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-test = { id = "com.android.test", version.ref = "androidTest" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
