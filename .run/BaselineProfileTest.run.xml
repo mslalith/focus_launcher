@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="BaselineProfile" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="BaselineProfileTest" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--rerun-tasks -P android.testInstrumentationRunnerArguments.class=dev.mslalith.focuslauncher.benchmark.BaselineProfile" />
+      <option name="scriptParameters" value="--rerun-tasks -P android.testInstrumentationRunnerArguments.class=dev.mslalith.focuslauncher.benchmark.BaselineProfileTest" />
       <option name="taskDescriptions">
         <list />
       </option>
