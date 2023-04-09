@@ -23,7 +23,7 @@ fun AppNavigator() {
         launcherScreen()
         editFavoritesScreen()
         hideAppsScreen()
-        pickPlaceForLunarPhase()
+        currentPlaceScreen()
     }
 }
 
@@ -53,7 +53,7 @@ private fun NavGraphBuilder.hideAppsScreen() {
     }
 }
 
-private fun NavGraphBuilder.pickPlaceForLunarPhase() {
+private fun NavGraphBuilder.currentPlaceScreen() {
     composable(Screen.CurrentPlace.id) {
         val navController = LocalNavController.current
         CurrentPlaceScreen(
