@@ -3,7 +3,9 @@ package dev.mslalith.focuslauncher.core.data.utils
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.Theme
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {
     object DataStore {
@@ -61,6 +63,13 @@ object Constants {
                     name = "-",
                     latitude = 0.0,
                     longitude = 0.0
+                )
+                val DEFAULT_CURRENT_PLACE_2 = CurrentPlace(
+                    latLng = LatLng(
+                        latitude = 0.0,
+                        longitude = 0.0
+                    ),
+                    address = "Not Available"
                 )
             }
 

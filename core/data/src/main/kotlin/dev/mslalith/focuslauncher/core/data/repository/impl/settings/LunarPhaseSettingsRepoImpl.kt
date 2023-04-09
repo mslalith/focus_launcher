@@ -10,9 +10,11 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettin
 import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
 
 internal class LunarPhaseSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
@@ -39,6 +41,11 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
             val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
             cityJsonParser.fromJson(json)
         }
+    override val currentPlace: Flow<CurrentPlace>
+        get() = settingsDataStore.data.map {
+            val json = it[PREFERENCES_CURRENT_PLACE_2] ?: return@map Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE_2
+            Json.decodeFromString(deserializer = CurrentPlace.serializer(), string = json)
+        }
 
     override suspend fun toggleShowLunarPhase() = toggleData(
         preference = PREFERENCES_SHOW_LUNAR_PHASE,
@@ -58,6 +65,12 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
     override suspend fun updatePlace(city: City) {
         settingsDataStore.edit {
             it[PREFERENCES_CURRENT_PLACE] = cityJsonParser.toJson(city)
+        }
+    }
+
+    override suspend fun updateCurrentPlace(currentPlace: CurrentPlace) {
+        settingsDataStore.edit {
+            it[PREFERENCES_CURRENT_PLACE_2] = Json.encodeToString(serializer = CurrentPlace.serializer(), value = currentPlace)
         }
     }
 
@@ -82,5 +95,8 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
 
         private val PREFERENCES_CURRENT_PLACE =
             stringPreferencesKey("preferences_current_place")
+
+        private val PREFERENCES_CURRENT_PLACE_2 =
+            stringPreferencesKey("preferences_current_place_2")
     }
 }

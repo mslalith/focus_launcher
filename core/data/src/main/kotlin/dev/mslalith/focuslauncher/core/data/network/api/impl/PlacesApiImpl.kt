@@ -2,7 +2,10 @@ package dev.mslalith.focuslauncher.core.data.network.api.impl
 
 import dev.mslalith.focuslauncher.core.data.network.api.PlacesApi
 import dev.mslalith.focuslauncher.core.data.network.entities.CityResponse
+import dev.mslalith.focuslauncher.core.data.network.entities.PlaceResponse
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
@@ -20,10 +23,14 @@ internal class PlacesApiImpl @Inject constructor(
 
     @OptIn(ExperimentalSerializationApi::class)
     override suspend fun getCities(): List<CityResponse> {
-        val responseString = httpClient.get("$baseUrl/cities.json").bodyAsChannel()
+        val byteReadChannel = httpClient.get("$baseUrl/cities.json").bodyAsChannel()
         return Json.decodeFromStream(
             deserializer = ListSerializer(elementSerializer = CityResponse.serializer()),
-            stream = responseString.toInputStream()
+            stream = byteReadChannel.toInputStream()
         )
+    }
+
+    override suspend fun getAddress(latLng: LatLng): PlaceResponse {
+        return httpClient.get("https://nominatim.openstreetmap.org/reverse?format=json&lat=${latLng.latitude}&lon=${latLng.longitude}").body()
     }
 }
