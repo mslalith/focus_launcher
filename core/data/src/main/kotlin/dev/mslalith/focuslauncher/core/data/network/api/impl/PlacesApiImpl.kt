@@ -7,6 +7,7 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import javax.inject.Inject
@@ -30,7 +31,13 @@ internal class PlacesApiImpl @Inject constructor(
         )
     }
 
-    override suspend fun getAddress(latLng: LatLng): PlaceResponse {
-        return httpClient.get("https://nominatim.openstreetmap.org/reverse?format=json&lat=${latLng.latitude}&lon=${latLng.longitude}").body()
+    override suspend fun getAddress(latLng: LatLng): PlaceResponse? = try {
+        httpClient.get("https://nominatim.openstreetmap.org/reverse") {
+            parameter("format", "json")
+            parameter("lat", latLng.latitude)
+            parameter("lon", latLng.longitude)
+        }.body()
+    } catch (e: Exception) {
+        null
     }
 }

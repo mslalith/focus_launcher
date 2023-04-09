@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.core.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE_2
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
@@ -58,7 +58,7 @@ internal class LunarCalendarViewModel @Inject constructor(
             state.copy(upcomingLunarPhase = upcomingLunarPhase)
         }.withinScope(initialValue = defaultLunarCalendarState)
 
-    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(DEFAULT_CURRENT_PLACE)
+    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlace.withinScope(DEFAULT_CURRENT_PLACE_2)
 
     fun toggleShowLunarPhase() {
         appCoroutineDispatcher.launchInIO {

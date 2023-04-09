@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,9 +35,11 @@ fun SettingsSelectableItem(
 ) {
     val onBackgroundColor = MaterialTheme.colors.onBackground
     val textColor by animateColorAsState(
+        label = "Background color",
         targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor
     )
     val subTextColor by animateColorAsState(
+        label = "Sub Text color",
         targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(
             alpha = 0.6f
         )
@@ -70,6 +73,8 @@ fun SettingsSelectableItem(
                     ) {
                         Text(
                             text = subText ?: "",
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                             style = TextStyle(
                                 color = subTextColor,
                                 fontSize = 14.sp

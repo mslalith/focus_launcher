@@ -51,7 +51,7 @@ internal fun LunarPhaseSettingsSheet(
         )
         SettingsSelectableItem(
             text = "Current Place",
-            subText = currentPlace.name,
+            subText = currentPlace.address,
             disabled = !lunarCalendarState.showLunarPhase,
             onClick = navigateToCurrentPlace
         )

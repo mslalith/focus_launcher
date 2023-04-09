@@ -6,5 +6,5 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 internal interface PlacesApi {
     suspend fun getCities(): List<CityResponse>
-    suspend fun getAddress(latLng: LatLng): PlaceResponse
+    suspend fun getAddress(latLng: LatLng): PlaceResponse?
 }

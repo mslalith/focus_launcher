@@ -8,5 +8,6 @@ interface PlacesRepo {
     suspend fun getAllCities(): List<City>
     suspend fun getCitiesByQuery(query: String): List<City>
     suspend fun fetchCities()
-    suspend fun fetchAddress(latLng: LatLng): Place
+    suspend fun fetchAddressLocal(latLng: LatLng): Place?
+    suspend fun fetchAddress(latLng: LatLng): Place?
 }

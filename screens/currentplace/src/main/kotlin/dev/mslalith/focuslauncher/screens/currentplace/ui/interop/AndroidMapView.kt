@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.currentplace.ui.interop
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +11,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.screens.currentplace.R
+import kotlinx.coroutines.launch
 import org.osmdroid.api.IGeoPoint
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapListener
@@ -24,9 +26,12 @@ import org.osmdroid.views.overlay.Marker
 @Composable
 internal fun AndroidMapView(
     modifier: Modifier = Modifier,
+    initialLatLngProvider: suspend () -> LatLng,
     onLocationChange: (LatLng) -> Unit
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     var currentPositionMarker: Marker? = remember { null }
 
     fun MapView.updateCurrentPositionMarker(geoPoint: IGeoPoint?) {
@@ -51,10 +56,13 @@ internal fun AndroidMapView(
             Configuration.getInstance().load(context.applicationContext, context.getSharedPreferences("focus_launcher_map", Context.MODE_PRIVATE))
             MapView(it).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
-                val geoPoint = GeoPoint(17.45678, 83.5678)
-                controller.setCenter(geoPoint)
-                controller.setZoom(7.0)
-                updateCurrentPositionMarker(geoPoint)
+                coroutineScope.launch {
+                    val initialLatLng = initialLatLngProvider()
+                    val geoPoint = GeoPoint(initialLatLng.latitude, initialLatLng.longitude)
+                    controller.animateTo(geoPoint)
+                    controller.setZoom(7.0)
+                    updateCurrentPositionMarker(geoPoint)
+                }
                 addMapListener(object : MapListener {
                     override fun onScroll(event: ScrollEvent?): Boolean {
                         updateCurrentPositionMarker(event?.source?.mapCenter)

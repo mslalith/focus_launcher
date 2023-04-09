@@ -5,10 +5,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +25,7 @@ import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
 import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
+import kotlinx.coroutines.launch
 
 @Composable
 fun CurrentPlaceScreen(
@@ -36,9 +42,20 @@ internal fun CurrentPlaceScreen(
     currentPlaceViewModel: CurrentPlaceViewModel,
     goBack: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
+    fun onDoneClick() {
+        coroutineScope.launch {
+            currentPlaceViewModel.savePlace()
+            goBack()
+        }
+    }
+
     CurrentPlaceScreen(
         currentPlace = currentPlaceViewModel.currentPlaceStateFlow.collectAsState().value,
         goBack = goBack,
+        initialLatLngProvider = { currentPlaceViewModel.fetchCurrentPlaceFromDb().latLng },
+        onDoneClick = ::onDoneClick,
         onLocationChange = currentPlaceViewModel::updateCurrentLocation
     )
 }
@@ -47,6 +64,8 @@ internal fun CurrentPlaceScreen(
 internal fun CurrentPlaceScreen(
     currentPlace: CurrentPlace,
     goBack: () -> Unit,
+    initialLatLngProvider: suspend () -> LatLng,
+    onDoneClick: () -> Unit,
     onLocationChange: (LatLng) -> Unit
 ) {
     Scaffold(
@@ -57,6 +76,15 @@ internal fun CurrentPlaceScreen(
             AppBarWithBackIcon(
                 title = "Update Place",
                 onBackPressed = goBack,
+                actions = {
+                    IconButton(onClick = onDoneClick) {
+                        Icon(
+                            Icons.Rounded.Done,
+                            contentDescription = "Done icon",
+                            tint = MaterialTheme.colors.onBackground
+                        )
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -73,6 +101,7 @@ internal fun CurrentPlaceScreen(
                     .fillMaxWidth()
                     .weight(weight = 1f)
                     .clip(shape = MaterialTheme.shapes.small),
+                initialLatLngProvider = initialLatLngProvider,
                 onLocationChange = onLocationChange
             )
             VerticalSpacer(spacing = 8.dp)
@@ -87,6 +116,8 @@ fun PreviewUpdatePlace() {
         CurrentPlaceScreen(
             currentPlace = CurrentPlace(LatLng(0.0, 0.0), "Not Available"),
             goBack = { },
+            initialLatLngProvider = { LatLng(0.0, 0.0) },
+            onDoneClick = { },
             onLocationChange = { }
         )
     }
