@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.core.ui
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,15 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-
-sealed class IconType {
-    data class Vector(val imageVector: ImageVector) : IconType()
-    data class Resource(@DrawableRes val resId: Int) : IconType()
-}
+import dev.mslalith.focuslauncher.core.ui.model.IconType
 
 @Composable
 fun RoundIcon(

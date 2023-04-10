@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.lerp
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ internal fun LunarPhaseMoonIcon(
     val moonSpotColor = Color(0xFF5B6876)
 
     val rotationDegrees by animateFloatAsState(
+        label = "Lunar Moon Rotation",
         targetValue = when (phaseAngle < 0) {
             true -> 180f
             false -> 0f
@@ -40,6 +42,7 @@ internal fun LunarPhaseMoonIcon(
     val startOffset = Offset(-0.165f, 0f)
     val endOffset = Offset(1.165f, 0f)
     val percentOffset by animateOffsetAsState(
+        label = "Lunar Moon Illumination Percent Offset",
         targetValue = lerp(
             start = startOffset,
             stop = endOffset,
@@ -53,134 +56,160 @@ internal fun LunarPhaseMoonIcon(
             .clip(CircleShape)
             .drawWithContent {
                 val radius = size.minDimension / 2f
-                drawRect(color = moonColor)
-
-                // diagonal center 1
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .2f,
-                    center = Offset(
-                        x = radius * .5f,
-                        y = radius * .5f
-                    )
+                drawMoonSpots(
+                    radius = radius,
+                    moonColor = moonColor,
+                    moonSpotColor = moonSpotColor
                 )
 
-                // diagonal center 2
-                (radius * .15f).let {
-                    drawCircle(
-                        color = moonSpotColor,
-                        radius = it,
-                        center = Offset(
-                            x = radius + (it / 2f),
-                            y = radius - (it / 2f)
-                        )
-                    )
-                }
-
-                // diagonal center 3
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .2f,
-                    center = Offset(
-                        x = radius * 1.35f,
-                        y = radius * 1.55f
-                    )
+                drawIllumination(
+                    radius = radius,
+                    percentOffset = percentOffset,
+                    rotationDegrees = rotationDegrees,
+                    illuminatedColor = illuminatedColor
                 )
-
-                // diagonal top 1
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .1f,
-                    center = Offset(
-                        x = radius * 1.2f,
-                        y = radius * .3f
-                    )
-                )
-
-                // diagonal top 2
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .06f,
-                    center = Offset(
-                        x = radius * 1.65f,
-                        y = radius * .55f
-                    )
-                )
-
-                // diagonal top 3
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .1f,
-                    center = Offset(
-                        x = radius * 1.7f,
-                        y = radius
-                    )
-                )
-
-                // diagonal bottom 1
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .06f,
-                    center = Offset(
-                        x = radius * .2f,
-                        y = radius
-                    )
-                )
-
-                // diagonal bottom 2
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .1f,
-                    center = Offset(
-                        x = radius * .65f,
-                        y = radius * 1.3f
-                    )
-                )
-
-                // diagonal bottom 3
-                drawCircle(
-                    color = moonSpotColor,
-                    radius = radius * .06f,
-                    center = Offset(
-                        x = radius * .8f,
-                        y = radius * 1.75f
-                    )
-                )
-
-                Path()
-                    .apply {
-                        moveTo(radius, 0f)
-                        quadraticBezierTo(
-                            x1 = 0f,
-                            y1 = 0f,
-                            x2 = 0f,
-                            y2 = radius
-                        )
-                        quadraticBezierTo(
-                            x1 = 0f,
-                            y1 = size.height,
-                            x2 = radius,
-                            y2 = size.height
-                        )
-                        cubicTo(
-                            x1 = size.width * percentOffset.x,
-                            y1 = size.height,
-                            x2 = size.width * percentOffset.x,
-                            y2 = 0f,
-                            x3 = size.width * .5f,
-                            y3 = 0f
-                        )
-                        close()
-                    }
-                    .also {
-                        rotate(degrees = rotationDegrees) {
-                            drawPath(
-                                path = it,
-                                color = illuminatedColor,
-                                blendMode = BlendMode.Overlay
-                            )
-                        }
-                    }
             }
     )
+}
+
+private fun ContentDrawScope.drawMoonSpots(
+    radius: Float,
+    moonColor: Color,
+    moonSpotColor: Color
+) {
+    drawRect(color = moonColor)
+
+    // diagonal center 1
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .2f,
+        center = Offset(
+            x = radius * .5f,
+            y = radius * .5f
+        )
+    )
+
+    // diagonal center 2
+    (radius * .15f).let {
+        drawCircle(
+            color = moonSpotColor,
+            radius = it,
+            center = Offset(
+                x = radius + (it / 2f),
+                y = radius - (it / 2f)
+            )
+        )
+    }
+
+    // diagonal center 3
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .2f,
+        center = Offset(
+            x = radius * 1.35f,
+            y = radius * 1.55f
+        )
+    )
+
+    // diagonal top 1
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .1f,
+        center = Offset(
+            x = radius * 1.2f,
+            y = radius * .3f
+        )
+    )
+
+    // diagonal top 2
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .06f,
+        center = Offset(
+            x = radius * 1.65f,
+            y = radius * .55f
+        )
+    )
+
+    // diagonal top 3
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .1f,
+        center = Offset(
+            x = radius * 1.7f,
+            y = radius
+        )
+    )
+
+    // diagonal bottom 1
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .06f,
+        center = Offset(
+            x = radius * .2f,
+            y = radius
+        )
+    )
+
+    // diagonal bottom 2
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .1f,
+        center = Offset(
+            x = radius * .65f,
+            y = radius * 1.3f
+        )
+    )
+
+    // diagonal bottom 3
+    drawCircle(
+        color = moonSpotColor,
+        radius = radius * .06f,
+        center = Offset(
+            x = radius * .8f,
+            y = radius * 1.75f
+        )
+    )
+}
+
+private fun ContentDrawScope.drawIllumination(
+    radius: Float,
+    percentOffset: Offset,
+    rotationDegrees: Float,
+    illuminatedColor: Color
+) {
+    Path()
+        .apply {
+            moveTo(radius, 0f)
+            quadraticBezierTo(
+                x1 = 0f,
+                y1 = 0f,
+                x2 = 0f,
+                y2 = radius
+            )
+            quadraticBezierTo(
+                x1 = 0f,
+                y1 = size.height,
+                x2 = radius,
+                y2 = size.height
+            )
+            cubicTo(
+                x1 = size.width * percentOffset.x,
+                y1 = size.height,
+                x2 = size.width * percentOffset.x,
+                y2 = 0f,
+                x3 = size.width * .5f,
+                y3 = 0f
+            )
+            close()
+        }
+        .also {
+            rotate(degrees = rotationDegrees) {
+                drawPath(
+                    path = it,
+                    color = illuminatedColor,
+                    blendMode = BlendMode.Overlay
+                )
+            }
+        }
 }

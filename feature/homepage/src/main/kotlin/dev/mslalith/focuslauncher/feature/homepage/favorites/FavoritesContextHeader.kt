@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
-import dev.mslalith.focuslauncher.core.ui.IconType
+import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.feature.homepage.R
 import kotlin.reflect.KClass
 

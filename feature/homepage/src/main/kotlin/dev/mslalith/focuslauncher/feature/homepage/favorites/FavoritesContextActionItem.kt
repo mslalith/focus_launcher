@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
-import dev.mslalith.focuslauncher.core.ui.IconType
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
+import dev.mslalith.focuslauncher.core.ui.model.IconType
 import kotlin.reflect.KClass
 
 @Composable
