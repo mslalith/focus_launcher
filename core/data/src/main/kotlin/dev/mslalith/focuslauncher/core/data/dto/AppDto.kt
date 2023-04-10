@@ -19,3 +19,4 @@ internal fun App.toAppRoom(): AppRoom = AppRoom(
 )
 
 internal fun App.toHiddenAppRoom(): HiddenAppRoom = HiddenAppRoom(packageName = packageName)
+internal fun AppRoom.toHiddenAppRoom(): HiddenAppRoom = HiddenAppRoom(packageName = packageName)
