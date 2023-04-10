@@ -260,7 +260,7 @@ exceptions:
     active: true
     ignoreLabeled: false
   SwallowedException:
-    active: false # TODO: remove this
+    active: false
     ignoredExceptionTypes:
       - 'InterruptedException'
       - 'MalformedURLException'
@@ -721,7 +721,7 @@ style:
   UntilInsteadOfRangeTo:
     active: false
   UnusedImports:
-    active: false
+    active: true
   UnusedParameter:
     active: true
     allowedNames: 'ignored|expected'
@@ -740,7 +740,7 @@ style:
   UseCheckNotNull:
     active: true
   UseCheckOrError:
-    active: false # TODO: remove this
+    active: true
   UseDataClass:
     active: false
     allowVars: false

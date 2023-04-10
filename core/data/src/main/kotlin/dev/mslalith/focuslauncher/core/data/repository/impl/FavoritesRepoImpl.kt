@@ -47,7 +47,7 @@ internal class FavoritesRepoImpl @Inject constructor(
     }
 
     override suspend fun removeFromFavorites(packageName: String) {
-        val appRoom = appsDao.getAppBy(packageName) ?: throw IllegalStateException("$packageName app was not found in Database")
+        val appRoom = appsDao.getAppBy(packageName) ?: error("$packageName app was not found in Database")
         favoriteAppsDao.removeFavorite(appRoom.toFavoriteAppRoom())
     }
 

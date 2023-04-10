@@ -33,7 +33,7 @@ internal class HiddenAppsRepoImpl @Inject constructor(
     }
 
     override suspend fun removeFromHiddenApps(packageName: String) {
-        val appRoom = appsDao.getAppBy(packageName) ?: throw IllegalStateException("$packageName app was not found in Database")
+        val appRoom = appsDao.getAppBy(packageName) ?: error("$packageName app was not found in Database")
         hiddenAppsDao.unHideApp(appRoom.toHiddenAppRoom())
     }
 
