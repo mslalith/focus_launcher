@@ -9,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
-import dev.mslalith.focuslauncher.core.data.database.dao.CitiesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.PlacesDao
@@ -51,10 +50,6 @@ internal object TestRoomModule {
     @Provides
     @Singleton
     fun provideQuotesDao(appDatabase: AppDatabase): QuotesDao = appDatabase.quotesDao()
-
-    @Provides
-    @Singleton
-    fun provideCitiesDao(appDatabase: AppDatabase): CitiesDao = appDatabase.citiesDao()
 
     @Provides
     @Singleton

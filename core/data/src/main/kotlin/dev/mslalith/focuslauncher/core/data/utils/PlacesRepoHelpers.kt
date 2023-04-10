@@ -1,25 +1,42 @@
 package dev.mslalith.focuslauncher.core.data.utils
 
-import dev.mslalith.focuslauncher.core.data.network.entities.CityResponse
-import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.data.network.entities.AddressResponse
+import dev.mslalith.focuslauncher.core.data.network.entities.PlaceResponse
+import dev.mslalith.focuslauncher.core.model.location.LatLng
+import dev.mslalith.focuslauncher.core.model.place.Address
+import dev.mslalith.focuslauncher.core.model.place.Place
 
-internal fun dummyCityResponseFor(index: Int) = CityResponse(
-    id = index,
-    name = "Name #$index",
-    stateId = index,
-    stateName = "State Name #$index",
-    stateCode = "State Code #$index",
-    countryId = index,
-    countryCode = "Country Code #$index",
-    countryName = "Country Name #$index",
-    latitude = "$index.$index",
-    longitude = "$index.$index",
-    wikiDataId = "Wiki Data #$index"
-)
+internal fun dummyPlaceResponseFor(latLng: LatLng): PlaceResponse {
+    val number = latLng.latitude
+    return PlaceResponse(
+        id = number.toLong(),
+        latitude = latLng.latitude.toString(),
+        longitude = latLng.longitude.toString(),
+        license = "License $number",
+        osmType = "OSM Type $number",
+        osmId = number.toLong(),
+        displayName = "Display Name $number",
+        boundingBox = emptyList(),
+        address = AddressResponse(
+            state= "State $number",
+            country = "Country $number",
+        )
+    )
+}
 
-internal fun dummyCityFor(index: Int) = City(
-    id = index,
-    name = "Name #$index",
-    latitude = "$index.$index".toDouble(),
-    longitude = "$index.$index".toDouble(),
-)
+internal fun dummyPlaceFor(latLng: LatLng): Place {
+    val number = latLng.latitude
+    return Place(
+        id = number.toLong(),
+        license = "License $number",
+        displayName = "Display Name $number",
+        latLng = LatLng(
+            latitude = latLng.latitude,
+            longitude = latLng.longitude,
+        ),
+        address = Address(
+            state= "State $number",
+            country = "Country $number",
+        )
+    )
+}
