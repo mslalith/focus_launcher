@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE_2
+import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
@@ -29,7 +29,7 @@ internal class CurrentPlaceViewModel @Inject constructor(
     private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
 ) : ViewModel() {
 
-    private val _latLngStateFlow = MutableStateFlow(DEFAULT_CURRENT_PLACE_2.latLng)
+    private val _latLngStateFlow = MutableStateFlow(DEFAULT_CURRENT_PLACE.latLng)
     private val _addressStateFlow = MutableStateFlow(value = "Not Available")
 
     private val defaultCurrentPlace = CurrentPlace(
@@ -54,7 +54,7 @@ internal class CurrentPlaceViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    suspend fun fetchCurrentPlaceFromDb(): CurrentPlace = lunarPhaseSettingsRepo.currentPlace.firstOrNull() ?: defaultCurrentPlace
+    suspend fun fetchCurrentPlaceFromDb(): CurrentPlace = lunarPhaseSettingsRepo.currentPlaceFlow.firstOrNull() ?: defaultCurrentPlace
 
     private suspend fun fetchCurrentPlaceAndUpdateFlows() {
         val currentPlace = fetchCurrentPlaceFromDb()

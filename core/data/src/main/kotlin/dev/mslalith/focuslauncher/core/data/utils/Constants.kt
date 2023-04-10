@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.utils
 
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.Theme
@@ -58,13 +57,7 @@ object Constants {
                 const val DEFAULT_SHOW_LUNAR_PHASE = true
                 const val DEFAULT_SHOW_ILLUMINATION_PERCENT = true
                 const val DEFAULT_SHOW_UPCOMING_PHASE_DETAILS = true
-                val DEFAULT_CURRENT_PLACE = City(
-                    id = -1,
-                    name = "-",
-                    latitude = 0.0,
-                    longitude = 0.0
-                )
-                val DEFAULT_CURRENT_PLACE_2 = CurrentPlace(
+                val DEFAULT_CURRENT_PLACE = CurrentPlace(
                     latLng = LatLng(
                         latitude = 0.0,
                         longitude = 0.0

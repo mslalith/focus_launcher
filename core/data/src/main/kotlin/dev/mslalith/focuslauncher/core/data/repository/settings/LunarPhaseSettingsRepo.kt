@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.core.data.repository.settings
 
-import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import kotlinx.coroutines.flow.Flow
 
@@ -8,12 +7,10 @@ interface LunarPhaseSettingsRepo {
     val showLunarPhaseFlow: Flow<Boolean>
     val showIlluminationPercentFlow: Flow<Boolean>
     val showUpcomingPhaseDetailsFlow: Flow<Boolean>
-    val currentPlaceFlow: Flow<City>
-    val currentPlace: Flow<CurrentPlace>
+    val currentPlaceFlow: Flow<CurrentPlace>
 
     suspend fun toggleShowLunarPhase()
     suspend fun toggleShowIlluminationPercent()
     suspend fun toggleShowUpcomingPhaseDetails()
-    suspend fun updatePlace(city: City)
     suspend fun updateCurrentPlace(currentPlace: CurrentPlace)
 }
