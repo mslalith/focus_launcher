@@ -5,12 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
-import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
 import dev.mslalith.focuslauncher.core.data.dto.HiddenToRoomMapper
-import dev.mslalith.focuslauncher.core.data.dto.QuoteResponseToRoomMapper
-import dev.mslalith.focuslauncher.core.data.dto.QuoteToRoomMapper
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -44,16 +41,6 @@ internal object DtoMapperModule {
         appsDao = appsDao,
         appToRoomMapper = appToRoomMapper
     )
-
-    @QuoteToRoomMapperProvider
-    @Provides
-    @Singleton
-    fun provideQuoteToRoomMapper(quotesDao: QuotesDao): QuoteToRoomMapper = QuoteToRoomMapper(quotesDao)
-
-    @QuoteResponseToRoomMapperProvider
-    @Provides
-    @Singleton
-    fun provideQuoteResponseToRoomMapper(): QuoteResponseToRoomMapper = QuoteResponseToRoomMapper()
 }
 
 @Qualifier
@@ -67,11 +54,3 @@ internal annotation class FavoriteToRoomMapperProvider
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 internal annotation class HiddenToRoomMapperProvider
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class QuoteToRoomMapperProvider
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class QuoteResponseToRoomMapperProvider
