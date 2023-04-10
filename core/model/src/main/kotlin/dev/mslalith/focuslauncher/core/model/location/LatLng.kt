@@ -1,11 +1,9 @@
-package dev.mslalith.focuslauncher.core.model
+package dev.mslalith.focuslauncher.core.model.location
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class City(
-    val id: Int,
-    val name: String,
+data class LatLng(
     val latitude: Double,
     val longitude: Double
 )

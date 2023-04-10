@@ -8,7 +8,8 @@ import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Lu
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
-import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.model.CurrentPlace
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -78,14 +79,15 @@ internal class LunarPhaseSettingsRepoTest : CoroutineTest() {
             flow = repo.currentPlaceFlow,
             initialItem = DEFAULT_CURRENT_PLACE,
             mutate = {
-                val newCity = City(
-                    id = 13,
-                    name = "Test",
-                    latitude = 34.87,
-                    longitude = 56.23
+                val newPlace = CurrentPlace(
+                    latLng = LatLng(
+                        latitude = 34.87,
+                        longitude = 56.23
+                    ),
+                    address = "Address"
                 )
-                repo.updatePlace(city = newCity)
-                newCity
+                repo.updateCurrentPlace(currentPlace = newPlace)
+                newPlace
             }
         )
     }

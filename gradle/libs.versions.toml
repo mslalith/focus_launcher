@@ -32,6 +32,7 @@ ksp = "1.8.10-1.0.9"
 ktlint = "11.3.1"
 ktorClient = "2.2.4"
 mockk = "1.13.4"
+osmdroid = "6.1.16"
 robolectric = "4.9.2"
 room = "2.5.1"
 suncalc = "3.5"
@@ -77,6 +78,7 @@ ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref =
 ktor-client-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorClient" }
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
 mockk = { group = "io.mockk", name="mockk", version.ref = "mockk" }
+osmdroid = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }

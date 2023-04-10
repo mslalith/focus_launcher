@@ -7,16 +7,15 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.mslalith.focuslauncher.core.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.core.data.serializers.CityJsonParser
 import dev.mslalith.focuslauncher.core.data.utils.Constants
-import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
 
 internal class LunarPhaseSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
-    private val cityJsonParser: CityJsonParser
 ) : LunarPhaseSettingsRepo {
 
     override val showLunarPhaseFlow: Flow<Boolean>
@@ -34,10 +33,10 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
             it[PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
         }
 
-    override val currentPlaceFlow: Flow<City>
+    override val currentPlaceFlow: Flow<CurrentPlace>
         get() = settingsDataStore.data.map {
             val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
-            cityJsonParser.fromJson(json)
+            Json.decodeFromString(deserializer = CurrentPlace.serializer(), string = json)
         }
 
     override suspend fun toggleShowLunarPhase() = toggleData(
@@ -55,9 +54,9 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
         defaultValue = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
     )
 
-    override suspend fun updatePlace(city: City) {
+    override suspend fun updateCurrentPlace(currentPlace: CurrentPlace) {
         settingsDataStore.edit {
-            it[PREFERENCES_CURRENT_PLACE] = cityJsonParser.toJson(city)
+            it[PREFERENCES_CURRENT_PLACE] = Json.encodeToString(serializer = CurrentPlace.serializer(), value = currentPlace)
         }
     }
 
@@ -81,6 +80,6 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
             booleanPreferencesKey("preferences_show_upcoming_phase_details")
 
         private val PREFERENCES_CURRENT_PLACE =
-            stringPreferencesKey("preferences_current_place")
+            stringPreferencesKey("preferences_current_place_key")
     }
 }

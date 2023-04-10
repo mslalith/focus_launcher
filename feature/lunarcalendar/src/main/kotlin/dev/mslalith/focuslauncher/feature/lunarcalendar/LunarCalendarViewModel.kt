@@ -29,10 +29,10 @@ internal class LunarCalendarViewModel @Inject constructor(
 
     init {
         appCoroutineDispatcher.launchInIO {
-            clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, city ->
-                instant to city
-            }.collectLatest { (instant, city) ->
-                lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant, city)
+            clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, currentPlace ->
+                instant to currentPlace
+            }.collectLatest { (instant, currentPlace) ->
+                lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant = instant, latLng = currentPlace.latLng)
             }
         }
     }

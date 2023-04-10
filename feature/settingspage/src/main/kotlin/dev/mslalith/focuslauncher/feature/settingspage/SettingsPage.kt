@@ -112,8 +112,8 @@ private fun Widgets(
                     viewManager.showBottomSheet {
                         LunarPhaseSettingsSheet(
                             properties = LunarPhaseSettingsProperties(
-                                navigateToPickPlaceForLunarPhase = {
-                                    navController.navigate(Screen.PickPlaceForLunarPhase.id)
+                                navigateToCurrentPlace = {
+                                    navController.navigate(Screen.CurrentPlace.id)
                                 }
                             )
                         )

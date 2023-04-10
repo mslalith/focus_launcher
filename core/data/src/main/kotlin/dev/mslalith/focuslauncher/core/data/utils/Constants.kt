@@ -1,9 +1,10 @@
 package dev.mslalith.focuslauncher.core.data.utils
 
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.City
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.Theme
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {
     object DataStore {
@@ -17,7 +18,7 @@ object Constants {
         const val FAVORITE_APPS_TABLE_NAME = "favorites_apps"
         const val HIDDEN_APPS_TABLE_NAME = "hidden_apps"
         const val QUOTES_TABLE_NAME = "quotes"
-        const val CITIES_TABLE_NAME = "cities"
+        const val PLACES_TABLE_NAME = "places"
     }
 
     object Defaults {
@@ -56,11 +57,12 @@ object Constants {
                 const val DEFAULT_SHOW_LUNAR_PHASE = true
                 const val DEFAULT_SHOW_ILLUMINATION_PERCENT = true
                 const val DEFAULT_SHOW_UPCOMING_PHASE_DETAILS = true
-                val DEFAULT_CURRENT_PLACE = City(
-                    id = -1,
-                    name = "-",
-                    latitude = 0.0,
-                    longitude = 0.0
+                val DEFAULT_CURRENT_PLACE = CurrentPlace(
+                    latLng = LatLng(
+                        latitude = 0.0,
+                        longitude = 0.0
+                    ),
+                    address = "Not Available"
                 )
             }
 

@@ -9,9 +9,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
-import dev.mslalith.focuslauncher.core.data.database.dao.CitiesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.HiddenAppsDao
+import dev.mslalith.focuslauncher.core.data.database.dao.PlacesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.APP_DB_NAME
@@ -51,5 +51,5 @@ internal object RoomModule {
 
     @Provides
     @Singleton
-    fun provideCitiesDao(appDatabase: AppDatabase): CitiesDao = appDatabase.citiesDao()
+    fun providePlacesDao(appDatabase: AppDatabase): PlacesDao = appDatabase.placesDao()
 }

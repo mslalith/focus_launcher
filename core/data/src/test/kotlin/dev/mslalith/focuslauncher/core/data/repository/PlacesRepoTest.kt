@@ -4,8 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.data.utils.dummyCityFor
-import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,27 +29,23 @@ internal class PlacesRepoTest : CoroutineTest() {
     @Inject
     lateinit var repo: PlacesRepo
 
+    private val latLngZero = LatLng(latitude = 0.0, longitude = 0.0)
+
     @Before
     fun setup() {
         hiltRule.inject()
-        runBlocking { repo.fetchCities() }
+        runBlocking { repo.fetchAddress(latLng = latLngZero) }
     }
 
     @Test
-    fun `when fetchCities is called, make sure cities are updated to database`() = runCoroutineTest {
-        val expectedCities = List(size = 6) { dummyCityFor(index = it) }
-        assertThat(repo.getAllCities()).isEqualTo(expectedCities)
-    }
-
-    @Test
-    fun `when fetch for an existing city, make sure city is returned`() = runCoroutineTest {
-        val expectedCity = dummyCityFor(index = 2)
-        assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(listOf(expectedCity))
+    fun `when fetched for an existing place, make sure place is returned`() = runCoroutineTest {
+        val expectedPlace = dummyPlaceFor(latLng = latLngZero)
+        assertThat(repo.fetchAddressLocal(latLng = latLngZero)).isEqualTo(expectedPlace)
     }
 
     @Test
     fun `when fetch for a non-existing city, make sure city is not returned`() = runCoroutineTest {
-        val expectedCity = dummyCityFor(index = 23)
-        assertThat(repo.getCitiesByQuery(query = expectedCity.name)).isEqualTo(emptyList<City>())
+        val latLng = LatLng(latitude = 23.0, longitude = 23.0)
+        assertThat(repo.fetchAddressLocal(latLng = latLng)).isNull()
     }
 }

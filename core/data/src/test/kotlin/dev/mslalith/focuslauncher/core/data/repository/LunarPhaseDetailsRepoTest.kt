@@ -6,7 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.extensions.limitDecimals
 import dev.mslalith.focuslauncher.core.common.getOrNull
-import dev.mslalith.focuslauncher.core.model.City
+import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
@@ -39,7 +39,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     @Inject
     lateinit var repo: LunarPhaseDetailsRepo
 
-    private val city = City(id = 0, name = "Something", latitude = 0.0, longitude = 0.0)
+    private val latLngZero = LatLng(latitude = 0.0, longitude = 0.0)
 
     @Before
     fun setup() {
@@ -50,7 +50,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     fun `given full moon date, verify phase is full moon`() = runCoroutineTest {
         withTimeZone {
             val instant = instantOf(dayOfMonth = 5, hour = 18, minute = 30)
-            repo.refreshLunarPhaseDetails(instant = instant, city = city)
+            repo.refreshLunarPhaseDetails(instant = instant, latLng = latLngZero)
 
             val expectedLunarPhaseDetails = LunarPhaseDetails(
                 lunarPhase = LunarPhase.FULL_MOON,
@@ -85,7 +85,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     fun `given new moon date, verify phase is new moon`() = runCoroutineTest {
         withTimeZone {
             val instant = instantOf(dayOfMonth = 20, hour = 7, minute = 9)
-            repo.refreshLunarPhaseDetails(instant = instant, city = city)
+            repo.refreshLunarPhaseDetails(instant = instant, latLng = latLngZero)
 
             val expectedLunarPhaseDetails = LunarPhaseDetails(
                 lunarPhase = LunarPhase.NEW_MOON,
@@ -120,7 +120,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     fun `given first quarter date, verify phase is first quarter`() = runCoroutineTest {
         withTimeZone {
             val instant = instantOf(dayOfMonth = 27, hour = 8, minute = 6)
-            repo.refreshLunarPhaseDetails(instant = instant, city = city)
+            repo.refreshLunarPhaseDetails(instant = instant, latLng = latLngZero)
 
             val expectedLunarPhaseDetails = LunarPhaseDetails(
                 lunarPhase = LunarPhase.FIRST_QUARTER,
@@ -155,7 +155,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     fun `given last quarter date, verify phase is last quarter`() = runCoroutineTest {
         withTimeZone {
             val instant = instantOf(dayOfMonth = 13, hour = 4, minute = 3)
-            repo.refreshLunarPhaseDetails(instant = instant, city = city)
+            repo.refreshLunarPhaseDetails(instant = instant, latLng = latLngZero)
 
             val expectedLunarPhaseDetails = LunarPhaseDetails(
                 lunarPhase = LunarPhase.LAST_QUARTER,

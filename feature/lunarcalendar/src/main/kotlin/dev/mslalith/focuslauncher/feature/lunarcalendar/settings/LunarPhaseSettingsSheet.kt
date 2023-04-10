@@ -18,14 +18,14 @@ fun LunarPhaseSettingsSheet(
 ) {
     LunarPhaseSettingsSheet(
         lunarCalendarViewModel = hiltViewModel(),
-        navigateToPickPlaceForLunarPhase = properties.navigateToPickPlaceForLunarPhase
+        navigateToCurrentPlace = properties.navigateToCurrentPlace
     )
 }
 
 @Composable
 internal fun LunarPhaseSettingsSheet(
     lunarCalendarViewModel: LunarCalendarViewModel,
-    navigateToPickPlaceForLunarPhase: () -> Unit
+    navigateToCurrentPlace: () -> Unit
 ) {
     val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsState()
     val currentPlace by lunarCalendarViewModel.currentPlaceStateFlow.collectAsState()
@@ -51,9 +51,9 @@ internal fun LunarPhaseSettingsSheet(
         )
         SettingsSelectableItem(
             text = "Current Place",
-            subText = currentPlace.name,
+            subText = currentPlace.address,
             disabled = !lunarCalendarState.showLunarPhase,
-            onClick = { navigateToPickPlaceForLunarPhase() }
+            onClick = navigateToCurrentPlace
         )
         VerticalSpacer(spacing = 12.dp)
     }

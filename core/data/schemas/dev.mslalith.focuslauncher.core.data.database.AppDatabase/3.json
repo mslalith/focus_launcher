@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "78baa3672dce208785de919cf7f4ef51",
+    "version": 3,
+    "identityHash": "4a182e4cae45c46bf8189313a687b810",
     "entities": [
       {
         "tableName": "apps",
@@ -122,86 +122,6 @@
             "columnName": "tags",
             "affinity": "TEXT",
             "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "cities",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `stateId` INTEGER NOT NULL, `stateCode` TEXT NOT NULL, `stateName` TEXT NOT NULL, `countryId` INTEGER NOT NULL, `countryCode` TEXT NOT NULL, `countryName` TEXT NOT NULL, `latitude` TEXT NOT NULL, `longitude` TEXT NOT NULL, `wikiDataId` TEXT, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "stateId",
-            "columnName": "stateId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "stateCode",
-            "columnName": "stateCode",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "stateName",
-            "columnName": "stateName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "countryId",
-            "columnName": "countryId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "countryCode",
-            "columnName": "countryCode",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "countryName",
-            "columnName": "countryName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "latitude",
-            "columnName": "latitude",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "longitude",
-            "columnName": "longitude",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "wikiDataId",
-            "columnName": "wikiDataId",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -345,7 +265,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '78baa3672dce208785de919cf7f4ef51')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a182e4cae45c46bf8189313a687b810')"
     ]
   }
 }

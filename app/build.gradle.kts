@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":screens:launcher"))
     implementation(project(":screens:editfavorites"))
     implementation(project(":screens:hideapps"))
+    implementation(project(":screens:currentplace"))
     implementation(project(":feature:settingspage"))
 
     implementation(libs.google.material)
