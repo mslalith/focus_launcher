@@ -11,12 +11,14 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.kotlin.android) apply false
 }
 
 allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "io.gitlab.arturbosch.detekt")
 }
 
 ktlint {
@@ -27,6 +29,12 @@ ktlint {
         reporter(ReporterType.CHECKSTYLE)
         reporter(ReporterType.JSON)
     }
+}
+
+detekt {
+    toolVersion = libs.versions.detekt.get()
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
 }
 
 kover {
