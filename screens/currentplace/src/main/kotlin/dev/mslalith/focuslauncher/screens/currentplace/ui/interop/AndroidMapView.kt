@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import dev.mslalith.focuslauncher.core.common.extensions.limitDecimals
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.screens.currentplace.R
 import kotlinx.coroutines.launch
@@ -46,7 +47,10 @@ internal fun AndroidMapView(
         }
         currentPositionMarker?.apply {
             position = GeoPoint(geoPoint.latitude, geoPoint.longitude)
-            onLocationChange(LatLng(latitude = geoPoint.latitude, longitude = geoPoint.longitude))
+            onLocationChange(LatLng(
+                latitude = geoPoint.latitude.limitDecimals(precision = 5).toDouble(),
+                longitude = geoPoint.longitude.limitDecimals(precision = 5).toDouble()
+            ))
         }
     }
 

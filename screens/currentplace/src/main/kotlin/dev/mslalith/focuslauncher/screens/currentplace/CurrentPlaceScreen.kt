@@ -24,7 +24,7 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
-import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
+import dev.mslalith.focuslauncher.screens.currentplace.ui.MapView
 import kotlinx.coroutines.launch
 
 @Composable
@@ -96,7 +96,7 @@ internal fun CurrentPlaceScreen(
             VerticalSpacer(spacing = 8.dp)
             CurrentPlaceInfo(currentPlace = currentPlace)
             VerticalSpacer(spacing = 16.dp)
-            AndroidMapView(
+            MapView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(weight = 1f)
