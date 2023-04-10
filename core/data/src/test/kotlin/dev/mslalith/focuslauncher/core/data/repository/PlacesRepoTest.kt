@@ -44,7 +44,7 @@ internal class PlacesRepoTest : CoroutineTest() {
     }
 
     @Test
-    fun `when fetch for a non-existing city, make sure city is not returned`() = runCoroutineTest {
+    fun `when fetch for a non-existing place, make sure place is not returned`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 23.0)
         assertThat(repo.fetchAddressLocal(latLng = latLng)).isNull()
     }

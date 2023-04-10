@@ -26,9 +26,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-  ktlint:
+  static_analysis:
     needs: [ setup ]
-    name: Run ktlint
+    name: Run Static Analysis
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -37,6 +37,9 @@ jobs:
 
       - name: Run ktlint
         run: ./gradlew ktlintCheck --build-cache
+
+      - name: Run detekt
+        run: ./gradlew detekt
 
   build:
     needs: [ setup ]
@@ -52,7 +55,7 @@ jobs:
           arguments: assembleDebug --stacktrace --no-daemon --build-cache
 
   unit_tests:
-    needs: [ ktlint, build ]
+    needs: [ static_analysis, build ]
     name: Run Unit Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -67,7 +70,7 @@ jobs:
 
   android_tests:
     if: ${{ false }} # Disable checking Instrumentation tests
-    needs: [ ktlint, build ]
+    needs: [ static_analysis, build ]
     name: Run Android Tests
     runs-on: macos-latest
     timeout-minutes: 30

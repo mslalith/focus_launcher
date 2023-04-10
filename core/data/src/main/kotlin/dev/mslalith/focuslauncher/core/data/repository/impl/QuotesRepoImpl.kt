@@ -5,10 +5,8 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
-import dev.mslalith.focuslauncher.core.data.di.modules.QuoteResponseToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.data.di.modules.QuoteToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.data.dto.QuoteResponseToRoomMapper
-import dev.mslalith.focuslauncher.core.data.dto.QuoteToRoomMapper
+import dev.mslalith.focuslauncher.core.data.dto.toQuote
+import dev.mslalith.focuslauncher.core.data.dto.toQuoteRoom
 import dev.mslalith.focuslauncher.core.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.core.data.network.entities.QuoteResponse
 import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
@@ -26,8 +24,6 @@ internal open class QuotesRepoImpl @Inject constructor(
     private val quotesDao: QuotesDao,
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
     private val randomNumberProvider: RandomNumberProvider,
-    @QuoteToRoomMapperProvider private val quoteToRoomMapper: QuoteToRoomMapper,
-    @QuoteResponseToRoomMapperProvider private val quoteResponseToRoomMapper: QuoteResponseToRoomMapper
 ) : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<State<Quote>>(State.Initial)
     override val currentQuoteStateFlow: StateFlow<State<Quote>>
@@ -44,7 +40,8 @@ internal open class QuotesRepoImpl @Inject constructor(
             if (it.isEmpty()) {
                 State.Initial
             } else {
-                State.Success(quoteToRoomMapper.fromEntity(it.elementAt(index = randomNumberProvider.random(it.size))))
+                val randomNumber = randomNumberProvider.random(it.size)
+                State.Success(it.elementAt(index = randomNumber).toQuote())
             }
         }
         _currentQuoteStateFlow.value = quoteState
@@ -67,7 +64,7 @@ internal open class QuotesRepoImpl @Inject constructor(
 
     private suspend fun fetchPageQuotes(page: Int) {
         val quotesApiResponse = quotesApi.getQuotes(page)
-        val quoteRoomList = quotesApiResponse.results.map(quoteResponseToRoomMapper::fromEntity)
+        val quoteRoomList = quotesApiResponse.results.map(QuoteResponse::toQuoteRoom)
         addAllQuotes(quoteRoomList)
     }
 
@@ -76,7 +73,7 @@ internal open class QuotesRepoImpl @Inject constructor(
             deserializer = ListSerializer(elementSerializer = QuoteResponse.serializer()),
             string = INITIAL_QUOTES_JSON
         )
-        val initialQuoteRoomList = initialQuoteResponses.map(quoteResponseToRoomMapper::fromEntity)
+        val initialQuoteRoomList = initialQuoteResponses.map(QuoteResponse::toQuoteRoom)
         addAllQuotes(initialQuoteRoomList)
         nextRandomQuote()
     }

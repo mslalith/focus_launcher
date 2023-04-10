@@ -2,10 +2,9 @@ package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.FavoriteAppsDao
-import dev.mslalith.focuslauncher.core.data.di.modules.AppToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.data.di.modules.FavoriteToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
-import dev.mslalith.focuslauncher.core.data.dto.FavoriteToRoomMapper
+import dev.mslalith.focuslauncher.core.data.database.entities.AppRoom
+import dev.mslalith.focuslauncher.core.data.dto.toApp
+import dev.mslalith.focuslauncher.core.data.dto.toFavoriteAppRoom
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
@@ -16,24 +15,21 @@ import kotlinx.coroutines.flow.map
 internal class FavoritesRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
     private val favoriteAppsDao: FavoriteAppsDao,
-    @AppToRoomMapperProvider private val appToRoomMapper: AppToRoomMapper,
-    @FavoriteToRoomMapperProvider private val favoriteToRoomMapper: FavoriteToRoomMapper
 ): FavoritesRepo {
     override val onlyFavoritesFlow: Flow<List<App>>
         get() = favoriteAppsDao.getFavoriteAppsFlow().map { favorites ->
             favorites.mapNotNull {
                 val appRoom = appsDao.getAppBy(it.packageName)
-                appRoom?.let { it1 -> appToRoomMapper.fromEntity(it1) }
+                appRoom?.let(AppRoom::toApp)
             }
         }
 
     override suspend fun addToFavorites(app: App) {
-        val favoriteAppRoom = favoriteToRoomMapper.toEntity(app)
-        favoriteAppsDao.addFavorite(favoriteAppRoom)
+        favoriteAppsDao.addFavorite(app.toFavoriteAppRoom())
     }
 
     override suspend fun addToFavorites(apps: List<App>) {
-        val favoriteAppRoomList = apps.map(favoriteToRoomMapper::toEntity)
+        val favoriteAppRoomList = apps.map(App::toFavoriteAppRoom)
         favoriteAppsDao.addFavorites(favoriteAppRoomList)
     }
 
@@ -43,18 +39,16 @@ internal class FavoritesRepoImpl @Inject constructor(
         val withAppIndex = apps.indexOfFirst { it.packageName == withApp.packageName }
         if (appIndex == -1 || withAppIndex == -1) return
 
-        apps[appIndex] = favoriteToRoomMapper.toEntity(withApp)
-        apps[withAppIndex] = favoriteToRoomMapper.toEntity(app)
+        apps[appIndex] = withApp.toFavoriteAppRoom()
+        apps[withAppIndex] = app.toFavoriteAppRoom()
 
         favoriteAppsDao.clearFavoriteApps()
         favoriteAppsDao.addFavorites(apps)
     }
 
     override suspend fun removeFromFavorites(packageName: String) {
-        val appRoom = appsDao.getAppBy(packageName) ?: throw IllegalStateException("$packageName app was not found in Database")
-        val app = appToRoomMapper.fromEntity(appRoom)
-        val favoriteAppRoom = favoriteToRoomMapper.toEntity(app)
-        favoriteAppsDao.removeFavorite(favoriteAppRoom)
+        val appRoom = appsDao.getAppBy(packageName) ?: error("$packageName app was not found in Database")
+        favoriteAppsDao.removeFavorite(appRoom.toFavoriteAppRoom())
     }
 
     override suspend fun clearFavorites() = favoriteAppsDao.clearFavoriteApps()

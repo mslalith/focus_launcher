@@ -48,10 +48,10 @@ fun LocalDateTime.inShortReadableFormat(
     return "$dayOfMonth$daySuffix $monthReadable"
 }
 
-fun ZonedDateTime.toKotlinxLocalDateTime() = try {
+fun ZonedDateTime.toKotlinxLocalDateTime(): LocalDateTime? = try {
     val isoString = toLocalDateTime().toString().substringBefore(delimiter = "+")
     LocalDateTime.parse(isoString)
-} catch (ex: Exception) {
+} catch (ex: IllegalArgumentException) {
     null
 }
 

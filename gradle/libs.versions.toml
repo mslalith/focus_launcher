@@ -18,6 +18,7 @@ androidxTestCore = "1.5.0"
 androidxTestJunit = "1.1.5"
 androidxTestRunner = "1.5.2"
 benchmarkMacroJunit4 = "1.1.1"
+detekt = "1.23.0-RC1"
 espressoCore = "3.5.1"
 googleMaterial = "1.8.0"
 hilt = "2.45"
@@ -112,3 +113,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

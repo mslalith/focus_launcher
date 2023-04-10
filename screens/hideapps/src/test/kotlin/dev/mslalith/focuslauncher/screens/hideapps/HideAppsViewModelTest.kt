@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.screens.hideapps
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.*
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
