@@ -1,8 +1,9 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl
 
 import dev.mslalith.focuslauncher.core.data.database.dao.AppsDao
-import dev.mslalith.focuslauncher.core.data.di.modules.AppToRoomMapperProvider
-import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.core.data.database.entities.AppRoom
+import dev.mslalith.focuslauncher.core.data.dto.toApp
+import dev.mslalith.focuslauncher.core.data.dto.toAppRoom
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
@@ -11,26 +12,25 @@ import kotlinx.coroutines.flow.map
 
 internal class AppDrawerRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
-    @AppToRoomMapperProvider private val appToRoomMapper: AppToRoomMapper
 ) : AppDrawerRepo {
     override val allAppsFlow: Flow<List<App>>
         get() = appsDao.getAllAppsFlow().map { apps ->
-            apps.map(appToRoomMapper::fromEntity).sortedBy { it.name.lowercase() }
+            apps.map(AppRoom::toApp).sortedBy { it.name.lowercase() }
         }
 
     override suspend fun getAppBy(packageName: String): App? {
         val appRoom = appsDao.getAppBy(packageName)
-        return appRoom?.let { appToRoomMapper.fromEntity(it) }
+        return appRoom?.let(AppRoom::toApp)
     }
 
-    override suspend fun addApps(apps: List<App>) = appsDao.addApps(apps.map(appToRoomMapper::toEntity))
-    override suspend fun addApp(app: App) = appsDao.addApp(appToRoomMapper.toEntity(app))
-    override suspend fun removeApp(app: App) = appsDao.removeApp(appToRoomMapper.toEntity(app))
+    override suspend fun addApps(apps: List<App>) = appsDao.addApps(apps.map(App::toAppRoom))
+    override suspend fun addApp(app: App) = appsDao.addApp(app.toAppRoom())
+    override suspend fun removeApp(app: App) = appsDao.removeApp(app.toAppRoom())
     override suspend fun clearApps() = appsDao.clearApps()
 
     override suspend fun updateDisplayName(app: App, displayName: String) {
         val newApp = app.copy(displayName = displayName)
-        appsDao.updateApp(appToRoomMapper.toEntity(newApp))
+        appsDao.updateApp(newApp.toAppRoom())
     }
 
     override suspend fun areAppsEmptyInDatabase() = appsDao.getAllApps().isEmpty()
