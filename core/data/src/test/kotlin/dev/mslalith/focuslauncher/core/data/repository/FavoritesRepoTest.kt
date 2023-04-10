@@ -1,12 +1,12 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
 import com.google.common.truth.Truth.assertThat
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
-import dev.mslalith.focuslauncher.core.data.dto.AppToRoomMapper
+import dev.mslalith.focuslauncher.core.data.dto.toAppRoom
+import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -36,14 +36,11 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Inject
     lateinit var appDatabase: AppDatabase
 
-    @BindValue
-    val appToRoomMapper: AppToRoomMapper = AppToRoomMapper()
-
     @Before
     fun setup() {
         hiltRule.inject()
         runBlocking {
-            appDatabase.appsDao().addApps(TestApps.all.map(appToRoomMapper::toEntity))
+            appDatabase.appsDao().addApps(TestApps.all.map(App::toAppRoom))
         }
     }
 
