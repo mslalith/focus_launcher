@@ -23,22 +23,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
-import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 
 @Composable
 internal fun CurrentPlaceInfo(
-    currentPlace: CurrentPlace,
-    addressState: LoadingState<String>
+    currentPlaceState: CurrentPlaceState
 ) {
     Column(
         modifier = Modifier.animateContentSize(),
     ) {
-        LatLngInfo(latLng = currentPlace.latLng)
+        LatLngInfo(latLng = currentPlaceState.latLng)
         VerticalSpacer(spacing = 8.dp)
-        AddressInfo(addressState = addressState)
+        AddressInfo(addressState = currentPlaceState.addressState)
     }
 }
 
