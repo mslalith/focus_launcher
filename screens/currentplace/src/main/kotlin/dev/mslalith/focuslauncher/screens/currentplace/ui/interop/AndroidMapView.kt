@@ -6,21 +6,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import dev.mslalith.focuslauncher.core.common.extensions.limitDecimals
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.screens.currentplace.R
 import kotlinx.coroutines.launch
-import org.osmdroid.api.IGeoPoint
 import org.osmdroid.config.Configuration
-import org.osmdroid.events.MapListener
-import org.osmdroid.events.ScrollEvent
-import org.osmdroid.events.ZoomEvent
+import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -30,36 +27,31 @@ internal fun AndroidMapView(
     initialLatLngProvider: suspend () -> LatLng,
     onLocationChange: (LatLng) -> Unit
 ) {
-    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     var currentPositionMarker: Marker? = remember { null }
 
-    fun MapView.updateCurrentPositionMarker(geoPoint: IGeoPoint?) {
-        geoPoint ?: return
+    fun MapView.updateCurrentPositionMarker(geoPoint: GeoPoint) {
         if (currentPositionMarker == null) {
             currentPositionMarker = Marker(this).apply {
-                title = "Here I am"
-                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_location_on)
             }
             overlays.add(currentPositionMarker)
         }
         currentPositionMarker?.apply {
-            position = GeoPoint(geoPoint.latitude, geoPoint.longitude)
-            onLocationChange(LatLng(
-                latitude = geoPoint.latitude.limitDecimals(precision = 5).toDouble(),
-                longitude = geoPoint.longitude.limitDecimals(precision = 5).toDouble()
-            ))
+            position = geoPoint
+            controller.animateTo(geoPoint)
+            onLocationChange(geoPoint.toLatLng(limitDecimals = 5))
         }
     }
 
     AndroidView(
         modifier = modifier,
-        factory = {
+        factory = { context ->
             Configuration.getInstance().load(context.applicationContext, context.getSharedPreferences("focus_launcher_map", Context.MODE_PRIVATE))
-            MapView(it).apply {
+            MapView(context).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
+                addOnTapListener { updateCurrentPositionMarker(geoPoint = it) }
                 coroutineScope.launch {
                     val initialLatLng = initialLatLngProvider()
                     val geoPoint = GeoPoint(initialLatLng.latitude, initialLatLng.longitude)
@@ -67,17 +59,6 @@ internal fun AndroidMapView(
                     controller.setZoom(7.0)
                     updateCurrentPositionMarker(geoPoint)
                 }
-                addMapListener(object : MapListener {
-                    override fun onScroll(event: ScrollEvent?): Boolean {
-                        updateCurrentPositionMarker(event?.source?.mapCenter)
-                        return false
-                    }
-
-                    override fun onZoom(event: ZoomEvent?): Boolean {
-                        updateCurrentPositionMarker(event?.source?.mapCenter)
-                        return false
-                    }
-                })
             }
         },
         onReset = { it.onResume() },
@@ -85,3 +66,22 @@ internal fun AndroidMapView(
         update = {}
     )
 }
+
+private fun MapView.addOnTapListener(block: (GeoPoint) -> Unit) {
+    val overlay = MapEventsOverlay(object : MapEventsReceiver {
+        override fun singleTapConfirmedHelper(geoPoint: GeoPoint?): Boolean {
+            if (geoPoint != null) block(geoPoint)
+            return true
+        }
+
+        override fun longPressHelper(p: GeoPoint?): Boolean {
+            return false
+        }
+    })
+    overlays.add(overlay)
+}
+
+private fun GeoPoint.toLatLng(limitDecimals: Int): LatLng = LatLng(
+    latitude = latitude.limitDecimals(precision = limitDecimals).toDouble(),
+    longitude = longitude.limitDecimals(precision = limitDecimals).toDouble()
+)
