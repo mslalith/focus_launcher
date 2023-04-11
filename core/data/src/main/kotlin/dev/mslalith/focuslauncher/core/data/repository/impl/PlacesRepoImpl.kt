@@ -14,13 +14,13 @@ internal class PlacesRepoImpl @Inject internal constructor(
     private val placesDao: PlacesDao
 ) : PlacesRepo {
 
-    override suspend fun fetchAddressLocal(latLng: LatLng): Place? = placesDao.fetchPlace(
+    override suspend fun fetchPlaceLocal(latLng: LatLng): Place? = placesDao.fetchPlace(
         latitude = latLng.latitude.toString(),
         longitude = latLng.longitude.toString()
     )?.toPlace()
 
-    override suspend fun fetchAddress(latLng: LatLng): Place? {
-        val localAddress = fetchAddressLocal(latLng)
+    override suspend fun fetchPlace(latLng: LatLng): Place? {
+        val localAddress = fetchPlaceLocal(latLng)
         if (localAddress != null) return localAddress
 
         val placeResponse = placesApi.getPlace(latLng = latLng) ?: return null

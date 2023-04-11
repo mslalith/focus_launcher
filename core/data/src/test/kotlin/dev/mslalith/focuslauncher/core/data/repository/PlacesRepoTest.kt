@@ -34,18 +34,18 @@ internal class PlacesRepoTest : CoroutineTest() {
     @Before
     fun setup() {
         hiltRule.inject()
-        runBlocking { repo.fetchAddress(latLng = latLngZero) }
+        runBlocking { repo.fetchPlace(latLng = latLngZero) }
     }
 
     @Test
     fun `when fetched for an existing place, make sure place is returned`() = runCoroutineTest {
         val expectedPlace = dummyPlaceFor(latLng = latLngZero)
-        assertThat(repo.fetchAddressLocal(latLng = latLngZero)).isEqualTo(expectedPlace)
+        assertThat(repo.fetchPlaceLocal(latLng = latLngZero)).isEqualTo(expectedPlace)
     }
 
     @Test
     fun `when fetch for a non-existing place, make sure place is not returned`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 23.0)
-        assertThat(repo.fetchAddressLocal(latLng = latLng)).isNull()
+        assertThat(repo.fetchPlaceLocal(latLng = latLng)).isNull()
     }
 }

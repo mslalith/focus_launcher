@@ -64,7 +64,7 @@ internal class CurrentPlaceViewModel @Inject constructor(
 
     private suspend fun fetchAddressAndUpdateFlows(latLng: LatLng) {
         _addressStateFlow.value = LoadingState.Loading
-        val place = placesRepo.fetchAddress(latLng = latLng)
+        val place = placesRepo.fetchPlace(latLng = latLng)
         val address = place?.displayName ?: defaultAddress
         _addressStateFlow.value = LoadingState.Loaded(value = address)
     }
