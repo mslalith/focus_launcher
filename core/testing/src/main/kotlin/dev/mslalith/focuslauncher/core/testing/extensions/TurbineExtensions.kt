@@ -13,6 +13,21 @@ suspend fun <T> Flow<T>.awaitItem(): T {
 }
 
 context (CoroutineScope)
+suspend fun <T> Flow<T>.awaitItemChangeUntil(
+    awaitTill: (T) -> Boolean
+): T {
+    val turbine = testIn(scope = this@CoroutineScope)
+    var lastItem = turbine.expectMostRecentItem()
+
+    while (!awaitTill(lastItem)) {
+        lastItem = turbine.awaitItem()
+    }
+
+    turbine.cancel()
+    return lastItem
+}
+
+context (CoroutineScope)
 suspend fun <T, R> Flow<T>.awaitItemChange(
     valueFor: (T) -> R
 ): R {
