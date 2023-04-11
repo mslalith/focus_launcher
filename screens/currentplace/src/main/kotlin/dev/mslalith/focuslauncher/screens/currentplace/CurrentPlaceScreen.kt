@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
@@ -53,6 +54,7 @@ internal fun CurrentPlaceScreen(
 
     CurrentPlaceScreen(
         currentPlace = currentPlaceViewModel.currentPlaceStateFlow.collectAsState().value,
+        addressState = currentPlaceViewModel.addressStateFlow.collectAsState().value,
         goBack = goBack,
         initialLatLngProvider = { currentPlaceViewModel.fetchCurrentPlaceFromDb().latLng },
         onDoneClick = ::onDoneClick,
@@ -63,6 +65,7 @@ internal fun CurrentPlaceScreen(
 @Composable
 internal fun CurrentPlaceScreen(
     currentPlace: CurrentPlace,
+    addressState: LoadingState<String>,
     goBack: () -> Unit,
     initialLatLngProvider: suspend () -> LatLng,
     onDoneClick: () -> Unit,
@@ -94,7 +97,10 @@ internal fun CurrentPlaceScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             VerticalSpacer(spacing = 8.dp)
-            CurrentPlaceInfo(currentPlace = currentPlace)
+            CurrentPlaceInfo(
+                currentPlace = currentPlace,
+                addressState = addressState
+            )
             VerticalSpacer(spacing = 16.dp)
             MapView(
                 modifier = Modifier
@@ -115,6 +121,7 @@ fun PreviewUpdatePlace() {
     MaterialTheme {
         CurrentPlaceScreen(
             currentPlace = CurrentPlace(LatLng(0.0, 0.0), "Not Available"),
+            addressState = LoadingState.Loading,
             goBack = { },
             initialLatLngProvider = { LatLng(0.0, 0.0) },
             onDoneClick = { },
