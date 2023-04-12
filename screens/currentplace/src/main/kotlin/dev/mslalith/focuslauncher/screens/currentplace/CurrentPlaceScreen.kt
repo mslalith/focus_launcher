@@ -110,7 +110,7 @@ internal fun CurrentPlaceScreen(
 
 @Preview
 @Composable
-fun PreviewUpdatePlace() {
+private fun PreviewUpdatePlace() {
     MaterialTheme {
         CurrentPlaceScreen(
             currentPlaceState = CurrentPlaceState(
