@@ -1,8 +1,10 @@
 package dev.mslalith.focuslauncher.core.data.database
 
+import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.DeleteTable
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
@@ -17,6 +19,7 @@ import dev.mslalith.focuslauncher.core.data.database.entities.HiddenAppRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.PlaceRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.core.data.database.typeconverter.Converters
+import dev.mslalith.focuslauncher.core.data.utils.Constants
 
 @Database(
     entities = [
@@ -41,6 +44,14 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun hiddenAppsDao(): HiddenAppsDao
     abstract fun quotesDao(): QuotesDao
     abstract fun placesDao(): PlacesDao
+
+    companion object {
+        internal fun build(context: Context): AppDatabase = Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            Constants.Database.APP_DB_NAME
+        ).build()
+    }
 }
 
 @DeleteTable(tableName = "cities")

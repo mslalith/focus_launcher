@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.di.modules
 
 import android.content.Context
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +13,6 @@ import dev.mslalith.focuslauncher.core.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.PlacesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
 import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.APP_DB_NAME
 import javax.inject.Singleton
 
 @Module
@@ -23,11 +21,7 @@ internal object RoomModule {
 
     @Provides
     @Singleton
-    fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        APP_DB_NAME
-    ).build()
+    fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase = AppDatabase.build(context = context)
 
     @Provides
     @Singleton
