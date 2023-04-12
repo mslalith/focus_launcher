@@ -9,6 +9,7 @@ import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import io.ktor.serialization.JsonConvertException
 import javax.inject.Inject
 
 internal class PlacesApiImpl @Inject constructor(
@@ -21,6 +22,8 @@ internal class PlacesApiImpl @Inject constructor(
             parameter("lat", latLng.latitude)
             parameter("lon", latLng.longitude)
         }.body()
+    } catch (e: JsonConvertException) {
+        null
     } catch (e: NoTransformationFoundException) {
         null
     } catch (e: DoubleReceiveException) {

@@ -24,7 +24,7 @@ internal fun dummyPlaceResponseFor(latLng: LatLng): PlaceResponse {
     )
 }
 
-internal fun dummyPlaceFor(latLng: LatLng): Place {
+fun dummyPlaceFor(latLng: LatLng): Place {
     val number = latLng.latitude
     return Place(
         id = number.toLong(),

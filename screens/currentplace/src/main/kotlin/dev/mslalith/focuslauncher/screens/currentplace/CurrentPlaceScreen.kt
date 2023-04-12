@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -19,12 +17,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.mslalith.focuslauncher.core.model.CurrentPlace
+import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
+import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.model.IconType
+import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
-import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
+import dev.mslalith.focuslauncher.screens.currentplace.ui.MapView
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,17 +53,17 @@ internal fun CurrentPlaceScreen(
     }
 
     CurrentPlaceScreen(
-        currentPlace = currentPlaceViewModel.currentPlaceStateFlow.collectAsState().value,
+        currentPlaceState = currentPlaceViewModel.currentPlaceState.collectAsState().value,
         goBack = goBack,
         initialLatLngProvider = { currentPlaceViewModel.fetchCurrentPlaceFromDb().latLng },
         onDoneClick = ::onDoneClick,
-        onLocationChange = currentPlaceViewModel::updateCurrentLocation
+        onLocationChange = currentPlaceViewModel::updateCurrentLatLng
     )
 }
 
 @Composable
 internal fun CurrentPlaceScreen(
-    currentPlace: CurrentPlace,
+    currentPlaceState: CurrentPlaceState,
     goBack: () -> Unit,
     initialLatLngProvider: suspend () -> LatLng,
     onDoneClick: () -> Unit,
@@ -77,13 +78,11 @@ internal fun CurrentPlaceScreen(
                 title = "Update Place",
                 onBackPressed = goBack,
                 actions = {
-                    IconButton(onClick = onDoneClick) {
-                        Icon(
-                            Icons.Rounded.Done,
-                            contentDescription = "Done icon",
-                            tint = MaterialTheme.colors.onBackground
-                        )
-                    }
+                    RoundIcon(
+                        iconType = IconType.Vector(imageVector = Icons.Rounded.Done),
+                        enabled = currentPlaceState.canSave,
+                        onClick = onDoneClick
+                    )
                 }
             )
         }
@@ -94,9 +93,9 @@ internal fun CurrentPlaceScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             VerticalSpacer(spacing = 8.dp)
-            CurrentPlaceInfo(currentPlace = currentPlace)
+            CurrentPlaceInfo(currentPlaceState = currentPlaceState)
             VerticalSpacer(spacing = 16.dp)
-            AndroidMapView(
+            MapView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(weight = 1f)
@@ -111,10 +110,14 @@ internal fun CurrentPlaceScreen(
 
 @Preview
 @Composable
-fun PreviewUpdatePlace() {
+private fun PreviewUpdatePlace() {
     MaterialTheme {
         CurrentPlaceScreen(
-            currentPlace = CurrentPlace(LatLng(0.0, 0.0), "Not Available"),
+            currentPlaceState = CurrentPlaceState(
+                latLng = LatLng(0.0, 0.0),
+                addressState = LoadingState.Loading,
+                canSave = false
+            ),
             goBack = { },
             initialLatLngProvider = { LatLng(0.0, 0.0) },
             onDoneClick = { },
