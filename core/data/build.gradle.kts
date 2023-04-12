@@ -16,7 +16,11 @@ android {
     defaultConfig {
         testInstrumentationRunner = "dev.mslalith.focuslauncher.core.testing.HiltTestRunner"
     }
+    sourceSets {
+        getByName("test").assets.srcDir("$projectDir/schemas")
+    }
     testOptions {
+        unitTests.isIncludeAndroidResources = true
         unitTests.all {
             it.extensions.configure(KoverTaskExtension::class) {
                 isDisabled.set(it.name != "testDebugUnitTest")
@@ -43,4 +47,5 @@ dependencies {
     implementation(libs.suncalc)
 
     testImplementation(project(":core:testing"))
+    testImplementation(libs.room.testing)
 }
