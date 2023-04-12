@@ -43,7 +43,12 @@ class MigrationTest {
     @Test
     fun migrateFrom1To2() {
         helper.createDatabase(testDbName, 1).apply {
-            execSQL("INSERT OR REPLACE INTO cities (id,name,stateId,stateCode,stateName,countryId,countryCode,countryName,latitude,longitude,wikiDataId) VALUES(42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')")
+            execSQL(
+                """INSERT OR REPLACE INTO cities (
+                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                """.trimIndent()
+            )
             close()
         }
 
@@ -66,7 +71,12 @@ class MigrationTest {
     @Test
     fun migrateFrom2To3() {
         helper.createDatabase(testDbName, 2).apply {
-            execSQL("INSERT OR REPLACE INTO cities (id,name,stateId,stateCode,stateName,countryId,countryCode,countryName,latitude,longitude,wikiDataId) VALUES(42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')")
+            execSQL(
+                """INSERT OR REPLACE INTO cities (
+                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                """.trimIndent()
+            )
             close()
         }
 
