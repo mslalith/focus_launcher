@@ -59,14 +59,12 @@ private fun LatLngInfo(
                 .align(Alignment.CenterVertically)
                 .padding(start = 4.dp, end = 12.dp)
         )
-        Column {
+        Crossfade(
+            label = "Cross Fade Lat Long",
+            targetState = latLng
+        ) {
             Text(
-                text = "Latitude: ${latLng.latitude}",
-                color = MaterialTheme.colors.onBackground
-            )
-            VerticalSpacer(spacing = 4.dp)
-            Text(
-                text = "Longitude: ${latLng.longitude}",
+                text = "${it.latitude},  ${it.longitude}",
                 color = MaterialTheme.colors.onBackground
             )
         }
