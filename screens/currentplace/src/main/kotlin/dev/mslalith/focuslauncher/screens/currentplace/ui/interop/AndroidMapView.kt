@@ -51,6 +51,7 @@ internal fun AndroidMapView(
             Configuration.getInstance().load(context.applicationContext, context.getSharedPreferences("focus_launcher_map", Context.MODE_PRIVATE))
             MapView(context).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
+                setMultiTouchControls(true)
                 addOnTapListener { updateCurrentPositionMarker(geoPoint = it) }
                 coroutineScope.launch {
                     val initialLatLng = initialLatLngProvider()
