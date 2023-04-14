@@ -16,6 +16,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
@@ -52,6 +53,7 @@ internal fun AndroidMapView(
             MapView(context).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
                 setMultiTouchControls(true)
+                zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
                 addOnTapListener { updateCurrentPositionMarker(geoPoint = it) }
                 coroutineScope.launch {
                     val initialLatLng = initialLatLngProvider()
