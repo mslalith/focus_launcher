@@ -3,11 +3,11 @@ package dev.mslalith.focuslauncher.feature.quoteforyou
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.getOrNull
 
 @Composable
@@ -28,7 +28,7 @@ internal fun QuoteForYou(
     quoteForYouViewModel: QuoteForYouViewModel,
     backgroundColor: Color,
 ) {
-    val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsState()
+    val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsStateWithLifecycle()
 
     AnimatedVisibility(
         visible = quoteForYouState.showQuotes,

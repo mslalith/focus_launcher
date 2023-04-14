@@ -2,12 +2,12 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.feature.lunarcalendar.LunarCalendarViewModel
 import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarCalendarState
 
@@ -38,7 +38,7 @@ internal fun LunarCalendar(
     horizontalPadding: Dp,
     onClick: (() -> Unit)? = null,
 ) {
-    val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsState()
+    val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
 
     LunarCalendar(
         modifier = modifier,

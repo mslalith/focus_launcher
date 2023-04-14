@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
@@ -40,7 +40,7 @@ internal fun AppDrawerPage(
     val focusManager = LocalFocusManager.current
     val viewManager = LocalLauncherViewManager.current
 
-    val appDrawerPageState by appDrawerPageViewModel.appDrawerPageState.collectAsState()
+    val appDrawerPageState by appDrawerPageViewModel.appDrawerPageState.collectAsStateWithLifecycle()
 
     var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(null) }
 

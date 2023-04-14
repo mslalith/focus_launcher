@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -63,7 +63,7 @@ internal fun SettingsPage(
         VerticalSpacer(spacing = 12.dp)
 
         ChangeTheme(
-            currentTheme = themeViewModel.currentThemeStateFlow.collectAsState().value,
+            currentTheme = themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle().value,
             changeTheme = themeViewModel::changeTheme
         )
 
@@ -71,11 +71,11 @@ internal fun SettingsPage(
         HideApps { navigateTo(Screen.HideApps) }
 
         ToggleStatusBar(
-            showStatusBar = settingsPageViewModel.statusBarVisibilityStateFlow.collectAsState().value,
+            showStatusBar = settingsPageViewModel.statusBarVisibilityStateFlow.collectAsStateWithLifecycle().value,
             onClick = settingsPageViewModel::toggleStatusBarVisibility
         )
         PullDownNotifications(
-            enableNotificationShade = settingsPageViewModel.notificationShadeStateFlow.collectAsState().value,
+            enableNotificationShade = settingsPageViewModel.notificationShadeStateFlow.collectAsStateWithLifecycle().value,
             onClick = settingsPageViewModel::toggleNotificationShade
         )
 
@@ -88,7 +88,7 @@ internal fun SettingsPage(
         Widgets(viewManager = viewManager)
 
         SetAsDefaultLauncher(
-            isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsState().value,
+            isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsStateWithLifecycle().value,
             refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context) }
         )
 

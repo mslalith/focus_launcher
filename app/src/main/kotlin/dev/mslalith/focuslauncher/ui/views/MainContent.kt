@@ -5,10 +5,10 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.ui.ConfirmDialog
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.ui.views.bottomsheets.LauncherBottomSheetContent
@@ -19,7 +19,7 @@ fun MainContent(
     content: @Composable () -> Unit
 ) {
     val viewManager = LocalLauncherViewManager.current
-    val dialogProperties by viewManager.dialogPropertiesStateFlow.collectAsState()
+    val dialogProperties by viewManager.dialogPropertiesStateFlow.collectAsStateWithLifecycle()
 
     ModalBottomSheetLayout(
         sheetState = viewManager.bottomSheetState,

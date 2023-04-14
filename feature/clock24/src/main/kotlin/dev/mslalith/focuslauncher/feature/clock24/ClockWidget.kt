@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.BiasAlignment
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
@@ -47,7 +47,7 @@ internal fun ClockWidget(
     horizontalPadding: Dp,
     verticalPadding: Dp = 0.dp,
 ) {
-    val clock24State by clock24ViewModel.clock24State.collectAsState()
+    val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
 
     ClockWidget(
         modifier = modifier,

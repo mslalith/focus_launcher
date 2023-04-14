@@ -2,10 +2,10 @@ package dev.mslalith.focuslauncher.feature.quoteforyou.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsLoadableItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
@@ -22,9 +22,9 @@ fun QuotesSettingsSheet() {
 internal fun QuotesSettingsSheet(
     quoteForYouViewModel: QuoteForYouViewModel
 ) {
-    val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsState()
+    val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsStateWithLifecycle()
 
-    val isFetchingQuotes by quoteForYouViewModel.isFetchingQuotes.collectAsState()
+    val isFetchingQuotes by quoteForYouViewModel.isFetchingQuotes.collectAsStateWithLifecycle()
 
     Column {
         PreviewQuotes(showQuotes = quoteForYouState.showQuotes)

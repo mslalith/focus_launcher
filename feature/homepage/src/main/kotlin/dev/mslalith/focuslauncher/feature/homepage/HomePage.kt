@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.extensions.onSwipeDown
@@ -51,12 +51,12 @@ internal fun HomePage(
     }
 
     MoonCalendarDetailsDialog(
-        showMoonCalendarDetailsDialogProvider = homePageViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsState().value,
+        showMoonCalendarDetailsDialogProvider = homePageViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsStateWithLifecycle().value,
         onHideMoonCalendarDetailsDialog = homePageViewModel::hideMoonCalendarDetailsDialog
     )
 
     HomePage(
-        homePageState = homePageViewModel.homePageState.collectAsState().value,
+        homePageState = homePageViewModel.homePageState.collectAsStateWithLifecycle().value,
         isInContextualMode = homePageViewModel::isInContextualMode,
         hideContextualMode = homePageViewModel::hideContextualMode,
         changeFavoritesContextMode = homePageViewModel::changeFavoritesContextMode,

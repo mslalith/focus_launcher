@@ -64,5 +64,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.profile.installer)
 }

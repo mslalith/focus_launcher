@@ -8,9 +8,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.ExtendedMiniFab
 import dev.mslalith.focuslauncher.screens.hideapps.ui.HiddenAppsList
@@ -53,7 +53,7 @@ internal fun HideAppsScreen(
     ) {
         HiddenAppsList(
             modifier = Modifier.padding(it),
-            hiddenApps = hideAppsViewModel.hiddenAppsFlow.collectAsState().value,
+            hiddenApps = hideAppsViewModel.hiddenAppsFlow.collectAsStateWithLifecycle().value,
             onRemoveFromFavorites = hideAppsViewModel::removeFromFavorites,
             onAddToHiddenApps = hideAppsViewModel::addToHiddenApps,
             onRemoveFromHiddenApps = hideAppsViewModel::removeFromHiddenApps
