@@ -6,8 +6,8 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_THEME
 import dev.mslalith.focuslauncher.core.model.Theme
@@ -44,7 +44,7 @@ fun FocusLauncherTheme(
     val systemUiController = LocalSystemUiController.current
     val themeViewModel: ThemeViewModel = viewModel()
 
-    val currentTheme by themeViewModel.currentThemeStateFlow.collectAsState()
+    val currentTheme by themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle()
     val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else DEFAULT_THEME
 
     val colors = when (theme) {

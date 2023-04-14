@@ -2,10 +2,10 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
@@ -27,8 +27,8 @@ internal fun LunarPhaseSettingsSheet(
     lunarCalendarViewModel: LunarCalendarViewModel,
     navigateToCurrentPlace: () -> Unit
 ) {
-    val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsState()
-    val currentPlace by lunarCalendarViewModel.currentPlaceStateFlow.collectAsState()
+    val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
+    val currentPlace by lunarCalendarViewModel.currentPlaceStateFlow.collectAsStateWithLifecycle()
 
     Column {
         PreviewLunarCalendar(showLunarPhase = lunarCalendarState.showLunarPhase)

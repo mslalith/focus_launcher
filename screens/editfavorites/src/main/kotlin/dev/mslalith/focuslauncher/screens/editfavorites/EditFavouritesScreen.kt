@@ -8,10 +8,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.ExtendedMiniFab
@@ -46,7 +46,7 @@ internal fun EditFavoritesScreen(
                 title = "Favorites",
                 onBackPressed = { goBack() },
                 actions = @Composable {
-                    val showHiddenApps by editFavoritesViewModel.showHiddenAppsInFavorites.collectAsState()
+                    val showHiddenApps by editFavoritesViewModel.showHiddenAppsInFavorites.collectAsStateWithLifecycle()
 
                     HiddenAppActionText(
                         showHiddenApps = showHiddenApps,
@@ -64,7 +64,7 @@ internal fun EditFavoritesScreen(
             )
         }
     ) { paddingValues ->
-        val favorites by editFavoritesViewModel.favoritesStateFlow.collectAsState()
+        val favorites by editFavoritesViewModel.favoritesStateFlow.collectAsStateWithLifecycle()
 
         FavoritesList(
             modifier = Modifier.padding(paddingValues),

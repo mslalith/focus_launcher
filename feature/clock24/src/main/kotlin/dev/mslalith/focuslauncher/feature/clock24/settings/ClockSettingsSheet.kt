@@ -2,11 +2,11 @@ package dev.mslalith.focuslauncher.feature.clock24.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
@@ -29,7 +29,7 @@ fun ClockSettingsSheet() {
 internal fun ClockSettingsSheet(
     clock24ViewModel: Clock24ViewModel,
 ) {
-    val clock24State by clock24ViewModel.clock24State.collectAsState()
+    val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
 
     val textIconsList = remember {
         listOf(

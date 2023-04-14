@@ -10,13 +10,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
@@ -53,7 +53,7 @@ internal fun CurrentPlaceScreen(
     }
 
     CurrentPlaceScreen(
-        currentPlaceState = currentPlaceViewModel.currentPlaceState.collectAsState().value,
+        currentPlaceState = currentPlaceViewModel.currentPlaceState.collectAsStateWithLifecycle().value,
         goBack = goBack,
         initialLatLngProvider = { currentPlaceViewModel.fetchCurrentPlaceFromDb().latLng },
         onDoneClick = ::onDoneClick,

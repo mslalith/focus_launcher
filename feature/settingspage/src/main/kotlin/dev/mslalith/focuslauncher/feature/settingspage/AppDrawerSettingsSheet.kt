@@ -2,11 +2,11 @@ package dev.mslalith.focuslauncher.feature.settingspage
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
@@ -16,10 +16,10 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 internal fun AppDrawerSettingsSheet(
     settingsPageViewModel: SettingsPageViewModel,
 ) {
-    val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsState()
-    val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsState()
-    val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsState()
-    val showSearchBar by settingsPageViewModel.searchBarVisibilityStateFlow.collectAsState()
+    val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsStateWithLifecycle()
+    val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsStateWithLifecycle()
+    val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsStateWithLifecycle()
+    val showSearchBar by settingsPageViewModel.searchBarVisibilityStateFlow.collectAsStateWithLifecycle()
 
     val isViewTypeGrid by remember {
         derivedStateOf { appDrawerViewType == AppDrawerViewType.GRID }
