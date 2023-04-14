@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.screens.currentplace.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.runtime.Composable
@@ -28,12 +29,28 @@ internal fun MapView(
             initialLatLngProvider = initialLatLngProvider,
             onLocationChange = onLocationChange
         )
-        MapCredits()
+        MapOverlay()
     }
 }
 
 @Composable
-private fun BoxScope.MapCredits() {
+private fun BoxScope.MapOverlay() {
+    Box(
+        modifier = Modifier.matchParentSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .align(alignment = Alignment.BottomEnd)
+                .padding(bottom = 4.dp, end = 8.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            MapCredits()
+        }
+    }
+}
+
+@Composable
+private fun MapCredits() {
     val uriHandler = LocalUriHandler.current
 
     val annotatedString = remember {
@@ -67,9 +84,6 @@ private fun BoxScope.MapCredits() {
         onClick = { offset ->
             val url = annotatedString.getStringAnnotations(tag = "url", start = offset, end = offset).firstOrNull()?.item
             if (url != null) uriHandler.openUri(url)
-        },
-        modifier = Modifier
-            .align(alignment = Alignment.BottomEnd)
-            .padding(bottom = 4.dp, end = 8.dp)
+        }
     )
 }
