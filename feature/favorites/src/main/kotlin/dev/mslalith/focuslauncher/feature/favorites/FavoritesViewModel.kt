@@ -36,7 +36,6 @@ internal class FavoritesViewModel @Inject constructor(
 
     val favoritesState = flowOf(value = defaultFavoritesState)
         .combine(favoritesRepo.onlyFavoritesFlow) { state, favorites ->
-            println("fav: favorites: $favorites")
             state.copy(favoritesList = favorites.toWithIcons())
         }.combine(_favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
