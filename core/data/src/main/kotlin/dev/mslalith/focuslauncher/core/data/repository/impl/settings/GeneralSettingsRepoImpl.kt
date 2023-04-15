@@ -14,23 +14,23 @@ import kotlinx.coroutines.flow.map
 internal class GeneralSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : GeneralSettingsRepo {
-    override val firstRunFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val firstRunFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_FIRST_RUN] ?: Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
         }
 
-    override val statusBarVisibilityFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val statusBarVisibilityFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_STATUS_BAR_VISIBILITY] ?: Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
         }
 
-    override val notificationShadeFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val notificationShadeFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_NOTIFICATION_SHADE] ?: Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
         }
 
-    override val isDefaultLauncher: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val isDefaultLauncher: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_IS_DEFAULT_LAUNCHER] ?: Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
         }
 

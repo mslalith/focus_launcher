@@ -9,16 +9,18 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 internal class FavoritesRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
     private val favoriteAppsDao: FavoriteAppsDao,
-): FavoritesRepo {
-    override val onlyFavoritesFlow: Flow<List<App>>
-        get() = favoriteAppsDao.getFavoriteAppsFlow().map { favorites ->
-            favorites.mapNotNull {
+) : FavoritesRepo {
+    override val onlyFavoritesFlow: Flow<List<App>> = favoriteAppsDao.getFavoriteAppsFlow()
+        .combine(appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->
+            onlyFavorites.filter { favorite ->
+                allApps.any { it.packageName == favorite.packageName }
+            }.mapNotNull {
                 val appRoom = appsDao.getAppBy(it.packageName)
                 appRoom?.let(AppRoom::toApp)
             }

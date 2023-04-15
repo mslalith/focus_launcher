@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.map
 internal class AppDrawerRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
 ) : AppDrawerRepo {
-    override val allAppsFlow: Flow<List<App>>
-        get() = appsDao.getAllAppsFlow().map { apps ->
+    override val allAppsFlow: Flow<List<App>> = appsDao.getAllAppsFlow()
+        .map { apps ->
             apps.map(AppRoom::toApp).sortedBy { it.name.lowercase() }
         }
 

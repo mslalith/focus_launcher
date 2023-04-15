@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.map
 internal class ThemeRepoImpl @Inject constructor(
     @ThemeProvider private val themeDataStore: DataStore<Preferences>
 ) : ThemeRepo {
-    override val currentThemeFlow: Flow<Theme?>
-        get() = themeDataStore.data.map {
+    override val currentThemeFlow: Flow<Theme?> = themeDataStore.data
+        .map {
             val themeName = it[themePreferenceKey] ?: return@map null
             Theme.valueOf(themeName)
         }

@@ -11,6 +11,5 @@ dependencies {
     implementation(project(":feature:clock24"))
     implementation(project(":feature:lunarcalendar"))
     implementation(project(":feature:quoteforyou"))
-    implementation(libs.androidx.palette.ktx)
-    implementation(libs.accompanist.flowlayout)
+    implementation(project(":feature:favorites"))
 }

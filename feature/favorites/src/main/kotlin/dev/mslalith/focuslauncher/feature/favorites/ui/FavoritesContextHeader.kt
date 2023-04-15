@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.homepage.favorites
+package dev.mslalith.focuslauncher.feature.favorites.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,10 +22,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
-import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.core.ui.model.IconType
-import dev.mslalith.focuslauncher.feature.homepage.R
+import dev.mslalith.focuslauncher.feature.favorites.R
+import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import kotlin.reflect.KClass
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -54,6 +54,7 @@ internal fun FavoritesContextHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AnimatedContent(
+            label = "Animated Header",
             targetState = headerText(),
             transitionSpec = {
                 slideInVertically { it } + fadeIn() with slideOutVertically { -it } + fadeOut() using SizeTransform(clip = false)

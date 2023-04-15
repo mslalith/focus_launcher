@@ -18,23 +18,23 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
 ) : LunarPhaseSettingsRepo {
 
-    override val showLunarPhaseFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val showLunarPhaseFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_SHOW_LUNAR_PHASE] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
         }
 
-    override val showIlluminationPercentFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val showIlluminationPercentFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_SHOW_ILLUMINATION_PERCENT] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
         }
 
-    override val showUpcomingPhaseDetailsFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val showUpcomingPhaseDetailsFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
         }
 
-    override val currentPlaceFlow: Flow<CurrentPlace>
-        get() = settingsDataStore.data.map {
+    override val currentPlaceFlow: Flow<CurrentPlace> = settingsDataStore.data
+        .map {
             val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
             Json.decodeFromString(deserializer = CurrentPlace.serializer(), string = json)
         }

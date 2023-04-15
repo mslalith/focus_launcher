@@ -19,24 +19,24 @@ import kotlinx.coroutines.flow.map
 internal class AppDrawerSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : AppDrawerSettingsRepo {
-    override val appDrawerViewTypeFlow: Flow<AppDrawerViewType>
-        get() = settingsDataStore.data.map { preferences ->
+    override val appDrawerViewTypeFlow: Flow<AppDrawerViewType> = settingsDataStore.data
+        .map { preferences ->
             val index = preferences[PREFERENCES_APP_DRAWER_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_VIEW_TYPE.index
             AppDrawerViewType.values().first { it.index == index }
         }
 
-    override val appIconsVisibilityFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val appIconsVisibilityFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_APP_ICONS_VISIBILITY] ?: DEFAULT_APP_ICONS
         }
 
-    override val searchBarVisibilityFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val searchBarVisibilityFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_SEARCH_BAR_VISIBILITY] ?: DEFAULT_SEARCH_BAR
         }
 
-    override val appGroupHeaderVisibilityFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val appGroupHeaderVisibilityFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_APP_GROUP_HEADER_VISIBILITY] ?: DEFAULT_APP_GROUP_HEADER
         }
 
