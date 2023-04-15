@@ -9,8 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.impl.IconManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.iconpack.IconPackManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.iconpack.impl.IconPackManagerImpl
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl.IconPackManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.impl.LauncherAppsManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.impl.IconProviderImpl

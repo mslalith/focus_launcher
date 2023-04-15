@@ -6,7 +6,7 @@ import android.os.Process
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.iconpack.impl.IconPackManagerImpl
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl.IconPackManagerImpl
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 
