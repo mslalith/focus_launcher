@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
-    private val launcherAppsManager: LauncherAppsManager,
+    private val iconProvider: IconProvider,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -96,7 +96,7 @@ internal class FavoritesViewModel @Inject constructor(
             name = app.name,
             displayName = app.displayName,
             packageName = app.packageName,
-            icon = launcherAppsManager.iconFor(app.packageName),
+            icon = iconProvider.iconFor(app.packageName),
             isSystem = app.isSystem
         )
     }

@@ -11,7 +11,7 @@ import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Ap
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 internal class AppDrawerPageViewModel @Inject constructor(
-    private val launcherAppsManager: LauncherAppsManager,
+    private val iconProvider: IconProvider,
     appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val appDrawerRepo: AppDrawerRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
@@ -66,7 +66,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
                 name = app.name,
                 displayName = app.displayName,
                 packageName = app.packageName,
-                icon = launcherAppsManager.iconFor(app.packageName),
+                icon = iconProvider.iconFor(app.packageName),
                 isSystem = app.isSystem
             )
         }
