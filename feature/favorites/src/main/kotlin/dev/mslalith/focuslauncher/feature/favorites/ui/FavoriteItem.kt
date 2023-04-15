@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.homepage.favorites
+package dev.mslalith.focuslauncher.feature.favorites.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
-import dev.mslalith.focuslauncher.feature.homepage.extensions.luminate
-import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
+import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
+import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 
 @Composable
 internal fun FavoriteItem(
@@ -43,6 +43,7 @@ internal fun FavoriteItem(
         return@remember extractedColor.luminate(threshold = 0.36f, value = 0.6f)
     }
     val animatedColor by animateColorAsState(
+        label = "Animated color",
         targetValue = if (isAppAboutToReorder()) onBackgroundColor else color,
         animationSpec = tween(durationMillis = 600)
     )

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.homepage.favorites
+package dev.mslalith.focuslauncher.feature.favorites
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDp
@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.defaultDialerApp
 import dev.mslalith.focuslauncher.core.common.extensions.defaultMessagingApp
@@ -28,7 +30,78 @@ import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
-import dev.mslalith.focuslauncher.feature.homepage.model.FavoritesContextMode
+import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
+import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
+import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
+import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+
+@Composable
+fun FavoritesList(
+    pagerCurrentPage: Flow<Int>,
+    contentPadding: Dp
+) {
+    FavoritesList(
+        favoritesViewModel = hiltViewModel(),
+        pagerCurrentPage = pagerCurrentPage,
+        contentPadding = contentPadding
+    )
+}
+
+@Composable
+internal fun FavoritesList(
+    favoritesViewModel: FavoritesViewModel,
+    pagerCurrentPage: Flow<Int>,
+    contentPadding: Dp
+) {
+    LaunchedEffect(key1 = pagerCurrentPage) {
+        pagerCurrentPage.collectLatest { page ->
+            if (page != 1) favoritesViewModel.hideContextualMode()
+        }
+    }
+
+    FavoritesList(
+        favoritesState = favoritesViewModel.favoritesState.collectAsStateWithLifecycle().value,
+        addDefaultAppsToFavorites = favoritesViewModel::addDefaultAppsIfRequired,
+        removeFromFavorites = favoritesViewModel::removeFromFavorites,
+        reorderFavorite = favoritesViewModel::reorderFavorite,
+        isInContextualMode = favoritesViewModel::isInContextualMode,
+        isReordering = favoritesViewModel::isReordering,
+        hideContextualMode = favoritesViewModel::hideContextualMode,
+        changeFavoritesContextMode = favoritesViewModel::changeFavoritesContextMode,
+        isAppAboutToReorder = favoritesViewModel::isAppAboutToReorder,
+        contentPadding = contentPadding
+    )
+}
+
+@Composable
+internal fun FavoritesList(
+    favoritesState: FavoritesState,
+    addDefaultAppsToFavorites: (List<App>) -> Unit,
+    removeFromFavorites: (App) -> Unit,
+    reorderFavorite: (App, App, () -> Unit) -> Unit,
+    isInContextualMode: () -> Boolean,
+    isReordering: () -> Boolean,
+    hideContextualMode: () -> Unit,
+    changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
+    isAppAboutToReorder: (App) -> Boolean,
+    contentPadding: Dp
+) {
+    FavoritesList(
+        favoritesList = favoritesState.favoritesList,
+        addDefaultAppsToFavorites = addDefaultAppsToFavorites,
+        removeFromFavorites = removeFromFavorites,
+        reorderFavorite = reorderFavorite,
+        currentContextMode1 = favoritesState.favoritesContextualMode,
+        isInContextualMode = isInContextualMode,
+        isReordering = isReordering,
+        hideContextualMode = hideContextualMode,
+        changeFavoritesContextMode = changeFavoritesContextMode,
+        isAppAboutToReorder = isAppAboutToReorder,
+        contentPadding = contentPadding
+    )
+}
 
 @Composable
 internal fun FavoritesList(

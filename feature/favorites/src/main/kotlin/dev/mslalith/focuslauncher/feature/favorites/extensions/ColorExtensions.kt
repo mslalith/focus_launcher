@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.homepage.extensions
+package dev.mslalith.focuslauncher.feature.favorites.extensions
 
 import androidx.compose.ui.graphics.Color
 

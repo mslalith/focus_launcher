@@ -45,5 +45,6 @@ include(
     ":feature:appdrawerpage",
     ":feature:clock24",
     ":feature:lunarcalendar",
-    ":feature:quoteforyou"
+    ":feature:quoteforyou",
+    ":feature:favorites"
 )
