@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
     implementation(project(":core:model"))
 
     api(libs.junit4)

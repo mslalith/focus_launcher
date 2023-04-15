@@ -11,8 +11,8 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
-import dev.mslalith.focuslauncher.core.testing.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import io.mockk.mockk
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -47,15 +47,13 @@ class LauncherViewModelTest : CoroutineTest() {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
-    private val launcherAppsManager = TestLauncherAppsManager()
-
     private lateinit var viewModel: LauncherViewModel
 
     @Before
     fun setup() {
         hiltRule.inject()
         viewModel = LauncherViewModel(
-            launcherAppsManager = launcherAppsManager,
+            launcherAppsManager = mockk(),
             appDrawerRepo = appDrawerRepo,
             favoritesRepo = favoritesRepo,
             hiddenAppsRepo = hiddenAppsRepo,

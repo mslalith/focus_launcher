@@ -1,17 +1,18 @@
-package dev.mslalith.focuslauncher.core.common.launcherapps.impl
+package dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.impl
 
 import android.content.Context
 import android.content.pm.LauncherApps
 import android.graphics.drawable.Drawable
 import android.os.Process
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 
 internal class LauncherAppsManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : LauncherAppsManager {
+
     private val launcherApps = context.getSystemService(LauncherApps::class.java)
 
     private val iconCache = hashMapOf<String, Drawable>()

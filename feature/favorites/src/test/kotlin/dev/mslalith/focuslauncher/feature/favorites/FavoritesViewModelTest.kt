@@ -11,10 +11,10 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsR
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
-import dev.mslalith.focuslauncher.core.testing.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChange
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
+import io.mockk.mockk
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -56,7 +56,7 @@ class FavoritesViewModelTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         viewModel = FavoritesViewModel(
-            launcherAppsManager = TestLauncherAppsManager(),
+            launcherAppsManager = mockk(),
             generalSettingsRepo = generalSettingsRepo,
             favoritesRepo = favoritesRepo,
             appCoroutineDispatcher = appCoroutineDispatcher

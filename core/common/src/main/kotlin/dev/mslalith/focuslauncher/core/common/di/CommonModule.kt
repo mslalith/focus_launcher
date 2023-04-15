@@ -8,8 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.impl.AppCoroutineDispatcherImpl
-import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.common.launcherapps.impl.LauncherAppsManagerImpl
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
@@ -25,10 +23,6 @@ object CommonModule {
     @Provides
     @Singleton
     fun provideAppCoroutineDispatcher(): AppCoroutineDispatcher = AppCoroutineDispatcherImpl()
-
-    @Provides
-    @Singleton
-    fun provideLauncherAppsManager(@ApplicationContext context: Context): LauncherAppsManager = LauncherAppsManagerImpl(context)
 
     @Provides
     @Singleton
