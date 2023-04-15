@@ -15,8 +15,8 @@ internal class HiddenAppsRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
     private val hiddenAppsDao: HiddenAppsDao,
 ) : HiddenAppsRepo {
-    override val onlyHiddenAppsFlow: Flow<List<App>>
-        get() = hiddenAppsDao.getHiddenAppsFlow().map { hiddenApps ->
+    override val onlyHiddenAppsFlow: Flow<List<App>> = hiddenAppsDao.getHiddenAppsFlow()
+        .map { hiddenApps ->
             hiddenApps.mapNotNull {
                 val appRoom = appsDao.getAppBy(it.packageName)
                 appRoom?.let(AppRoom::toApp)

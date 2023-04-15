@@ -16,16 +16,15 @@ internal class FavoritesRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
     private val favoriteAppsDao: FavoriteAppsDao,
 ) : FavoritesRepo {
-    override val onlyFavoritesFlow: Flow<List<App>>
-        get() = favoriteAppsDao.getFavoriteAppsFlow()
-            .combine(appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->
-                onlyFavorites.filter { favorite ->
-                    allApps.any { it.packageName == favorite.packageName }
-                }.mapNotNull {
-                    val appRoom = appsDao.getAppBy(it.packageName)
-                    appRoom?.let(AppRoom::toApp)
-                }
+    override val onlyFavoritesFlow: Flow<List<App>> = favoriteAppsDao.getFavoriteAppsFlow()
+        .combine(appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->
+            onlyFavorites.filter { favorite ->
+                allApps.any { it.packageName == favorite.packageName }
+            }.mapNotNull {
+                val appRoom = appsDao.getAppBy(it.packageName)
+                appRoom?.let(AppRoom::toApp)
             }
+        }
 
     override suspend fun addToFavorites(app: App) {
         favoriteAppsDao.addFavorite(app.toFavoriteAppRoom())

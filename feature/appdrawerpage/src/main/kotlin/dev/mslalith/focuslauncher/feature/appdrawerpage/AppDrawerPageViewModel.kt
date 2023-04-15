@@ -45,8 +45,8 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQuery = searchBarQueryStateFlow.value
     )
 
-    private val appDrawerAppsFlow: Flow<List<App>>
-        get() = appDrawerRepo.allAppsFlow.combine(hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
+    private val appDrawerAppsFlow: Flow<List<App>> = appDrawerRepo.allAppsFlow
+        .combine(hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
             allApps - hiddenApps.toSet()
         }.combine(searchBarQueryStateFlow) { filteredApps, query ->
             when {

@@ -15,8 +15,8 @@ internal class QuotesSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : QuotesSettingsRepo {
 
-    override val showQuotesFlow: Flow<Boolean>
-        get() = settingsDataStore.data.map {
+    override val showQuotesFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
             it[PREFERENCES_SHOW_QUOTES] ?: Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
         }
 
