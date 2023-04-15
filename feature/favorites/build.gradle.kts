@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(libs.androidx.palette.ktx)
     implementation(libs.accompanist.flowlayout)
+    testImplementation(project(":core:testing"))
 }
