@@ -22,7 +22,10 @@ internal object LauncherAppsModule {
 
     @Provides
     @Singleton
-    fun provideLauncherAppsManager(@ApplicationContext context: Context): LauncherAppsManager = LauncherAppsManagerImpl(context = context)
+    fun provideLauncherAppsManager(
+        @ApplicationContext context: Context,
+        iconManager: IconManager
+    ): LauncherAppsManager = LauncherAppsManagerImpl(context = context, iconManager = iconManager)
 
     @Provides
     @Singleton

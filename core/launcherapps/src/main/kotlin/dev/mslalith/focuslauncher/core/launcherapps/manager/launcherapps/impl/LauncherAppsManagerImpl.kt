@@ -2,20 +2,20 @@ package dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.impl
 
 import android.content.Context
 import android.content.pm.LauncherApps
-import android.graphics.drawable.Drawable
 import android.os.Process
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.iconpack.impl.IconPackManagerImpl
 import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 
 internal class LauncherAppsManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val iconManager: IconManager
 ) : LauncherAppsManager {
 
     private val launcherApps = context.getSystemService(LauncherApps::class.java)
-
-    private val iconCache = hashMapOf<String, Drawable>()
 
     override fun loadAllApps(): List<App> {
         val appsList = mutableListOf<App>()
@@ -28,8 +28,11 @@ internal class LauncherAppsManagerImpl @Inject constructor(
                 isSystem = false,
             )
 
-            iconCache[packageName] = context.packageManager.getApplicationIcon(packageName)
             appsList.add(app)
+            iconManager.addToCache(
+                packageName = packageName,
+                drawable = context.packageManager.getApplicationIcon(packageName)
+            )
         }
 
         return appsList
@@ -43,12 +46,11 @@ internal class LauncherAppsManagerImpl @Inject constructor(
             isSystem = false,
         )
 
-        iconCache[packageName] = launcherActivityInfo.getIcon(context.resources.configuration.densityDpi)
+        iconManager.addToCache(
+            packageName = packageName,
+            drawable = launcherActivityInfo.getIcon(context.resources.configuration.densityDpi)
+        )
 
         return app
-    }
-
-    override fun iconFor(packageName: String): Drawable = iconCache.getOrPut(packageName) {
-        context.packageManager.getApplicationIcon(packageName)
     }
 }

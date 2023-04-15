@@ -15,4 +15,12 @@ internal class IconManagerImpl @Inject constructor(
     override fun iconFor(packageName: String): Drawable = iconCache.getOrPut(packageName) {
         context.packageManager.getApplicationIcon(packageName)
     }
+
+    override fun addToCache(packageName: String, drawable: Drawable) {
+        iconCache[packageName] = drawable
+    }
+
+    override fun clearCache() {
+        iconCache.clear()
+    }
 }
