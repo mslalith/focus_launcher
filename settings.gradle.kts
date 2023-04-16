@@ -42,6 +42,7 @@ include(
     ":screens:editfavorites",
     ":screens:hideapps",
     ":screens:currentplace",
+    ":screens:iconpack",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",
