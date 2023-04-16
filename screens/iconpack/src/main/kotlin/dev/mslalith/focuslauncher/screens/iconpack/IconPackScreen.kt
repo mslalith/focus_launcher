@@ -17,11 +17,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -64,7 +67,7 @@ internal fun IconPackScreen(
 @Composable
 internal fun IconPackScreen(
     iconPackState: IconPackState,
-    onIconPackClick: (AppWithIcon) -> Unit,
+    onIconPackClick: (IconPackType) -> Unit,
     onDoneClick: () -> Unit,
     goBack: () -> Unit
 ) {
@@ -109,14 +112,35 @@ internal fun IconPackScreen(
                     .background(color = MaterialTheme.colors.secondaryVariant)
                     .padding(horizontal = 12.dp, vertical = 12.dp)
             ) {
+                val context = LocalContext.current
+                val systemIconPackApp: AppWithIcon? = remember {
+                    context.getDrawable(R.drawable.ic_launcher)?.let { icon ->
+                        AppWithIcon(
+                            name = context.getString(R.string.app_name),
+                            displayName = context.getString(R.string.app_name),
+                            packageName = context.packageName,
+                            icon = icon,
+                            isSystem = false
+                        )
+                    }
+                }
+
                 LazyRow {
+                    item {
+                        if (systemIconPackApp != null) {
+                            IconPackItem(
+                                app = systemIconPackApp,
+                                onClick = { onIconPackClick(IconPackType.System) }
+                            )
+                        }
+                    }
                     items(
                         items = iconPackState.iconPacks,
                         key = { it.uniqueKey }
                     ) { app ->
                         IconPackItem(
                             app = app,
-                            onClick = { onIconPackClick(app) },
+                            onClick = { onIconPackClick(IconPackType.Custom(packageName = app.packageName)) },
                             modifier = Modifier.animateItemPlacement()
                         )
                     }
