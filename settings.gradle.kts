@@ -35,6 +35,7 @@ include(
     ":core:ui",
     ":core:resources",
     ":core:launcherapps",
+    ":core:detekt",
     ":core:testing",
     ":core:testing-compose",
     ":screens:launcher",
