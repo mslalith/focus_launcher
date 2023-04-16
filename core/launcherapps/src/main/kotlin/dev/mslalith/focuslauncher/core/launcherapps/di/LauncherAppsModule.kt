@@ -33,7 +33,10 @@ internal object LauncherAppsModule {
 
     @Provides
     @Singleton
-    fun provideIconPackManager(@ApplicationContext context: Context): IconPackManager = IconPackManagerImpl(context = context)
+    fun provideIconPackManager(
+        @ApplicationContext context: Context,
+        iconManager: IconManager
+    ): IconPackManager = IconPackManagerImpl(context = context, iconManager = iconManager)
 
     @Provides
     @Singleton
