@@ -139,6 +139,7 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotated:
       - 'Composable'
+      - 'HiltViewModel'
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
     active: false
