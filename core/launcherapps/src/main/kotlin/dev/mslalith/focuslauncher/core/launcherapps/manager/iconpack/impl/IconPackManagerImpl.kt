@@ -48,22 +48,24 @@ internal class IconPackManagerImpl @Inject constructor(
     }
 
     override suspend fun loadIconPack(iconPackType: IconPackType) {
-        iconManager.clearCache()
         when (iconPackType) {
             is IconPackType.Custom -> loadCustomTypeIcons(packageName = iconPackType.packageName)
             IconPackType.System -> loadSystemTypeIcons()
         }
-        _iconPackLoadedTriggerFlow.update { !it }
     }
 
     private fun loadSystemTypeIcons() {
+        iconManager.clearCache()
         currentIconPackParser = null
+        _iconPackLoadedTriggerFlow.update { !it }
     }
 
     private fun loadCustomTypeIcons(packageName: String) {
         if (currentIconPackParser?.packageName == packageName) return
 
+        iconManager.clearCache()
         currentIconPackParser = iconManager.iconPackFor(packageName = packageName)
         currentIconPackParser?.load()
+        _iconPackLoadedTriggerFlow.update { !it }
     }
 }
