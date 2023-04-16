@@ -35,7 +35,7 @@ internal fun AppsGrid(
 
         items(
             items = apps,
-            key = { it.packageName }
+            key = { it.uniqueKey }
         ) { app ->
             AppDrawerGridItem(
                 app = app,

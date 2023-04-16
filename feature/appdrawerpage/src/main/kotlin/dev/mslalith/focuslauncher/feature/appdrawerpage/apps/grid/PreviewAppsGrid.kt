@@ -29,7 +29,7 @@ fun PreviewAppsGrid(
     ) {
         items(
             items = apps,
-            key = { it.packageName.hashCode() + (31 * it.icon.hashCode()) }
+            key = { it.uniqueKey }
         ) { app ->
             AppDrawerGridItem(
                 app = app,

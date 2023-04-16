@@ -111,7 +111,7 @@ internal fun IconPackScreen(
                 LazyRow {
                     items(
                         items = iconPackState.iconPacks,
-                        key = { it.packageName.hashCode() + (31 * it.icon.hashCode()) }
+                        key = { it.uniqueKey }
                     ) { app ->
                         IconPackItem(
                             app = app,

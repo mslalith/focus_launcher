@@ -47,6 +47,13 @@ internal class IconPackViewModel @Inject constructor(
             .launchIn(scope = viewModelScope)
     }
 
+    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = _iconPackType
+        .combine(flow = appDrawerRepo.allAppsFlow) { iconPackType, allApps ->
+            iconPackType ?: return@combine emptyList()
+            iconPackManager.loadIconPack(iconPackType = iconPackType)
+            with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
+        }
+
     private val iconPackApps: Flow<List<App>> = appDrawerRepo.allAppsFlow
         .combine(flow = iconPackManager.iconPacksFlow) { allApps, iconPacks ->
             allApps.filter { app ->
@@ -55,14 +62,9 @@ internal class IconPackViewModel @Inject constructor(
         }
 
     val iconPackState = flowOf(value = defaultIconPackState)
-        .combine(flow = iconPackManager.iconPackLoadedTriggerFlow) { state, _ ->
-            val iconPackType = _iconPackType.value ?: return@combine state
-            iconPackManager.loadIconPack(iconPackType = iconPackType)
-            val allApps = appDrawerRepo.allAppsFlow.first()
-            val allAppsWithIcons = with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
-            state.copy(allApps = allAppsWithIcons)
-        }
-        .combine(flow = iconPackApps) { state, iconPackApps ->
+        .combine(flow = allAppsIconPackAware) { state, allApps ->
+            state.copy(allApps = allApps)
+        }.combine(flow = iconPackApps) { state, iconPackApps ->
             val iconPackType = generalSettingsRepo.iconPackTypeFlow.first()
             state.copy(iconPacks = with(iconProvider) { iconPackApps.toAppWithIcons(iconPackType) })
         }.combine(flow = _iconPackType) { state, iconPackType ->
