@@ -14,21 +14,20 @@ import org.xmlpull.v1.XmlPullParserFactory
 internal class IconPackXmlParser(
     private val context: Context,
     private val iconPackPackageName: String
-) : IconPackParser {
+) {
 
     private var iconPackResources: Resources? = null
 
-    private val drawablesByComponent: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(0)
-    private val drawableList = HashSet<SimpleDrawableInfo>(0)
+    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(0)
     private val backImages = mutableListOf<SimpleDrawableInfo>()
     private var maskImage: SimpleDrawableInfo? = null
     private var frontImage: SimpleDrawableInfo? = null
     private var scaleFactor = 1.0f
 
-    override val packageName: String
+    val packageName: String
         get() = iconPackPackageName
 
-    override fun load() {
+    fun load() {
         try {
             iconPackResources = context.packageManager.getResourcesForApplication(iconPackPackageName)
         } catch (ignored: PackageManager.NameNotFoundException) {
@@ -37,8 +36,8 @@ internal class IconPackXmlParser(
         parseAppFilterXML()
     }
 
-    override fun drawableFor(componentName: String): Drawable? {
-        val set = drawablesByComponent[componentName]
+    fun drawableFor(componentName: String): Drawable? {
+        val set = iconPackToDrawablesMap[componentName]
         if (set.isNullOrEmpty()) return null
         return iconPackResources?.getDrawable(set.first().drawableId)
     }
@@ -100,10 +99,9 @@ internal class IconPackXmlParser(
                             val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
                             if (drawableId != 0) {
                                 val drawableInfo = SimpleDrawableInfo(drawableName, drawableId)
-                                drawableList.add(drawableInfo)
                                 if (componentName != null) {
-                                    drawablesByComponent.putIfAbsent(componentName, HashSet())
-                                    drawablesByComponent.getValue(componentName).add(drawableInfo)
+                                    iconPackToDrawablesMap.putIfAbsent(componentName, HashSet())
+                                    iconPackToDrawablesMap.getValue(componentName).add(drawableInfo)
                                 }
                             }
                         }

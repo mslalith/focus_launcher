@@ -7,22 +7,32 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
 import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack
-import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackParser
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
+import dev.mslalith.focuslauncher.core.model.IconPackType
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 internal class IconPackManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val iconManager: IconManager
 ) : IconPackManager {
 
-    private var currentIconPackParser: IconPackParser? = null
+    private var currentIconPackParser: IconPackXmlParser? = null
 
-    override fun fetchInstalledIconPacks(): List<IconPack> {
+    private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
+    override val iconPacksFlow: Flow<List<IconPack>> = _iconPacksFlow
+
+    private val _iconPackLoadedTriggerFlow = MutableStateFlow(value = false)
+    override val iconPackLoadedTriggerFlow: Flow<Boolean> = _iconPackLoadedTriggerFlow
+
+    @Suppress("DEPRECATION")
+    override fun fetchInstalledIconPacks() {
         val packageManager = context.packageManager
         val themes = packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.GET_META_DATA)
 
-        return themes.mapNotNull { ri ->
+        _iconPacksFlow.value = themes.mapNotNull { ri ->
             val iconPackageName = ri.activityInfo.packageName
             try {
                 val applicationInfo = packageManager.getApplicationInfo(iconPackageName, PackageManager.GET_META_DATA)
@@ -37,15 +47,23 @@ internal class IconPackManagerImpl @Inject constructor(
         }
     }
 
-    private fun loadIconPack(packageName: String?) {
-        if (packageName == null || packageName.equals("default", ignoreCase = true)) {
-            currentIconPackParser = null
-            return
+    override suspend fun loadIconPack(iconPackType: IconPackType) {
+        iconManager.clearCache()
+        when (iconPackType) {
+            is IconPackType.Custom -> loadCustomTypeIcons(packageName = iconPackType.packageName)
+            IconPackType.System -> loadSystemTypeIcons()
         }
+        _iconPackLoadedTriggerFlow.update { !it }
+    }
 
-        if (currentIconPackParser == null || currentIconPackParser?.packageName != packageName) {
-            currentIconPackParser = IconPackXmlParser(context = context, iconPackPackageName = packageName)
-            currentIconPackParser?.load()
-        }
+    private fun loadSystemTypeIcons() {
+        currentIconPackParser = null
+    }
+
+    private fun loadCustomTypeIcons(packageName: String) {
+        if (currentIconPackParser?.packageName == packageName) return
+
+        currentIconPackParser = iconManager.iconPackFor(packageName = packageName)
+        currentIconPackParser?.load()
     }
 }

@@ -9,5 +9,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:launcherapps"))
+    implementation(project(":feature:appdrawerpage"))
     testImplementation(project(":core:testing"))
 }
