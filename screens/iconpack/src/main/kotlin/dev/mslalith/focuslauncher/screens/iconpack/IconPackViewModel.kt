@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.iconpack
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
@@ -15,29 +16,35 @@ import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
     private val iconPackManager: IconPackManager,
     private val iconProvider: IconProvider,
     private val generalSettingsRepo: GeneralSettingsRepo,
-    appDrawerRepo: AppDrawerRepo,
+    private val appDrawerRepo: AppDrawerRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     private val _iconPackType = MutableStateFlow<IconPackType?>(value = null)
+    private val _allAppsStateFlow = MutableStateFlow<LoadingState<List<AppWithIcon>>>(value = LoadingState.Loading)
 
     private val defaultIconPackState = IconPackState(
-        allApps = emptyList(),
+        allApps = _allAppsStateFlow.value,
         iconPacks = emptyList(),
-        iconPackType = _iconPackType.value
+        iconPackType = _iconPackType.value,
+        canSave = false
     )
 
     init {
@@ -45,14 +52,12 @@ internal class IconPackViewModel @Inject constructor(
         generalSettingsRepo.iconPackTypeFlow
             .onEach { _iconPackType.value = it }
             .launchIn(scope = viewModelScope)
-    }
 
-    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = _iconPackType
-        .combine(flow = appDrawerRepo.allAppsFlow) { iconPackType, allApps ->
-            iconPackType ?: return@combine emptyList()
-            iconPackManager.loadIconPack(iconPackType = iconPackType)
-            with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
-        }
+        _iconPackType
+            .mapLatest(::updateAllAppsWithNewIcons)
+            .flowOn(context = appCoroutineDispatcher.io)
+            .launchIn(scope = viewModelScope)
+    }
 
     private val iconPackApps: Flow<List<App>> = appDrawerRepo.allAppsFlow
         .combine(flow = iconPackManager.iconPacksFlow) { allApps, iconPacks ->
@@ -62,14 +67,26 @@ internal class IconPackViewModel @Inject constructor(
         }
 
     val iconPackState = flowOf(value = defaultIconPackState)
-        .combine(flow = allAppsIconPackAware) { state, allApps ->
-            state.copy(allApps = allApps)
+        .combine(flow = _allAppsStateFlow) { state, allAppsState ->
+            state.copy(
+                allApps = allAppsState,
+                canSave = allAppsState is LoadingState.Loaded
+            )
         }.combine(flow = iconPackApps) { state, iconPackApps ->
             val iconPackType = generalSettingsRepo.iconPackTypeFlow.first()
             state.copy(iconPacks = with(iconProvider) { iconPackApps.toAppWithIcons(iconPackType) })
         }.combine(flow = _iconPackType) { state, iconPackType ->
             state.copy(iconPackType = iconPackType)
         }.withinScope(initialValue = defaultIconPackState)
+
+    private suspend fun updateAllAppsWithNewIcons(iconPackType: IconPackType?) {
+        iconPackType ?: return
+        _allAppsStateFlow.value = LoadingState.Loading
+        iconPackManager.loadIconPack(iconPackType = iconPackType)
+        val allApps = appDrawerRepo.allAppsFlow.first()
+        val allAppsWithIcon = with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
+        _allAppsStateFlow.value = LoadingState.Loaded(value = allAppsWithIcon)
+    }
 
     fun updateSelectedIconPackApp(iconPackApp: AppWithIcon) {
         val iconPackType = IconPackType.Custom(packageName = iconPackApp.packageName)

@@ -82,6 +82,7 @@ internal fun IconPackScreen(
                 actions = {
                     RoundIcon(
                         iconType = IconType.Vector(imageVector = Icons.Rounded.Done),
+                        enabled = iconPackState.canSave,
                         onClick = onDoneClick
                     )
                 }
@@ -97,7 +98,7 @@ internal fun IconPackScreen(
             )
 
             PreviewAppsGrid(
-                apps = iconPackState.allApps,
+                appsState = iconPackState.allApps,
                 modifier = Modifier.weight(weight = 1f)
             )
             VerticalSpacer(spacing = 12.dp)

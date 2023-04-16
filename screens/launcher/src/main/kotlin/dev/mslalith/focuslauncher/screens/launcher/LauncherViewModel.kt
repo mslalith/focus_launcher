@@ -23,11 +23,9 @@ internal class LauncherViewModel @Inject constructor(
 
     fun loadApps(forceLoad: Boolean = false) {
         appCoroutineDispatcher.launchInIO {
-            // this will also refresh the icon cache
-            val allApps = launcherAppsManager.loadAllApps()
             appDrawerRepo.apply {
                 if (!forceLoad && !areAppsEmptyInDatabase()) return@launchInIO
-                addApps(allApps)
+                addApps(launcherAppsManager.loadAllApps())
             }
         }
     }

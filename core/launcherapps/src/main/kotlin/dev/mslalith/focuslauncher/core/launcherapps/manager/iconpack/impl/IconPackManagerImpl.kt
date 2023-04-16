@@ -32,8 +32,8 @@ internal class IconPackManagerImpl @Inject constructor(
         val packageManager = context.packageManager
         val themes = packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.GET_META_DATA)
 
-        _iconPacksFlow.value = themes.mapNotNull { ri ->
-            val iconPackageName = ri.activityInfo.packageName
+        _iconPacksFlow.value = themes.mapNotNull {
+            val iconPackageName = it.activityInfo.packageName
             try {
                 val applicationInfo = packageManager.getApplicationInfo(iconPackageName, PackageManager.GET_META_DATA)
                 val iconLabel = packageManager.getApplicationLabel(applicationInfo).toString()
