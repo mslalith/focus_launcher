@@ -8,6 +8,5 @@ internal interface IconManager {
     fun addToCache(packageName: String, drawable: Drawable)
     fun clearCache()
     fun iconPackFor(packageName: String): IconPackXmlParser
-    fun iconFor(packageName: String): Drawable
     fun iconFor(packageName: String, iconPackType: IconPackType): Drawable
 }

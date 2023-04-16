@@ -27,14 +27,6 @@ internal class IconManagerImpl @Inject constructor(
         IconPackXmlParser(context = context, iconPackPackageName = packageName)
     }
 
-    override fun iconFor(packageName: String): Drawable {
-        val componentName = context.packageManager.getLaunchIntentForPackage(packageName)?.component
-        val key = if (componentName != null) componentName.packageName + "/" + componentName.className else packageName
-        return iconCache.getOrPut(key) {
-            context.packageManager.getApplicationIcon(packageName)
-        }
-    }
-
     override fun iconFor(packageName: String, iconPackType: IconPackType): Drawable = when (iconPackType) {
         is IconPackType.Custom -> getCustomTypeIcon(iconPackPackageName = iconPackType.packageName, packageName = packageName)
         IconPackType.System -> getSystemTypeIcon(packageName = packageName)

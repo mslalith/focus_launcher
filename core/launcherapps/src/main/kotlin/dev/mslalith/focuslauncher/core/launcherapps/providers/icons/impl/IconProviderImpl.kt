@@ -10,8 +10,6 @@ internal class IconProviderImpl @Inject constructor(
     private val iconManager: IconManager
 ) : IconProvider {
 
-    override fun iconFor(packageName: String): Drawable = iconManager.iconFor(packageName)
-
     override fun iconFor(packageName: String, iconPackType: IconPackType): Drawable = iconManager.iconFor(
         packageName = packageName,
         iconPackType = iconPackType
