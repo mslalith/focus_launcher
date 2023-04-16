@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import javax.inject.Inject
+import kotlinx.coroutines.flow.combine
 
 @HiltViewModel
 internal class SettingsPageViewModel @Inject constructor(
@@ -22,6 +23,10 @@ internal class SettingsPageViewModel @Inject constructor(
     val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR)
     val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE)
     val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER)
+    val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
+        .combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { appDrawerViewType, areAppIconsVisible ->
+            appDrawerViewType == AppDrawerViewType.GRID || areAppIconsVisible
+        }.withinScope(initialValue = true)
 
     fun toggleStatusBarVisibility() {
         appCoroutineDispatcher.launchInIO {

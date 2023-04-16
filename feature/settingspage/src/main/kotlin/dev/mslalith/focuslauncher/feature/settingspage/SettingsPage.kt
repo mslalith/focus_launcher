@@ -80,7 +80,10 @@ internal fun SettingsPage(
             onClick = settingsPageViewModel::toggleNotificationShade
         )
 
-        IconPack { navigateTo(Screen.IconPack) }
+        IconPack(
+            shouldShow = settingsPageViewModel.canShowIconPackStateFlow.collectAsStateWithLifecycle().value,
+            onClick = { navigateTo(Screen.IconPack) }
+        )
 
         AppDrawer {
             viewManager.showBottomSheet {
