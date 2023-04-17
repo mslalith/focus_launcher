@@ -90,9 +90,6 @@ internal class IconPackViewModel @Inject constructor(
 
     fun updateSelectedIconPackApp(iconPackType: IconPackType) {
         _iconPackType.value = iconPackType
-        appCoroutineDispatcher.launchInIO {
-            iconPackManager.loadIconPack(iconPackType = iconPackType)
-        }
     }
 
     fun saveIconPackType() {

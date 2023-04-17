@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -109,7 +110,7 @@ internal fun IconPackScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = shape)
-                    .background(color = MaterialTheme.colors.secondaryVariant)
+                    .background(color = MaterialTheme.colors.primaryVariant)
                     .padding(horizontal = 12.dp, vertical = 12.dp)
             ) {
                 val context = LocalContext.current
@@ -128,19 +129,24 @@ internal fun IconPackScreen(
                 LazyRow {
                     item {
                         if (systemIconPackApp != null) {
-                            IconPackItem(
-                                app = systemIconPackApp,
-                                onClick = { onIconPackClick(IconPackType.System) }
-                            )
+                            ReusableContent(key = systemIconPackApp.uniqueKey) {
+                                IconPackItem(
+                                    app = systemIconPackApp,
+                                    isSelected = iconPackState.iconPackType == IconPackType.System,
+                                    onClick = { onIconPackClick(IconPackType.System) }
+                                )
+                            }
                         }
                     }
                     items(
                         items = iconPackState.iconPacks,
                         key = { it.uniqueKey }
                     ) { app ->
+                        val customIconPackType = IconPackType.Custom(packageName = app.packageName)
                         IconPackItem(
                             app = app,
-                            onClick = { onIconPackClick(IconPackType.Custom(packageName = app.packageName)) },
+                            isSelected = iconPackState.iconPackType == customIconPackType,
+                            onClick = { onIconPackClick(customIconPackType) },
                             modifier = Modifier.animateItemPlacement()
                         )
                     }
