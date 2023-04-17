@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.clock24.settings
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,6 +47,8 @@ internal fun ClockSettingsSheet(
             subText = clock24State.clockAlignment.text,
             textIconsList = textIconsList,
             selectedItem = clock24State.clockAlignment.text,
+            showText = false,
+            itemHorizontalArrangement = Arrangement.Center,
             onItemSelected = { index ->
                 val alignmentName = textIconsList[index].first
                 val alignment = ClockAlignment.values().first { it.text == alignmentName }

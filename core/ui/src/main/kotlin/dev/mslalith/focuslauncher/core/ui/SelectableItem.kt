@@ -30,7 +30,8 @@ fun SelectableItem(
         modifier = modifier
             .fillMaxWidth()
             .height(height = height)
-            .clickable(enabled = onClick != null) { onClick?.invoke() }
+            .clickable(enabled = onClick != null) { onClick?.invoke() },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier.size(
@@ -47,9 +48,7 @@ fun SelectableItem(
                 color = MaterialTheme.colors.onBackground,
                 fontSize = 16.sp
             ),
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(start = 8.dp, end = 8.dp)
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
     }
 }
