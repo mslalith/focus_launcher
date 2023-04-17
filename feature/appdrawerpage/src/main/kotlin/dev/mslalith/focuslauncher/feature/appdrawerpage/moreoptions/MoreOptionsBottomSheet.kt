@@ -110,7 +110,7 @@ internal fun MoreOptionsBottomSheet(
         }
         SelectableIconItem(
             text = "Update Display Name",
-            iconRes = R.drawable.ic_app_display_name,
+            iconRes = R.drawable.ic_edit,
             onClick = {
                 closeAfterAction { onUpdateDisplayNameClick() }
             }
