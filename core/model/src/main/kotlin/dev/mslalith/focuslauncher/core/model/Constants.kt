@@ -1,10 +1,5 @@
-package dev.mslalith.focuslauncher.core.data.utils
+package dev.mslalith.focuslauncher.core.model
 
-import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.ClockAlignment
-import dev.mslalith.focuslauncher.core.model.CurrentPlace
-import dev.mslalith.focuslauncher.core.model.IconPackType
-import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {

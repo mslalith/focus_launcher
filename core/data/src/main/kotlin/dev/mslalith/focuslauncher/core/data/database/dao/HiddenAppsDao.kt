@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.mslalith.focuslauncher.core.data.database.entities.HiddenAppRoom
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.HIDDEN_APPS_TABLE_NAME
+import dev.mslalith.focuslauncher.core.model.Constants.Database.HIDDEN_APPS_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao

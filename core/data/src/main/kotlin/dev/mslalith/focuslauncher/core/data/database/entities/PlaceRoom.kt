@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.core.data.database.entities
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.PLACES_TABLE_NAME
+import dev.mslalith.focuslauncher.core.model.Constants.Database.PLACES_TABLE_NAME
 
 @Entity(tableName = PLACES_TABLE_NAME)
 internal data class PlaceRoom(

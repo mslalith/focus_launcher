@@ -7,7 +7,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import dev.mslalith.focuslauncher.core.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -20,38 +23,38 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
 
     override val showLunarPhaseFlow: Flow<Boolean> = settingsDataStore.data
         .map {
-            it[PREFERENCES_SHOW_LUNAR_PHASE] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
+            it[PREFERENCES_SHOW_LUNAR_PHASE] ?: DEFAULT_SHOW_LUNAR_PHASE
         }
 
     override val showIlluminationPercentFlow: Flow<Boolean> = settingsDataStore.data
         .map {
-            it[PREFERENCES_SHOW_ILLUMINATION_PERCENT] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
+            it[PREFERENCES_SHOW_ILLUMINATION_PERCENT] ?: DEFAULT_SHOW_ILLUMINATION_PERCENT
         }
 
     override val showUpcomingPhaseDetailsFlow: Flow<Boolean> = settingsDataStore.data
         .map {
-            it[PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS] ?: Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
+            it[PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS] ?: DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
         }
 
     override val currentPlaceFlow: Flow<CurrentPlace> = settingsDataStore.data
         .map {
-            val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
+            val json = it[PREFERENCES_CURRENT_PLACE] ?: return@map DEFAULT_CURRENT_PLACE
             Json.decodeFromString(deserializer = CurrentPlace.serializer(), string = json)
         }
 
     override suspend fun toggleShowLunarPhase() = toggleData(
         preference = PREFERENCES_SHOW_LUNAR_PHASE,
-        defaultValue = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE
+        defaultValue = DEFAULT_SHOW_LUNAR_PHASE
     )
 
     override suspend fun toggleShowIlluminationPercent() = toggleData(
         preference = PREFERENCES_SHOW_ILLUMINATION_PERCENT,
-        defaultValue = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT
+        defaultValue = DEFAULT_SHOW_ILLUMINATION_PERCENT
     )
 
     override suspend fun toggleShowUpcomingPhaseDetails() = toggleData(
         preference = PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS,
-        defaultValue = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
+        defaultValue = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
     )
 
     override suspend fun updateCurrentPlace(currentPlace: CurrentPlace) {

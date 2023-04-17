@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.QUOTES_TABLE_NAME
+import dev.mslalith.focuslauncher.core.model.Constants.Database.QUOTES_TABLE_NAME
 
 @Dao
 internal interface QuotesDao {

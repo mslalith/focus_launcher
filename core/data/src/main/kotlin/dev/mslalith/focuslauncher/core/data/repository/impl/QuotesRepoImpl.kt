@@ -10,7 +10,7 @@ import dev.mslalith.focuslauncher.core.data.dto.toQuoteRoom
 import dev.mslalith.focuslauncher.core.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.core.data.network.entities.QuoteResponse
 import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.QUOTES_LIMIT
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.QUOTES_LIMIT
 import dev.mslalith.focuslauncher.core.model.Quote
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

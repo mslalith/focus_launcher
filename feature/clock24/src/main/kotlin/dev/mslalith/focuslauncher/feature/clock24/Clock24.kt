@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.DEFAULT_CLOCK_24_ANALOG_RADIUS
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
