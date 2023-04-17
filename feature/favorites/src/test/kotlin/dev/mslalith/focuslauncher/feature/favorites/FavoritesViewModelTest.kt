@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.test.TestIconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
@@ -60,6 +61,7 @@ class FavoritesViewModelTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         viewModel = FavoritesViewModel(
+            launcherAppsManager = TestLauncherAppsManager(),
             iconPackManager = iconPackManager,
             iconProvider = TestIconProvider(),
             generalSettingsRepo = generalSettingsRepo,
