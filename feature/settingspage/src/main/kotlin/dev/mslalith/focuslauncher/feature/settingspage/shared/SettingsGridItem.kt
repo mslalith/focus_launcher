@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.settingspage.shared
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,9 +20,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ internal fun SettingsGridItem(
     showIcon: Boolean = false,
     horizontalPadding: Dp? = null,
     verticalPadding: Dp = 8.dp,
-    icon: ImageVector? = null,
+    @DrawableRes iconRes: Int? = null,
     contentDescription: String? = null,
     onClick: () -> Unit
 ) {
@@ -61,14 +62,14 @@ internal fun SettingsGridItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (showIcon) {
-            if (icon != null) {
+            if (iconRes != null) {
                 Box(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .then(iconModifier)
                 ) {
                     Icon(
-                        imageVector = icon,
+                        painter = painterResource(id = iconRes),
                         contentDescription = contentDescription ?: text,
                         tint = color
                     )

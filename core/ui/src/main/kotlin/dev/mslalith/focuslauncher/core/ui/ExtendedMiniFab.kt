@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +23,7 @@ import androidx.compose.ui.unit.sp
 fun ExtendedMiniFab(
     modifier: Modifier = Modifier,
     text: String,
-    icon: ImageVector,
+    @DrawableRes iconRes: Int,
     contentDescription: String? = null,
     onClick: () -> Unit
 ) {
@@ -39,7 +40,7 @@ fun ExtendedMiniFab(
         val centerVerticallyModifier = Modifier.align(Alignment.CenterVertically)
 
         Icon(
-            imageVector = icon,
+            painter = painterResource(id = iconRes),
             contentDescription = contentDescription ?: text,
             tint = colors.background,
             modifier = centerVerticallyModifier.padding(vertical = 10.dp)

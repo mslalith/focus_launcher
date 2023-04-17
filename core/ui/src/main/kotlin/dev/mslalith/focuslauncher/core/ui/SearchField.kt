@@ -13,13 +13,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -61,7 +59,10 @@ fun SearchField(
             unfocusedIndicatorColor = Color.Transparent
         ),
         leadingIcon = {
-            Icon(Icons.Rounded.Search, contentDescription = "Search")
+            Icon(
+                painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = "Search"
+            )
         },
         trailingIcon = {
             AnimatedVisibility(visible = query.isNotEmpty()) {
@@ -72,7 +73,7 @@ fun SearchField(
                         .padding(4.dp)
                 ) {
                     Icon(
-                        Icons.Rounded.Clear,
+                        painter = painterResource(id = R.drawable.ic_close),
                         contentDescription = "Clear"
                     )
                 }

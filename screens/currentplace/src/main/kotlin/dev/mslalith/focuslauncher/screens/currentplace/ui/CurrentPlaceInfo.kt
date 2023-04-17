@@ -14,18 +14,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.screens.currentplace.R
 import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 
 @Composable
@@ -53,7 +52,7 @@ private fun LatLngInfo(
             .padding(horizontal = 12.dp, vertical = 12.dp),
     ) {
         Icon(
-            imageVector = Icons.Rounded.LocationOn,
+            painter = painterResource(id = R.drawable.ic_map_pin),
             contentDescription = "Location icon",
             modifier = Modifier
                 .align(Alignment.CenterVertically)
@@ -85,7 +84,7 @@ private fun AddressInfo(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Rounded.Home,
+            painter = painterResource(id = R.drawable.ic_house),
             contentDescription = "Address icon",
             modifier = Modifier
                 .align(Alignment.CenterVertically)

@@ -6,9 +6,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -26,7 +25,7 @@ fun AppBarWithBackIcon(
         navigationIcon = {
             IconButton(onClick = onBackPressed) {
                 Icon(
-                    Icons.Rounded.ArrowBack,
+                    painter = painterResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back",
                     tint = colors.onBackground
                 )
