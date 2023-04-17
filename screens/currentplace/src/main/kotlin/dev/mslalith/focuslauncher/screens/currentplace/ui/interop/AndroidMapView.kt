@@ -35,7 +35,7 @@ internal fun AndroidMapView(
     fun MapView.updateCurrentPositionMarker(geoPoint: GeoPoint) {
         if (currentPositionMarker == null) {
             currentPositionMarker = Marker(this).apply {
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_location_on)
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_map_pin_line)
             }
             overlays.add(currentPositionMarker)
         }

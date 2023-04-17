@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,7 +77,7 @@ internal fun FavoritesContextHeader(
         FavoritesContextActionItem(
             contextModes = listOf(FavoritesContextMode.Remove::class) as List<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
-            iconType = IconType.Vector(imageVector = Icons.Default.Delete),
+            iconType = IconType.Resource(resId = R.drawable.ic_delete),
             onClick = { handleReClickFor(FavoritesContextMode.Remove) { onRemoveClick() } }
         )
     }

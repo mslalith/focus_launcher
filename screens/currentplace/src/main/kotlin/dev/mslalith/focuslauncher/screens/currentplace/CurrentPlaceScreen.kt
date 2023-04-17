@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -79,7 +77,7 @@ internal fun CurrentPlaceScreen(
                 onBackPressed = goBack,
                 actions = {
                     RoundIcon(
-                        iconType = IconType.Vector(imageVector = Icons.Rounded.Done),
+                        iconType = IconType.Resource(resId = R.drawable.ic_check),
                         enabled = currentPlaceState.canSave,
                         onClick = onDoneClick
                     )

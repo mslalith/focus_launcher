@@ -42,7 +42,7 @@ internal fun QuoteForYouContent(
             .animateContentSize()
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_format_quote),
+            painter = painterResource(id = R.drawable.ic_quote),
             contentDescription = "Quotation",
             tint = MaterialTheme.colors.onBackground,
             modifier = Modifier.align(Alignment.CenterHorizontally)

@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TextIconButton(
     modifier: Modifier = Modifier,
-    text: String,
+    text: String?,
     icon: Painter,
     contentDescription: String? = null,
     paddingValues: PaddingValues = PaddingValues(
@@ -29,6 +30,7 @@ fun TextIconButton(
         vertical = 8.dp
     ),
     afterIconSpacing: Dp = 14.dp,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     backgroundColor: Color = Color.Transparent,
     onClick: () -> Unit
 ) {
@@ -37,20 +39,23 @@ fun TextIconButton(
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor)
             .clickable { onClick() }
-            .padding(paddingValues = paddingValues)
+            .padding(paddingValues = paddingValues),
+        horizontalArrangement = horizontalArrangement
     ) {
         Icon(
             painter = icon,
             contentDescription = contentDescription ?: text,
             tint = MaterialTheme.colors.onBackground
         )
-        HorizontalSpacer(spacing = afterIconSpacing)
-        Text(
-            text = text,
-            style = TextStyle(
-                color = MaterialTheme.colors.onBackground,
-                fontSize = 16.sp
+        if (text != null) {
+            HorizontalSpacer(spacing = afterIconSpacing)
+            Text(
+                text = text,
+                style = TextStyle(
+                    color = MaterialTheme.colors.onBackground,
+                    fontSize = 16.sp
+                )
             )
-        )
+        }
     }
 }
