@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
-import dev.mslalith.focuslauncher.core.common.extensions.defaultDialerApp
-import dev.mslalith.focuslauncher.core.common.extensions.defaultMessagingApp
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
@@ -78,7 +76,7 @@ internal fun FavoritesList(
 @Composable
 internal fun FavoritesList(
     favoritesState: FavoritesState,
-    addDefaultAppsToFavorites: (List<App>) -> Unit,
+    addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
     isInContextualMode: () -> Boolean,
@@ -106,7 +104,7 @@ internal fun FavoritesList(
 @Composable
 internal fun FavoritesList(
     favoritesList: List<AppWithIcon>,
-    addDefaultAppsToFavorites: (List<App>) -> Unit,
+    addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
     currentContextMode1: FavoritesContextMode,
@@ -124,8 +122,7 @@ internal fun FavoritesList(
         if (favoritesList.isNotEmpty() || isReordering()) return@LaunchedEffect
 
         hideContextualMode()
-        val defaultApps = listOfNotNull(context.defaultDialerApp, context.defaultMessagingApp)
-        if (defaultApps.isNotEmpty()) addDefaultAppsToFavorites(defaultApps)
+        addDefaultAppsToFavorites()
     }
 
     BackPressHandler(enabled = isInContextualMode()) { hideContextualMode() }

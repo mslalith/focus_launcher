@@ -5,4 +5,5 @@ import dev.mslalith.focuslauncher.core.model.App
 interface LauncherAppsManager {
     fun loadAllApps(): List<App>
     fun loadApp(packageName: String): App?
+    fun defaultFavoriteApps(): List<App>
 }

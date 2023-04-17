@@ -12,4 +12,6 @@ class TestLauncherAppsManager : LauncherAppsManager {
         packageName = packageName,
         isSystem = false
     )
+
+    override fun defaultFavoriteApps(): List<App> = emptyList()
 }
