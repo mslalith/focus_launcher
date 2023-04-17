@@ -13,8 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReusableContent
@@ -84,7 +82,7 @@ internal fun IconPackScreen(
                 onBackPressed = goBack,
                 actions = {
                     RoundIcon(
-                        iconType = IconType.Vector(imageVector = Icons.Rounded.Done),
+                        iconType = IconType.Resource(resId = R.drawable.ic_check),
                         enabled = iconPackState.canSave,
                         onClick = onDoneClick
                     )

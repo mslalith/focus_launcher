@@ -126,7 +126,7 @@ internal fun MoreOptionsBottomSheet(
         if (!appWithIcon.isSystem) {
             SelectableIconItem(
                 text = "Uninstall",
-                iconRes = R.drawable.ic_uninstall,
+                iconRes = R.drawable.ic_delete,
                 onClick = {
                     closeAfterAction { context.uninstallApp(appWithIcon.toApp()) }
                 }
