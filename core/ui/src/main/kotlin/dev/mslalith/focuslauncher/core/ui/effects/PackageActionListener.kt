@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.screens.launcher
+package dev.mslalith.focuslauncher.core.ui.effects
 
 import android.content.pm.LauncherApps
 import android.os.UserHandle
@@ -7,10 +7,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
-import dev.mslalith.focuslauncher.screens.launcher.model.PackageAction
+import dev.mslalith.focuslauncher.core.model.PackageAction
 
 @Composable
-internal fun PackageActionListener(
+fun PackageActionListener(
     onAction: (PackageAction) -> Unit
 ) {
     val context = LocalContext.current
