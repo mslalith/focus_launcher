@@ -24,11 +24,11 @@ class PackageActionUseCase @Inject constructor(
         }
     }
 
-    private suspend fun handleAppInstall(app: App) {
+    internal suspend fun handleAppInstall(app: App) {
         appDrawerRepo.addApp(app)
     }
 
-    private suspend fun handleAppUninstall(packageName: String) {
+    internal suspend fun handleAppUninstall(packageName: String) {
         appDrawerRepo.getAppBy(packageName)?.let { app ->
             favoritesRepo.removeFromFavorites(app.packageName)
             hiddenAppsRepo.removeFromHiddenApps(app.packageName)
