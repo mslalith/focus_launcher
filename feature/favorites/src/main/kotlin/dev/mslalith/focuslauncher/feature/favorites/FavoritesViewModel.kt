@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
@@ -43,7 +44,7 @@ internal class FavoritesViewModel @Inject constructor(
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { iconPackType, favorites ->
             iconPackManager.loadIconPack(iconPackType = iconPackType)
             with(iconProvider) { favorites.toAppWithIcons(iconPackType = iconPackType) }
-        }
+        }.flowOn(context = appCoroutineDispatcher.io)
 
     val favoritesState = flowOf(value = defaultFavoritesState)
         .combine(allAppsIconPackAware) { state, favorites ->
