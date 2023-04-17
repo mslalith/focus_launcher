@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.screens.iconpack
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -101,12 +102,16 @@ internal class IconPackViewModel @Inject constructor(
 }
 
 context (IconProvider)
-private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = map { app ->
-    AppWithIcon(
-        name = app.name,
-        displayName = app.displayName,
-        packageName = app.packageName,
-        icon = iconFor(app.packageName, iconPackType),
-        isSystem = app.isSystem
-    )
+private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
+    try {
+        AppWithIcon(
+            name = app.name,
+            displayName = app.displayName,
+            packageName = app.packageName,
+            icon = iconFor(app.packageName, iconPackType),
+            isSystem = app.isSystem
+        )
+    } catch (e: PackageManager.NameNotFoundException) {
+        null
+    }
 }

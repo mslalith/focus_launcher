@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -117,12 +118,16 @@ internal class AppDrawerPageViewModel @Inject constructor(
 }
 
 context (IconProvider)
-private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = map { app ->
-    AppWithIcon(
-        name = app.name,
-        displayName = app.displayName,
-        packageName = app.packageName,
-        icon = iconFor(app.packageName, iconPackType),
-        isSystem = app.isSystem
-    )
+private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
+    try {
+        AppWithIcon(
+            name = app.name,
+            displayName = app.displayName,
+            packageName = app.packageName,
+            icon = iconFor(app.packageName, iconPackType),
+            isSystem = app.isSystem
+        )
+    } catch (e: PackageManager.NameNotFoundException) {
+        null
+    }
 }
