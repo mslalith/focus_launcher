@@ -6,10 +6,10 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.common.extensions.formatToTime
 import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.ClockSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State

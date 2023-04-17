@@ -4,10 +4,12 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_FIRST_RUN
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_ICON_PACK_TYPE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
+import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -79,6 +81,19 @@ internal class GeneralSettingsRepoTest : CoroutineTest() {
             mutate = {
                 repo.setIsDefaultLauncher(true)
                 true
+            }
+        )
+    }
+
+    @Test
+    fun `verify icon pack type change`() = runCoroutineTest {
+        verifyChange(
+            flow = repo.iconPackTypeFlow,
+            initialItem = DEFAULT_ICON_PACK_TYPE,
+            mutate = {
+                val newIconPackType = IconPackType.Custom(packageName = "icon.package")
+                repo.updateIconPackType(iconPackType = newIconPackType)
+                newIconPackType
             }
         )
     }

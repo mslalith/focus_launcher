@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import dev.mslalith.focuslauncher.core.data.database.entities.AppRoom
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Database.APPS_TABLE_NAME
+import dev.mslalith.focuslauncher.core.model.Constants.Database.APPS_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao

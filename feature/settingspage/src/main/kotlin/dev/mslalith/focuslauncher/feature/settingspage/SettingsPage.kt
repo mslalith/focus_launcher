@@ -25,6 +25,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ChangeTheme
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.EditFavorites
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.HideApps
+import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.IconPack
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.PullDownNotifications
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaultLauncher
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
@@ -77,6 +78,11 @@ internal fun SettingsPage(
         PullDownNotifications(
             enableNotificationShade = settingsPageViewModel.notificationShadeStateFlow.collectAsStateWithLifecycle().value,
             onClick = settingsPageViewModel::toggleNotificationShade
+        )
+
+        IconPack(
+            shouldShow = settingsPageViewModel.canShowIconPackStateFlow.collectAsStateWithLifecycle().value,
+            onClick = { navigateTo(Screen.IconPack) }
         )
 
         AppDrawer {

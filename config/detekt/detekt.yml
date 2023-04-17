@@ -110,6 +110,8 @@ complexity:
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
+    ignoreAnnotated:
+      - 'IgnoreCyclomaticComplexMethod'
     nestingFunctions:
       - 'also'
       - 'apply'
@@ -137,6 +139,7 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotated:
       - 'Composable'
+      - 'HiltViewModel'
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
     active: false
@@ -148,6 +151,8 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 4
+    ignoreAnnotated:
+      - 'IgnoreNestedBlockDepth'
   NestedScopeFunctions:
     active: false
     threshold: 1
@@ -671,7 +676,7 @@ style:
     active: false
   ReturnCount:
     active: true
-    max: 3
+    max: 4
     excludedFunctions:
       - 'equals'
     excludeLabeled: false

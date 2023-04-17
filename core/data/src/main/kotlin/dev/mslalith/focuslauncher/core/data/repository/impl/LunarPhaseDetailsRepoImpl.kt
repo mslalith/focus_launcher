@@ -12,8 +12,6 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.RiseAndSetDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.core.model.lunarphase.toLunarPhase
 import javax.inject.Inject
-import kotlin.random.Random
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.Instant
@@ -33,9 +31,6 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
         get() = _upcomingLunarPhaseStateFlow
 
     override suspend fun refreshLunarPhaseDetails(instant: Instant, latLng: LatLng) {
-        val delayInMillis = Random.nextInt(from = 8, until = 17) * 100L
-        delay(timeMillis = delayInMillis)
-
         val lunarPhaseDetails = findLunarPhaseDetails(instant = instant, latLng = latLng)
         updateStateFlowsWith(instant = instant, lunarPhaseDetails = lunarPhaseDetails)
     }

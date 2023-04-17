@@ -8,8 +8,8 @@ import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.getOrNull
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
-import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.QUOTES_LIMIT_PER_PAGE
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -97,7 +97,7 @@ internal class QuotesRepoTest : CoroutineTest() {
     @Test
     fun `when one page of quotes are added, quotes size must be same`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
-        assertThat(repo.quotesSize()).isEqualTo(Constants.Defaults.QUOTES_LIMIT_PER_PAGE)
+        assertThat(repo.quotesSize()).isEqualTo(QUOTES_LIMIT_PER_PAGE)
     }
 
     @Test

@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "dev.mslalith.focuslauncher.feature.appdrawerpage"
 }
+
+dependencies {
+    implementation(project(":core:launcherapps"))
+}

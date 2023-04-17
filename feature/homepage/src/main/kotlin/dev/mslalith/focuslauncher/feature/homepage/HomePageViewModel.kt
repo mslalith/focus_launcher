@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.feature.homepage
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePageState
 import javax.inject.Inject

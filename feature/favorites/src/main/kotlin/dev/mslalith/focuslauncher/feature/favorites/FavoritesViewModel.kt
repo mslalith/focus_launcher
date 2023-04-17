@@ -1,27 +1,33 @@
 package dev.mslalith.focuslauncher.feature.favorites
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
-    private val launcherAppsManager: LauncherAppsManager,
+    private val iconPackManager: IconPackManager,
+    private val iconProvider: IconProvider,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -34,9 +40,15 @@ internal class FavoritesViewModel @Inject constructor(
         favoritesList = emptyList()
     )
 
+    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = generalSettingsRepo.iconPackTypeFlow
+        .combine(flow = favoritesRepo.onlyFavoritesFlow) { iconPackType, favorites ->
+            iconPackManager.loadIconPack(iconPackType = iconPackType)
+            with(iconProvider) { favorites.toAppWithIcons(iconPackType = iconPackType) }
+        }.flowOn(context = appCoroutineDispatcher.io)
+
     val favoritesState = flowOf(value = defaultFavoritesState)
-        .combine(favoritesRepo.onlyFavoritesFlow) { state, favorites ->
-            state.copy(favoritesList = favorites.toWithIcons())
+        .combine(allAppsIconPackAware) { state, favorites ->
+            state.copy(favoritesList = favorites)
         }.combine(_favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
         }.withinScope(initialValue = defaultFavoritesState)
@@ -90,14 +102,19 @@ internal class FavoritesViewModel @Inject constructor(
     fun hideContextualMode() {
         _favoritesContextualMode.value = FavoritesContextMode.Closed
     }
+}
 
-    private fun List<App>.toWithIcons(): List<AppWithIcon> = map { app ->
+context (IconProvider)
+private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
+    try {
         AppWithIcon(
             name = app.name,
             displayName = app.displayName,
             packageName = app.packageName,
-            icon = launcherAppsManager.iconFor(app.packageName),
+            icon = iconFor(app.packageName, iconPackType),
             isSystem = app.isSystem
         )
+    } catch (e: PackageManager.NameNotFoundException) {
+        null
     }
 }

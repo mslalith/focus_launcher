@@ -4,7 +4,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi

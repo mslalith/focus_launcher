@@ -9,8 +9,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.data.utils.Constants.DataStore.SETTINGS_DATASTORE
-import dev.mslalith.focuslauncher.core.data.utils.Constants.DataStore.THEME_DATASTORE
+import dev.mslalith.focuslauncher.core.model.Constants.DataStore.SETTINGS_DATASTORE
+import dev.mslalith.focuslauncher.core.model.Constants.DataStore.THEME_DATASTORE
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

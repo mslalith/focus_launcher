@@ -8,10 +8,11 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.test.TestIconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
-import dev.mslalith.focuslauncher.core.testing.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChange
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
@@ -39,6 +40,9 @@ class FavoritesViewModelTest : CoroutineTest() {
     val hiltRule = HiltAndroidRule(this)
 
     @Inject
+    lateinit var iconPackManager: IconPackManager
+
+    @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
     @Inject
@@ -56,7 +60,8 @@ class FavoritesViewModelTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         viewModel = FavoritesViewModel(
-            launcherAppsManager = TestLauncherAppsManager(),
+            iconPackManager = iconPackManager,
+            iconProvider = TestIconProvider(),
             generalSettingsRepo = generalSettingsRepo,
             favoritesRepo = favoritesRepo,
             appCoroutineDispatcher = appCoroutineDispatcher

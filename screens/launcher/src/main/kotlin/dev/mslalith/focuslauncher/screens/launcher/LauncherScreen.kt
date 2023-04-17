@@ -41,8 +41,6 @@ internal fun LauncherScreen(
         launcherViewModel.loadApps()
     }
 
-    PackageActionListener(onAction = launcherViewModel::onPackageAction)
-
     BackPressHandler(enabled = true) {
         viewManager.apply {
             when {

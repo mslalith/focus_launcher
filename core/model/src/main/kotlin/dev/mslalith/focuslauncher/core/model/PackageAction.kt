@@ -1,6 +1,6 @@
-package dev.mslalith.focuslauncher.screens.launcher.model
+package dev.mslalith.focuslauncher.core.model
 
-internal sealed interface PackageAction {
+sealed interface PackageAction {
     data class Added(val packageName: String) : PackageAction
     data class Updated(val packageName: String) : PackageAction
     data class Removed(val packageName: String) : PackageAction

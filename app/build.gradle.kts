@@ -50,14 +50,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:data"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":core:domain"))
     implementation(project(":screens:launcher"))
     implementation(project(":screens:editfavorites"))
     implementation(project(":screens:hideapps"))
     implementation(project(":screens:currentplace"))
+    implementation(project(":screens:iconpack"))
     implementation(project(":feature:settingspage"))
 
     implementation(libs.google.material)

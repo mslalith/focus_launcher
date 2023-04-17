@@ -19,7 +19,7 @@ import dev.mslalith.focuslauncher.core.data.database.entities.HiddenAppRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.PlaceRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.core.data.database.typeconverter.Converters
-import dev.mslalith.focuslauncher.core.data.utils.Constants
+import dev.mslalith.focuslauncher.core.model.Constants.Database.APP_DB_NAME
 
 @Database(
     entities = [
@@ -49,7 +49,7 @@ internal abstract class AppDatabase : RoomDatabase() {
         internal fun build(context: Context): AppDatabase = Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            Constants.Database.APP_DB_NAME
+            APP_DB_NAME
         ).build()
     }
 }

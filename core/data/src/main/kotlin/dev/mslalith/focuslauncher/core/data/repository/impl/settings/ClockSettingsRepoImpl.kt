@@ -7,8 +7,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import dev.mslalith.focuslauncher.core.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.core.data.repository.settings.ClockSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,23 +20,23 @@ internal class ClockSettingsRepoImpl @Inject constructor(
 ) : ClockSettingsRepo {
     override val showClock24Flow: Flow<Boolean> = settingsDataStore.data
         .map {
-            it[PREFERENCES_SHOW_CLOCK_24] ?: Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
+            it[PREFERENCES_SHOW_CLOCK_24] ?: DEFAULT_SHOW_CLOCK_24
         }
 
     override val clockAlignmentFlow: Flow<ClockAlignment> = settingsDataStore.data
         .map { preferences ->
-            val index = preferences[PREFERENCES_CLOCK_ALIGNMENT] ?: Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT.index
+            val index = preferences[PREFERENCES_CLOCK_ALIGNMENT] ?: DEFAULT_CLOCK_ALIGNMENT.index
             ClockAlignment.values().first { it.index == index }
         }
 
     override val clock24AnimationDurationFlow: Flow<Int> = settingsDataStore.data
         .map {
-            it[PREFERENCES_CLOCK_24_ANIMATION_DURATION] ?: Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
+            it[PREFERENCES_CLOCK_24_ANIMATION_DURATION] ?: DEFAULT_CLOCK_24_ANIMATION_DURATION
         }
 
     override suspend fun toggleClock24() {
         settingsDataStore.edit {
-            val current = it[PREFERENCES_SHOW_CLOCK_24] ?: Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
+            val current = it[PREFERENCES_SHOW_CLOCK_24] ?: DEFAULT_SHOW_CLOCK_24
             it[PREFERENCES_SHOW_CLOCK_24] = !current
         }
     }

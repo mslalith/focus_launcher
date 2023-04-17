@@ -1,9 +1,5 @@
-package dev.mslalith.focuslauncher.core.data.utils
+package dev.mslalith.focuslauncher.core.model
 
-import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.ClockAlignment
-import dev.mslalith.focuslauncher.core.model.CurrentPlace
-import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {
@@ -34,6 +30,7 @@ object Constants {
                 const val DEFAULT_STATUS_BAR = false
                 const val DEFAULT_NOTIFICATION_SHADE = true
                 const val DEFAULT_IS_DEFAULT_LAUNCHER = false
+                val DEFAULT_ICON_PACK_TYPE = IconPackType.System
             }
 
             object AppDrawer {

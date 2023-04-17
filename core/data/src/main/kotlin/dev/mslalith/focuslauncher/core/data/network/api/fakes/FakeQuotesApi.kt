@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.core.data.network.api.fakes
 
 import dev.mslalith.focuslauncher.core.data.network.api.QuotesApi
 import dev.mslalith.focuslauncher.core.data.network.entities.QuotesApiResponse
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.QUOTES_LIMIT_PER_PAGE
 import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteResponseFor
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.QUOTES_LIMIT_PER_PAGE
 
 internal class FakeQuotesApi : QuotesApi {
     override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {

@@ -57,8 +57,7 @@ internal fun AppDrawerGridItem(
             Image(
                 bitmap = iconBitmap,
                 contentDescription = app.displayName,
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
         }
         VerticalSpacer(spacing = 8.dp)

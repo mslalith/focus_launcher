@@ -1,18 +1,22 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
-import dev.mslalith.focuslauncher.core.data.utils.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
@@ -22,12 +26,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 internal class AppDrawerPageViewModel @Inject constructor(
-    private val launcherAppsManager: LauncherAppsManager,
+    private val iconPackManager: IconPackManager,
+    private val iconProvider: IconProvider,
     appDrawerSettingsRepo: AppDrawerSettingsRepo,
+    generalSettingsRepo: GeneralSettingsRepo,
     private val appDrawerRepo: AppDrawerRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
     private val favoritesRepo: FavoritesRepo,
@@ -60,17 +65,11 @@ internal class AppDrawerPageViewModel @Inject constructor(
             }
         }
 
-    private val appsWithIconFlow: Flow<List<AppWithIcon>> = appDrawerAppsFlow.map { apps ->
-        apps.map { app ->
-            AppWithIcon(
-                name = app.name,
-                displayName = app.displayName,
-                packageName = app.packageName,
-                icon = launcherAppsManager.iconFor(app.packageName),
-                isSystem = app.isSystem
-            )
+    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = generalSettingsRepo.iconPackTypeFlow
+        .combine(flow = appDrawerAppsFlow) { iconPackType, allApps ->
+            iconPackManager.loadIconPack(iconPackType = iconPackType)
+            with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
         }
-    }
 
     val appDrawerPageState = flowOf(defaultAppDrawerPageState)
         .combine(appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
@@ -83,7 +82,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
             state.copy(showSearchBar = showSearchBar)
         }.combine(searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
-        }.combine(appsWithIconFlow) { state, apps ->
+        }.combine(allAppsIconPackAware) { state, apps ->
             state.copy(allApps = apps)
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
@@ -115,5 +114,20 @@ internal class AppDrawerPageViewModel @Inject constructor(
         appCoroutineDispatcher.launchInIO {
             hiddenAppsRepo.addToHiddenApps(app)
         }
+    }
+}
+
+context (IconProvider)
+private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
+    try {
+        AppWithIcon(
+            name = app.name,
+            displayName = app.displayName,
+            packageName = app.packageName,
+            icon = iconFor(app.packageName, iconPackType),
+            isSystem = app.isSystem
+        )
+    } catch (e: PackageManager.NameNotFoundException) {
+        null
     }
 }

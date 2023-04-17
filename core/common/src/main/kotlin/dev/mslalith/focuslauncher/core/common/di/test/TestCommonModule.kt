@@ -9,8 +9,6 @@ import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.di.CommonModule
-import dev.mslalith.focuslauncher.core.common.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.common.launcherapps.impl.LauncherAppsManagerImpl
 import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
@@ -31,10 +29,6 @@ object TestCommonModule {
     @Provides
     @Singleton
     fun provideAppCoroutineDispatcher(): AppCoroutineDispatcher = TestAppCoroutineDispatcher(Dispatchers.Main as CoroutineContext)
-
-    @Provides
-    @Singleton
-    fun provideLauncherAppsManager(@ApplicationContext context: Context): LauncherAppsManager = LauncherAppsManagerImpl(context)
 
     @Provides
     @Singleton
