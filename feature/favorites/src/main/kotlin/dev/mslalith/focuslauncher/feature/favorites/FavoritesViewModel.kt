@@ -7,6 +7,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -26,6 +27,7 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
+    private val launcherAppsManager: LauncherAppsManager,
     private val iconPackManager: IconPackManager,
     private val iconProvider: IconProvider,
     private val generalSettingsRepo: GeneralSettingsRepo,
@@ -53,12 +55,12 @@ internal class FavoritesViewModel @Inject constructor(
             state.copy(favoritesContextualMode = favoritesContextualMode)
         }.withinScope(initialValue = defaultFavoritesState)
 
-    fun addDefaultAppsIfRequired(defaultApps: List<App>) {
+    fun addDefaultAppsIfRequired() {
         appCoroutineDispatcher.launchInIO {
             val isFirstRun = generalSettingsRepo.firstRunFlow.first()
             if (isFirstRun) {
                 generalSettingsRepo.overrideFirstRun()
-                defaultApps.forEach { favoritesRepo.addToFavorites(it) }
+                launcherAppsManager.defaultFavoriteApps().forEach { favoritesRepo.addToFavorites(it) }
             }
         }
     }
