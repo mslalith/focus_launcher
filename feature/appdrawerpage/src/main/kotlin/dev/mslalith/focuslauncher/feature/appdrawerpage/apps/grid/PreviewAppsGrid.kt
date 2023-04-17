@@ -11,12 +11,13 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
+import dev.mslalith.focuslauncher.feature.appdrawerpage.ListFadeOutEdgeGradient
+import dev.mslalith.focuslauncher.feature.appdrawerpage.model.Position
 
 @Composable
 fun PreviewAppsGrid(
@@ -51,28 +52,36 @@ private fun PreviewAppsContent(
     apps: List<AppWithIcon>
 ) {
     val columnCount = 4
+    val verticalSpacing = 16.dp
 
-    val configuration = LocalConfiguration.current
-    val bottomSpacing = configuration.screenHeightDp.dp * 0.05f
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(count = columnCount),
+    Box(
         modifier = modifier
     ) {
-        items(
-            items = apps,
-            key = { it.uniqueKey }
-        ) { app ->
-            AppDrawerGridItem(
-                app = app,
-                onClick = {},
-                onLongClick = {},
-                modifier = Modifier.animateItemPlacement()
-            )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(count = columnCount),
+        ) {
+            repeat(columnCount) {
+                item { VerticalSpacer(spacing = verticalSpacing) }
+            }
+
+            items(
+                items = apps,
+                key = { it.uniqueKey }
+            ) { app ->
+                AppDrawerGridItem(
+                    app = app,
+                    onClick = {},
+                    onLongClick = {},
+                    modifier = Modifier.animateItemPlacement()
+                )
+            }
+
+            repeat(columnCount) {
+                item { VerticalSpacer(spacing = verticalSpacing) }
+            }
         }
 
-        repeat(columnCount) {
-            item { VerticalSpacer(spacing = bottomSpacing) }
-        }
+        ListFadeOutEdgeGradient(position = Position.TOP)
+        ListFadeOutEdgeGradient(position = Position.BOTTOM)
     }
 }

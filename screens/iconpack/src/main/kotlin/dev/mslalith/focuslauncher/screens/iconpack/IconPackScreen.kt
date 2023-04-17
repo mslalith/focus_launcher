@@ -28,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
-import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
@@ -105,7 +104,6 @@ internal fun IconPackScreen(
                 appsState = iconPackState.allApps,
                 modifier = Modifier.weight(weight = 1f)
             )
-            VerticalSpacer(spacing = 12.dp)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
