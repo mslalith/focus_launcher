@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 
 internal class IconPackManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val iconManager: IconManager
+    private val iconCacheManager: IconCacheManager
 ) : IconPackManager {
 
     private var currentIconPackParser: IconPackXmlParser? = null
@@ -55,7 +55,7 @@ internal class IconPackManagerImpl @Inject constructor(
     }
 
     private fun loadSystemTypeIcons() {
-        iconManager.clearCache()
+        iconCacheManager.clearCache()
         currentIconPackParser = null
         _iconPackLoadedTriggerFlow.update { !it }
     }
@@ -63,8 +63,8 @@ internal class IconPackManagerImpl @Inject constructor(
     private fun loadCustomTypeIcons(packageName: String) {
         if (currentIconPackParser?.packageName == packageName) return
 
-        iconManager.clearCache()
-        currentIconPackParser = iconManager.iconPackFor(packageName = packageName)
+        iconCacheManager.clearCache()
+        currentIconPackParser = iconCacheManager.iconPackFor(packageName = packageName)
         currentIconPackParser?.load()
         _iconPackLoadedTriggerFlow.update { !it }
     }

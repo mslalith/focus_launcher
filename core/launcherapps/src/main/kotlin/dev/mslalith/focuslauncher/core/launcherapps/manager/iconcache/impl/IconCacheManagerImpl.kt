@@ -1,23 +1,19 @@
-package dev.mslalith.focuslauncher.core.launcherapps.manager.icons.impl
+package dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.impl
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.mslalith.focuslauncher.core.launcherapps.manager.icons.IconManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import javax.inject.Inject
 
-internal class IconManagerImpl @Inject constructor(
+internal class IconCacheManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-) : IconManager {
+) : IconCacheManager {
 
     private val iconCache = hashMapOf<String, Drawable>()
     private val iconPackCache = hashMapOf<String, IconPackXmlParser>()
-
-    override fun addToCache(packageName: String, drawable: Drawable) {
-        iconCache[packageName] = drawable
-    }
 
     override fun clearCache() {
         iconCache.clear()
