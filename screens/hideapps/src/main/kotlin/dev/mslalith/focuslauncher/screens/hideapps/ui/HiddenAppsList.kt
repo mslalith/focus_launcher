@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.screens.hideapps.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import dev.mslalith.focuslauncher.screens.hideapps.model.HiddenApp
 internal fun HiddenAppsList(
     modifier: Modifier = Modifier,
     hiddenApps: List<HiddenApp>,
+    contentPadding: PaddingValues = PaddingValues(),
     onRemoveFromFavorites: (App) -> Unit,
     onAddToHiddenApps: (App) -> Unit,
     onRemoveFromHiddenApps: (App) -> Unit
@@ -27,7 +29,10 @@ internal fun HiddenAppsList(
         }
     }
 
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = contentPadding
+    ) {
         items(
             items = hiddenApps
         ) { hiddenApp ->

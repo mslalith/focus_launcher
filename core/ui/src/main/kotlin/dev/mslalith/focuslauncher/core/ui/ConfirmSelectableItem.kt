@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -56,12 +56,13 @@ fun ConfirmSelectableItem(
         }
         AnimatedVisibility(visible = showConfirm) {
             Column(
-                modifier = Modifier.padding(horizontal = 22.dp)
+                modifier = Modifier
+                    .background(color = MaterialTheme.colorScheme.surface)
+                    .padding(horizontal = 22.dp)
             ) {
                 Text(
                     text = confirmMessage,
                     style = TextStyle(
-                        color = MaterialTheme.colors.onBackground,
                         fontSize = 14.sp,
                         lineHeight = 20.sp
                     )
@@ -80,6 +81,8 @@ fun ConfirmSelectableItem(
                     TextButton(
                         text = confirmText,
                         modifier = Modifier.weight(1f),
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        textColor = MaterialTheme.colorScheme.onPrimary,
                         onClick = {
                             showConfirm = false
                             onConfirm(true)

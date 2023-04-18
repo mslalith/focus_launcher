@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -32,16 +31,13 @@ internal fun SettingsGridItem(
     modifier: Modifier = Modifier,
     text: String,
     showIcon: Boolean = false,
-    horizontalPadding: Dp? = null,
     verticalPadding: Dp = 8.dp,
     @DrawableRes iconRes: Int? = null,
     contentDescription: String? = null,
     onClick: () -> Unit
 ) {
     val density = LocalDensity.current
-    val usableHorizontalPadding = horizontalPadding ?: ITEM_PADDING
 
-    val color = MaterialTheme.colors.onBackground
     var contentHeight by remember { mutableStateOf(0.dp) }
     val iconModifier = Modifier.size(contentHeight)
 
@@ -51,10 +47,7 @@ internal fun SettingsGridItem(
             .padding(horizontal = 2.dp)
             .clip(shape = MaterialTheme.shapes.small)
             .clickable { onClick() }
-            .padding(
-                horizontal = usableHorizontalPadding,
-                vertical = verticalPadding
-            )
+            .padding(vertical = verticalPadding)
             .onSizeChanged {
                 density.run { contentHeight = it.height.toDp() }
             },
@@ -71,19 +64,13 @@ internal fun SettingsGridItem(
                     Icon(
                         painter = painterResource(id = iconRes),
                         contentDescription = contentDescription ?: text,
-                        tint = color
                     )
                 }
             } else {
                 Spacer(iconModifier)
             }
         }
-        Text(
-            text = text,
-            style = TextStyle(color = color)
-        )
-        if (showIcon) {
-            Spacer(iconModifier)
-        }
+        Text(text = text)
+        if (showIcon) Spacer(iconModifier)
     }
 }

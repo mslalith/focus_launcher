@@ -1,12 +1,11 @@
 package dev.mslalith.focuslauncher.screens.launcher
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,7 +26,7 @@ fun LauncherScreen() {
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun LauncherScreen(
     launcherViewModel: LauncherViewModel
@@ -53,16 +52,11 @@ internal fun LauncherScreen(
         }
     }
 
-    Scaffold(
-        scaffoldState = viewManager.scaffoldState,
-        modifier = Modifier
-            .statusBarsPadding()
-            .navigationBarsPadding()
-    ) {
+    Scaffold {
         HorizontalPager(
             pageCount = 3,
             state = pagerState,
-            modifier = Modifier.padding(bottom = it.calculateBottomPadding())
+            modifier = Modifier.padding(paddingValues = it)
         ) { page ->
             when (page) {
                 0 -> SettingsPage()
