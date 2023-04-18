@@ -49,7 +49,7 @@ internal fun Clock24(
 
     Row(
         modifier = modifier
-            .padding(vertical = 12.dp)
+            .padding(vertical = 4.dp)
             .testSemantics(tag = TestTags.TAG_CLOCK24),
         horizontalArrangement = Arrangement.Center
     ) {

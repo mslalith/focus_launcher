@@ -54,20 +54,20 @@ internal fun MoreOptionsBottomSheet(
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        VerticalSpacer(spacing = 12.dp)
+        VerticalSpacer(spacing = 24.dp)
         Text(
             text = appWithIcon.displayName,
             style = TextStyle(
                 color = colors.onBackground,
                 fontSize = 20.sp
             ),
-            modifier = Modifier.padding(top = 18.dp, bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 12.dp)
         )
         Divider(
             color = colors.onBackground,
             modifier = Modifier.fillMaxWidth(fraction = 0.4f)
         )
-        VerticalSpacer(spacing = 12.dp)
+        VerticalSpacer(spacing = 16.dp)
 
         val favoriteIconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star
         SelectableIconItem(

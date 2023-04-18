@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -107,7 +108,7 @@ internal fun IconPackScreen(
                     .fillMaxWidth()
                     .clip(shape = shape)
                     .background(color = MaterialTheme.colors.primaryVariant)
-                    .padding(horizontal = 12.dp, vertical = 12.dp)
+                    .padding(vertical = 12.dp)
             ) {
                 val context = LocalContext.current
                 val systemIconPackApp: AppWithIcon? = remember {
@@ -122,7 +123,9 @@ internal fun IconPackScreen(
                     }
                 }
 
-                LazyRow {
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
                     item {
                         if (systemIconPackApp != null) {
                             ReusableContent(key = systemIconPackApp.uniqueKey) {
