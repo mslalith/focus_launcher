@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -49,8 +50,6 @@ fun ConfirmSelectableItem(
                 text = text,
                 checked = itemType.checked,
                 disabled = itemType.disabled,
-                height = height,
-                iconWidth = iconWidth,
                 onClick = { showConfirm = !showConfirm }
             )
         }
