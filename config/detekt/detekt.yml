@@ -131,6 +131,8 @@ complexity:
   LongMethod:
     active: true
     threshold: 90
+    ignoreAnnotated:
+      - 'IgnoreLongMethod'
   LongParameterList:
     active: true
     functionThreshold: 6

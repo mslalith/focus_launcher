@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
 import dev.mslalith.focuslauncher.core.common.extensions.toast
 import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
+import dev.mslalith.focuslauncher.core.detekt.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableIconItem
@@ -27,6 +28,7 @@ import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.feature.appdrawerpage.R
 
 @Composable
+@IgnoreLongMethod
 internal fun MoreOptionsBottomSheet(
     appWithIcon: AppWithIcon,
     isFavorite: suspend (App) -> Boolean,
