@@ -4,12 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
@@ -22,11 +24,12 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZON
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_END_PADDING
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppDrawerListItem(
     app: AppWithIcon,
     showAppIcons: Boolean,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: (AppWithIcon) -> Unit,
     onLongClick: (AppWithIcon) -> Unit
 ) {
@@ -46,6 +49,9 @@ internal fun AppDrawerListItem(
     }
 
     ListItem(
+        colors = ListItemDefaults.colors(
+            containerColor = Color.Transparent
+        ),
         modifier = Modifier
             .pointerInput(app.packageName) {
                 detectTapGestures(
@@ -53,12 +59,12 @@ internal fun AppDrawerListItem(
                     onLongPress = { onLongClick(app) }
                 )
             },
-        icon = if (showAppIcons) image else null,
-        text = {
+        leadingContent = if (showAppIcons) image else null,
+        headlineText = {
             Text(
                 text = app.displayName,
                 style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
+                    color = contentColor,
                     fontSize = 18.sp
                 ),
                 maxLines = 1,
