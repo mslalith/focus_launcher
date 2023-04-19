@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.feature.clock24
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -27,7 +27,7 @@ internal fun CurrentTime(
             Text(
                 text = it,
                 style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
                 )

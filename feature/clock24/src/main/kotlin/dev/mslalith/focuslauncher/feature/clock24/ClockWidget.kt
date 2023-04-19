@@ -95,7 +95,7 @@ internal fun ClockWidget(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = horizontalPadding)
-    ) {
+    ) { showClock24 ->
         Column(
             horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
             modifier = Modifier
@@ -104,7 +104,7 @@ internal fun ClockWidget(
                     testBiasAlignment(BiasAlignment.Horizontal(horizontalBias))
                 }
         ) {
-            if (it) {
+            if (showClock24) {
                 Clock24(
                     currentTime = clock24State.currentTime,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
