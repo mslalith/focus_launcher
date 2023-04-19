@@ -26,6 +26,7 @@ import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
 import dev.mslalith.focuslauncher.screens.iconpack.ui.IconPackItem
@@ -100,6 +101,10 @@ internal fun IconPackScreen(
                     .fillMaxWidth()
                     .clip(shape = shape)
                     .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                    .horizontalFadeOutEdge(
+                        width = 16.dp,
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
                     .padding(top = 24.dp, bottom = 12.dp)
             ) {
                 val context = LocalContext.current
@@ -116,7 +121,7 @@ internal fun IconPackScreen(
                 }
 
                 LazyRow(
-                    contentPadding = PaddingValues(horizontal = 12.dp)
+                    contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     item {
                         if (systemIconPackApp != null) {
