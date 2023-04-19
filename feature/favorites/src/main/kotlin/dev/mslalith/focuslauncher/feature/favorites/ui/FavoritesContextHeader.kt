@@ -11,17 +11,14 @@ import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
-import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.feature.favorites.R
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import kotlin.reflect.KClass
@@ -60,24 +57,21 @@ internal fun FavoritesContextHeader(
         ) { header ->
             Text(
                 text = header,
-                style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
-                    fontSize = 24.sp
-                )
+                fontSize = 24.sp
             )
         }
         FillSpacer()
         FavoritesContextActionItem(
             contextModes = listOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as List<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
-            iconType = IconType.Resource(resId = R.drawable.ic_drag_indicator),
+            iconRes = R.drawable.ic_drag_indicator,
             onClick = { handleReClickFor(FavoritesContextMode.Reorder) { onReorderClick() } }
         )
         HorizontalSpacer(spacing = 4.dp)
         FavoritesContextActionItem(
             contextModes = listOf(FavoritesContextMode.Remove::class) as List<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
-            iconType = IconType.Resource(resId = R.drawable.ic_delete),
+            iconRes = R.drawable.ic_delete,
             onClick = { handleReClickFor(FavoritesContextMode.Remove) { onRemoveClick() } }
         )
     }

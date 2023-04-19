@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReusableContent
@@ -91,7 +91,7 @@ internal fun FavoritesList(
         addDefaultAppsToFavorites = addDefaultAppsToFavorites,
         removeFromFavorites = removeFromFavorites,
         reorderFavorite = reorderFavorite,
-        currentContextMode1 = favoritesState.favoritesContextualMode,
+        currentContextMode = favoritesState.favoritesContextualMode,
         isInContextualMode = isInContextualMode,
         isReordering = isReordering,
         hideContextualMode = hideContextualMode,
@@ -107,7 +107,7 @@ internal fun FavoritesList(
     addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
-    currentContextMode1: FavoritesContextMode,
+    currentContextMode: FavoritesContextMode,
     isInContextualMode: () -> Boolean,
     isReordering: () -> Boolean,
     hideContextualMode: () -> Unit,
@@ -116,7 +116,7 @@ internal fun FavoritesList(
     contentPadding: Dp
 ) {
     val context = LocalContext.current
-    val currentContextMode by rememberUpdatedState(newValue = currentContextMode1)
+    val currentContextMode by rememberUpdatedState(newValue = currentContextMode)
 
     LaunchedEffect(favoritesList.isEmpty()) {
         if (favoritesList.isNotEmpty() || isReordering()) return@LaunchedEffect
@@ -138,7 +138,7 @@ internal fun FavoritesList(
             .padding(horizontal = outerPadding)
             .border(
                 width = 1.dp,
-                color = MaterialTheme.colors.onBackground.copy(alpha = borderOpacity),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = borderOpacity),
                 shape = RoundedCornerShape(size = 12.dp)
             )
             .padding(bottom = innerPaddingBottom)
