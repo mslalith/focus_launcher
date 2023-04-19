@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,6 +47,8 @@ internal fun LunarPhaseDetailsDialog(
 @Composable
 internal fun LunarPhaseDetailsDialog(
     lunarPhaseDetails: LunarPhaseDetails,
+    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     onClose: () -> Unit,
 ) {
     Dialog(
@@ -55,24 +58,31 @@ internal fun LunarPhaseDetailsDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(shape = RoundedCornerShape(size = 12.dp))
-                .background(color = MaterialTheme.colors.primaryVariant)
+                .background(color = backgroundColor)
                 .padding(horizontal = 24.dp, vertical = 24.dp)
         ) {
-            TodayLunarPhase(lunarPhaseDetails = lunarPhaseDetails)
+            TodayLunarPhase(
+                lunarPhaseDetails = lunarPhaseDetails,
+                contentColor = contentColor
+            )
 
             Divider(
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
                 modifier = Modifier.padding(vertical = 16.dp)
             )
 
-            NextMajorPhaseDetails(lunarPhaseDetails.nextPhaseDetails)
+            NextMajorPhaseDetails(
+                nextPhaseDetails = lunarPhaseDetails.nextPhaseDetails,
+                contentColor = contentColor
+            )
 
             Divider(
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
                 modifier = Modifier.padding(vertical = 16.dp)
             )
 
-            LunarRiseAndSetDetails(lunarPhaseDetails = lunarPhaseDetails)
+            LunarRiseAndSetDetails(
+                lunarPhaseDetails = lunarPhaseDetails,
+                contentColor = contentColor
+            )
         }
     }
 }

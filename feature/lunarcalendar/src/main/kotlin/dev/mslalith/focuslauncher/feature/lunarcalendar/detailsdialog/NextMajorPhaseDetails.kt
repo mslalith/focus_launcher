@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,13 +21,13 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 @Composable
 internal fun NextMajorPhaseDetails(
     nextPhaseDetails: NextPhaseDetails,
-    textColor: Color = MaterialTheme.colors.onBackground
+    contentColor: Color
 ) {
     Column {
         Text(
             text = "Upcoming Phases",
             style = TextStyle(
-                color = textColor,
+                color = contentColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 letterSpacing = 1.2.sp
@@ -45,7 +44,8 @@ internal fun NextMajorPhaseDetails(
             Box(modifier = Modifier.weight(weight = 1f)) {
                 NextSingleMajorPhaseDetails(
                     illumination = 0.0,
-                    localDateTime = nextPhaseDetails.newMoon
+                    localDateTime = nextPhaseDetails.newMoon,
+                    contentColor = contentColor
                 )
             }
 
@@ -54,7 +54,8 @@ internal fun NextMajorPhaseDetails(
             Box(modifier = Modifier.weight(weight = 1f)) {
                 NextSingleMajorPhaseDetails(
                     illumination = 100.0,
-                    localDateTime = nextPhaseDetails.fullMoon
+                    localDateTime = nextPhaseDetails.fullMoon,
+                    contentColor = contentColor
                 )
             }
         }

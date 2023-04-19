@@ -2,8 +2,7 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +13,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 internal fun RowScope.RiseAndSetIndicator(
     text: String,
-    textColor: Color = MaterialTheme.colors.onBackground
+    contentColor: Color
 ) {
     Box(
         modifier = Modifier.weight(weight = 1f),
@@ -23,7 +22,7 @@ internal fun RowScope.RiseAndSetIndicator(
         Text(
             text = text,
             style = TextStyle(
-                color = textColor,
+                color = contentColor,
                 fontSize = 12.sp,
                 letterSpacing = 1.2.sp
             )

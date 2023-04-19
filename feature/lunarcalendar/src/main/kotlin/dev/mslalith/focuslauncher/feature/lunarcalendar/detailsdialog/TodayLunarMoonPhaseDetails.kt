@@ -1,8 +1,7 @@
 package dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -17,13 +16,13 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 @Composable
 internal fun TodayLunarMoonPhaseDetails(
     lunarPhaseDetails: LunarPhaseDetails,
-    textColor: Color = MaterialTheme.colors.onBackground
+    contentColor: Color
 ) {
     Column {
         Text(
             text = lunarPhaseDetails.lunarPhase.phaseName,
             style = TextStyle(
-                color = textColor,
+                color = contentColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 letterSpacing = 1.2.sp
@@ -33,7 +32,7 @@ internal fun TodayLunarMoonPhaseDetails(
         Text(
             text = "Illumination: ${lunarPhaseDetails.illumination.times(100).asPercent(precision = 3)}",
             style = TextStyle(
-                color = textColor,
+                color = contentColor,
                 fontSize = 14.sp,
                 letterSpacing = 1.2.sp
             )
@@ -42,7 +41,7 @@ internal fun TodayLunarMoonPhaseDetails(
         Text(
             text = "Angle: ${lunarPhaseDetails.phaseAngle.limitDecimals(precision = 2)}",
             style = TextStyle(
-                color = textColor,
+                color = contentColor,
                 fontSize = 14.sp,
                 letterSpacing = 1.2.sp
             )
