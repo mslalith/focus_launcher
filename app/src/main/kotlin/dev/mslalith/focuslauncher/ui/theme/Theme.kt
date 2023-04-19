@@ -1,8 +1,6 @@
 package dev.mslalith.focuslauncher.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -17,29 +15,7 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.feature.settingspage.ThemeViewModel
 import kotlinx.coroutines.flow.first
 
-private val NotWhitePalette = lightColors(
-    background = notWhiteBackgroundColor,
-    surface = notWhiteBackgroundColor,
-    onBackground = notWhiteOnBackgroundColor,
-    onSurface = notWhiteOnBackgroundColor,
-    primary = notWhitePrimaryColorVariant,
-    primaryVariant = notWhitePrimaryColorVariant,
-    secondary = notWhiteSecondaryColorVariant,
-    secondaryVariant = notWhiteSecondaryColorVariant
-)
-
-private val SaidDarkPalette = darkColors(
-    background = saidDarkBackgroundColor,
-    surface = saidDarkBackgroundColor,
-    onBackground = saidDarkOnBackgroundColor,
-    onSurface = saidDarkOnBackgroundColor,
-    primary = saidDarkPrimaryColorVariant,
-    primaryVariant = saidDarkPrimaryColorVariant,
-    secondary = saidDarkSecondaryColorVariant,
-    secondaryVariant = saidDarkSecondaryColorVariant
-)
-
-private val LightColors = lightColorScheme(
+private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -72,7 +48,7 @@ private val LightColors = lightColorScheme(
 )
 
 
-private val DarkColors = darkColorScheme(
+private val darkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -115,8 +91,8 @@ fun FocusLauncherTheme(
     val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else DEFAULT_THEME
 
     val colors = when (theme) {
-        Theme.NOT_WHITE -> LightColors
-        Theme.SAID_DARK -> DarkColors
+        Theme.NOT_WHITE -> lightColors
+        Theme.SAID_DARK -> darkColors
     }
     systemUiController.setSystemBarsColor(color = colors.background)
 
