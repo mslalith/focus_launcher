@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,14 +33,14 @@ fun SettingsSelectableItem(
     horizontalPadding: Dp = 24.dp,
     onClick: (() -> Unit)?
 ) {
-    val onBackgroundColor = MaterialTheme.colors.onBackground
+    val onSurfaceColor = MaterialTheme.colorScheme.onSurface
     val textColor by animateColorAsState(
         label = "Background color",
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor
+        targetValue = if (disabled) onSurfaceColor.copy(alpha = 0.38f) else onSurfaceColor
     )
     val subTextColor by animateColorAsState(
         label = "Sub Text color",
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(
+        targetValue = if (disabled) onSurfaceColor.copy(alpha = 0.38f) else onSurfaceColor.copy(
             alpha = 0.6f
         )
     )

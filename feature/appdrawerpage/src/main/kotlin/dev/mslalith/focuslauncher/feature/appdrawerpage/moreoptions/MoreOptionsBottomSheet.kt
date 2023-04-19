@@ -3,9 +3,9 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
@@ -38,7 +37,6 @@ internal fun MoreOptionsBottomSheet(
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
-    val colors = MaterialTheme.colors
 
     val isFavoriteApp by produceState(initialValue = false, key1 = appWithIcon) {
         this.value = isFavorite(appWithIcon.toApp())
@@ -57,14 +55,12 @@ internal fun MoreOptionsBottomSheet(
         VerticalSpacer(spacing = 24.dp)
         Text(
             text = appWithIcon.displayName,
-            style = TextStyle(
-                color = colors.onBackground,
-                fontSize = 20.sp
-            ),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Divider(
-            color = colors.onBackground,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.fillMaxWidth(fraction = 0.4f)
         )
         VerticalSpacer(spacing = 16.dp)

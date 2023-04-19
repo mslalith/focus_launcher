@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.ui.views
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -23,7 +23,7 @@ fun MainContent(
 
     ModalBottomSheetLayout(
         sheetState = viewManager.bottomSheetState,
-        sheetBackgroundColor = MaterialTheme.colors.primaryVariant,
+        sheetBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
         sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         scrimColor = Color.Black.copy(alpha = 0.7f),
         sheetContent = { LauncherBottomSheetContent() }

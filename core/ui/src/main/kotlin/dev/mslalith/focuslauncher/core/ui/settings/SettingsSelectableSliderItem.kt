@@ -22,7 +22,6 @@ fun SettingsSelectableSliderItem(
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     steps: Int = 0,
     disabled: Boolean = false,
-    height: Dp = 56.dp,
     horizontalPadding: Dp = 24.dp
 ) {
     val thumbColor = MaterialTheme.colors.onBackground
@@ -34,7 +33,6 @@ fun SettingsSelectableSliderItem(
         text = text,
         subText = subText,
         disabled = disabled,
-        height = height,
         horizontalPadding = horizontalPadding
     ) {
         Slider(

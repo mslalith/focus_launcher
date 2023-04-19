@@ -19,7 +19,6 @@ fun SettingsSelectableChooserItem(
     itemHorizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     onItemSelected: (Int) -> Unit,
     disabled: Boolean = false,
-    height: Dp = 56.dp,
     horizontalPadding: Dp = 24.dp
 ) {
     SettingsSelectableBottomContentItem(
@@ -27,7 +26,6 @@ fun SettingsSelectableChooserItem(
         text = text,
         subText = subText,
         disabled = disabled,
-        height = height,
         horizontalPadding = horizontalPadding
     ) {
         ChooserGroup(
