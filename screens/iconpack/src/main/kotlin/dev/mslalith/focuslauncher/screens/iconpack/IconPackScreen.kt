@@ -6,15 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.remember
@@ -28,7 +26,6 @@ import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
-import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
 import dev.mslalith.focuslauncher.screens.iconpack.ui.IconPackItem
@@ -62,7 +59,7 @@ internal fun IconPackScreen(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun IconPackScreen(
     iconPackState: IconPackState,
@@ -70,20 +67,15 @@ internal fun IconPackScreen(
     onDoneClick: () -> Unit,
     goBack: () -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
-        modifier = Modifier
-            .statusBarsPadding()
-            .navigationBarsPadding(),
         topBar = {
             AppBarWithBackIcon(
                 title = "Icon Pack",
                 onBackPressed = goBack,
                 actions = {
                     RoundIcon(
-                        iconType = IconType.Resource(resId = R.drawable.ic_check),
+                        iconRes = R.drawable.ic_check,
+                        contentDescription = "Done icon",
                         enabled = iconPackState.canSave,
                         onClick = onDoneClick
                     )
@@ -107,8 +99,8 @@ internal fun IconPackScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = shape)
-                    .background(color = MaterialTheme.colors.primaryVariant)
-                    .padding(vertical = 12.dp)
+                    .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(top = 24.dp, bottom = 12.dp)
             ) {
                 val context = LocalContext.current
                 val systemIconPackApp: AppWithIcon? = remember {

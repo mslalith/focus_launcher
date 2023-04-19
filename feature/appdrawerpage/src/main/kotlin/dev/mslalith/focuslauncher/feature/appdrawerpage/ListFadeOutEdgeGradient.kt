@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +19,10 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.model.Position
 @Composable
 internal fun ListFadeOutEdgeGradient(
     position: Position,
+    color: Color = MaterialTheme.colorScheme.surface,
     height: Dp = 14.dp
 ) {
-    val colors = listOf(MaterialTheme.colors.background, Color.Transparent).let {
+    val colors = listOf(color, Color.Transparent).let {
         when (position) {
             Position.TOP -> it
             Position.BOTTOM -> it.reversed()

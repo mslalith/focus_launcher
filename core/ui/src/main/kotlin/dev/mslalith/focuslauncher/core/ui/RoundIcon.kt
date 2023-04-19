@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -67,12 +70,32 @@ fun RoundIcon(
     }
 }
 
+@Composable
+fun RoundIcon(
+    modifier: Modifier = Modifier,
+    @DrawableRes iconRes: Int,
+    contentDescription: String = "",
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    IconButton(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = onClick
+    ) {
+        androidx.compose.material3.Icon(
+            painter = painterResource(id = iconRes),
+            contentDescription = contentDescription
+        )
+    }
+}
+
 @Preview(name = "Enabled")
 @Composable
 private fun PreviewRoundIconEnabled() {
-    MaterialTheme {
+    Surface {
         RoundIcon(
-            iconType = IconType.Resource(resId = R.drawable.ic_check),
+            iconRes = R.drawable.ic_check,
             enabled = true,
             onClick = { }
         )
@@ -82,9 +105,9 @@ private fun PreviewRoundIconEnabled() {
 @Preview(name = "Disabled")
 @Composable
 private fun PreviewRoundIconDisabled() {
-    MaterialTheme {
+    Surface {
         RoundIcon(
-            iconType = IconType.Resource(resId = R.drawable.ic_check),
+            iconRes = R.drawable.ic_check,
             enabled = false,
             onClick = { }
         )
