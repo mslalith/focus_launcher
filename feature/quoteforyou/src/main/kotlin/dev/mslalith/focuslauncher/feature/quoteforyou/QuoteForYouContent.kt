@@ -7,9 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +28,7 @@ internal fun QuoteForYouContent(
     quote: Quote,
     onQuoteClick: () -> Unit,
     backgroundColor: Color,
+    contentColor: Color
 ) {
     Column(
         modifier = Modifier
@@ -44,30 +45,36 @@ internal fun QuoteForYouContent(
         Icon(
             painter = painterResource(id = R.drawable.ic_quote),
             contentDescription = "Quotation",
-            tint = MaterialTheme.colors.onBackground,
+            tint = contentColor,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         VerticalSpacer(spacing = 12.dp)
-        Crossfade(targetState = quote.quote) { quote ->
+        Crossfade(
+            label = "Cross Fade Quote",
+            targetState = quote.quote
+        ) { quote ->
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = quote,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
+                    color = contentColor,
                     fontSize = 14.sp,
                     letterSpacing = 1.sp
                 )
             )
         }
         VerticalSpacer(spacing = 16.dp)
-        Crossfade(targetState = quote.author) { author ->
+        Crossfade(
+            label = "Cross Fade Quote Author",
+            targetState = quote.author
+        ) { author ->
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "— $author",
                 textAlign = TextAlign.Center,
                 style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
+                    color = contentColor,
                     fontSize = 12.sp,
                     letterSpacing = 1.sp
                 )

@@ -1,10 +1,8 @@
 package dev.mslalith.focuslauncher.core.ui.settings
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,25 +23,18 @@ fun SettingsLoadableItem(
         subText = subText,
         disabled = disabled,
         onClick = { if (!isLoading) onClick?.invoke() },
-        trailing = if (isLoading) {
+        trailingContent = if (isLoading) {
             @Composable { LoadingIndicator() }
-        } else {
-            @Composable {}
-        }
+        } else null
     )
 }
 
 @Composable
 private fun LoadingIndicator() {
     Box(
-        modifier = Modifier
-            .fillMaxHeight(fraction = 0.5f)
-            .aspectRatio(ratio = 1f),
+        modifier = Modifier.size(size = 28.dp),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colors.onBackground,
-            strokeWidth = 2.dp
-        )
+        CircularProgressIndicator(strokeWidth = 2.dp)
     }
 }
