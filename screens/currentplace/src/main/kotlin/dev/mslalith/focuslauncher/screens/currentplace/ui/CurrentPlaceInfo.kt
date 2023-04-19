@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,12 +48,13 @@ private fun LatLngInfo(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colors.secondaryVariant)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = 12.dp, vertical = 12.dp),
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_map_pin),
             contentDescription = "Location icon",
+            tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(start = 4.dp, end = 12.dp)
@@ -64,7 +65,7 @@ private fun LatLngInfo(
         ) {
             Text(
                 text = "${it.latitude},  ${it.longitude}",
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
     }
@@ -79,13 +80,14 @@ private fun AddressInfo(
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Min)
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colors.secondaryVariant)
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
             .padding(horizontal = 12.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_house),
             contentDescription = "Address icon",
+            tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(start = 4.dp, end = 12.dp)
@@ -102,7 +104,7 @@ private fun AddressInfo(
                     ) {
                         Text(
                             text = it.value,
-                            color = MaterialTheme.colors.onBackground
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 }

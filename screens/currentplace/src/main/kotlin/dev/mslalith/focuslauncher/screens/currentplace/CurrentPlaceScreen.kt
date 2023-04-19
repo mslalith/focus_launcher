@@ -2,11 +2,10 @@ package dev.mslalith.focuslauncher.screens.currentplace
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -20,7 +19,6 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
 import dev.mslalith.focuslauncher.screens.currentplace.ui.MapView
@@ -59,6 +57,7 @@ internal fun CurrentPlaceScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CurrentPlaceScreen(
     currentPlaceState: CurrentPlaceState,
@@ -68,16 +67,13 @@ internal fun CurrentPlaceScreen(
     onLocationChange: (LatLng) -> Unit
 ) {
     Scaffold(
-        modifier = Modifier
-            .statusBarsPadding()
-            .navigationBarsPadding(),
         topBar = {
             AppBarWithBackIcon(
                 title = "Update Place",
                 onBackPressed = goBack,
                 actions = {
                     RoundIcon(
-                        iconType = IconType.Resource(resId = R.drawable.ic_check),
+                        iconRes = R.drawable.ic_check,
                         enabled = currentPlaceState.canSave,
                         onClick = onDoneClick
                     )
