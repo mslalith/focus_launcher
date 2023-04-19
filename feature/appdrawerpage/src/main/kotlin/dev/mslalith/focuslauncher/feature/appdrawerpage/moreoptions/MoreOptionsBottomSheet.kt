@@ -37,6 +37,7 @@ internal fun MoreOptionsBottomSheet(
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
+    val contentColor = MaterialTheme.colorScheme.onSurface
 
     val isFavoriteApp by produceState(initialValue = false, key1 = appWithIcon) {
         this.value = isFavorite(appWithIcon.toApp())
@@ -55,20 +56,20 @@ internal fun MoreOptionsBottomSheet(
         VerticalSpacer(spacing = 24.dp)
         Text(
             text = appWithIcon.displayName,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = contentColor,
             fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Divider(
-            color = MaterialTheme.colorScheme.onSurface,
+            color = contentColor,
             modifier = Modifier.fillMaxWidth(fraction = 0.4f)
         )
         VerticalSpacer(spacing = 16.dp)
 
-        val favoriteIconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star
         SelectableIconItem(
             text = if (isFavoriteApp) "Remove from Favorites" else "Add to Favorites",
-            iconRes = favoriteIconRes,
+            iconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction {
                     if (isFavoriteApp) {
@@ -88,6 +89,7 @@ internal fun MoreOptionsBottomSheet(
                 itemType = ConfirmSelectableItemType.Icon(
                     iconRes = R.drawable.ic_visibility_off
                 ),
+                contentColor = contentColor,
                 confirmText = "Yes, Hide",
                 onConfirm = {
                     closeAfterAction {
@@ -99,6 +101,7 @@ internal fun MoreOptionsBottomSheet(
             SelectableIconItem(
                 text = "Hide App",
                 iconRes = R.drawable.ic_visibility_off,
+                contentColor = contentColor,
                 onClick = {
                     closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
                 }
@@ -107,6 +110,7 @@ internal fun MoreOptionsBottomSheet(
         SelectableIconItem(
             text = "Update Display Name",
             iconRes = R.drawable.ic_edit,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction { onUpdateDisplayNameClick() }
             }
@@ -114,6 +118,7 @@ internal fun MoreOptionsBottomSheet(
         SelectableIconItem(
             text = "App Info",
             iconRes = R.drawable.ic_info,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction { context.showAppInfo(appWithIcon.packageName) }
             }
@@ -123,6 +128,7 @@ internal fun MoreOptionsBottomSheet(
             SelectableIconItem(
                 text = "Uninstall",
                 iconRes = R.drawable.ic_delete,
+                contentColor = contentColor,
                 onClick = {
                     closeAfterAction { context.uninstallApp(appWithIcon.toApp()) }
                 }

@@ -1,14 +1,11 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,13 +29,8 @@ internal fun UpdateAppDisplayNameDialog(
 
     AlertDialog(
         onDismissRequest = onClose,
-        containerColor = MaterialTheme.colors.primaryVariant,
-        titleContentColor = MaterialTheme.colors.onBackground,
-        textContentColor = MaterialTheme.colors.onBackground,
         title = {
-            Text(
-                text = "Update Display Name"
-            )
+            Text(text = "Update Display Name")
         },
         text = {
             OutlinedTextField(
@@ -46,30 +38,18 @@ internal fun UpdateAppDisplayNameDialog(
                 onValueChange = { displayName = it },
                 maxLines = 1,
                 singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = MaterialTheme.colors.onBackground,
-                    focusedBorderColor = MaterialTheme.colors.onBackground.copy(alpha = 0.6f),
-                    unfocusedBorderColor = MaterialTheme.colors.secondaryVariant
-                )
             )
         },
         confirmButton = {
             Button(
                 onClick = ::onUpdateClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colors.secondaryVariant,
-                    contentColor = MaterialTheme.colors.onBackground
-                )
             ) {
                 Text(text = "Update")
             }
         },
         dismissButton = {
             TextButton(onClick = onClose) {
-                Text(
-                    text = "Cancel",
-                    color = MaterialTheme.colors.onBackground
-                )
+                Text(text = "Cancel")
             }
         }
     )

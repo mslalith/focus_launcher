@@ -2,8 +2,10 @@ package dev.mslalith.focuslauncher.core.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -13,6 +15,7 @@ fun SelectableIconItem(
     modifier: Modifier = Modifier,
     text: String,
     @DrawableRes iconRes: Int,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     contentDescription: String? = null,
     height: Dp = 48.dp,
     iconWidth: Dp = 56.dp,
@@ -21,6 +24,7 @@ fun SelectableIconItem(
     SelectableItem(
         modifier = modifier,
         text = text,
+        color = contentColor,
         height = height,
         iconWidth = iconWidth,
         onClick = onClick,
@@ -28,6 +32,7 @@ fun SelectableIconItem(
             Icon(
                 painter = painterResource(id = iconRes),
                 contentDescription = contentDescription ?: text,
+                tint = contentColor
             )
         }
     )

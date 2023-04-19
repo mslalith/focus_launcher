@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ fun ConfirmSelectableItem(
     text: String,
     confirmMessage: String,
     itemType: ConfirmSelectableItemType,
+    backgroundColor: Color = Color.Transparent,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     confirmText: String = "Confirm",
     cancelText: String = "Cancel",
     height: Dp = 48.dp,
@@ -41,6 +44,7 @@ fun ConfirmSelectableItem(
                 text = text,
                 iconRes = itemType.iconRes,
                 contentDescription = itemType.contentDescription,
+                contentColor = contentColor,
                 height = height,
                 iconWidth = iconWidth,
                 onClick = { showConfirm = !showConfirm }
@@ -56,12 +60,13 @@ fun ConfirmSelectableItem(
         AnimatedVisibility(visible = showConfirm) {
             Column(
                 modifier = Modifier
-                    .background(color = MaterialTheme.colorScheme.surface)
+                    .background(color = backgroundColor)
                     .padding(horizontal = 22.dp)
             ) {
                 Text(
                     text = confirmMessage,
                     style = TextStyle(
+                        color = contentColor,
                         fontSize = 14.sp,
                         lineHeight = 20.sp
                     )
@@ -71,6 +76,8 @@ fun ConfirmSelectableItem(
                     TextButton(
                         text = cancelText,
                         modifier = Modifier.weight(1f),
+                        backgroundColor = backgroundColor,
+                        textColor = contentColor,
                         onClick = {
                             showConfirm = false
                             onConfirm(false)
