@@ -1,8 +1,7 @@
 package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +14,7 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 internal fun UpcomingLunarPhaseDetails(
     modifier: Modifier = Modifier,
     upcomingLunarPhase: UpcomingLunarPhase,
-    textColor: Color = MaterialTheme.colors.onBackground
+    textColor: Color
 ) {
     val phaseName = upcomingLunarPhase.lunarPhase.phaseName
     val dateTime = upcomingLunarPhase.dateTime?.inShortReadableFormat() ?: return
@@ -23,6 +22,7 @@ internal fun UpcomingLunarPhaseDetails(
 
     Crossfade(
         modifier = modifier,
+        label = "Cross Fade Upcoming Lunar Phase Details",
         targetState = nextPhaseOnText
     ) {
         Text(
