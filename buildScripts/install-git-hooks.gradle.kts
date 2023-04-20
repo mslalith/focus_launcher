@@ -19,4 +19,4 @@ val installGitHooks by tasks.creating(Copy::class) {
 }
 
 // Register the Git task to run at beginning
-// tasks.getByPath(":app:preBuild").dependsOn(installGitHooks)
+tasks.getByPath(":app:preBuild").dependsOn(installGitHooks)

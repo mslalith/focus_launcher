@@ -8,9 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup:
-    if: "!contains(github.event.head_commit.message, 'ci(skip)')"
-    name: Setup
+  static_analysis:
+    name: Run Static Analysis
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -20,20 +19,11 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '17'
+          distribution: 'zulu'
+          java-version: 17
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-
-  static_analysis:
-    needs: [ setup ]
-    name: Run Static Analysis
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Run ktlint & detekt
         uses: gradle/gradle-build-action@v2
@@ -41,13 +31,21 @@ jobs:
           arguments: ktlintCheck detekt --stacktrace --no-daemon --build-cache
 
   build:
-    needs: [ setup ]
     name: Build app
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - uses: gradle/gradle-build-action@v2
         with:
@@ -61,6 +59,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - uses: gradle/gradle-build-action@v2
         with:
@@ -84,7 +91,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: 17
 
       - name: Gradle cache
         uses: gradle/gradle-build-action@v2
