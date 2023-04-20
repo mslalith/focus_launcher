@@ -35,6 +35,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Delete gradle
+        run: rm -rf ~./gradle
+
       - name: Run ktlint & detekt
         uses: gradle/gradle-build-action@v2
         with:
