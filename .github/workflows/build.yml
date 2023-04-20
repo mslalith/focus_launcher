@@ -31,7 +31,6 @@ jobs:
           arguments: ktlintCheck detekt --stacktrace --no-daemon --build-cache
 
   build:
-    needs: [ setup ]
     name: Build app
     runs-on: ubuntu-latest
     timeout-minutes: 30
