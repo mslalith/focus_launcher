@@ -109,25 +109,23 @@ private fun Widgets(
     val navController = LocalNavController.current
 
     Widgets { widgetType ->
-        viewManager.showBottomSheet {
-            when (widgetType) {
-                WidgetType.CLOCK -> {
-                    viewManager.showBottomSheet { ClockSettingsSheet() }
-                }
-                WidgetType.LUNAR_PHASE -> {
-                    viewManager.showBottomSheet {
-                        LunarPhaseSettingsSheet(
-                            properties = LunarPhaseSettingsProperties(
-                                navigateToCurrentPlace = {
-                                    navController.navigate(Screen.CurrentPlace.id)
-                                }
-                            )
+        when (widgetType) {
+            WidgetType.CLOCK -> {
+                viewManager.showBottomSheet { ClockSettingsSheet() }
+            }
+            WidgetType.LUNAR_PHASE -> {
+                viewManager.showBottomSheet {
+                    LunarPhaseSettingsSheet(
+                        properties = LunarPhaseSettingsProperties(
+                            navigateToCurrentPlace = {
+                                navController.navigate(Screen.CurrentPlace.id)
+                            }
                         )
-                    }
+                    )
                 }
-                WidgetType.QUOTES -> {
-                    viewManager.showBottomSheet { QuotesSettingsSheet() }
-                }
+            }
+            WidgetType.QUOTES -> {
+                viewManager.showBottomSheet { QuotesSettingsSheet() }
             }
         }
     }
