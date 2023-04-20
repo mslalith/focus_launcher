@@ -3,8 +3,7 @@ package dev.mslalith.focuslauncher
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +33,7 @@ class LauncherActivity : ComponentActivity() {
 
             ProvideAll {
                 FocusLauncherTheme {
-                    Surface(color = MaterialTheme.colors.background) {
+                    Surface {
                         AppNavigator()
                     }
                 }

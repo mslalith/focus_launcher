@@ -43,8 +43,7 @@ internal fun LauncherScreen(
     BackPressHandler(enabled = true) {
         viewManager.apply {
             when {
-                isDialogVisible -> hideDialog()
-                isVisible -> hideBottomSheet()
+                isBottomSheetVisible -> hideBottomSheet()
                 pagerState.currentPage != 1 -> coroutineScope.launch {
                     pagerState.animateScrollToPage(1)
                 }

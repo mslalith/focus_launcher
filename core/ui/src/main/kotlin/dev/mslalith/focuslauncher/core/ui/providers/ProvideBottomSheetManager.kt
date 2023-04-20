@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.core.ui.providers
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -21,7 +21,7 @@ fun ProvideBottomSheetManager(
     content: @Composable () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -30,7 +30,7 @@ fun ProvideBottomSheetManager(
     val viewManager = remember {
         LauncherViewManager(
             coroutineScope = coroutineScope,
-            scaffoldState = scaffoldState,
+            snackbarHostState = snackbarHostState,
             bottomSheetState = modalBottomSheetState
         )
     }

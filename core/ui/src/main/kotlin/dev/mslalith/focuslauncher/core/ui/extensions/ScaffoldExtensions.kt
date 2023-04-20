@@ -1,10 +1,10 @@
 package dev.mslalith.focuslauncher.core.ui.extensions
 
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarResult
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 
-suspend fun ScaffoldState.showSnackbar(
+internal suspend fun SnackbarHostState.showDismissibleSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
     dismissVisibleSnackbar: Boolean = false,
@@ -12,20 +12,16 @@ suspend fun ScaffoldState.showSnackbar(
     actionLabel: String? = null,
     onAction: ((SnackbarResult) -> Unit)? = null
 ) {
-    snackbarHostState.apply {
-        if (discardIfShowing && currentSnackbarData != null) {
-            return@apply
-        }
+    if (discardIfShowing && currentSnackbarData != null) return
 
-        if (dismissVisibleSnackbar) {
-            currentSnackbarData?.dismiss()
-        }
-
-        val snackbarResult = showSnackbar(
-            message = message,
-            actionLabel = actionLabel,
-            duration = duration
-        )
-        onAction?.invoke(snackbarResult)
+    if (dismissVisibleSnackbar) {
+        currentSnackbarData?.dismiss()
     }
+
+    val snackbarResult = showSnackbar(
+        message = message,
+        actionLabel = actionLabel,
+        duration = duration
+    )
+    onAction?.invoke(snackbarResult)
 }
