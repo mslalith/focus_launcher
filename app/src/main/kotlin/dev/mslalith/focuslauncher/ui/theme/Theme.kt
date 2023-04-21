@@ -104,7 +104,7 @@ fun FocusLauncherTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        // typography = Typography,
+        typography = Typography,
         content = content
     )
 }
