@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
@@ -20,10 +22,10 @@ import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
-import dev.mslalith.focuslauncher.feature.appdrawerpage.model.Position
 import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
 
 @Composable
@@ -78,7 +80,12 @@ internal fun AppDrawerPage(
             .imePadding()
     ) {
         Box(
-            modifier = Modifier.weight(weight = 1f)
+            modifier = Modifier
+                .weight(weight = 1f)
+                .verticalFadeOutEdge(
+                    height = 16.dp,
+                    color = MaterialTheme.colorScheme.surface
+                )
         ) {
             when (appDrawerPageState.appDrawerViewType) {
                 AppDrawerViewType.LIST -> AppsList(
@@ -96,9 +103,6 @@ internal fun AppDrawerPage(
                     onAppLongClick = ::showMoreOptions
                 )
             }
-
-            ListFadeOutEdgeGradient(position = Position.TOP)
-            ListFadeOutEdgeGradient(position = Position.BOTTOM)
         }
 
         AnimatedVisibility(visible = appDrawerPageState.showSearchBar) {

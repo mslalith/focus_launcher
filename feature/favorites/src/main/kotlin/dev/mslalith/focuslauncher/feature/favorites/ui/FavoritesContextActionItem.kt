@@ -1,14 +1,14 @@
 package dev.mslalith.focuslauncher.feature.favorites.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
-import dev.mslalith.focuslauncher.core.ui.model.IconType
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import kotlin.reflect.KClass
 
@@ -16,27 +16,24 @@ import kotlin.reflect.KClass
 internal fun FavoritesContextActionItem(
     contextModes: List<KClass<FavoritesContextMode>>,
     currentContextMode: FavoritesContextMode,
-    iconType: IconType,
+    @DrawableRes iconRes: Int,
     onClick: () -> Unit
 ) {
-    val backgroundColor = MaterialTheme.colors.background
-    val onBackgroundColor = MaterialTheme.colors.onBackground
     val iconBackgroundColor by animateColorAsState(
         label = "Icon Background color",
-        targetValue = if (currentContextMode::class in contextModes) onBackgroundColor else backgroundColor,
+        targetValue = if (currentContextMode::class in contextModes) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
     val iconColor by animateColorAsState(
         label = "Icon color",
-        targetValue = if (currentContextMode::class in contextModes) backgroundColor else onBackgroundColor,
+        targetValue = if (currentContextMode::class in contextModes) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface,
         animationSpec = spring(stiffness = Spring.StiffnessLow)
     )
 
     RoundIcon(
-        iconSize = 40.dp,
-        iconType = iconType,
+        iconRes = iconRes,
         backgroundColor = iconBackgroundColor,
-        iconColor = iconColor,
+        contentColor = iconColor,
         onClick = onClick
     )
 }

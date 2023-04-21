@@ -6,15 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +31,7 @@ fun TextIconButton(
     afterIconSpacing: Dp = 14.dp,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     backgroundColor: Color = Color.Transparent,
+    contentColor: Color = Color.Transparent,
     onClick: () -> Unit
 ) {
     Row(
@@ -45,16 +45,14 @@ fun TextIconButton(
         Icon(
             painter = icon,
             contentDescription = contentDescription ?: text,
-            tint = MaterialTheme.colors.onBackground
+            tint = contentColor
         )
         if (text != null) {
             HorizontalSpacer(spacing = afterIconSpacing)
             Text(
                 text = text,
-                style = TextStyle(
-                    color = MaterialTheme.colors.onBackground,
-                    fontSize = 16.sp
-                )
+                color = contentColor,
+                fontSize = 16.sp
             )
         }
     }

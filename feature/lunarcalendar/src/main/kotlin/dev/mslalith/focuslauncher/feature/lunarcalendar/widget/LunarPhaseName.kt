@@ -1,8 +1,7 @@
 package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,7 +16,7 @@ internal fun LunarPhaseName(
     modifier: Modifier = Modifier,
     lunarPhaseDetails: LunarPhaseDetails,
     showIlluminationPercent: Boolean,
-    textColor: Color = MaterialTheme.colors.onBackground
+    textColor: Color
 ) {
     val phaseNameAndIlluminationPercentPair = lunarPhaseDetails.run {
         lunarPhase.phaseName to (illumination * 100).asPercent()
@@ -27,6 +26,7 @@ internal fun LunarPhaseName(
     }
     Crossfade(
         modifier = modifier,
+        label = "Cross Fade Lunar Phase name",
         targetState = text
     ) {
         Text(

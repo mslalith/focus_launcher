@@ -3,9 +3,9 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -13,12 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
 import dev.mslalith.focuslauncher.core.common.extensions.toast
 import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
+import dev.mslalith.focuslauncher.core.detekt.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableIconItem
@@ -28,6 +28,7 @@ import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.feature.appdrawerpage.R
 
 @Composable
+@IgnoreLongMethod
 internal fun MoreOptionsBottomSheet(
     appWithIcon: AppWithIcon,
     isFavorite: suspend (App) -> Boolean,
@@ -38,7 +39,7 @@ internal fun MoreOptionsBottomSheet(
     onClose: () -> Unit
 ) {
     val context = LocalContext.current
-    val colors = MaterialTheme.colors
+    val contentColor = MaterialTheme.colorScheme.onSurface
 
     val isFavoriteApp by produceState(initialValue = false, key1 = appWithIcon) {
         this.value = isFavorite(appWithIcon.toApp())
@@ -57,22 +58,20 @@ internal fun MoreOptionsBottomSheet(
         VerticalSpacer(spacing = 24.dp)
         Text(
             text = appWithIcon.displayName,
-            style = TextStyle(
-                color = colors.onBackground,
-                fontSize = 20.sp
-            ),
+            color = contentColor,
+            fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Divider(
-            color = colors.onBackground,
+            color = contentColor,
             modifier = Modifier.fillMaxWidth(fraction = 0.4f)
         )
         VerticalSpacer(spacing = 16.dp)
 
-        val favoriteIconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star
         SelectableIconItem(
             text = if (isFavoriteApp) "Remove from Favorites" else "Add to Favorites",
-            iconRes = favoriteIconRes,
+            iconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction {
                     if (isFavoriteApp) {
@@ -92,6 +91,7 @@ internal fun MoreOptionsBottomSheet(
                 itemType = ConfirmSelectableItemType.Icon(
                     iconRes = R.drawable.ic_visibility_off
                 ),
+                contentColor = contentColor,
                 confirmText = "Yes, Hide",
                 onConfirm = {
                     closeAfterAction {
@@ -103,6 +103,7 @@ internal fun MoreOptionsBottomSheet(
             SelectableIconItem(
                 text = "Hide App",
                 iconRes = R.drawable.ic_visibility_off,
+                contentColor = contentColor,
                 onClick = {
                     closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
                 }
@@ -111,6 +112,7 @@ internal fun MoreOptionsBottomSheet(
         SelectableIconItem(
             text = "Update Display Name",
             iconRes = R.drawable.ic_edit,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction { onUpdateDisplayNameClick() }
             }
@@ -118,6 +120,7 @@ internal fun MoreOptionsBottomSheet(
         SelectableIconItem(
             text = "App Info",
             iconRes = R.drawable.ic_info,
+            contentColor = contentColor,
             onClick = {
                 closeAfterAction { context.showAppInfo(appWithIcon.packageName) }
             }
@@ -127,6 +130,7 @@ internal fun MoreOptionsBottomSheet(
             SelectableIconItem(
                 text = "Uninstall",
                 iconRes = R.drawable.ic_delete,
+                contentColor = contentColor,
                 onClick = {
                     closeAfterAction { context.uninstallApp(appWithIcon.toApp()) }
                 }

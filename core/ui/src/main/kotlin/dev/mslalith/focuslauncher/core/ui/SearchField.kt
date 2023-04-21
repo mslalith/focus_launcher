@@ -8,20 +8,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchField(
     modifier: Modifier = Modifier,
@@ -30,20 +31,14 @@ fun SearchField(
     onQueryChange: (String) -> Unit,
     paddingValues: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
 ) {
-    val colors = MaterialTheme.colors
-
     TextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(paddingValues = paddingValues),
         value = query,
-        textStyle = TextStyle(color = colors.onBackground),
         onValueChange = { onQueryChange(it) },
         placeholder = {
-            Text(
-                text = placeholder,
-                style = TextStyle(color = colors.onBackground)
-            )
+            Text(text = placeholder)
         },
         shape = MaterialTheme.shapes.small,
         singleLine = true,
@@ -52,8 +47,6 @@ fun SearchField(
             imeAction = ImeAction.Search
         ),
         colors = TextFieldDefaults.textFieldColors(
-            cursorColor = colors.onBackground,
-            backgroundColor = colors.primaryVariant,
             focusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent

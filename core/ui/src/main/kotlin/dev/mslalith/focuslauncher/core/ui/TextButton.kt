@@ -5,8 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,14 +19,16 @@ import androidx.compose.ui.unit.dp
 fun TextButton(
     modifier: Modifier = Modifier,
     text: String,
-    backgroundColor: Color = MaterialTheme.colors.secondaryVariant,
-    textColor: Color = MaterialTheme.colors.onBackground,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     paddingValues: PaddingValues = PaddingValues(horizontal = 18.dp, vertical = 8.dp),
     onClick: () -> Unit
 ) {
+    val beforeModifier = Modifier.clip(shape = MaterialTheme.shapes.small)
+
     Box(
-        modifier = modifier
-            .clip(shape = MaterialTheme.shapes.small)
+        modifier = beforeModifier
+            .then(other = modifier)
             .background(color = backgroundColor)
             .clickable { onClick() }
             .padding(paddingValues = paddingValues),

@@ -1,15 +1,10 @@
 package dev.mslalith.focuslauncher.screens.hideapps
 
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,18 +21,13 @@ fun HideAppsScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HideAppsScreen(
     hideAppsViewModel: HideAppsViewModel,
     goBack: () -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
-        modifier = Modifier
-            .statusBarsPadding()
-            .navigationBarsPadding(),
         topBar = {
             AppBarWithBackIcon(
                 title = "Hide Apps",
@@ -47,18 +37,16 @@ internal fun HideAppsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = hideAppsViewModel::clearHiddenApps,
-                backgroundColor = MaterialTheme.colors.onBackground.copy(alpha = 0.85f),
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_broom),
                     contentDescription = "Clear Hidden Apps",
-                    tint = MaterialTheme.colors.background,
                 )
             }
         }
-    ) {
+    ) { paddingValues ->
         HiddenAppsList(
-            modifier = Modifier.padding(it),
+            contentPadding = paddingValues,
             hiddenApps = hideAppsViewModel.hiddenAppsFlow.collectAsStateWithLifecycle().value,
             onRemoveFromFavorites = hideAppsViewModel::removeFromFavorites,
             onAddToHiddenApps = hideAppsViewModel::addToHiddenApps,

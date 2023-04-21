@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,7 +38,7 @@ internal fun Clock24(
     analogClockRadius: Float = DEFAULT_CLOCK_24_ANALOG_RADIUS,
     analogClockSpacing: Dp = 4.dp,
     digitSpacing: Dp = 4.dp,
-    handleColor: Color = MaterialTheme.colors.onBackground,
+    handleColor: Color = MaterialTheme.colorScheme.onSurface,
     handleWidth: Float = 4f,
     offsetAnimationSpec: AnimationSpec<Offset> = tween(durationMillis = 900),
     colorAnimationSpec: AnimationSpec<Color> = tween(durationMillis = 900)

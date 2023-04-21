@@ -1,46 +1,41 @@
 package dev.mslalith.focuslauncher.core.ui
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectableCheckboxItem(
     modifier: Modifier = Modifier,
     text: String,
     checked: Boolean,
     disabled: Boolean = false,
-    height: Dp = 48.dp,
-    iconWidth: Dp = 56.dp,
     onClick: () -> Unit
 ) {
-    val backgroundColor = MaterialTheme.colors.background
-    val onBackgroundColor = MaterialTheme.colors.onBackground
-    val disabledColor = onBackgroundColor.copy(alpha = 0.4f)
+    val onBackgroundColor = MaterialTheme.colorScheme.onSurface
+    val disabledColor = onBackgroundColor.copy(alpha = 0.38f)
 
-    SelectableItem(
-        modifier = modifier,
-        text = text,
-        height = height,
-        iconWidth = iconWidth,
-        onClick = onClick,
-        leading = {
+    ListItem(
+        modifier = modifier.clickable { onClick() },
+        colors = ListItemDefaults.colors(
+            headlineColor = if (disabled) disabledColor else onBackgroundColor,
+            leadingIconColor = if (disabled) disabledColor else onBackgroundColor,
+        ),
+        headlineText = {
+            Text(text = text)
+        },
+        leadingContent = {
             Checkbox(
                 checked = checked,
+                enabled = !disabled,
                 onCheckedChange = null,
-                colors = CheckboxDefaults.colors(
-                    checkedColor = if (disabled) disabledColor else onBackgroundColor,
-                    uncheckedColor = if (disabled) disabledColor else onBackgroundColor,
-                    checkmarkColor = backgroundColor
-                ),
-                modifier = Modifier
-                    .padding(12.dp)
-                    .padding(start = 8.dp, end = 8.dp)
             )
         }
     )

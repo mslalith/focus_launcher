@@ -1,96 +1,47 @@
 package dev.mslalith.focuslauncher.core.ui.settings
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsSelectableItem(
     modifier: Modifier = Modifier,
     text: String,
     subText: String? = null,
-    trailing: @Composable () -> Unit = {},
+    trailingContent: @Composable (() -> Unit)? = null,
     disabled: Boolean = false,
-    height: Dp = 48.dp,
-    horizontalPadding: Dp = 24.dp,
+    backgroundColor: Color = Color.Transparent,
     onClick: (() -> Unit)?
 ) {
-    val onBackgroundColor = MaterialTheme.colors.onBackground
-    val textColor by animateColorAsState(
+    val contentColor = MaterialTheme.colorScheme.onSurface
+    val animatedContentColor by animateColorAsState(
         label = "Background color",
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor
-    )
-    val subTextColor by animateColorAsState(
-        label = "Sub Text color",
-        targetValue = if (disabled) onBackgroundColor.copy(alpha = 0.4f) else onBackgroundColor.copy(
-            alpha = 0.6f
-        )
+        targetValue = if (disabled) contentColor.copy(alpha = 0.38f) else contentColor
     )
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height = height)
-            .clickable(enabled = !disabled && onClick != null) { onClick?.invoke() }
-    ) {
-        Row(
-            modifier = Modifier.weight(weight = 1f)
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(weight = 1f)
-                    .align(Alignment.CenterVertically)
-                    .padding(horizontal = horizontalPadding)
-            ) {
-                Column {
-                    Text(
-                        text = text,
-                        style = TextStyle(
-                            color = textColor,
-                            fontSize = 16.sp
-                        )
-                    )
-                    AnimatedVisibility(
-                        visible = subText != null
-                    ) {
-                        Text(
-                            text = subText ?: "",
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            style = TextStyle(
-                                color = subTextColor,
-                                fontSize = 14.sp
-                            )
-                        )
-                    }
-                }
+    ListItem(
+        modifier = modifier.clickable(enabled = !disabled && onClick != null) { onClick?.invoke() },
+        colors = ListItemDefaults.colors(
+            containerColor = backgroundColor,
+            supportingColor = animatedContentColor,
+            headlineColor = animatedContentColor
+        ),
+        headlineText = { Text(text = text) },
+        supportingText = if (subText != null) {
+            @Composable {
+                Text(text = subText)
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(end = horizontalPadding),
-                contentAlignment = Alignment.Center
-            ) {
-                trailing()
-            }
-        }
-    }
+        } else null,
+        trailingContent = trailingContent
+    )
 }

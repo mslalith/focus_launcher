@@ -7,8 +7,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -34,17 +34,17 @@ internal fun FavoriteItem(
     changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
     onClick: () -> Unit
 ) {
-    val backgroundColor = MaterialTheme.colors.background
-    val onBackgroundColor = MaterialTheme.colors.onBackground
+    val backgroundColor = MaterialTheme.colorScheme.surface
+    val contentColor = MaterialTheme.colorScheme.onSurface
 
     val color = remember(key1 = app) {
         val appIconPalette = Palette.from(app.icon.toBitmap()).generate()
-        val extractedColor = Color(appIconPalette.getDominantColor(onBackgroundColor.toArgb()))
+        val extractedColor = Color(appIconPalette.getDominantColor(contentColor.toArgb()))
         return@remember extractedColor.luminate(threshold = 0.36f, value = 0.6f)
     }
     val animatedColor by animateColorAsState(
         label = "Animated color",
-        targetValue = if (isAppAboutToReorder()) onBackgroundColor else color,
+        targetValue = if (isAppAboutToReorder()) contentColor else color,
         animationSpec = tween(durationMillis = 600)
     )
 

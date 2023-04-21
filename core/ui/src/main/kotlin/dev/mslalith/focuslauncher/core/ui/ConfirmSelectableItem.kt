@@ -1,20 +1,22 @@
 package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,8 @@ fun ConfirmSelectableItem(
     text: String,
     confirmMessage: String,
     itemType: ConfirmSelectableItemType,
+    backgroundColor: Color = Color.Transparent,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     confirmText: String = "Confirm",
     cancelText: String = "Cancel",
     height: Dp = 48.dp,
@@ -40,6 +44,7 @@ fun ConfirmSelectableItem(
                 text = text,
                 iconRes = itemType.iconRes,
                 contentDescription = itemType.contentDescription,
+                contentColor = contentColor,
                 height = height,
                 iconWidth = iconWidth,
                 onClick = { showConfirm = !showConfirm }
@@ -49,19 +54,19 @@ fun ConfirmSelectableItem(
                 text = text,
                 checked = itemType.checked,
                 disabled = itemType.disabled,
-                height = height,
-                iconWidth = iconWidth,
                 onClick = { showConfirm = !showConfirm }
             )
         }
         AnimatedVisibility(visible = showConfirm) {
             Column(
-                modifier = Modifier.padding(horizontal = 22.dp)
+                modifier = Modifier
+                    .background(color = backgroundColor)
+                    .padding(horizontal = 22.dp)
             ) {
                 Text(
                     text = confirmMessage,
                     style = TextStyle(
-                        color = MaterialTheme.colors.onBackground,
+                        color = contentColor,
                         fontSize = 14.sp,
                         lineHeight = 20.sp
                     )
@@ -71,6 +76,8 @@ fun ConfirmSelectableItem(
                     TextButton(
                         text = cancelText,
                         modifier = Modifier.weight(1f),
+                        backgroundColor = backgroundColor,
+                        textColor = contentColor,
                         onClick = {
                             showConfirm = false
                             onConfirm(false)
@@ -80,6 +87,8 @@ fun ConfirmSelectableItem(
                     TextButton(
                         text = confirmText,
                         modifier = Modifier.weight(1f),
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        textColor = MaterialTheme.colorScheme.onPrimary,
                         onClick = {
                             showConfirm = false
                             onConfirm(true)

@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.core.ui.settings
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,21 +22,19 @@ fun SettingsSelectableSliderItem(
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
     steps: Int = 0,
     disabled: Boolean = false,
-    height: Dp = 56.dp,
     horizontalPadding: Dp = 24.dp
 ) {
-    val thumbColor = MaterialTheme.colors.onBackground
-    val inactiveColor = thumbColor.copy(alpha = 0.1f)
-    var sliderValue by remember { mutableStateOf(value) }
-
     SettingsSelectableBottomContentItem(
         modifier = modifier,
         text = text,
         subText = subText,
         disabled = disabled,
-        height = height,
         horizontalPadding = horizontalPadding
     ) {
+        val activeColor = MaterialTheme.colorScheme.primary
+        val inactiveColor = MaterialTheme.colorScheme.onSurface
+        var sliderValue by remember { mutableStateOf(value) }
+
         Slider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
@@ -45,10 +43,10 @@ fun SettingsSelectableSliderItem(
             valueRange = valueRange,
             steps = steps,
             colors = SliderDefaults.colors(
-                thumbColor = thumbColor,
-                activeTrackColor = thumbColor,
-                inactiveTrackColor = inactiveColor,
-                activeTickColor = thumbColor,
+                thumbColor = activeColor,
+                activeTrackColor = activeColor,
+                inactiveTrackColor = inactiveColor.copy(alpha = 0.24f),
+                activeTickColor = activeColor,
                 inactiveTickColor = inactiveColor
             )
         )

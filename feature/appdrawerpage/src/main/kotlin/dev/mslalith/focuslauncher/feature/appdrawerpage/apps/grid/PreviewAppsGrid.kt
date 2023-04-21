@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,8 +17,7 @@ import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
-import dev.mslalith.focuslauncher.feature.appdrawerpage.ListFadeOutEdgeGradient
-import dev.mslalith.focuslauncher.feature.appdrawerpage.model.Position
+import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 
 @Composable
 fun PreviewAppsGrid(
@@ -56,6 +56,10 @@ private fun PreviewAppsContent(
 
     Box(
         modifier = modifier
+            .verticalFadeOutEdge(
+                height = 16.dp,
+                color = MaterialTheme.colorScheme.surface
+            )
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = columnCount),
@@ -80,8 +84,5 @@ private fun PreviewAppsContent(
                 item { VerticalSpacer(spacing = verticalSpacing) }
             }
         }
-
-        ListFadeOutEdgeGradient(position = Position.TOP)
-        ListFadeOutEdgeGradient(position = Position.BOTTOM)
     }
 }

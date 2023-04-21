@@ -1,32 +1,46 @@
 package dev.mslalith.focuslauncher.core.ui.settings
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.ui.RoundedSwitch
+import androidx.compose.ui.graphics.Color
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsSelectableSwitchItem(
     modifier: Modifier = Modifier,
     text: String,
     checked: Boolean,
     disabled: Boolean = false,
-    height: Dp = 48.dp,
-    horizontalPadding: Dp = 24.dp,
+    backgroundColor: Color = Color.Transparent,
     onClick: () -> Unit
 ) {
-    SettingsSelectableItem(
-        modifier = modifier,
-        text = text,
-        disabled = disabled,
-        height = height,
-        horizontalPadding = horizontalPadding,
-        onClick = onClick,
-        trailing = {
-            RoundedSwitch(
+    val contentColor = MaterialTheme.colorScheme.onSurface
+    val animatedContentColor by animateColorAsState(
+        label = "Background color",
+        targetValue = if (disabled) contentColor.copy(alpha = 0.38f) else contentColor
+    )
+
+    ListItem(
+        modifier = modifier.clickable(enabled = !disabled) { onClick.invoke() },
+        colors = ListItemDefaults.colors(
+            containerColor = backgroundColor,
+            headlineColor = animatedContentColor
+        ),
+        headlineText = { Text(text = text) },
+        trailingContent = {
+            Switch(
                 checked = checked,
-                enabled = !disabled
+                enabled = !disabled,
+                onCheckedChange = null
             )
         }
     )

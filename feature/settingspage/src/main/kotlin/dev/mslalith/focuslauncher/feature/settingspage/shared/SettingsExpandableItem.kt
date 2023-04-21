@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +43,7 @@ internal fun SettingsExpandableItem(
     var isExpanded by remember { mutableStateOf(false) }
 
     val curvyLineSurroundPaddingValues = curvyLineSurroundPadding ?: PaddingValues(start = 4.dp, top = 4.dp, bottom = 4.dp)
-    val dividerColor = MaterialTheme.colors.onBackground
+    val dividerColor = MaterialTheme.colorScheme.onSurface
     val dividerWidth = 3f
 
     Box(

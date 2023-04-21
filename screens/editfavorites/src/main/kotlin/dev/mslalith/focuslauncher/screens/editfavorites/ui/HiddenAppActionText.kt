@@ -1,10 +1,8 @@
 package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -24,9 +22,6 @@ internal fun HiddenAppActionText(
 
     TextButton(
         onClick = { onToggleHiddenApps(!showHiddenApps) },
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = MaterialTheme.colors.onBackground
-        ),
         modifier = Modifier.padding(end = 8.dp)
     ) {
         Text(

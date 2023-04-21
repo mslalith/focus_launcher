@@ -3,9 +3,8 @@ package dev.mslalith.focuslauncher.feature.settingspage.settingsitems
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -26,7 +25,6 @@ internal fun SettingsHeader() {
         Text(
             text = "Settings",
             style = TextStyle(
-                color = MaterialTheme.colors.onBackground,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             ),
@@ -36,7 +34,6 @@ internal fun SettingsHeader() {
         )
 
         Divider(
-            color = MaterialTheme.colors.onBackground,
             modifier = Modifier.fillMaxWidth(fraction = 0.5f)
         )
     }

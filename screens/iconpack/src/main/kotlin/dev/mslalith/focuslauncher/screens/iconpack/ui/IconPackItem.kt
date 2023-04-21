@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.screens.iconpack.ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,8 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,9 +43,14 @@ internal fun IconPackItem(
         app.icon.toBitmap().asImageBitmap()
     }
 
-    val backgroundColorAlpha by animateFloatAsState(
+    val backgroundColor by animateColorAsState(
         label = "Background Color",
-        targetValue = if (isSelected) 1f else 0f
+        targetValue = if (isSelected) MaterialTheme.colorScheme.secondary else Color.Transparent
+    )
+
+    val textColor by animateColorAsState(
+        label = "Text Color",
+        targetValue = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onSurface
     )
 
     Column(
@@ -53,7 +58,7 @@ internal fun IconPackItem(
             .width(intrinsicSize = IntrinsicSize.Min)
             .padding(horizontal = 4.dp, vertical = 0.dp)
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colors.secondaryVariant.copy(alpha = backgroundColorAlpha))
+            .background(color = backgroundColor)
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickableNoRipple { onClick(app) },
         horizontalAlignment = Alignment.CenterHorizontally
@@ -74,10 +79,8 @@ internal fun IconPackItem(
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = TextStyle(
-                color = MaterialTheme.colors.onBackground,
-                fontSize = 16.sp
-            ),
+            color = textColor,
+            fontSize = 16.sp,
             modifier = Modifier.animateContentSize(),
             onTextLayout = { result ->
                 val emptyLinesCount = result.multiParagraph.run { maxLines - lineCount }
