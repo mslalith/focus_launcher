@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -87,9 +87,9 @@ internal fun IconPackScreen(
         Column(
             modifier = Modifier.padding(paddingValues = paddingValues)
         ) {
-            val shape = MaterialTheme.shapes.large.copy(
-                bottomStart = CornerSize(size = 0.dp),
-                bottomEnd = CornerSize(size = 0.dp)
+            val shape = MaterialTheme.shapes.extraLarge.copy(
+                bottomStart = ZeroCornerSize,
+                bottomEnd = ZeroCornerSize
             )
 
             PreviewAppsGrid(
@@ -105,7 +105,7 @@ internal fun IconPackScreen(
                         width = 16.dp,
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
-                    .padding(top = 24.dp, bottom = 12.dp)
+                    .padding(top = 32.dp, bottom = 16.dp)
             ) {
                 val context = LocalContext.current
                 val systemIconPackApp: AppWithIcon? = remember {
