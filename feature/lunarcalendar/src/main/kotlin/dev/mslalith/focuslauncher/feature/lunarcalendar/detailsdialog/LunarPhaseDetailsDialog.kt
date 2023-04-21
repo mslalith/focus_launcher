@@ -47,8 +47,8 @@ internal fun LunarPhaseDetailsDialog(
 @Composable
 internal fun LunarPhaseDetailsDialog(
     lunarPhaseDetails: LunarPhaseDetails,
-    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    contentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     onClose: () -> Unit,
 ) {
     Dialog(
