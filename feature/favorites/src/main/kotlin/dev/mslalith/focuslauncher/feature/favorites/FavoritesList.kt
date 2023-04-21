@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -129,7 +128,7 @@ internal fun FavoritesList(
 
     val transition = updateTransition(targetState = currentContextMode, label = "Favorites Transition")
     val outerPadding by transition.animateDp(label = "Outer Padding") { if (it.isInContextualMode()) 16.dp else 0.dp }
-    val innerPaddingBottom by transition.animateDp(label = "Inner Padding Bottom") { if (it.isInContextualMode()) 16.dp else 0.dp }
+    val innerPaddingBottom by transition.animateDp(label = "Inner Padding Bottom") { if (it.isInContextualMode()) 24.dp else 0.dp }
     val borderOpacity by transition.animateFloat(label = "Border Opacity") { if (it.isInContextualMode()) 0.8f else 0f }
 
     Box(
@@ -139,7 +138,7 @@ internal fun FavoritesList(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = borderOpacity),
-                shape = RoundedCornerShape(size = 12.dp)
+                shape = MaterialTheme.shapes.extraLarge
             )
             .padding(bottom = innerPaddingBottom)
     ) {

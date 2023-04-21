@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -57,7 +56,7 @@ internal fun LunarPhaseDetailsDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(size = 12.dp))
+                .clip(shape = MaterialTheme.shapes.extraLarge)
                 .background(color = backgroundColor)
                 .padding(horizontal = 24.dp, vertical = 24.dp)
         ) {

@@ -54,14 +54,14 @@ internal fun FavoriteItem(
 
     Row(
         modifier = Modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor())
             .border(
                 width = 0.25.dp,
                 color = animatedColor,
                 shape = MaterialTheme.shapes.small
             )
-            .pointerInput(isInContextualMode()) {
+            .pointerInput(key1 = isInContextualMode()) {
                 detectTapGestures(
                     onTap = { onClick() },
                     onLongPress = {
