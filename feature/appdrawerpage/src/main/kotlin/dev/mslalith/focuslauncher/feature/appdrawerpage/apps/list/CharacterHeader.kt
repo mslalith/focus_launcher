@@ -16,10 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZONTAL_PADDING
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
@@ -50,10 +48,8 @@ internal fun CharacterHeader(
             ) {
                 Text(
                     text = "$character",
-                    style = TextStyle(
-                        color = contentColor,
-                        fontSize = 18.sp
-                    ),
+                    color = contentColor,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center)
                 )

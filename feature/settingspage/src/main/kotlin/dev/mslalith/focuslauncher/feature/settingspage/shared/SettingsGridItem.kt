@@ -70,7 +70,10 @@ internal fun SettingsGridItem(
                 Spacer(iconModifier)
             }
         }
-        Text(text = text)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge
+        )
         if (showIcon) Spacer(iconModifier)
     }
 }

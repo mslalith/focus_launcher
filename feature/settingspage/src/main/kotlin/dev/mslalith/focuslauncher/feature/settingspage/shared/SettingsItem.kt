@@ -53,7 +53,10 @@ internal fun SettingsItem(
             label = "Cross Fade Settings Item Text",
             targetState = text,
         ) {
-            Text(text = it)
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }

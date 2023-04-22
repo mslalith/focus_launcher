@@ -53,7 +53,8 @@ internal fun PreviewLunarCalendar(
                 Text(
                     text = "Enable Lunar Phase to preview",
                     textAlign = TextAlign.Center,
-                    color = contentColor
+                    color = contentColor,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }

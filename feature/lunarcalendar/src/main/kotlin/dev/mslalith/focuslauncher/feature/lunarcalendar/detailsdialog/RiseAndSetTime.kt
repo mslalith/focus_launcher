@@ -1,11 +1,10 @@
 package dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -29,10 +28,7 @@ internal fun RiseAndSetTime(
     Text(
         modifier = modifier,
         text = time,
-        style = TextStyle(
-            color = contentColor,
-            fontSize = 14.sp,
-            letterSpacing = 1.2.sp
-        )
+        color = contentColor,
+        style = MaterialTheme.typography.bodyMedium
     )
 }

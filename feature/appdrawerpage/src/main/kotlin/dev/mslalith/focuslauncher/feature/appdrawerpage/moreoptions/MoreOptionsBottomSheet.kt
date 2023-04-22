@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
 import dev.mslalith.focuslauncher.core.common.extensions.toast
 import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
@@ -59,7 +58,7 @@ internal fun MoreOptionsBottomSheet(
         Text(
             text = appWithIcon.displayName,
             color = contentColor,
-            fontSize = 20.sp,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Divider(

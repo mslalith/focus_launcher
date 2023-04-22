@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun TextIconButton(
@@ -52,7 +51,7 @@ fun TextIconButton(
             Text(
                 text = text,
                 color = contentColor,
-                fontSize = 16.sp
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }

@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.clickableNoRipple
@@ -80,7 +79,7 @@ internal fun IconPackItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             color = textColor,
-            fontSize = 16.sp,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.animateContentSize(),
             onTextLayout = { result ->
                 val emptyLinesCount = result.multiParagraph.run { maxLines - lineCount }
