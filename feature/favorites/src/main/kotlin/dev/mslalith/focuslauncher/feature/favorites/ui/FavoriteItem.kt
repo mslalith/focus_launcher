@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
@@ -75,7 +74,8 @@ internal fun FavoriteItem(
     ) {
         Text(
             text = app.displayName,
-            style = TextStyle(color = textColor())
+            color = textColor(),
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

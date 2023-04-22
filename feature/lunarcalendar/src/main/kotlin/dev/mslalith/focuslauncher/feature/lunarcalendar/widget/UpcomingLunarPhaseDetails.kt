@@ -5,8 +5,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.common.extensions.inShortReadableFormat
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 
@@ -27,11 +25,7 @@ internal fun UpcomingLunarPhaseDetails(
     ) {
         Text(
             text = it,
-            style = TextStyle(
-                color = textColor,
-                fontSize = 12.sp,
-                letterSpacing = 0.9.sp
-            )
+            color = textColor,
         )
     }
 }

@@ -16,10 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 
@@ -57,11 +55,8 @@ internal fun QuoteForYouContent(
                 modifier = Modifier.fillMaxWidth(),
                 text = quote,
                 textAlign = TextAlign.Center,
-                style = TextStyle(
-                    color = contentColor,
-                    fontSize = 14.sp,
-                    letterSpacing = 1.sp
-                )
+                color = contentColor,
+                style = MaterialTheme.typography.bodyMedium
             )
         }
         VerticalSpacer(spacing = 16.dp)
@@ -73,11 +68,8 @@ internal fun QuoteForYouContent(
                 modifier = Modifier.fillMaxWidth(),
                 text = "— $author",
                 textAlign = TextAlign.Center,
-                style = TextStyle(
-                    color = contentColor,
-                    fontSize = 12.sp,
-                    letterSpacing = 1.sp
-                )
+                color = contentColor,
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }

@@ -17,10 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 
 @Composable
@@ -32,8 +29,6 @@ fun ConfirmSelectableItem(
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     confirmText: String = "Confirm",
     cancelText: String = "Cancel",
-    height: Dp = 48.dp,
-    iconWidth: Dp = 56.dp,
     onConfirm: (Boolean) -> Unit
 ) {
     var showConfirm by remember { mutableStateOf(false) }
@@ -45,8 +40,6 @@ fun ConfirmSelectableItem(
                 iconRes = itemType.iconRes,
                 contentDescription = itemType.contentDescription,
                 contentColor = contentColor,
-                height = height,
-                iconWidth = iconWidth,
                 onClick = { showConfirm = !showConfirm }
             )
 
@@ -65,11 +58,8 @@ fun ConfirmSelectableItem(
             ) {
                 Text(
                     text = confirmMessage,
-                    style = TextStyle(
-                        color = contentColor,
-                        fontSize = 14.sp,
-                        lineHeight = 20.sp
-                    )
+                    color = contentColor,
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row {
