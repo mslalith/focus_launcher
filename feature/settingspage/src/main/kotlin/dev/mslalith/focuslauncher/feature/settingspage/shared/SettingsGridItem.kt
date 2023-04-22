@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 
 @Composable
 internal fun SettingsGridItem(
@@ -67,13 +68,13 @@ internal fun SettingsGridItem(
                     )
                 }
             } else {
-                Spacer(iconModifier)
+                HorizontalSpacer(spacing = contentHeight)
             }
         }
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge
         )
-        if (showIcon) Spacer(iconModifier)
+        if (showIcon) HorizontalSpacer(spacing = contentHeight)
     }
 }

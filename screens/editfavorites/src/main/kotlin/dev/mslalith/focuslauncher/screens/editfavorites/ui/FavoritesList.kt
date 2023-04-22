@@ -2,8 +2,6 @@ package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.editfavorites.R
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 
@@ -57,6 +56,6 @@ internal fun FavoritesList(
                 onAppClick = { toggleFavorite(favorite, favorite.disabled) }
             )
         }
-        item { Spacer(Modifier.height(80.dp)) }
+        item { VerticalSpacer(spacing = 84.dp) }
     }
 }

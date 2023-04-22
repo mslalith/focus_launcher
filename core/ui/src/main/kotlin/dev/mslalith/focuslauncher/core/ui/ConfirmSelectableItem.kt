@@ -4,10 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,7 +58,7 @@ fun ConfirmSelectableItem(
                     color = contentColor,
                     style = MaterialTheme.typography.bodyMedium
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                VerticalSpacer(spacing = 12.dp)
                 Row {
                     TextButton(
                         text = cancelText,
@@ -73,7 +70,7 @@ fun ConfirmSelectableItem(
                             onConfirm(false)
                         }
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    HorizontalSpacer(spacing = 8.dp)
                     TextButton(
                         text = confirmText,
                         modifier = Modifier.weight(1f),
@@ -85,7 +82,7 @@ fun ConfirmSelectableItem(
                         }
                     )
                 }
-                Spacer(modifier = Modifier.height(8.dp))
+                VerticalSpacer(spacing = 8.dp)
             }
         }
     }

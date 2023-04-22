@@ -3,10 +3,8 @@ package dev.mslalith.focuslauncher.feature.homepage
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -16,6 +14,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
 import dev.mslalith.focuslauncher.feature.favorites.FavoritesList
@@ -86,7 +85,7 @@ internal fun HomePage(
             Column(
                 verticalArrangement = Arrangement.Bottom
             ) {
-                Spacer(modifier = Modifier.height(topPadding))
+                VerticalSpacer(spacing = topPadding)
                 ClockWidget(horizontalPadding = horizontalPadding)
                 SpacedMoonCalendar(
                     onMoonCalendarClick = onMoonCalendarClick
@@ -100,7 +99,7 @@ internal fun HomePage(
                     pagerCurrentPage = pagerCurrentPage,
                     contentPadding = horizontalPadding
                 )
-                Spacer(modifier = Modifier.height(bottomPadding))
+                VerticalSpacer(spacing = bottomPadding)
             }
         }
     }

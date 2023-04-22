@@ -2,8 +2,6 @@ package dev.mslalith.focuslauncher.screens.hideapps.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.hideapps.model.HiddenApp
 
 @Composable
@@ -44,6 +43,6 @@ internal fun HiddenAppsList(
                 onAppClick = { toggleHiddenApp(hiddenApp) }
             )
         }
-        item { Spacer(Modifier.height(80.dp)) }
+        item { VerticalSpacer(spacing = 84.dp) }
     }
 }
