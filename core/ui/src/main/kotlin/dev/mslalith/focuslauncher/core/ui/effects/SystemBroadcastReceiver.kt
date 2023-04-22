@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.ui
+package dev.mslalith.focuslauncher.core.ui.effects
 
 import android.content.BroadcastReceiver
 import android.content.Context

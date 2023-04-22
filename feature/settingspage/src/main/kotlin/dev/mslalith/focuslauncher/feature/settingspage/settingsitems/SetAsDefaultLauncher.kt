@@ -15,7 +15,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
-import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
+import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
 
 @Composable
