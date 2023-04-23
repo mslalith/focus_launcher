@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin")
+    id("focuslauncher.kotlin.library")
     alias(libs.plugins.kotlin.serialization)
 }
 

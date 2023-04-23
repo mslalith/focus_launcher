@@ -31,6 +31,10 @@ gradlePlugin {
             id = "focuslauncher.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("kotlinLibrary") {
+            id = "focuslauncher.kotlin.library"
+            implementationClass = "KotlinLibraryConventionPlugin"
+        }
         register("androidFeature") {
             id = "focuslauncher.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"

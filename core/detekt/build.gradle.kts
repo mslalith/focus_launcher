@@ -1,3 +1,3 @@
 plugins {
-    id("kotlin")
+    id("focuslauncher.kotlin.library")
 }
