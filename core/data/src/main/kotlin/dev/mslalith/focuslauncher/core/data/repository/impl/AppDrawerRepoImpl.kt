@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class AppDrawerRepoImpl @Inject constructor(
-    private val appsDao: AppsDao,
+    private val appsDao: AppsDao
 ) : AppDrawerRepo {
     override val allAppsFlow: Flow<List<App>> = appsDao.getAllAppsFlow()
         .map { apps ->

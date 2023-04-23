@@ -21,7 +21,7 @@ class MigrationTest {
         InstrumentationRegistry.getInstrumentation(),
         AppDatabase::class.java,
         emptyList(),
-        FrameworkSQLiteOpenHelperFactory(),
+        FrameworkSQLiteOpenHelperFactory()
     )
 
     @Test

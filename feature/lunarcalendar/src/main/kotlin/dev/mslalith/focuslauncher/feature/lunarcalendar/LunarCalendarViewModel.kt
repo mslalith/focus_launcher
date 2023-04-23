@@ -42,7 +42,7 @@ internal class LunarCalendarViewModel @Inject constructor(
         showIlluminationPercent = DEFAULT_SHOW_ILLUMINATION_PERCENT,
         showUpcomingPhaseDetails = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS,
         lunarPhaseDetails = INITIAL_LUNAR_PHASE_DETAILS_STATE,
-        upcomingLunarPhase = INITIAL_UPCOMING_LUNAR_PHASE_STATE,
+        upcomingLunarPhase = INITIAL_UPCOMING_LUNAR_PHASE_STATE
     )
 
     val lunarCalendarState = flowOf(defaultLunarCalendarState)

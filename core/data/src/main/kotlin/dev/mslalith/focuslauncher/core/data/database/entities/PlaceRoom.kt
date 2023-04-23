@@ -30,5 +30,5 @@ internal data class AddressRoom(
     val state: String? = null,
     val iso3166: String? = null,
     val country: String? = null,
-    val countryCode: String? = null,
+    val countryCode: String? = null
 )

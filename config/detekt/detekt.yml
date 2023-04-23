@@ -314,6 +314,19 @@ exceptions:
       - 'RuntimeException'
       - 'Throwable'
 
+formatting:
+  active: true
+  android: true
+  Indentation:
+    active: true
+    indentSize: 4
+  TrailingCommaOnCallSite:
+    active: true
+    useTrailingCommaOnCallSite: false
+  TrailingCommaOnDeclarationSite:
+    active: true
+    useTrailingCommaOnDeclarationSite: false
+
 naming:
   active: true
   BooleanPropertyNaming:

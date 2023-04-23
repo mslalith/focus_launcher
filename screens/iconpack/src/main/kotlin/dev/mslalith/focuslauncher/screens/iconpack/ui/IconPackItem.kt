@@ -36,7 +36,7 @@ internal fun IconPackItem(
     modifier: Modifier = Modifier,
     app: AppWithIcon,
     isSelected: Boolean,
-    onClick: (AppWithIcon) -> Unit,
+    onClick: (AppWithIcon) -> Unit
 ) {
     val iconBitmap = remember(key1 = app.packageName) {
         app.icon.toBitmap().asImageBitmap()
@@ -69,7 +69,7 @@ internal fun IconPackItem(
         ) {
             Image(
                 bitmap = iconBitmap,
-                contentDescription = app.displayName,
+                contentDescription = app.displayName
             )
         }
         VerticalSpacer(spacing = 8.dp)

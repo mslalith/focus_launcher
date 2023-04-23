@@ -9,7 +9,7 @@ import dev.mslalith.focuslauncher.core.model.IconPackType
 import javax.inject.Inject
 
 internal class IconCacheManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : IconCacheManager {
 
     private val iconCache = hashMapOf<String, Drawable>()

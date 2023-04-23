@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.feature.clock24.model
 
 internal enum class AnalogClockPhase(
     val first: AnalogClockHandlePhase,
-    val second: AnalogClockHandlePhase,
+    val second: AnalogClockHandlePhase
 ) {
     NONE(first = AnalogClockHandlePhase.NONE, second = AnalogClockHandlePhase.NONE),
     TOP(first = AnalogClockHandlePhase.TOP, second = AnalogClockHandlePhase.TOP),

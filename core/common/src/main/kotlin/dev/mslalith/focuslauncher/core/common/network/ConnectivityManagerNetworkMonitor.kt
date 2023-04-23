@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 
 internal class ConnectivityManagerNetworkMonitor @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : NetworkMonitor {
     private val connectivityManager = context.getSystemService<ConnectivityManager>()
 
@@ -31,7 +31,7 @@ internal class ConnectivityManagerNetworkMonitor @Inject constructor(
 
             override fun onCapabilitiesChanged(
                 network: Network,
-                networkCapabilities: NetworkCapabilities,
+                networkCapabilities: NetworkCapabilities
             ) {
                 channel.trySend(isCurrentlyConnected())
             }
@@ -41,7 +41,7 @@ internal class ConnectivityManagerNetworkMonitor @Inject constructor(
             NetworkRequest.Builder()
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 .build(),
-            callback,
+            callback
         )
 
         channel.trySend(isCurrentlyConnected())

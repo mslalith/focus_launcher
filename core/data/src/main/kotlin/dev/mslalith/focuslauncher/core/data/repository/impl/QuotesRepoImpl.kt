@@ -23,7 +23,7 @@ internal open class QuotesRepoImpl @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesDao: QuotesDao,
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
-    private val randomNumberProvider: RandomNumberProvider,
+    private val randomNumberProvider: RandomNumberProvider
 ) : QuotesRepo {
     private val _currentQuoteStateFlow = MutableStateFlow<State<Quote>>(State.Initial)
     override val currentQuoteStateFlow: StateFlow<State<Quote>>

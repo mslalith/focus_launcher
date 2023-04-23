@@ -12,10 +12,10 @@ import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 @Composable
 internal fun CurrentTime(
     modifier: Modifier = Modifier,
-    currentTime: String,
+    currentTime: String
 ) {
     Box(
-        modifier = modifier.testSemantics(tag = TestTags.TAG_REGULAR_CLOCK),
+        modifier = modifier.testSemantics(tag = TestTags.TAG_REGULAR_CLOCK)
     ) {
         Crossfade(
             label = "Current Time CrossFade",

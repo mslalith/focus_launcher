@@ -26,7 +26,7 @@ fun SelectableCheckboxItem(
         modifier = modifier.clickable { onClick() },
         colors = ListItemDefaults.colors(
             headlineColor = if (disabled) disabledColor else onBackgroundColor,
-            leadingIconColor = if (disabled) disabledColor else onBackgroundColor,
+            leadingIconColor = if (disabled) disabledColor else onBackgroundColor
         ),
         headlineText = {
             Text(text = text)
@@ -35,7 +35,7 @@ fun SelectableCheckboxItem(
             Checkbox(
                 checked = checked,
                 enabled = !disabled,
-                onCheckedChange = null,
+                onCheckedChange = null
             )
         }
     )

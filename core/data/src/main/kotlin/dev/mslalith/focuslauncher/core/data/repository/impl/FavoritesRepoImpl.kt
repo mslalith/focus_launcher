@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.first
 
 internal class FavoritesRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
-    private val favoriteAppsDao: FavoriteAppsDao,
+    private val favoriteAppsDao: FavoriteAppsDao
 ) : FavoritesRepo {
     override val onlyFavoritesFlow: Flow<List<App>> = favoriteAppsDao.getFavoriteAppsFlow()
         .combine(appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->

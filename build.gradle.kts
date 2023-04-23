@@ -33,7 +33,7 @@ ktlint {
 
 detekt {
     toolVersion = libs.versions.detekt.get()
-    config = files("config/detekt/detekt.yml")
+    config.from(files("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
 

@@ -29,7 +29,7 @@ fun RoundIcon(
         onClick = onClick,
         modifier = modifier
             .clip(shape = CircleShape)
-            .background(color = backgroundColor),
+            .background(color = backgroundColor)
     ) {
         Icon(
             painter = painterResource(id = iconRes),

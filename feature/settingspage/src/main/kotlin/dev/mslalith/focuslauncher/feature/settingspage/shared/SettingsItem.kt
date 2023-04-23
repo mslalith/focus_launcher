@@ -51,7 +51,7 @@ internal fun SettingsItem(
         }
         Crossfade(
             label = "Cross Fade Settings Item Text",
-            targetState = text,
+            targetState = text
         ) {
             Text(
                 text = it,

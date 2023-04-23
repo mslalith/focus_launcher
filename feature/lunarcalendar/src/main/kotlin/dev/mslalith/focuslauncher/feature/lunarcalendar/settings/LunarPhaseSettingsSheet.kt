@@ -14,7 +14,7 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettings
 
 @Composable
 fun LunarPhaseSettingsSheet(
-    properties: LunarPhaseSettingsProperties,
+    properties: LunarPhaseSettingsProperties
 ) {
     LunarPhaseSettingsSheet(
         lunarCalendarViewModel = hiltViewModel(),

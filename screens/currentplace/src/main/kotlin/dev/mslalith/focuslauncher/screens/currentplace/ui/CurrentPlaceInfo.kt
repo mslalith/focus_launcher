@@ -32,7 +32,7 @@ internal fun CurrentPlaceInfo(
     currentPlaceState: CurrentPlaceState
 ) {
     Column(
-        modifier = Modifier.animateContentSize(),
+        modifier = Modifier.animateContentSize()
     ) {
         LatLngInfo(latLng = currentPlaceState.latLng)
         VerticalSpacer(spacing = 8.dp)
@@ -49,7 +49,7 @@ private fun LatLngInfo(
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .padding(horizontal = 12.dp, vertical = 12.dp),
+            .padding(horizontal = 12.dp, vertical = 12.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_map_pin),

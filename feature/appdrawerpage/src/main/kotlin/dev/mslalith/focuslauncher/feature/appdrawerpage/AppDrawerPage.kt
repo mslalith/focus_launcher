@@ -36,7 +36,7 @@ fun AppDrawerPage(
 
 @Composable
 internal fun AppDrawerPage(
-    appDrawerPageViewModel: AppDrawerPageViewModel,
+    appDrawerPageViewModel: AppDrawerPageViewModel
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current

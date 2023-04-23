@@ -47,7 +47,7 @@ internal fun HomePage(
     HomePage(
         homePageState = homePageViewModel.homePageState.collectAsStateWithLifecycle().value,
         pagerCurrentPage = pagerCurrentPage,
-        onMoonCalendarClick = homePageViewModel::showMoonCalendarDetailsDialog,
+        onMoonCalendarClick = homePageViewModel::showMoonCalendarDetailsDialog
     )
 }
 
@@ -67,7 +67,7 @@ internal fun MoonCalendarDetailsDialog(
 internal fun HomePage(
     homePageState: HomePageState,
     pagerCurrentPage: Flow<Int>,
-    onMoonCalendarClick: () -> Unit,
+    onMoonCalendarClick: () -> Unit
 ) {
     val context = LocalContext.current
 

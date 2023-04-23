@@ -63,7 +63,7 @@ internal fun SettingsGridItem(
                 ) {
                     Icon(
                         painter = painterResource(id = iconRes),
-                        contentDescription = contentDescription ?: text,
+                        contentDescription = contentDescription ?: text
                     )
                 }
             } else {

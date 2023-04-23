@@ -61,11 +61,11 @@ internal fun EditFavoritesScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = editFavoritesViewModel::clearFavorites,
-                modifier = Modifier.testSemantics(tag = TestTags.TAG_CLEAR_FAVORITES_FAB),
+                modifier = Modifier.testSemantics(tag = TestTags.TAG_CLEAR_FAVORITES_FAB)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_broom),
-                    contentDescription = "Clear Favorites",
+                    contentDescription = "Clear Favorites"
                 )
             }
         }

@@ -12,7 +12,7 @@ class PackageActionUseCase @Inject constructor(
     private val launcherAppsManager: LauncherAppsManager,
     private val appDrawerRepo: AppDrawerRepo,
     private val favoritesRepo: FavoritesRepo,
-    private val hiddenAppsRepo: HiddenAppsRepo,
+    private val hiddenAppsRepo: HiddenAppsRepo
 ) {
     suspend operator fun invoke(packageAction: PackageAction) = onPackageAction(packageAction = packageAction)
 

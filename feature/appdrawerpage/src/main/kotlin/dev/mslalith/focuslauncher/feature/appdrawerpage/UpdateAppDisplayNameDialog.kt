@@ -37,12 +37,12 @@ internal fun UpdateAppDisplayNameDialog(
                 value = displayName,
                 onValueChange = { displayName = it },
                 maxLines = 1,
-                singleLine = true,
+                singleLine = true
             )
         },
         confirmButton = {
             Button(
-                onClick = ::onUpdateClick,
+                onClick = ::onUpdateClick
             ) {
                 Text(text = "Update")
             }

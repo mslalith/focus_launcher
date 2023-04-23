@@ -14,7 +14,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 
 @Composable
 internal fun AppDrawerSettingsSheet(
-    settingsPageViewModel: SettingsPageViewModel,
+    settingsPageViewModel: SettingsPageViewModel
 ) {
     val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsStateWithLifecycle()
     val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsStateWithLifecycle()

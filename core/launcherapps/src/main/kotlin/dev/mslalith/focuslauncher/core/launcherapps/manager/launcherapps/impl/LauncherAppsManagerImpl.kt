@@ -13,7 +13,7 @@ import dev.mslalith.focuslauncher.core.model.App
 import javax.inject.Inject
 
 internal class LauncherAppsManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : LauncherAppsManager {
 
     private val launcherApps = context.getSystemService(LauncherApps::class.java)
@@ -25,7 +25,7 @@ internal class LauncherAppsManagerImpl @Inject constructor(
                 App(
                     name = launcherActivityInfo.applicationInfo.loadLabel(context.packageManager).toString(),
                     packageName = packageName,
-                    isSystem = isSystemApp(packageName = packageName),
+                    isSystem = isSystemApp(packageName = packageName)
                 )
             )
         }
@@ -36,7 +36,7 @@ internal class LauncherAppsManagerImpl @Inject constructor(
         return App(
             name = launcherActivityInfo.label.toString(),
             packageName = packageName,
-            isSystem = isSystemApp(packageName = packageName),
+            isSystem = isSystemApp(packageName = packageName)
         )
     }
 

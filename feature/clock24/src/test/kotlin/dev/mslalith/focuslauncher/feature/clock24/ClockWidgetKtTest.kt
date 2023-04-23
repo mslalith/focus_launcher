@@ -29,7 +29,7 @@ class ClockWidgetKtTest {
             ClockWidget(
                 clock24State = stateWith(showClock24 = true),
                 refreshTime = {},
-                horizontalPadding = 2.dp,
+                horizontalPadding = 2.dp
             )
         }
 
@@ -43,7 +43,7 @@ class ClockWidgetKtTest {
             ClockWidget(
                 clock24State = stateWith(showClock24 = false),
                 refreshTime = {},
-                horizontalPadding = 2.dp,
+                horizontalPadding = 2.dp
             )
         }
 
@@ -58,7 +58,7 @@ class ClockWidgetKtTest {
             ClockWidget(
                 clock24State = clock24State.value,
                 refreshTime = {},
-                horizontalPadding = 2.dp,
+                horizontalPadding = 2.dp
             )
         }
 

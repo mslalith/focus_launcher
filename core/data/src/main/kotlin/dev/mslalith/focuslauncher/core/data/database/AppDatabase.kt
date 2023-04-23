@@ -31,7 +31,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Database.APP_DB_NAME
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3, spec = MigrateFrom2To3::class),
+        AutoMigration(from = 2, to = 3, spec = MigrateFrom2To3::class)
     ],
     version = 3,
     exportSchema = true

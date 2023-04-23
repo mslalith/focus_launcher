@@ -37,7 +37,7 @@ internal fun QuotesSettingsSheet(
             text = "Fetch Quotes",
             disabled = !quoteForYouState.showQuotes,
             isLoading = isFetchingQuotes,
-            onClick = quoteForYouViewModel::fetchQuotesIfRequired,
+            onClick = quoteForYouViewModel::fetchQuotesIfRequired
         )
         VerticalSpacer(spacing = 12.dp)
     }

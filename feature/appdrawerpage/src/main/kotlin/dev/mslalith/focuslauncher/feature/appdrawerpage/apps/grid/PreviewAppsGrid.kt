@@ -22,7 +22,7 @@ import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 @Composable
 fun PreviewAppsGrid(
     modifier: Modifier = Modifier,
-    appsState: LoadingState<List<AppWithIcon>>,
+    appsState: LoadingState<List<AppWithIcon>>
 ) {
     Crossfade(
         label = "Apps Grid Cross Fade",
@@ -62,7 +62,7 @@ private fun PreviewAppsContent(
             )
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(count = columnCount),
+            columns = GridCells.Fixed(count = columnCount)
         ) {
             repeat(columnCount) {
                 item { VerticalSpacer(spacing = verticalSpacing) }

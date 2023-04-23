@@ -25,7 +25,7 @@ internal fun UpcomingLunarPhaseDetails(
     ) {
         Text(
             text = it,
-            color = textColor,
+            color = textColor
         )
     }
 }

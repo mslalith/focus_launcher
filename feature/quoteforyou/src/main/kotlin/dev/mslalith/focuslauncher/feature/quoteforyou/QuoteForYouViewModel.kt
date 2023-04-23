@@ -20,7 +20,7 @@ internal class QuoteForYouViewModel @Inject constructor(
     private val quotesRepo: QuotesRepo,
     private val quotesSettingsRepo: QuotesSettingsRepo,
     private val networkMonitor: NetworkMonitor,
-    private val appCoroutineDispatcher: AppCoroutineDispatcher,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
     init {
