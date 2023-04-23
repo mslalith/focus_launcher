@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.mapLatest
 @HiltViewModel
 internal class CurrentPlaceViewModel @Inject constructor(
     private val placesRepo: PlacesRepo,
-    private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
+    private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo
 ) : ViewModel() {
 
     private val defaultAddress = DEFAULT_CURRENT_PLACE.address

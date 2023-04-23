@@ -54,7 +54,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
         hiltRule.inject()
         viewModel = CurrentPlaceViewModel(
             placesRepo = placesRepo,
-            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo,
+            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
         )
     }
 
@@ -75,7 +75,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
 
         val viewModel = CurrentPlaceViewModel(
             placesRepo = placesRepo,
-            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo,
+            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
         )
         viewModel.updateCurrentLatLng(latLng = latLng)
 

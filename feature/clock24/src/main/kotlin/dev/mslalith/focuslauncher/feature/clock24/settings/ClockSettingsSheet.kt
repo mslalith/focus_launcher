@@ -28,7 +28,7 @@ fun ClockSettingsSheet() {
 
 @Composable
 internal fun ClockSettingsSheet(
-    clock24ViewModel: Clock24ViewModel,
+    clock24ViewModel: Clock24ViewModel
 ) {
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
 

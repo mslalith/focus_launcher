@@ -36,11 +36,11 @@ internal fun HideAppsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = hideAppsViewModel::clearHiddenApps,
+                onClick = hideAppsViewModel::clearHiddenApps
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_broom),
-                    contentDescription = "Clear Hidden Apps",
+                    contentDescription = "Clear Hidden Apps"
                 )
             }
         }

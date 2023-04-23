@@ -28,7 +28,7 @@ internal object TestRoomModule {
     @Singleton
     fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase = Room.inMemoryDatabaseBuilder(
         context,
-        AppDatabase::class.java,
+        AppDatabase::class.java
     ).allowMainThreadQueries().build()
 
     @Provides

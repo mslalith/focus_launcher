@@ -53,6 +53,6 @@ internal fun CharacterHeader(
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
-        },
+        }
     )
 }

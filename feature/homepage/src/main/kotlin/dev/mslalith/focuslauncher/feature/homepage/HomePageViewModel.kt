@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @HiltViewModel
 internal class HomePageViewModel @Inject constructor(
-    generalSettingsRepo: GeneralSettingsRepo,
+    generalSettingsRepo: GeneralSettingsRepo
 ) : ViewModel() {
 
     private val defaultHomePageState = HomePageState(

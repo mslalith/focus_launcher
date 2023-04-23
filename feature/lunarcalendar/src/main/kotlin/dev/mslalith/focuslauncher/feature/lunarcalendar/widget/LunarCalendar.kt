@@ -23,7 +23,7 @@ fun LunarCalendar(
     horizontalPadding: Dp = 0.dp,
     backgroundColor: Color = Color.Transparent,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     LunarCalendar(
         modifier = modifier,
@@ -46,7 +46,7 @@ internal fun LunarCalendar(
     horizontalPadding: Dp,
     backgroundColor: Color = Color.Transparent,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
 
@@ -71,7 +71,7 @@ private fun LunarCalendar(
     horizontalPadding: Dp = 0.dp,
     backgroundColor: Color = Color.Transparent,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     AnimatedVisibility(
         visible = lunarCalendarState.showLunarPhase,

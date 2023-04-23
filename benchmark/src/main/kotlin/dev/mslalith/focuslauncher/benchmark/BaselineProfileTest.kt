@@ -20,7 +20,7 @@ class BaselineProfileTest {
 
     @Test
     fun startUp() = baselineProfileRule.collectBaselineProfile(
-        packageName = "dev.mslalith.focuslauncher",
+        packageName = "dev.mslalith.focuslauncher"
     ) {
         pressHome()
         startActivityAndWait()

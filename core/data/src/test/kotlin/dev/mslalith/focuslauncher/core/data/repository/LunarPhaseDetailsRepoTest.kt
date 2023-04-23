@@ -58,7 +58,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 phaseAngle = 4.9256389938282545,
                 nextPhaseDetails = NextPhaseDetails(
                     newMoon = LocalDateTime.parse("2023-02-20T07:08:17.496"),
-                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981")
                 ),
                 moonRiseAndSetDetails = RiseAndSetDetails(
                     riseDateTime = LocalDateTime.parse("2023-02-05T18:20:24"),
@@ -93,7 +93,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 phaseAngle = -175.43035810796886,
                 nextPhaseDetails = NextPhaseDetails(
                     newMoon = LocalDateTime.parse("2023-03-21T17:25:46.770"),
-                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.982"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.982")
                 ),
                 moonRiseAndSetDetails = RiseAndSetDetails(
                     riseDateTime = LocalDateTime.parse("2023-02-20T06:19:22"),
@@ -128,7 +128,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 phaseAngle = -90.03272940065548,
                 nextPhaseDetails = NextPhaseDetails(
                     newMoon = LocalDateTime.parse("2023-03-21T17:25:46.771"),
-                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981")
                 ),
                 moonRiseAndSetDetails = RiseAndSetDetails(
                     riseDateTime = LocalDateTime.parse("2023-02-27T12:05:52"),
@@ -163,7 +163,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 phaseAngle = 83.81691199458245,
                 nextPhaseDetails = NextPhaseDetails(
                     newMoon = LocalDateTime.parse("2023-02-20T07:08:17.492"),
-                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981"),
+                    fullMoon = LocalDateTime.parse("2023-03-07T12:39:47.981")
                 ),
                 moonRiseAndSetDetails = RiseAndSetDetails(
                     riseDateTime = LocalDateTime.parse("2023-02-14T00:11:42"),

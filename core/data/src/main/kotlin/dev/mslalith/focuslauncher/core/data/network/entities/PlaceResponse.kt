@@ -48,5 +48,5 @@ internal data class AddressResponse(
     @SerialName("country")
     val country: String? = null,
     @SerialName("country_code")
-    val countryCode: String? = null,
+    val countryCode: String? = null
 )

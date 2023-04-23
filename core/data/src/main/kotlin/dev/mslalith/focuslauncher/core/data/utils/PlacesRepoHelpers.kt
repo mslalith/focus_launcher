@@ -19,7 +19,7 @@ internal fun dummyPlaceResponseFor(latLng: LatLng): PlaceResponse {
         boundingBox = emptyList(),
         address = AddressResponse(
             state= "State $number",
-            country = "Country $number",
+            country = "Country $number"
         )
     )
 }
@@ -32,11 +32,11 @@ fun dummyPlaceFor(latLng: LatLng): Place {
         displayName = "Display Name $number",
         latLng = LatLng(
             latitude = latLng.latitude,
-            longitude = latLng.longitude,
+            longitude = latLng.longitude
         ),
         address = Address(
             state= "State $number",
-            country = "Country $number",
+            country = "Country $number"
         )
     )
 }

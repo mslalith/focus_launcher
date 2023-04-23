@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
 internal class LunarPhaseSettingsRepoImpl @Inject constructor(
-    @SettingsProvider private val settingsDataStore: DataStore<Preferences>,
+    @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : LunarPhaseSettingsRepo {
 
     override val showLunarPhaseFlow: Flow<Boolean> = settingsDataStore.data

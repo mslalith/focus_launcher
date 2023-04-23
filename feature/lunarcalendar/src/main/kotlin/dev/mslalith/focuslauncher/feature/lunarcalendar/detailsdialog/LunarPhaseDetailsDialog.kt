@@ -21,7 +21,7 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.LunarCalendarViewModel
 
 @Composable
 fun LunarPhaseDetailsDialog(
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     LunarPhaseDetailsDialog(
         lunarCalendarViewModel = hiltViewModel(),
@@ -32,7 +32,7 @@ fun LunarPhaseDetailsDialog(
 @Composable
 internal fun LunarPhaseDetailsDialog(
     lunarCalendarViewModel: LunarCalendarViewModel,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     val lunarPhaseDetailsState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
     lunarPhaseDetailsState.lunarPhaseDetails.getOrNull()?.let { phaseDetails ->
@@ -48,7 +48,7 @@ internal fun LunarPhaseDetailsDialog(
     lunarPhaseDetails: LunarPhaseDetails,
     backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     contentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onClose

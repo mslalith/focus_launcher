@@ -26,7 +26,7 @@ internal fun IconPack(
             animationSpec = tween(durationMillis = durationMillis)
         ) + shrinkVertically(
             animationSpec = tween(durationMillis = durationMillis)
-        ),
+        )
     ) {
         SettingsItem(
             text = "Icon Pack",

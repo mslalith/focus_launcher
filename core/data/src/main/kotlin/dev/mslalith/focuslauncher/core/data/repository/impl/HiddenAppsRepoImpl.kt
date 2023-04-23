@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 
 internal class HiddenAppsRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
-    private val hiddenAppsDao: HiddenAppsDao,
+    private val hiddenAppsDao: HiddenAppsDao
 ) : HiddenAppsRepo {
     override val onlyHiddenAppsFlow: Flow<List<App>> = hiddenAppsDao.getHiddenAppsFlow()
         .map { hiddenApps ->
