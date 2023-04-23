@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 
 @Composable
 internal fun SettingsGridItem(
@@ -67,13 +67,13 @@ internal fun SettingsGridItem(
                     )
                 }
             } else {
-                Spacer(iconModifier)
+                HorizontalSpacer(spacing = contentHeight)
             }
         }
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge
         )
-        if (showIcon) Spacer(iconModifier)
+        if (showIcon) HorizontalSpacer(spacing = contentHeight)
     }
 }

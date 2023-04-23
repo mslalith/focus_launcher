@@ -2,12 +2,9 @@ package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -18,12 +15,11 @@ fun AppBarWithBackIcon(
 ) {
     TopAppBar(
         navigationIcon = {
-            IconButton(onClick = onBackPressed) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_left),
-                    contentDescription = "Back",
-                )
-            }
+            RoundIcon(
+                iconRes = R.drawable.ic_arrow_left,
+                contentDescription = "Back",
+                onClick = onBackPressed
+            )
         },
         title = {
             Text(text = title)

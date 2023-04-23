@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.ui
+package dev.mslalith.focuslauncher.core.ui.effects
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

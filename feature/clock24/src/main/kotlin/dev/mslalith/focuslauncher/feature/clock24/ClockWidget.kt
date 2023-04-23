@@ -21,8 +21,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
-import dev.mslalith.focuslauncher.core.ui.OnLifecycleEventChange
-import dev.mslalith.focuslauncher.core.ui.SystemBroadcastReceiver
+import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
+import dev.mslalith.focuslauncher.core.ui.effects.SystemBroadcastReceiver
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 
