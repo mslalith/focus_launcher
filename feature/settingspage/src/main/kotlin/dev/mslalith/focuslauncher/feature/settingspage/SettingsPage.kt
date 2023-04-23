@@ -21,6 +21,7 @@ import dev.mslalith.focuslauncher.feature.clock24.settings.ClockSettingsSheet
 import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
 import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
+import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ChangeTheme
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.EditFavorites
@@ -97,6 +98,8 @@ internal fun SettingsPage(
             isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsStateWithLifecycle().value,
             refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context) }
         )
+
+        About { navigateTo(Screen.About) }
 
         VerticalSpacer(spacing = 12.dp)
     }

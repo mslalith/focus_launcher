@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
+import dev.mslalith.focuslauncher.screens.about.AboutScreen
 import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceScreen
 import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
 import dev.mslalith.focuslauncher.screens.hideapps.HideAppsScreen
@@ -26,6 +27,7 @@ fun AppNavigator() {
         hideAppsScreen()
         currentPlaceScreen()
         iconPackScreen()
+        aboutScreen()
     }
 }
 
@@ -70,5 +72,11 @@ private fun NavGraphBuilder.iconPackScreen() {
         IconPackScreen(
             goBack = navController::popBackStack
         )
+    }
+}
+
+private fun NavGraphBuilder.aboutScreen() {
+    composable(Screen.About.id) {
+        AboutScreen()
     }
 }

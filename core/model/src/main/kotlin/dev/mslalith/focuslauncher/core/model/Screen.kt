@@ -6,4 +6,5 @@ sealed class Screen(val id: String) {
     object HideApps : Screen("screen_hide_apps")
     object CurrentPlace : Screen("screen_current_place")
     object IconPack : Screen("screen_icon_packs")
+    object About : Screen("screen_about")
 }
