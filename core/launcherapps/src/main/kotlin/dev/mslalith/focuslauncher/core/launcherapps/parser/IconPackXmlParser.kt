@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import dev.mslalith.focuslauncher.core.detekt.ignore.IgnoreCyclomaticComplexMethod
-import dev.mslalith.focuslauncher.core.detekt.ignore.IgnoreNestedBlockDepth
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreCyclomaticComplexMethod
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreNestedBlockDepth
 import dev.mslalith.focuslauncher.core.launcherapps.model.SimpleDrawableInfo
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory

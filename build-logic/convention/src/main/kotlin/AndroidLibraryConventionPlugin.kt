@@ -19,7 +19,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         }
 
         dependencies {
-            add("implementation", project(":core:detekt"))
+            add("implementation", project(":core:lint"))
         }
     }
 }
