@@ -3,6 +3,7 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 plugins {
     alias(libs.plugins.android.test)
     alias(libs.plugins.kotlin.android)
+    id("focuslauncher.lint")
 }
 
 android {
