@@ -43,6 +43,7 @@ include(
     ":screens:hideapps",
     ":screens:currentplace",
     ":screens:iconpack",
+    ":screens:about",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",

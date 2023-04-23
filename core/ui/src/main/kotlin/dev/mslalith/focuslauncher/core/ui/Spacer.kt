@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.ui
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -16,3 +17,6 @@ fun VerticalSpacer(spacing: Dp) = Spacer(modifier = Modifier.height(height = spa
 
 @Composable
 fun RowScope.FillSpacer() = Spacer(modifier = Modifier.weight(weight = 1f))
+
+@Composable
+fun ColumnScope.FillSpacer() = Spacer(modifier = Modifier.weight(weight = 1f))
