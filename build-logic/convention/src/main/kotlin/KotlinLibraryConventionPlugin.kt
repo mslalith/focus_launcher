@@ -3,6 +3,9 @@ import org.gradle.api.Project
 
 class KotlinLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("kotlin")
+        with(pluginManager) {
+            apply("kotlin")
+            apply("focuslauncher.lint")
+        }
     }
 }
