@@ -27,7 +27,6 @@ A minimalist Android Launcher built with Jetpack Compose
 - [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose) - Modern UI development toolkit.
 - [Accompanist](https://chrisbanes.github.io/accompanist/) - A collection of extension libraries for Jetpack Compose.
 - [Ktor](https://ktor.io/) - Lightweight & simple asynchronous HTTP Client
-- [ktlint](https://ktlint.github.io/) - An anti-bikeshedding Kotlin linter with built-in formatter.
 
 
 ## Donation 💰

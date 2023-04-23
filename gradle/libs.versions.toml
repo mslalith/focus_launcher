@@ -30,7 +30,6 @@ kotlinxDatetime = "0.4.0"
 kotlinxSerialization = "1.5.0"
 kover = "0.6.1"
 ksp = "1.8.20-1.0.11"
-ktlint = "11.3.1"
 ktorClient = "2.3.0"
 mockk = "1.13.5"
 osmdroid = "6.1.16"
@@ -115,5 +114,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

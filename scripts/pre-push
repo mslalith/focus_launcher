@@ -3,7 +3,7 @@
 echo "Running Git pre-push hook"
 
 echo "Running static analysis"
-./gradlew ktlintCheck detekt --daemon
+./gradlew detekt --daemon
 
 STATUS=$?
 
