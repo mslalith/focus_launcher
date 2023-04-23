@@ -5,7 +5,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.LoadingState
-import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
@@ -43,9 +42,6 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
 
     @Inject
     lateinit var lunarPhaseSettingsRepo: LunarPhaseSettingsRepo
-
-    @Inject
-    lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
     private lateinit var viewModel: CurrentPlaceViewModel
 
