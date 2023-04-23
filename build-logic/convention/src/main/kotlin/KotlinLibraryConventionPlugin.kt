@@ -5,7 +5,6 @@ class KotlinLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply("kotlin")
-            apply("focuslauncher.lint")
         }
     }
 }
