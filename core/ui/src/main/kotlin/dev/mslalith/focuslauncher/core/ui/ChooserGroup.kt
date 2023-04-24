@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -41,7 +40,7 @@ fun ChooserGroup(
 
             TextIconButton(
                 text = if (showText) textIcon.first else null,
-                icon = painterResource(id = textIcon.second),
+                icon = textIcon.second,
                 backgroundColor = backgroundColor,
                 contentColor = contentColor,
                 horizontalArrangement = itemHorizontalArrangement,

@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":screens:hideapps"))
     implementation(project(":screens:currentplace"))
     implementation(project(":screens:iconpack"))
+    implementation(project(":screens:about"))
     implementation(project(":feature:settingspage"))
 
     implementation(libs.google.material)
