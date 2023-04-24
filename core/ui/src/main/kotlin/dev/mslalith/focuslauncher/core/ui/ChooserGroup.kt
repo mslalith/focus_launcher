@@ -45,9 +45,7 @@ fun ChooserGroup(
                 contentColor = contentColor,
                 horizontalArrangement = itemHorizontalArrangement,
                 onClick = {
-                    if (!isSelected) {
-                        onItemSelected(index)
-                    }
+                    if (!isSelected) onItemSelected(index)
                 },
                 modifier = Modifier
                     .padding(horizontal = 4.dp)

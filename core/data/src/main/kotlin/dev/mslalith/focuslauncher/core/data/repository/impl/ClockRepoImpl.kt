@@ -10,7 +10,8 @@ import kotlinx.datetime.Instant
 internal class ClockRepoImpl @Inject constructor(
     private val clockProvider: ClockProvider
 ) : ClockRepo {
-    private val _currentInstantStateFlow = MutableStateFlow(clockProvider.now())
+
+    private val _currentInstantStateFlow = MutableStateFlow(value = clockProvider.now())
     override val currentInstantStateFlow: StateFlow<Instant>
         get() = _currentInstantStateFlow
 

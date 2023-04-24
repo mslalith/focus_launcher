@@ -40,7 +40,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         runBlocking {
-            appDatabase.appsDao().addApps(TestApps.all.map(App::toAppRoom))
+            appDatabase.appsDao().addApps(apps = TestApps.all.map(App::toAppRoom))
         }
     }
 
@@ -58,7 +58,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when an app is added to favorite, make sure it stays as favorite`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToFavorites(app)
+        repo.addToFavorites(app = app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
@@ -67,7 +67,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when multiple apps are added to favorites, make sure they stays as favorites`() = runCoroutineTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
-        repo.addToFavorites(apps)
+        repo.addToFavorites(apps = apps)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(apps)
@@ -76,12 +76,12 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when an app is removed from favorites, make sure it isn't present`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToFavorites(app)
+        repo.addToFavorites(app = app)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        repo.removeFromFavorites(app.packageName)
+        repo.removeFromFavorites(packageName = app.packageName)
 
         items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).doesNotContain(app)
@@ -91,7 +91,7 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when favorites are cleared, list should be empty`() = runCoroutineTest {
         val apps = TestApps.all
-        repo.addToFavorites(apps)
+        repo.addToFavorites(apps = apps)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(apps)
@@ -105,36 +105,36 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when querying for a favorite app, isFavorite must return true`() = runCoroutineTest {
         val app = TestApps.Youtube
-        repo.addToFavorites(app)
+        repo.addToFavorites(app = app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        val isHidden = repo.isFavorite(app.packageName)
+        val isHidden = repo.isFavorite(packageName = app.packageName)
         assertThat(isHidden).isTrue()
     }
 
     @Test
     fun `when querying for an un-favorite app, isFavorite must return false`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToFavorites(app)
+        repo.addToFavorites(app = app)
 
         val items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        val isHidden = repo.isFavorite(TestApps.Phone.packageName)
+        val isHidden = repo.isFavorite(packageName = TestApps.Phone.packageName)
         assertThat(isHidden).isFalse()
     }
 
     @Test
     fun `when 2 favorites are present and are reordered, make sure it returns reordered list`() = runCoroutineTest {
         val appsBeforeReorder = listOf(TestApps.Phone, TestApps.Youtube)
-        repo.addToFavorites(appsBeforeReorder)
+        repo.addToFavorites(apps = appsBeforeReorder)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(appsBeforeReorder)
 
-        repo.reorderFavorite(TestApps.Youtube, TestApps.Phone)
+        repo.reorderFavorite(app = TestApps.Youtube, withApp = TestApps.Phone)
         val appsAfterReorder = listOf(TestApps.Youtube, TestApps.Phone)
 
         items = repo.onlyFavoritesFlow.awaitItem()
@@ -144,12 +144,12 @@ internal class FavoritesRepoTest : CoroutineTest() {
     @Test
     fun `when more than 2 favorites are present and two of them are reordered, make sure it returns reordered list`() = runCoroutineTest {
         val appsBeforeReorder = listOf(TestApps.Phone, TestApps.Chrome, TestApps.Youtube)
-        repo.addToFavorites(appsBeforeReorder)
+        repo.addToFavorites(apps = appsBeforeReorder)
 
         var items = repo.onlyFavoritesFlow.awaitItem()
         assertThat(items).isEqualTo(appsBeforeReorder)
 
-        repo.reorderFavorite(TestApps.Youtube, TestApps.Phone)
+        repo.reorderFavorite(app = TestApps.Youtube, withApp = TestApps.Phone)
         val appsAfterReorder = listOf(TestApps.Youtube, TestApps.Chrome, TestApps.Phone)
 
         items = repo.onlyFavoritesFlow.awaitItem()

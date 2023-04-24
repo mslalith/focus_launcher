@@ -10,7 +10,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Database.PLACES_TABLE_NAM
 @Dao
 internal interface PlacesDao {
 
-    @Query("SELECT * FROM $PLACES_TABLE_NAME WHERE latitude = :latitude AND longitude = :longitude")
+    @Query(value = "SELECT * FROM $PLACES_TABLE_NAME WHERE latitude = :latitude AND longitude = :longitude")
     suspend fun fetchPlace(latitude: String, longitude: String): PlaceRoom?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

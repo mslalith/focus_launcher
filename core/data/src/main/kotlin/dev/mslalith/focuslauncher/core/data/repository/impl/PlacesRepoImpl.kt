@@ -20,7 +20,7 @@ internal class PlacesRepoImpl @Inject internal constructor(
     )?.toPlace()
 
     override suspend fun fetchPlace(latLng: LatLng): Place? {
-        val localAddress = fetchPlaceLocal(latLng)
+        val localAddress = fetchPlaceLocal(latLng = latLng)
         if (localAddress != null) return localAddress
 
         val placeResponse = placesApi.getPlace(latLng = latLng) ?: return null

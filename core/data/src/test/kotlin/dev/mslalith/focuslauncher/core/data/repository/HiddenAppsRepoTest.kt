@@ -40,7 +40,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     fun setup() {
         hiltRule.inject()
         runBlocking {
-            appDatabase.appsDao().addApps(TestApps.all.map(App::toAppRoom))
+            appDatabase.appsDao().addApps(apps = TestApps.all.map(App::toAppRoom))
         }
     }
 
@@ -58,7 +58,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `when an app is hidden, make sure it stays hidden`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToHiddenApps(app)
+        repo.addToHiddenApps(app = app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
@@ -67,7 +67,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `when multiple apps are hidden, make sure it stays hidden`() = runCoroutineTest {
         val apps = listOf(TestApps.Chrome, TestApps.Phone)
-        repo.addToHiddenApps(apps)
+        repo.addToHiddenApps(apps = apps)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(apps)
@@ -76,12 +76,12 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `when an app is un-hidden, make sure it isn't present`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToHiddenApps(app)
+        repo.addToHiddenApps(app = app)
 
         var items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        repo.removeFromHiddenApps(app.packageName)
+        repo.removeFromHiddenApps(packageName = app.packageName)
 
         items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).doesNotContain(app)
@@ -91,7 +91,7 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `when hidden apps are cleared, list should be empty`() = runCoroutineTest {
         val apps = TestApps.all
-        repo.addToHiddenApps(apps)
+        repo.addToHiddenApps(apps = apps)
 
         var items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(apps)
@@ -105,24 +105,24 @@ internal class HiddenAppsRepoTest : CoroutineTest() {
     @Test
     fun `when querying for a hidden app, isHidden must return true`() = runCoroutineTest {
         val app = TestApps.Youtube
-        repo.addToHiddenApps(app)
+        repo.addToHiddenApps(app = app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        val isHidden = repo.isHidden(app.packageName)
+        val isHidden = repo.isHidden(packageName = app.packageName)
         assertThat(isHidden).isTrue()
     }
 
     @Test
     fun `when querying for an un-hidden app, isHidden must return false`() = runCoroutineTest {
         val app = TestApps.Chrome
-        repo.addToHiddenApps(app)
+        repo.addToHiddenApps(app = app)
 
         val items = repo.onlyHiddenAppsFlow.awaitItem()
         assertThat(items).isEqualTo(listOf(app))
 
-        val isHidden = repo.isHidden(TestApps.Phone.packageName)
+        val isHidden = repo.isHidden(packageName = TestApps.Phone.packageName)
         assertThat(isHidden).isFalse()
     }
 }

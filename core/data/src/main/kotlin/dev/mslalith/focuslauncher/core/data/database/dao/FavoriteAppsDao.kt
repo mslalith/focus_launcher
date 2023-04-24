@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 internal interface FavoriteAppsDao {
 
-    @Query("SELECT * FROM $FAVORITE_APPS_TABLE_NAME")
+    @Query(value = "SELECT * FROM $FAVORITE_APPS_TABLE_NAME")
     fun getFavoriteAppsFlow(): Flow<List<FavoriteAppRoom>>
 
-    @Query("SELECT * FROM $FAVORITE_APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
+    @Query(value = "SELECT * FROM $FAVORITE_APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
     suspend fun getFavoriteAppBy(packageName: String): FavoriteAppRoom?
 
-    @Query("DELETE FROM $FAVORITE_APPS_TABLE_NAME")
+    @Query(value = "DELETE FROM $FAVORITE_APPS_TABLE_NAME")
     suspend fun clearFavoriteApps()
 
-    @Query("SELECT COUNT(*) $FAVORITE_APPS_TABLE_NAME")
+    @Query(value = "SELECT COUNT(*) $FAVORITE_APPS_TABLE_NAME")
     suspend fun getFavoriteAppsSize(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

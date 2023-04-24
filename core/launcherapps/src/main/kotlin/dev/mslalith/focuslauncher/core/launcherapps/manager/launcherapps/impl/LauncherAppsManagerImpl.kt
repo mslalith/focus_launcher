@@ -50,11 +50,11 @@ internal class LauncherAppsManagerImpl @Inject constructor(
 
     private fun defaultDialerApp(): App? {
         val manager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-        return manager.defaultDialerPackage?.let { loadApp(packageName = it) }
+        return manager.defaultDialerPackage?.let(::loadApp)
     }
 
     private fun defaultMessagingApp(): App? {
         val packageName: String? = Telephony.Sms.getDefaultSmsPackage(context)
-        return packageName?.let { loadApp(packageName = packageName) }
+        return packageName?.let(::loadApp)
     }
 }

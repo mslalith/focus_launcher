@@ -47,9 +47,9 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         internal fun build(context: Context): AppDatabase = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            APP_DB_NAME
+            context = context,
+            klass = AppDatabase::class.java,
+            name = APP_DB_NAME
         ).build()
     }
 }

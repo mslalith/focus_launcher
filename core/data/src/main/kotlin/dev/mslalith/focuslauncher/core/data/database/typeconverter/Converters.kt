@@ -9,11 +9,17 @@ internal class Converters {
 
     @TypeConverter
     fun jsonToStringList(json: String): List<String> {
-        return Json.decodeFromString(ListSerializer(String.serializer()), json)
+        return Json.decodeFromString(
+            deserializer = ListSerializer(elementSerializer = String.serializer()),
+            string = json
+        )
     }
 
     @TypeConverter
     fun stringListToJson(list: List<String>): String {
-        return Json.encodeToString(ListSerializer(String.serializer()), list)
+        return Json.encodeToString(
+            serializer = ListSerializer(elementSerializer = String.serializer()),
+            value = list
+        )
     }
 }

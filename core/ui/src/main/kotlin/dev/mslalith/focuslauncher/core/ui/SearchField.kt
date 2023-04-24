@@ -61,9 +61,9 @@ fun SearchField(
             AnimatedVisibility(visible = query.isNotEmpty()) {
                 Box(
                     modifier = Modifier
-                        .clip(CircleShape)
+                        .clip(shape = CircleShape)
                         .clickable { onQueryChange("") }
-                        .padding(4.dp)
+                        .padding(all = 4.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_close),

@@ -28,13 +28,15 @@ object TestCommonModule {
 
     @Provides
     @Singleton
-    fun provideAppCoroutineDispatcher(): AppCoroutineDispatcher = TestAppCoroutineDispatcher(Dispatchers.Main as CoroutineContext)
+    fun provideAppCoroutineDispatcher(): AppCoroutineDispatcher = TestAppCoroutineDispatcher(
+        coroutineContext = Dispatchers.Main as CoroutineContext
+    )
 
     @Provides
     @Singleton
     fun provideNetworkMonitor(
         @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context = context)
 
     @Provides
     @Singleton

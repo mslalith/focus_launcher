@@ -16,7 +16,9 @@ fun SemanticsNodeInteractionCollection.waitForSelectedAppsToUpdate(
 ) {
     waitUntil(timeoutMillis = timeoutMillis) {
         selectedApps.all { selectedApp ->
-            filter(hasText(selectedApp.app.displayName)).onFirst().onMatchWith(hasSelectedApp(selectedApp))
+            filter(matcher = hasText(text = selectedApp.app.displayName))
+                .onFirst()
+                .onMatchWith(matcher = hasSelectedApp(selectedApp = selectedApp))
         }
     }
 }

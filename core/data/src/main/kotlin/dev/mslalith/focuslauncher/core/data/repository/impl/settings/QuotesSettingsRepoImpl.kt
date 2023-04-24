@@ -36,6 +36,6 @@ internal class QuotesSettingsRepoImpl @Inject constructor(
     }
 
     companion object {
-        private val PREFERENCES_SHOW_QUOTES = booleanPreferencesKey("preferences_show_quotes")
+        private val PREFERENCES_SHOW_QUOTES = booleanPreferencesKey(name = "preferences_show_quotes")
     }
 }

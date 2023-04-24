@@ -98,7 +98,7 @@ fun FocusLauncherTheme(
 
     LaunchedEffect(Unit) {
         if (themeViewModel.firstRunStateFlow.first()) {
-            themeViewModel.changeTheme(theme)
+            themeViewModel.changeTheme(theme = theme)
         }
     }
 

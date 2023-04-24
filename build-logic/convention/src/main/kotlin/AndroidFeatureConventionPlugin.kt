@@ -23,16 +23,16 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
-                add("implementation", project(":core:model"))
-                add("implementation", project(":core:ui"))
-                add("implementation", project(":core:data"))
-                add("implementation", project(":core:common"))
-                add("implementation", project(":core:domain"))
-                add("implementation", project(":core:resources"))
+                add(configurationName = "implementation", project(":core:model"))
+                add(configurationName = "implementation", project(":core:ui"))
+                add(configurationName = "implementation", project(":core:data"))
+                add(configurationName = "implementation", project(":core:common"))
+                add(configurationName = "implementation", project(":core:domain"))
+                add(configurationName = "implementation", project(":core:resources"))
 
-                add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
-                add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
-                add("implementation", libs.findLibrary("androidx.lifecycle.runtime.compose").get())
+                add(configurationName = "implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
+                add(configurationName = "implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
+                add(configurationName = "implementation", libs.findLibrary("androidx.lifecycle.runtime.compose").get())
             }
         }
     }

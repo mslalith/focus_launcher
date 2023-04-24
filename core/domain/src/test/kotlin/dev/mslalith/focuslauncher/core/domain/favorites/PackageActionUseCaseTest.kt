@@ -57,7 +57,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val appToInstall = TestApps.Chrome
         val allApps = TestApps.all
         val installedApps = allApps - setOf(appToInstall)
-        appDrawerRepo.addApps(installedApps)
+        appDrawerRepo.addApps(apps = installedApps)
 
         backgroundScope.launch {
             appDrawerRepo.allAppsFlow.test {
@@ -66,7 +66,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
             }
         }
 
-        packageActionUseCase.handleAppInstall(appToInstall)
+        packageActionUseCase.handleAppInstall(app = appToInstall)
     }
 
     @Test
@@ -74,7 +74,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val appToUninstall = TestApps.Chrome
         val allApps = TestApps.all
         val appsAfterUninstall = allApps - setOf(appToUninstall)
-        appDrawerRepo.addApps(allApps)
+        appDrawerRepo.addApps(apps = allApps)
 
         backgroundScope.launch {
             appDrawerRepo.allAppsFlow.test {
@@ -83,6 +83,6 @@ class PackageActionUseCaseTest : CoroutineTest() {
             }
         }
 
-        packageActionUseCase.handleAppUninstall(appToUninstall.packageName)
+        packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
     }
 }

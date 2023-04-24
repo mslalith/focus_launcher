@@ -17,10 +17,10 @@ internal class PlacesApiImpl @Inject constructor(
 ) : PlacesApi {
 
     override suspend fun getPlace(latLng: LatLng): PlaceResponse? = try {
-        httpClient.get("https://nominatim.openstreetmap.org/reverse") {
-            parameter("format", "json")
-            parameter("lat", latLng.latitude)
-            parameter("lon", latLng.longitude)
+        httpClient.get(urlString = "https://nominatim.openstreetmap.org/reverse") {
+            parameter(key = "format", value = "json")
+            parameter(key = "lat", value = latLng.latitude)
+            parameter(key = "lon", value = latLng.longitude)
         }.body()
     } catch (e: JsonConvertException) {
         null

@@ -76,8 +76,8 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 isSuperMoon = true
             )
 
-            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expected = expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expected = expectedUpcomingLunarPhase)
         }
     }
 
@@ -111,8 +111,8 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 isSuperMoon = false
             )
 
-            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expected = expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expected = expectedUpcomingLunarPhase)
         }
     }
 
@@ -146,8 +146,8 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 isSuperMoon = false
             )
 
-            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expected = expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expected = expectedUpcomingLunarPhase)
         }
     }
 
@@ -181,8 +181,8 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
                 isSuperMoon = true
             )
 
-            repo.assertLunarPhaseDetailsWith(expectedLunarPhaseDetails)
-            repo.assertUpcomingLunarPhaseWith(expectedUpcomingLunarPhase)
+            repo.assertLunarPhaseDetailsWith(expected = expectedLunarPhaseDetails)
+            repo.assertUpcomingLunarPhaseWith(expected = expectedUpcomingLunarPhase)
         }
     }
 }

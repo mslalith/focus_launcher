@@ -15,12 +15,12 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
 
         val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
         dependencies {
-            add("implementation", libs.findLibrary("hilt.android").get())
-            add("kapt", libs.findLibrary("hilt.compiler").get())
-            add("kapt", libs.findLibrary("hilt.android.compiler").get())
-            add("kaptTest", libs.findLibrary("hilt.android.compiler").get())
-            add("kaptAndroidTest", libs.findLibrary("hilt.android.compiler").get())
-            add("implementation", libs.findLibrary("hilt.android.testing").get())
+            add(configurationName = "implementation", libs.findLibrary("hilt.android").get())
+            add(configurationName = "kapt", libs.findLibrary("hilt.compiler").get())
+            add(configurationName = "kapt", libs.findLibrary("hilt.android.compiler").get())
+            add(configurationName = "kaptTest", libs.findLibrary("hilt.android.compiler").get())
+            add(configurationName = "kaptAndroidTest", libs.findLibrary("hilt.android.compiler").get())
+            add(configurationName = "implementation", libs.findLibrary("hilt.android.testing").get())
         }
     }
 }

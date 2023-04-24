@@ -15,9 +15,9 @@ internal class QuotesApiImpl @Inject constructor(
     private val baseUrl = "https://api.quotable.io"
 
     override suspend fun getQuotes(page: Int, limit: Int): QuotesApiResponse {
-        return httpClient.get("$baseUrl/quotes") {
-            parameter("page", page)
-            parameter("limit", limit)
+        return httpClient.get(urlString = "$baseUrl/quotes") {
+            parameter(key = "page", value = page)
+            parameter(key = "limit", value = limit)
         }.body()
     }
 }

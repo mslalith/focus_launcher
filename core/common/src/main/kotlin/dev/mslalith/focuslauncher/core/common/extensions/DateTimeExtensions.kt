@@ -11,15 +11,15 @@ import kotlinx.datetime.toLocalDateTime
 
 fun ZonedDateTime.isSameAsToday(): Boolean {
     val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-    val (year, month, day) = this.toString().substringBefore("T").split("-")
+    val (year, month, day) = this.toString().substringBefore(delimiter = "T").split("-")
     return today.year == year.toInt() && today.monthNumber == month.toInt() && today.dayOfMonth == day.toInt()
 }
 
 fun ZonedDateTime.inShortReadableFormat(): String {
-    val (_, month, day) = this.toString().substringBefore("T").split("-")
+    val (_, month, day) = this.toString().substringBefore(delimiter = "T").split("-")
     val monthReadable = Month.values()[month.toInt() - 1].toString()
-        .lowercase(Locale.getDefault())
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        .lowercase(locale = Locale.getDefault())
+        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale = Locale.getDefault()) else it.toString() }
 
     val daySuffix = when (day.toInt()) {
         1, 21, 31 -> "st"
@@ -41,9 +41,9 @@ fun LocalDateTime.inShortReadableFormat(
     }
     val monthReadable =
         month.toString()
-            .lowercase(Locale.getDefault())
+            .lowercase(locale = Locale.getDefault())
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-            .run { if (shortMonthName) take(3) else this }
+            .run { if (shortMonthName) take(n = 3) else this }
 
     return "$dayOfMonth$daySuffix $monthReadable"
 }
@@ -57,6 +57,8 @@ fun ZonedDateTime.toKotlinxLocalDateTime(): LocalDateTime? = try {
 
 fun Instant.formatToTime(): String {
     return toLocalDateTime(TimeZone.currentSystemDefault()).run {
-        listOf(hour, minute).map { it.to2Digit() }.joinToString(separator = ":")
+        listOf(hour, minute)
+            .map { it.to2Digit() }
+            .joinToString(separator = ":")
     }
 }

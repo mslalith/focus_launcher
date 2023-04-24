@@ -18,7 +18,7 @@ internal class IconPackXmlParser(
 
     private var iconPackResources: Resources? = null
 
-    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(0)
+    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(initialCapacity = 0)
     private val backImages = mutableListOf<SimpleDrawableInfo>()
     private var maskImage: SimpleDrawableInfo? = null
     private var frontImage: SimpleDrawableInfo? = null
@@ -55,10 +55,10 @@ internal class IconPackXmlParser(
                     when {
                         xmlPullParser.name == "iconback" -> {
                             for (i in 0 until xmlPullParser.attributeCount) {
-                                if (xmlPullParser.getAttributeName(i).startsWith("img")) {
+                                if (xmlPullParser.getAttributeName(i).startsWith(prefix = "img")) {
                                     val drawableName = xmlPullParser.getAttributeValue(i)
                                     val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
-                                    if (drawableId != 0) backImages.add(SimpleDrawableInfo(drawableName, drawableId))
+                                    if (drawableId != 0) backImages.add(SimpleDrawableInfo(drawableName = drawableName, drawableId = drawableId))
                                 }
                             }
                         }
@@ -66,14 +66,14 @@ internal class IconPackXmlParser(
                             if (xmlPullParser.attributeCount > 0 && xmlPullParser.getAttributeName(0) == "img1") {
                                 val drawableName = xmlPullParser.getAttributeValue(0)
                                 val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
-                                if (drawableId != 0) maskImage = SimpleDrawableInfo(drawableName, drawableId)
+                                if (drawableId != 0) maskImage = SimpleDrawableInfo(drawableName = drawableName, drawableId = drawableId)
                             }
                         }
                         xmlPullParser.name == "iconupon" -> {
                             if (xmlPullParser.attributeCount > 0 && xmlPullParser.getAttributeName(0) == "img1") {
                                 val drawableName = xmlPullParser.getAttributeValue(0)
                                 val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
-                                if (drawableId != 0) frontImage = SimpleDrawableInfo(drawableName, drawableId)
+                                if (drawableId != 0) frontImage = SimpleDrawableInfo(drawableName = drawableName, drawableId = drawableId)
                             }
                         }
                         xmlPullParser.name == "scale" && xmlPullParser.attributeCount > 0 && xmlPullParser.getAttributeName(0) == "factor" -> {
@@ -98,10 +98,10 @@ internal class IconPackXmlParser(
                             }
                             val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
                             if (drawableId != 0) {
-                                val drawableInfo = SimpleDrawableInfo(drawableName, drawableId)
+                                val drawableInfo = SimpleDrawableInfo(drawableName = drawableName, drawableId = drawableId)
                                 if (componentName != null) {
                                     iconPackToDrawablesMap.putIfAbsent(componentName, HashSet())
-                                    iconPackToDrawablesMap.getValue(componentName).add(drawableInfo)
+                                    iconPackToDrawablesMap.getValue(key = componentName).add(element = drawableInfo)
                                 }
                             }
                         }

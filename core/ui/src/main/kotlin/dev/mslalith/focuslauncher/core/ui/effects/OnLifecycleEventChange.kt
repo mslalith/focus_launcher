@@ -21,7 +21,7 @@ fun OnLifecycleEventChange(
             updatedOnEvent(event)
         }
 
-        lifecycle.addObserver(observer)
-        onDispose { lifecycle.removeObserver(observer) }
+        lifecycle.addObserver(observer = observer)
+        onDispose { lifecycle.removeObserver(observer = observer) }
     }
 }

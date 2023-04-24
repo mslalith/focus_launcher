@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 internal class ClockSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : ClockSettingsRepo {
+
     override val showClock24Flow: Flow<Boolean> = settingsDataStore.data
         .map {
             it[PREFERENCES_SHOW_CLOCK_24] ?: DEFAULT_SHOW_CLOCK_24
@@ -54,8 +55,8 @@ internal class ClockSettingsRepoImpl @Inject constructor(
     }
 
     companion object {
-        private val PREFERENCES_SHOW_CLOCK_24 = booleanPreferencesKey("preferences_show_clock_24")
-        private val PREFERENCES_CLOCK_ALIGNMENT = intPreferencesKey("preferences_clock_alignment")
-        private val PREFERENCES_CLOCK_24_ANIMATION_DURATION = intPreferencesKey("preferences_clock_24_animation_duration")
+        private val PREFERENCES_SHOW_CLOCK_24 = booleanPreferencesKey(name = "preferences_show_clock_24")
+        private val PREFERENCES_CLOCK_ALIGNMENT = intPreferencesKey(name = "preferences_clock_alignment")
+        private val PREFERENCES_CLOCK_24_ANIMATION_DURATION = intPreferencesKey(name = "preferences_clock_24_animation_duration")
     }
 }

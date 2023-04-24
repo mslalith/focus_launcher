@@ -21,17 +21,17 @@ fun PackageActionListener(
         val callback = object : LauncherApps.Callback() {
             override fun onPackageRemoved(packageName: String?, user: UserHandle?) {
                 packageName ?: return
-                updatedOnAction(PackageAction.Removed(packageName))
+                updatedOnAction(PackageAction.Removed(packageName = packageName))
             }
 
             override fun onPackageAdded(packageName: String?, user: UserHandle?) {
                 packageName ?: return
-                updatedOnAction(PackageAction.Added(packageName))
+                updatedOnAction(PackageAction.Added(packageName = packageName))
             }
 
             override fun onPackageChanged(packageName: String?, user: UserHandle?) {
                 packageName ?: return
-                updatedOnAction(PackageAction.Updated(packageName))
+                updatedOnAction(PackageAction.Updated(packageName = packageName))
             }
 
             override fun onPackagesAvailable(packageNames: Array<out String>?, user: UserHandle?, replacing: Boolean) = Unit
