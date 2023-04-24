@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.about.ui.AppInfo
@@ -17,8 +18,17 @@ import dev.mslalith.focuslauncher.screens.about.ui.MadeWithLove
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen() {
-    Scaffold { paddingValues ->
+fun AboutScreen(
+    goBack: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            AppBarWithBackIcon(
+                title = "About",
+                onBackPressed = goBack
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues = paddingValues)

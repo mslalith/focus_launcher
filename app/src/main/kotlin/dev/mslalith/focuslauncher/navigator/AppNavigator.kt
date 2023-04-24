@@ -77,6 +77,9 @@ private fun NavGraphBuilder.iconPackScreen() {
 
 private fun NavGraphBuilder.aboutScreen() {
     composable(Screen.About.id) {
-        AboutScreen()
+        val navController = LocalNavController.current
+        AboutScreen(
+            goBack = navController::popBackStack
+        )
     }
 }
