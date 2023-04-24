@@ -45,9 +45,9 @@ class MigrationTest {
         helper.createDatabase(testDbName, 1).apply {
             execSQL(
                 sql = """INSERT OR REPLACE INTO cities (
-                                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
-                                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
-                                """.trimIndent()
+                    id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                    42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                """.trimIndent()
             )
             close()
         }
@@ -73,9 +73,9 @@ class MigrationTest {
         helper.createDatabase(testDbName, 2).apply {
             execSQL(
                 sql = """INSERT OR REPLACE INTO cities (
-                                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
-                                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
-                                """.trimIndent()
+                    id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                    42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                """.trimIndent()
             )
             close()
         }
