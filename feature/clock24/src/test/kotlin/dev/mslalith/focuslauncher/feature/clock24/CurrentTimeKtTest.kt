@@ -26,7 +26,7 @@ class CurrentTimeKtTest {
             CurrentTime(currentTime = "17:23")
         }
 
-        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(hasText("17:23"))
+        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "17:23"))
     }
 
     @Test
@@ -36,9 +36,9 @@ class CurrentTimeKtTest {
             CurrentTime(currentTime = currentTime.value)
         }
 
-        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(hasText("17:23"))
+        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "17:23"))
 
         currentTime.value = "21:49"
-        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(hasText("21:49"))
+        composeTestRule.onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "21:49"))
     }
 }

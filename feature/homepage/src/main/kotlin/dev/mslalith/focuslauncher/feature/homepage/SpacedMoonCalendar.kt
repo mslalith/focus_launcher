@@ -15,7 +15,7 @@ internal fun SpacedMoonCalendar(
     onMoonCalendarClick: () -> Unit
 ) {
     val homePadding = LocalHomePadding.current
-    val startPadding = homePadding.contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
+    val startPadding = homePadding.contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
     val startOffsetPadding = startPadding - 16.dp
     val extraLunarPhaseIconSize = 1.dp
     val iconSize = homePadding.lunarPhaseIconSize + extraLunarPhaseIconSize

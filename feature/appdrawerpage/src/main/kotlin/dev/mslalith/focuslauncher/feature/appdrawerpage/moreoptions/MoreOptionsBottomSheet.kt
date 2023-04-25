@@ -44,9 +44,9 @@ internal fun MoreOptionsBottomSheet(
         this.value = isFavorite(appWithIcon.toApp())
     }
 
-    val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, appWithIcon.displayName)
-    val addedAppToFavoritesMessage = stringResource(R.string.added_app_to_favorites, appWithIcon.displayName)
-    val removedAppFromFavoritesMessage = stringResource(R.string.removed_app_from_favorites, appWithIcon.displayName)
+    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appWithIcon.displayName)
+    val addedAppToFavoritesMessage = stringResource(id = R.string.added_app_to_favorites, appWithIcon.displayName)
+    val removedAppFromFavoritesMessage = stringResource(id = R.string.removed_app_from_favorites, appWithIcon.displayName)
 
     fun closeAfterAction(action: () -> Unit) {
         action()
@@ -75,10 +75,10 @@ internal fun MoreOptionsBottomSheet(
                 closeAfterAction {
                     if (isFavoriteApp) {
                         removeFromFavorites(appWithIcon.toApp())
-                        context.toast(removedAppFromFavoritesMessage)
+                        context.toast(message = removedAppFromFavoritesMessage)
                     } else {
                         addToFavorites(appWithIcon.toApp())
-                        context.toast(addedAppToFavoritesMessage)
+                        context.toast(message = addedAppToFavoritesMessage)
                     }
                 }
             }
@@ -121,7 +121,7 @@ internal fun MoreOptionsBottomSheet(
             iconRes = R.drawable.ic_info,
             contentColor = contentColor,
             onClick = {
-                closeAfterAction { context.showAppInfo(appWithIcon.packageName) }
+                closeAfterAction { context.showAppInfo(packageName = appWithIcon.packageName) }
             }
         )
 
@@ -131,7 +131,7 @@ internal fun MoreOptionsBottomSheet(
                 iconRes = R.drawable.ic_delete,
                 contentColor = contentColor,
                 onClick = {
-                    closeAfterAction { context.uninstallApp(appWithIcon.toApp()) }
+                    closeAfterAction { context.uninstallApp(app = appWithIcon.toApp()) }
                 }
             )
         }

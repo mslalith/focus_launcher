@@ -38,8 +38,8 @@ internal fun SettingsGridItem(
 ) {
     val density = LocalDensity.current
 
-    var contentHeight by remember { mutableStateOf(0.dp) }
-    val iconModifier = Modifier.size(contentHeight)
+    var contentHeight by remember { mutableStateOf(value = 0.dp) }
+    val iconModifier = Modifier.size(size = contentHeight)
 
     Row(
         modifier = modifier
@@ -59,7 +59,7 @@ internal fun SettingsGridItem(
                 Box(
                     modifier = Modifier
                         .padding(end = 12.dp)
-                        .then(iconModifier)
+                        .then(other = iconModifier)
                 ) {
                     Icon(
                         painter = painterResource(id = iconRes),

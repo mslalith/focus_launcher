@@ -25,7 +25,7 @@ internal fun FavoritesList(
     onAddToFavorites: (App) -> Unit,
     onRemoveFromFavorites: (App) -> Unit
 ) {
-    val appHiddenMessage = stringResource(R.string.app_hidden_message)
+    val appHiddenMessage = stringResource(id = R.string.app_hidden_message)
 
     fun toggleFavorite(selectedApp: SelectedApp, isHidden: Boolean) {
         if (!isHidden) {
@@ -35,7 +35,7 @@ internal fun FavoritesList(
                 onAddToFavorites(selectedApp.app)
             }
         } else {
-            showSnackbar(appHiddenMessage.replace("{}", selectedApp.app.name))
+            showSnackbar(appHiddenMessage.replace(oldValue = "{}", newValue = selectedApp.app.name))
         }
     }
 
@@ -53,7 +53,7 @@ internal fun FavoritesList(
                     testSelectedApp(selectedApp = favorite)
                 },
                 selectedApp = favorite,
-                onAppClick = { toggleFavorite(favorite, favorite.disabled) }
+                onAppClick = { toggleFavorite(selectedApp = favorite, isHidden = favorite.disabled) }
             )
         }
         item { VerticalSpacer(spacing = 84.dp) }

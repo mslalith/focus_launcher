@@ -44,11 +44,11 @@ internal fun AppDrawerPage(
 
     val appDrawerPageState by appDrawerPageViewModel.appDrawerPageState.collectAsStateWithLifecycle()
 
-    var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(null) }
+    var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
 
     fun onAppClick(app: AppWithIcon) {
         focusManager.clearFocus()
-        context.launchApp(app.toApp())
+        context.launchApp(app = app.toApp())
     }
 
     fun showMoreOptions(app: AppWithIcon) {
@@ -56,7 +56,7 @@ internal fun AppDrawerPage(
         viewManager.showBottomSheet {
             MoreOptionsBottomSheet(
                 appWithIcon = app,
-                isFavorite = { appDrawerPageViewModel.isFavorite(it.packageName) },
+                isFavorite = { appDrawerPageViewModel.isFavorite(packageName = it.packageName) },
                 addToFavorites = appDrawerPageViewModel::addToFavorites,
                 removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
                 addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
@@ -69,7 +69,7 @@ internal fun AppDrawerPage(
     updateAppDisplayAppDialog?.let { updatedApp ->
         UpdateAppDisplayNameDialog(
             app = updatedApp,
-            onUpdateDisplayName = { appDrawerPageViewModel.updateDisplayName(updatedApp, it) },
+            onUpdateDisplayName = { appDrawerPageViewModel.updateDisplayName(app = updatedApp, displayName = it) },
             onClose = { updateAppDisplayAppDialog = null }
         )
     }

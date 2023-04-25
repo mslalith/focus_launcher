@@ -39,7 +39,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    private val searchBarQueryStateFlow = MutableStateFlow("")
+    private val searchBarQueryStateFlow = MutableStateFlow(value = "")
 
     private val defaultAppDrawerPageState = AppDrawerPageState(
         allApps = emptyList(),
@@ -51,9 +51,9 @@ internal class AppDrawerPageViewModel @Inject constructor(
     )
 
     private val appDrawerAppsFlow: Flow<List<App>> = appDrawerRepo.allAppsFlow
-        .combine(hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
+        .combine(flow = hiddenAppsRepo.onlyHiddenAppsFlow) { allApps, hiddenApps ->
             allApps - hiddenApps.toSet()
-        }.combine(searchBarQueryStateFlow) { filteredApps, query ->
+        }.combine(flow = searchBarQueryStateFlow) { filteredApps, query ->
             when {
                 query.isNotEmpty() -> filteredApps.filter {
                     it.name.startsWith(
@@ -71,18 +71,18 @@ internal class AppDrawerPageViewModel @Inject constructor(
             with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
         }
 
-    val appDrawerPageState = flowOf(defaultAppDrawerPageState)
-        .combine(appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
+    val appDrawerPageState = flowOf(value = defaultAppDrawerPageState)
+        .combine(flow = appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
             state.copy(appDrawerViewType = appDrawerViewType)
-        }.combine(appDrawerSettingsRepo.appIconsVisibilityFlow) { state, showAppIcons ->
+        }.combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { state, showAppIcons ->
             state.copy(showAppIcons = showAppIcons)
-        }.combine(appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
+        }.combine(flow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
             state.copy(showAppGroupHeader = showAppGroupHeader)
-        }.combine(appDrawerSettingsRepo.searchBarVisibilityFlow) { state, showSearchBar ->
+        }.combine(flow = appDrawerSettingsRepo.searchBarVisibilityFlow) { state, showSearchBar ->
             state.copy(showSearchBar = showSearchBar)
-        }.combine(searchBarQueryStateFlow) { state, searchBarQuery ->
+        }.combine(flow = searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
-        }.combine(allAppsIconPackAware) { state, apps ->
+        }.combine(flow = allAppsIconPackAware) { state, apps ->
             state.copy(allApps = apps)
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
@@ -92,27 +92,27 @@ internal class AppDrawerPageViewModel @Inject constructor(
 
     fun updateDisplayName(app: App, displayName: String) {
         appCoroutineDispatcher.launchInIO {
-            appDrawerRepo.updateDisplayName(app, displayName)
+            appDrawerRepo.updateDisplayName(app = app, displayName = displayName)
         }
     }
 
-    suspend fun isFavorite(packageName: String) = favoritesRepo.isFavorite(packageName)
+    suspend fun isFavorite(packageName: String) = favoritesRepo.isFavorite(packageName = packageName)
 
     fun addToFavorites(app: App) {
         appCoroutineDispatcher.launchInIO {
-            favoritesRepo.addToFavorites(app)
+            favoritesRepo.addToFavorites(app = app)
         }
     }
 
     fun removeFromFavorites(app: App) {
         appCoroutineDispatcher.launchInIO {
-            favoritesRepo.removeFromFavorites(app.packageName)
+            favoritesRepo.removeFromFavorites(packageName = app.packageName)
         }
     }
 
     fun addToHiddenApps(app: App) {
         appCoroutineDispatcher.launchInIO {
-            hiddenAppsRepo.addToHiddenApps(app)
+            hiddenAppsRepo.addToHiddenApps(app = app)
         }
     }
 }

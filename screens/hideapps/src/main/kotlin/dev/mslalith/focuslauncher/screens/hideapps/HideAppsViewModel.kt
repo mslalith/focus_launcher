@@ -25,12 +25,12 @@ internal class HideAppsViewModel @Inject constructor(
 
     val hiddenAppsFlow: StateFlow<List<HiddenApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> HiddenApp(app = app, isSelected = false, isFavorite = false) } }
-        .combine(favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
+        .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { hiddenApp ->
                 val isFavorite = onlyFavoritesList.any { it.packageName == hiddenApp.app.packageName }
                 hiddenApp.copy(isFavorite = isFavorite)
             }
-        }.combine(hiddenAppsRepo.onlyHiddenAppsFlow) { appsList, onlyHiddenAppsList ->
+        }.combine(flow = hiddenAppsRepo.onlyHiddenAppsFlow) { appsList, onlyHiddenAppsList ->
             appsList.map { hiddenApp ->
                 val isSelected = onlyHiddenAppsList.any { it.packageName == hiddenApp.app.packageName }
                 hiddenApp.copy(isSelected = isSelected)
@@ -38,15 +38,15 @@ internal class HideAppsViewModel @Inject constructor(
         }.withinScope(initialValue = emptyList())
 
     fun removeFromFavorites(app: App) {
-        appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(app.packageName) }
+        appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(packageName = app.packageName) }
     }
 
     fun addToHiddenApps(app: App) {
-        appCoroutineDispatcher.launchInIO { hiddenAppsRepo.addToHiddenApps(app) }
+        appCoroutineDispatcher.launchInIO { hiddenAppsRepo.addToHiddenApps(app = app) }
     }
 
     fun removeFromHiddenApps(app: App) {
-        appCoroutineDispatcher.launchInIO { hiddenAppsRepo.removeFromHiddenApps(app.packageName) }
+        appCoroutineDispatcher.launchInIO { hiddenAppsRepo.removeFromHiddenApps(packageName = app.packageName) }
     }
 
     fun clearHiddenApps() {

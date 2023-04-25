@@ -11,6 +11,7 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -30,6 +31,10 @@ internal fun AppDrawerListItem(
     onClick: (AppWithIcon) -> Unit,
     onLongClick: (AppWithIcon) -> Unit
 ) {
+    val iconBitmap = remember(key1 = app.packageName) {
+        app.icon.toBitmap().asImageBitmap()
+    }
+
     val textStartPadding = when (showAppIcons) {
         true -> ITEM_END_PADDING
         false -> ITEM_START_PADDING + ((APP_ICON_SIZE + ICON_INNER_HORIZONTAL_PADDING) / 4)
@@ -47,11 +52,11 @@ internal fun AppDrawerListItem(
         leadingContent = if (showAppIcons) {
             @Composable {
                 Image(
-                    bitmap = app.icon.toBitmap().asImageBitmap(),
+                    bitmap = iconBitmap,
                     contentDescription = app.displayName,
                     modifier = Modifier
                         .padding(start = ITEM_START_PADDING)
-                        .size(APP_ICON_SIZE)
+                        .size(size = APP_ICON_SIZE)
                 )
             }
         } else null,

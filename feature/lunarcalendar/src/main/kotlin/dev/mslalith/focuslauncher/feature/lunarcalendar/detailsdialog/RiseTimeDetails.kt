@@ -12,7 +12,9 @@ internal fun RiseTimeDetails(
     sunRiseDateTime: LocalDateTime?,
     contentColor: Color
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         RiseAndSetTime(
             localDateTime = moonRiseDateTime,
             contentColor = contentColor

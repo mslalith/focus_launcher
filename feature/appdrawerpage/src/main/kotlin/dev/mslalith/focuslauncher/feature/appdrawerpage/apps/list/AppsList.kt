@@ -30,7 +30,7 @@ internal fun AppsList(
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
     val bottomSpacing = configuration.screenHeightDp.dp * 0.05f
 
-    val groupedApps by remember(apps) {
+    val groupedApps by remember(key1 = apps) {
         derivedStateOf {
             apps.groupBy { appModel ->
                 appModel.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
@@ -49,7 +49,7 @@ internal fun AppsList(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
             .fillMaxSize()
-            .height(150.dp)
+            .height(height = 150.dp)
     ) {
         item { VerticalSpacer(spacing = spacing.first) }
 

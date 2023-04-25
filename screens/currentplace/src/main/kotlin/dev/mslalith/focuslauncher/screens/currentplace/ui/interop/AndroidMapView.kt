@@ -60,7 +60,7 @@ internal fun AndroidMapView(
                     val geoPoint = GeoPoint(initialLatLng.latitude, initialLatLng.longitude)
                     controller.animateTo(geoPoint)
                     controller.setZoom(7.0)
-                    updateCurrentPositionMarker(geoPoint)
+                    updateCurrentPositionMarker(geoPoint = geoPoint)
                 }
             }
         },

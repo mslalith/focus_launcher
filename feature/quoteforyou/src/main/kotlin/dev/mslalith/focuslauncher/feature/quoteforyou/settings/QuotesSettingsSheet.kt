@@ -23,7 +23,6 @@ internal fun QuotesSettingsSheet(
     quoteForYouViewModel: QuoteForYouViewModel
 ) {
     val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsStateWithLifecycle()
-
     val isFetchingQuotes by quoteForYouViewModel.isFetchingQuotes.collectAsStateWithLifecycle()
 
     Column {

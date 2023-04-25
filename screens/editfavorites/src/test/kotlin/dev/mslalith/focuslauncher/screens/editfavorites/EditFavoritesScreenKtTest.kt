@@ -78,7 +78,7 @@ class EditFavoritesScreenKtTest {
             appCoroutineDispatcher = appCoroutineDispatcher
         )
         runBlocking {
-            appDrawerRepo.addApps(TestApps.all)
+            appDrawerRepo.addApps(apps = TestApps.all)
         }
         composeTestRule.setContent {
             EditFavoritesScreen(
@@ -102,7 +102,7 @@ class EditFavoritesScreenKtTest {
     fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
         val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         TestApps.all.forEach {
-            favoriteNodes.filterToOne(hasText(it.displayName)).assertSelectedApp(
+            favoriteNodes.filterToOne(matcher = hasText(text = it.displayName)).assertSelectedApp(
                 selectedApp = it.toSelectedAppWith(isSelected = false)
             )
         }
@@ -120,7 +120,7 @@ class EditFavoritesScreenKtTest {
         )
 
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true)
             )
         }
@@ -150,7 +150,7 @@ class EditFavoritesScreenKtTest {
         )
 
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false)
             )
         }
@@ -161,7 +161,7 @@ class EditFavoritesScreenKtTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
         runBlocking {
-            hiddenAppsRepo.addToHiddenApps(hiddenApps)
+            hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
         }
 
         val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
@@ -174,7 +174,7 @@ class EditFavoritesScreenKtTest {
         )
 
         apps.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true)
             )
         }
@@ -185,7 +185,7 @@ class EditFavoritesScreenKtTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all
         runBlocking {
-            hiddenAppsRepo.addToHiddenApps(hiddenApps)
+            hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
         }
         viewModel.shouldShowHiddenAppsInFavorites(value = true)
 
@@ -199,7 +199,7 @@ class EditFavoritesScreenKtTest {
         )
 
         apps.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true, disabled = true)
             )
         }

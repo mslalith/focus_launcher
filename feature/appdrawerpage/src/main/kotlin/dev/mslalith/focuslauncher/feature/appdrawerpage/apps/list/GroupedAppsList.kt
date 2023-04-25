@@ -18,8 +18,7 @@ internal fun GroupedAppsList(
     onAppLongClick: (AppWithIcon) -> Unit
 ) {
     Column(
-        modifier = modifier
-            .padding(top = 20.dp)
+        modifier = modifier.padding(top = 20.dp)
     ) {
         if (showAppGroupHeader) {
             CharacterHeader(character = character)

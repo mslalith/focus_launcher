@@ -49,9 +49,9 @@ internal class FavoritesViewModel @Inject constructor(
         }.flowOn(context = appCoroutineDispatcher.io)
 
     val favoritesState = flowOf(value = defaultFavoritesState)
-        .combine(allAppsIconPackAware) { state, favorites ->
+        .combine(flow = allAppsIconPackAware) { state, favorites ->
             state.copy(favoritesList = favorites)
-        }.combine(_favoritesContextualMode) { state, favoritesContextualMode ->
+        }.combine(flow = _favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
         }.withinScope(initialValue = defaultFavoritesState)
 
@@ -60,7 +60,7 @@ internal class FavoritesViewModel @Inject constructor(
             val isFirstRun = generalSettingsRepo.firstRunFlow.first()
             if (isFirstRun) {
                 generalSettingsRepo.overrideFirstRun()
-                launcherAppsManager.defaultFavoriteApps().forEach { favoritesRepo.addToFavorites(it) }
+                favoritesRepo.addToFavorites(launcherAppsManager.defaultFavoriteApps())
             }
         }
     }
@@ -71,7 +71,7 @@ internal class FavoritesViewModel @Inject constructor(
             return
         }
         appCoroutineDispatcher.launchInIO {
-            favoritesRepo.reorderFavorite(app, withApp)
+            favoritesRepo.reorderFavorite(app = app, withApp = withApp)
             withContext(appCoroutineDispatcher.main) {
                 onReordered()
             }
@@ -80,7 +80,7 @@ internal class FavoritesViewModel @Inject constructor(
 
     fun removeFromFavorites(app: App) {
         appCoroutineDispatcher.launchInIO {
-            favoritesRepo.removeFromFavorites(app.packageName)
+            favoritesRepo.removeFromFavorites(packageName = app.packageName)
         }
     }
 

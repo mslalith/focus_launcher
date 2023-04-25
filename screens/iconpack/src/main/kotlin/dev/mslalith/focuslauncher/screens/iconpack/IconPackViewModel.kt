@@ -75,7 +75,7 @@ internal class IconPackViewModel @Inject constructor(
             )
         }.combine(flow = iconPackApps) { state, iconPackApps ->
             val iconPackType = generalSettingsRepo.iconPackTypeFlow.first()
-            state.copy(iconPacks = with(iconProvider) { iconPackApps.toAppWithIcons(iconPackType) })
+            state.copy(iconPacks = with(iconProvider) { iconPackApps.toAppWithIcons(iconPackType = iconPackType) })
         }.combine(flow = _iconPackType) { state, iconPackType ->
             state.copy(iconPackType = iconPackType)
         }.withinScope(initialValue = defaultIconPackState)

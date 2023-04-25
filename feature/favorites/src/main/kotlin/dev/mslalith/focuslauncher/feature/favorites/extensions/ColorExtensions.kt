@@ -8,7 +8,7 @@ internal fun Color.luminate(threshold: Float, value: Float) = toHSL().apply {
 }.toColor()
 
 internal fun Color.toHSL(): FloatArray {
-    val hsl = FloatArray(3)
+    val hsl = FloatArray(size = 3)
     val min = minOf(red, green, blue)
     val max = maxOf(red, green, blue)
     hsl[2] = (max + min) / 2

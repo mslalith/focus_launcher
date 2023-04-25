@@ -31,14 +31,14 @@ internal class Clock24ViewModel @Inject constructor(
         clock24AnimationDuration = DEFAULT_CLOCK_24_ANIMATION_DURATION
     )
 
-    val clock24State = flowOf(defaultClock24State)
-        .combine(clockSettingsRepo.showClock24Flow) { state, showClock24 ->
+    val clock24State = flowOf(value = defaultClock24State)
+        .combine(flow = clockSettingsRepo.showClock24Flow) { state, showClock24 ->
             state.copy(showClock24 = showClock24)
-        }.combine(clockSettingsRepo.clockAlignmentFlow) { state, clockAlignment ->
+        }.combine(flow = clockSettingsRepo.clockAlignmentFlow) { state, clockAlignment ->
             state.copy(clockAlignment = clockAlignment)
-        }.combine(clockSettingsRepo.clock24AnimationDurationFlow) { state, clock24AnimationDuration ->
+        }.combine(flow = clockSettingsRepo.clock24AnimationDurationFlow) { state, clock24AnimationDuration ->
             state.copy(clock24AnimationDuration = clock24AnimationDuration)
-        }.combine(clockRepo.currentInstantStateFlow) { state, currentInstant ->
+        }.combine(flow = clockRepo.currentInstantStateFlow) { state, currentInstant ->
             state.copy(currentTime = currentInstant.formatToTime())
         }.withinScope(initialValue = defaultClock24State)
 
@@ -52,13 +52,13 @@ internal class Clock24ViewModel @Inject constructor(
 
     fun updateClockAlignment(clockAlignment: ClockAlignment) {
         appCoroutineDispatcher.launchInIO {
-            clockSettingsRepo.updateClockAlignment(clockAlignment)
+            clockSettingsRepo.updateClockAlignment(clockAlignment = clockAlignment)
         }
     }
 
     fun updateClock24AnimationDuration(duration: Int) {
         appCoroutineDispatcher.launchInIO {
-            clockSettingsRepo.updateClock24AnimationDuration(duration)
+            clockSettingsRepo.updateClock24AnimationDuration(duration = duration)
         }
     }
 }

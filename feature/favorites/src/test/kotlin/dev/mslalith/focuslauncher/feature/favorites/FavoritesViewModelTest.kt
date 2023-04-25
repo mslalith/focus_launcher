@@ -76,7 +76,7 @@ class FavoritesViewModelTest : CoroutineTest() {
         assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
 
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
-        appDrawerRepo.addApps(TestApps.all)
+        appDrawerRepo.addApps(apps = TestApps.all)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         favoritesRepo.addToFavorites(apps = defaultApps)
@@ -90,7 +90,7 @@ class FavoritesViewModelTest : CoroutineTest() {
         assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
 
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
-        appDrawerRepo.addApps(TestApps.all)
+        appDrawerRepo.addApps(apps = TestApps.all)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         viewModel.favoritesState.assertFavoritesList(expected = defaultApps)

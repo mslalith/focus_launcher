@@ -97,11 +97,11 @@ internal fun ClockWidget(
             .padding(horizontal = horizontalPadding)
     ) { showClock24 ->
         Column(
-            horizontalAlignment = BiasAlignment.Horizontal(horizontalBias),
+            horizontalAlignment = BiasAlignment.Horizontal(bias = horizontalBias),
             modifier = Modifier
                 .fillMaxWidth()
                 .testSemantics(tag = TestTags.TAG_CLOCK_COLUMN) {
-                    testBiasAlignment(BiasAlignment.Horizontal(horizontalBias))
+                    testBiasAlignment(biasAlignment = BiasAlignment.Horizontal(bias = horizontalBias))
                 }
         ) {
             if (showClock24) {

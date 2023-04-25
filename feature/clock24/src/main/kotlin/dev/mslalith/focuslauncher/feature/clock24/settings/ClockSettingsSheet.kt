@@ -52,7 +52,7 @@ internal fun ClockSettingsSheet(
             onItemSelected = { index ->
                 val alignmentName = textIconsList[index].first
                 val alignment = ClockAlignment.values().first { it.text == alignmentName }
-                clock24ViewModel.updateClockAlignment(alignment)
+                clock24ViewModel.updateClockAlignment(clockAlignment = alignment)
             }
         )
         SettingsSelectableSwitchItem(
@@ -65,7 +65,7 @@ internal fun ClockSettingsSheet(
             subText = "${clock24State.clock24AnimationDuration}ms",
             disabled = !clock24State.showClock24,
             value = clock24State.clock24AnimationDuration.toFloat(),
-            onValueChangeFinished = { clock24ViewModel.updateClock24AnimationDuration(it.roundToInt()) },
+            onValueChangeFinished = { clock24ViewModel.updateClock24AnimationDuration(duration = it.roundToInt()) },
             valueRange = DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE,
             steps = DEFAULT_CLOCK_24_ANIMATION_STEP
         )

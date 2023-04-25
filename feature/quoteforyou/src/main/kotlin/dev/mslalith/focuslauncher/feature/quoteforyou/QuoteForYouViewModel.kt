@@ -35,14 +35,14 @@ internal class QuoteForYouViewModel @Inject constructor(
         currentQuote = State.Initial
     )
 
-    val quoteForYouState = flowOf(defaultQuoteForYouState)
-        .combine(quotesSettingsRepo.showQuotesFlow) { state, showQuotes ->
+    val quoteForYouState = flowOf(value = defaultQuoteForYouState)
+        .combine(flow = quotesSettingsRepo.showQuotesFlow) { state, showQuotes ->
             state.copy(showQuotes = showQuotes)
-        }.combine(quotesRepo.currentQuoteStateFlow) { state, currentQuote ->
+        }.combine(flow = quotesRepo.currentQuoteStateFlow) { state, currentQuote ->
             state.copy(currentQuote = currentQuote)
         }.withinScope(initialValue = defaultQuoteForYouState)
 
-    val isFetchingQuotes = quotesRepo.isFetchingQuotesStateFlow.withinScope(false)
+    val isFetchingQuotes = quotesRepo.isFetchingQuotesStateFlow.withinScope(initialValue = false)
 
     fun fetchQuotesIfRequired() {
         if (!networkMonitor.isCurrentlyConnected()) return

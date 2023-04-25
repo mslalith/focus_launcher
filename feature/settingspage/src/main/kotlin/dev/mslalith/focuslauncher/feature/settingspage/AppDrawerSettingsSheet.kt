@@ -40,25 +40,25 @@ internal fun AppDrawerSettingsSheet(
             onItemSelected = { index ->
                 val viewTypeName = textIconsList[index].first
                 val viewType = AppDrawerViewType.values().first { it.text == viewTypeName }
-                settingsPageViewModel.updateAppDrawerViewType(viewType)
+                settingsPageViewModel.updateAppDrawerViewType(appDrawerViewType = viewType)
             }
         )
         SettingsSelectableSwitchItem(
             text = "Show Search Bar",
             checked = showSearchBar,
-            onClick = { settingsPageViewModel.toggleSearchBarVisibility() }
+            onClick = settingsPageViewModel::toggleSearchBarVisibility
         )
         SettingsSelectableSwitchItem(
             text = "Group Apps by Character",
             checked = showAppGroupHeader,
             disabled = isViewTypeGrid,
-            onClick = { settingsPageViewModel.toggleAppGroupHeaderVisibility() }
+            onClick = settingsPageViewModel::toggleAppGroupHeaderVisibility
         )
         SettingsSelectableSwitchItem(
             text = "Show App Icons",
             checked = showAppIcons,
             disabled = isViewTypeGrid,
-            onClick = { settingsPageViewModel.toggleAppIconsVisibility() }
+            onClick = settingsPageViewModel::toggleAppIconsVisibility
         )
         VerticalSpacer(spacing = 12.dp)
     }

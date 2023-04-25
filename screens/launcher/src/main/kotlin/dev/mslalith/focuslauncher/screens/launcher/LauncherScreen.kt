@@ -45,7 +45,7 @@ internal fun LauncherScreen(
             when {
                 isBottomSheetVisible -> hideBottomSheet()
                 pagerState.currentPage != 1 -> coroutineScope.launch {
-                    pagerState.animateScrollToPage(1)
+                    pagerState.animateScrollToPage(page = 1)
                 }
             }
         }
@@ -62,7 +62,6 @@ internal fun LauncherScreen(
                 1 -> HomePage(
                     pagerCurrentPage = snapshotFlow { pagerState.currentPage }
                 )
-
                 2 -> AppDrawerPage()
             }
         }

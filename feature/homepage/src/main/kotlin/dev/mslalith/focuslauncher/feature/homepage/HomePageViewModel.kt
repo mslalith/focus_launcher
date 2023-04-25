@@ -21,12 +21,12 @@ internal class HomePageViewModel @Inject constructor(
         isPullDownNotificationShadeEnabled = DEFAULT_NOTIFICATION_SHADE
     )
 
-    val homePageState = flowOf(defaultHomePageState)
-        .combine(generalSettingsRepo.notificationShadeFlow) { state, isPullDownNotificationShadeEnabled ->
+    val homePageState = flowOf(value = defaultHomePageState)
+        .combine(flow = generalSettingsRepo.notificationShadeFlow) { state, isPullDownNotificationShadeEnabled ->
             state.copy(isPullDownNotificationShadeEnabled = isPullDownNotificationShadeEnabled)
         }.withinScope(initialValue = defaultHomePageState)
 
-    private val _showMoonCalendarDetailsDialogStateFlow = MutableStateFlow(false)
+    private val _showMoonCalendarDetailsDialogStateFlow = MutableStateFlow(value = false)
     val showMoonCalendarDetailsDialogStateFlow: StateFlow<Boolean>
         get() = _showMoonCalendarDetailsDialogStateFlow
 

@@ -60,7 +60,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
             appCoroutineDispatcher = appCoroutineDispatcher
         )
         runBlocking {
-            appDrawerRepo.addApps(TestApps.all)
+            appDrawerRepo.addApps(apps = TestApps.all)
         }
     }
 
@@ -85,7 +85,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
             }
         }
 
-        apps.forEach { viewModel.addToFavorites(it) }
+        apps.forEach { viewModel.addToFavorites(app = it) }
     }
 
     @Test
@@ -100,7 +100,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
             }
         }
 
-        apps.forEach { viewModel.addToFavorites(it) }
+        apps.forEach { viewModel.addToFavorites(app = it) }
         viewModel.clearFavorites()
     }
 
@@ -119,7 +119,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
             }
         }
 
-        hiddenAppsRepo.addToHiddenApps(hiddenApps)
+        hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
     }
 
     @Test
@@ -142,7 +142,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
             }
         }
 
-        hiddenAppsRepo.addToHiddenApps(hiddenApps)
+        hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
         viewModel.shouldShowHiddenAppsInFavorites(value = true)
     }
 }

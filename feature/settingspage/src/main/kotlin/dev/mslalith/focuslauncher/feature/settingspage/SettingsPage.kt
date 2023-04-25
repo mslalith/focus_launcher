@@ -58,7 +58,7 @@ internal fun SettingsPage(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState),
+            .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.Center
     ) {
         SettingsHeader()
@@ -92,11 +92,14 @@ internal fun SettingsPage(
             }
         }
 
-        Widgets(viewManager = viewManager)
+        Widgets(
+            viewManager = viewManager,
+            navigateTo = navigateTo
+        )
 
         SetAsDefaultLauncher(
             isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsStateWithLifecycle().value,
-            refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context) }
+            refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) }
         )
 
         About { navigateTo(Screen.About) }
@@ -107,10 +110,9 @@ internal fun SettingsPage(
 
 @Composable
 private fun Widgets(
-    viewManager: LauncherViewManager
+    viewManager: LauncherViewManager,
+    navigateTo: (Screen) -> Unit
 ) {
-    val navController = LocalNavController.current
-
     Widgets { widgetType ->
         when (widgetType) {
             WidgetType.CLOCK -> {
@@ -121,7 +123,7 @@ private fun Widgets(
                     LunarPhaseSettingsSheet(
                         properties = LunarPhaseSettingsProperties(
                             navigateToCurrentPlace = {
-                                navController.navigate(Screen.CurrentPlace.id)
+                                navigateTo(Screen.CurrentPlace)
                             }
                         )
                     )

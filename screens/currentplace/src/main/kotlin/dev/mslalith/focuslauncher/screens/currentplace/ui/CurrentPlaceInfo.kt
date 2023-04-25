@@ -56,7 +56,7 @@ private fun LatLngInfo(
             contentDescription = "Location icon",
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
-                .align(Alignment.CenterVertically)
+                .align(alignment = Alignment.CenterVertically)
                 .padding(start = 4.dp, end = 12.dp)
         )
         Crossfade(
@@ -89,7 +89,7 @@ private fun AddressInfo(
             contentDescription = "Address icon",
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
-                .align(Alignment.CenterVertically)
+                .align(alignment = Alignment.CenterVertically)
                 .padding(start = 4.dp, end = 12.dp)
         )
         Crossfade(

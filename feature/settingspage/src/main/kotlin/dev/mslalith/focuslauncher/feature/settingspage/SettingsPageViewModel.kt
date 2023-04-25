@@ -26,9 +26,9 @@ internal class SettingsPageViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(DEFAULT_STATUS_BAR)
-    val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(DEFAULT_NOTIFICATION_SHADE)
-    val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(DEFAULT_IS_DEFAULT_LAUNCHER)
+    val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(initialValue = DEFAULT_STATUS_BAR)
+    val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(initialValue = DEFAULT_NOTIFICATION_SHADE)
+    val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(initialValue = DEFAULT_IS_DEFAULT_LAUNCHER)
     val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
         .combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { appDrawerViewType, areAppIconsVisible ->
             appDrawerViewType == AppDrawerViewType.GRID || areAppIconsVisible
@@ -48,18 +48,18 @@ internal class SettingsPageViewModel @Inject constructor(
 
     fun refreshIsDefaultLauncher(context: Context) {
         appCoroutineDispatcher.launchInIO {
-            generalSettingsRepo.setIsDefaultLauncher(context.isDefaultLauncher())
+            generalSettingsRepo.setIsDefaultLauncher(isDefault = context.isDefaultLauncher())
         }
     }
 
-    val appDrawerViewTypeStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow.withinScope(DEFAULT_APP_DRAWER_VIEW_TYPE)
-    val appIconsVisibilityStateFlow = appDrawerSettingsRepo.appIconsVisibilityFlow.withinScope(DEFAULT_APP_ICONS)
-    val searchBarVisibilityStateFlow = appDrawerSettingsRepo.searchBarVisibilityFlow.withinScope(DEFAULT_SEARCH_BAR)
-    val appGroupHeaderVisibilityStateFlow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.withinScope(DEFAULT_APP_GROUP_HEADER)
+    val appDrawerViewTypeStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow.withinScope(initialValue = DEFAULT_APP_DRAWER_VIEW_TYPE)
+    val appIconsVisibilityStateFlow = appDrawerSettingsRepo.appIconsVisibilityFlow.withinScope(initialValue = DEFAULT_APP_ICONS)
+    val searchBarVisibilityStateFlow = appDrawerSettingsRepo.searchBarVisibilityFlow.withinScope(initialValue = DEFAULT_SEARCH_BAR)
+    val appGroupHeaderVisibilityStateFlow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.withinScope(initialValue = DEFAULT_APP_GROUP_HEADER)
 
     fun updateAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
         appCoroutineDispatcher.launchInIO {
-            appDrawerSettingsRepo.updateAppDrawerViewType(appDrawerViewType)
+            appDrawerSettingsRepo.updateAppDrawerViewType(appDrawerViewType = appDrawerViewType)
         }
     }
 

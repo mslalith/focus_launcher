@@ -18,7 +18,7 @@ internal class IconPackXmlParser(
 
     private var iconPackResources: Resources? = null
 
-    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(initialCapacity = 0)
+    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(0)
     private val backImages = mutableListOf<SimpleDrawableInfo>()
     private var maskImage: SimpleDrawableInfo? = null
     private var frontImage: SimpleDrawableInfo? = null
