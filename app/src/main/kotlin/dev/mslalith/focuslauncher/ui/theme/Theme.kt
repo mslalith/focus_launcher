@@ -92,14 +92,14 @@ fun FocusLauncherTheme(
     val currentTheme by themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle()
     val theme = currentTheme ?: if (isSystemInDarkTheme) Theme.SAID_DARK else DEFAULT_THEME
 
-    val colors = when (theme) {
+    val colorScheme = when (theme) {
         Theme.NOT_WHITE -> lightColors
         Theme.SAID_DARK -> darkColors
     }
 
-    DisposableEffect(key1 = systemUiController, key2 = isSystemInDarkTheme, key3 = colors) {
+    DisposableEffect(key1 = systemUiController, key2 = isSystemInDarkTheme, key3 = colorScheme) {
         systemUiController.setSystemBarsColor(
-            color = colors.background,
+            color = colorScheme.background,
             darkIcons = !isSystemInDarkTheme
         )
 
@@ -113,7 +113,7 @@ fun FocusLauncherTheme(
     }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
