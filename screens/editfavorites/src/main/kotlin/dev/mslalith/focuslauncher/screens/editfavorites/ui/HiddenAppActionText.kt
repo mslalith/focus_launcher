@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
+import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 
 @Composable
 internal fun HiddenAppActionText(
@@ -21,7 +23,9 @@ internal fun HiddenAppActionText(
 
     TextButton(
         onClick = { onToggleHiddenApps(!showHiddenApps) },
-        modifier = Modifier.padding(end = 8.dp)
+        modifier = Modifier
+            .testSemantics(tag = TestTags.TAG_TOGGLE_HIDDEN_APPS)
+            .padding(end = 8.dp)
     ) {
         Text(
             text = " Hidden Apps ",
