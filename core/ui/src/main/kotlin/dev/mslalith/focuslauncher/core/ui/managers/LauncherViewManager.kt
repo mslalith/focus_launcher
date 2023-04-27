@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class LauncherViewManager constructor(
     private val coroutineScope: CoroutineScope,
     private val snackbarHostState: SnackbarHostState,
-    val bottomSheetState: SheetState
+    private val bottomSheetState: SheetState
 ) {
 
     private val _sheetContentTypeFlow = MutableStateFlow<(@Composable () -> Unit)?>(value = null)

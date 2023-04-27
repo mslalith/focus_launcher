@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.ui.providers
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -34,20 +35,23 @@ fun ProvideBottomSheetManager(
         )
     }
     CompositionLocalProvider(LocalLauncherViewManager provides viewManager) {
+        AppBottomSheetContent(sheetState = bottomSheetState)
         content()
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppBottomSheetContent() {
+private fun AppBottomSheetContent(
+    sheetState: SheetState
+) {
     val viewManager = LocalLauncherViewManager.current
     val content by viewManager.sheetContentTypeStateFlow.collectAsStateWithLifecycle()
 
     if (content != null) {
         ModalBottomSheet(
             onDismissRequest = viewManager::hideBottomSheet,
-            sheetState = viewManager.bottomSheetState,
+            sheetState = sheetState,
             content = { content?.invoke() }
         )
     }
