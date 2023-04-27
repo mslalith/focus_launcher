@@ -1,23 +1,29 @@
 package dev.mslalith.focuslauncher.screens.iconpack
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.ZeroCornerSize
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReusableContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,6 +35,7 @@ import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
 import dev.mslalith.focuslauncher.screens.iconpack.ui.IconPackItem
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun IconPackScreen(
@@ -59,7 +66,7 @@ internal fun IconPackScreen(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun IconPackScreen(
     iconPackState: IconPackState,
@@ -67,7 +74,29 @@ internal fun IconPackScreen(
     onDoneClick: () -> Unit,
     goBack: () -> Unit
 ) {
-    Scaffold(
+    val configuration = LocalConfiguration.current
+    val density = LocalDensity.current
+    var bottomSheetHeight by remember { mutableStateOf(value = 0.dp) }
+
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded
+        )
+    )
+
+    LaunchedEffect(key1 = bottomSheetScaffoldState.bottomSheetState) {
+        snapshotFlow { bottomSheetScaffoldState.bottomSheetState.requireOffset() }.collectLatest {
+            density.run {
+                val value = configuration.screenHeightDp.dp - it.toDp()
+                bottomSheetHeight = maxOf(0.dp, value) + 36.dp
+            }
+        }
+    }
+
+
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetSwipeEnabled = false,
         topBar = {
             AppBarWithBackIcon(
                 title = "Icon Pack",
@@ -81,72 +110,77 @@ internal fun IconPackScreen(
                     )
                 }
             )
+        },
+        sheetContent = {
+            IconPackListSheet(
+                modifier = Modifier.navigationBarsPadding(),
+                iconPackState = iconPackState,
+                onIconPackClick = onIconPackClick
+            )
         }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues = paddingValues)
-        ) {
-            val shape = MaterialTheme.shapes.extraLarge.copy(
-                bottomStart = ZeroCornerSize,
-                bottomEnd = ZeroCornerSize
-            )
+        PreviewAppsGrid(
+            appsState = iconPackState.allApps,
+            modifier = Modifier
+                .padding(paddingValues = paddingValues)
+                .padding(bottom = bottomSheetHeight)
+        )
+    }
+}
 
-            PreviewAppsGrid(
-                appsState = iconPackState.allApps,
-                modifier = Modifier.weight(weight = 1f)
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun IconPackListSheet(
+    modifier: Modifier = Modifier,
+    iconPackState: IconPackState,
+    onIconPackClick: (IconPackType) -> Unit
+) {
+    val context = LocalContext.current
+
+    val systemIconPackApp: AppWithIcon? = remember {
+        context.getDrawable(R.drawable.ic_launcher)?.let { icon ->
+            AppWithIcon(
+                name = context.getString(R.string.app_name),
+                displayName = context.getString(R.string.app_name),
+                packageName = context.packageName,
+                icon = icon,
+                isSystem = false
             )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shape = shape)
-                    .background(color = MaterialTheme.colorScheme.surfaceVariant)
-                    .horizontalFadeOutEdge(
-                        width = 16.dp,
-                        color = MaterialTheme.colorScheme.surfaceVariant
+        }
+    }
+
+    LazyRow(
+        modifier = modifier
+            .horizontalFadeOutEdge(
+                width = 16.dp,
+                color = MaterialTheme.colorScheme.surface
+            )
+            .padding(bottom = 12.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        item {
+            if (systemIconPackApp != null) {
+                ReusableContent(key = systemIconPackApp.uniqueKey) {
+                    IconPackItem(
+                        app = systemIconPackApp,
+                        isSelected = iconPackState.iconPackType == IconPackType.System,
+                        onClick = { onIconPackClick(IconPackType.System) }
                     )
-                    .padding(top = 32.dp, bottom = 16.dp)
-            ) {
-                val context = LocalContext.current
-                val systemIconPackApp: AppWithIcon? = remember {
-                    context.getDrawable(R.drawable.ic_launcher)?.let { icon ->
-                        AppWithIcon(
-                            name = context.getString(R.string.app_name),
-                            displayName = context.getString(R.string.app_name),
-                            packageName = context.packageName,
-                            icon = icon,
-                            isSystem = false
-                        )
-                    }
-                }
-
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 16.dp)
-                ) {
-                    item {
-                        if (systemIconPackApp != null) {
-                            ReusableContent(key = systemIconPackApp.uniqueKey) {
-                                IconPackItem(
-                                    app = systemIconPackApp,
-                                    isSelected = iconPackState.iconPackType == IconPackType.System,
-                                    onClick = { onIconPackClick(IconPackType.System) }
-                                )
-                            }
-                        }
-                    }
-                    items(
-                        items = iconPackState.iconPacks,
-                        key = { it.uniqueKey }
-                    ) { app ->
-                        val customIconPackType = IconPackType.Custom(packageName = app.packageName)
-                        IconPackItem(
-                            app = app,
-                            isSelected = iconPackState.iconPackType == customIconPackType,
-                            onClick = { onIconPackClick(customIconPackType) },
-                            modifier = Modifier.animateItemPlacement()
-                        )
-                    }
                 }
             }
+        }
+        items(
+            items = iconPackState.iconPacks,
+            key = { it.uniqueKey }
+        ) { app ->
+            val customIconPackType = IconPackType.Custom(packageName = app.packageName)
+
+            IconPackItem(
+                app = app,
+                isSelected = iconPackState.iconPackType == customIconPackType,
+                onClick = { onIconPackClick(customIconPackType) },
+                modifier = Modifier.animateItemPlacement()
+            )
         }
     }
 }
