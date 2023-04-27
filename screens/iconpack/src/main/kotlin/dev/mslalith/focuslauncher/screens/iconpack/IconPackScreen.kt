@@ -88,7 +88,7 @@ internal fun IconPackScreen(
         snapshotFlow { bottomSheetScaffoldState.bottomSheetState.requireOffset() }.collectLatest {
             density.run {
                 val value = configuration.screenHeightDp.dp - it.toDp()
-                bottomSheetHeight = maxOf(0.dp, value) + 36.dp
+                bottomSheetHeight = maxOf(0.dp, value)
             }
         }
     }
