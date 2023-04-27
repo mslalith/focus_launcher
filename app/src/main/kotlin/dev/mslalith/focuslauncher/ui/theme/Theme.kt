@@ -97,11 +97,8 @@ fun FocusLauncherTheme(
         Theme.SAID_DARK -> darkColors
     }
 
-    DisposableEffect(key1 = systemUiController, key2 = isSystemInDarkTheme, key3 = colorScheme) {
-        systemUiController.setSystemBarsColor(
-            color = colorScheme.background,
-            darkIcons = !isSystemInDarkTheme
-        )
+    DisposableEffect(key1 = systemUiController, key2 = colorScheme) {
+        systemUiController.setSystemBarsColor(color = colorScheme.background)
 
         onDispose {}
     }
