@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsSelectableBottomContentItem(
     modifier: Modifier = Modifier,
@@ -54,8 +52,8 @@ fun SettingsSelectableBottomContentItem(
                 containerColor = backgroundColor,
                 headlineColor = animatedContentColor
             ),
-            headlineText = { Text(text = text) },
-            supportingText = { Text(text = subText) }
+            headlineContent = { Text(text = text) },
+            supportingContent = { Text(text = subText) }
         )
         AnimatedVisibility(visible = showBottomContent) {
             Box(

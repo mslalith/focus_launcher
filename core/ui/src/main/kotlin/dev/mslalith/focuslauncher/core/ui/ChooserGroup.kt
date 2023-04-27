@@ -28,13 +28,13 @@ fun ChooserGroup(
             val isSelected = selectedItem == textIcon.first
             val backgroundColor by animateColorAsState(
                 label = "Background Color",
-                targetValue = if (isSelected) MaterialTheme.colorScheme.secondary else Color.Transparent,
+                targetValue = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                 animationSpec = tween(durationMillis = 300)
             )
 
             val contentColor by animateColorAsState(
                 label = "Content Color",
-                targetValue = if (isSelected) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.onSurface,
+                targetValue = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
                 animationSpec = tween(durationMillis = 300)
             )
 

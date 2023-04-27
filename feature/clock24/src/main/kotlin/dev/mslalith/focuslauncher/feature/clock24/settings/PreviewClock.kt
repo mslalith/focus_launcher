@@ -9,23 +9,28 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
 
 @Composable
-internal fun PreviewClock() {
+internal fun PreviewClock(
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp)
             .padding(top = 16.dp, bottom = 16.dp)
             .clip(shape = MaterialTheme.shapes.small)
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
+            .background(color = backgroundColor)
             .animateContentSize()
     ) {
         ClockWidget(
             horizontalPadding = 22.dp,
-            verticalPadding = 4.dp
+            verticalPadding = 4.dp,
+            contentColor = contentColor
         )
     }
 }

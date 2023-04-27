@@ -54,7 +54,6 @@ internal fun MoreOptionsBottomSheet(
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        VerticalSpacer(spacing = 24.dp)
         Text(
             text = appWithIcon.displayName,
             color = contentColor,

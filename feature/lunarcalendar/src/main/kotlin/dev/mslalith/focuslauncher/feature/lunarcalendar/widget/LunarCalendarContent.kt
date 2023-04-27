@@ -3,7 +3,6 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +17,6 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import dev.mslalith.focuslauncher.feature.lunarcalendar.shared.LunarPhaseMoonIcon
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LunarCalendarContent(
     lunarPhaseDetails: State<LunarPhaseDetails>,
@@ -51,7 +49,7 @@ internal fun LunarCalendarContent(
                 )
             }
         },
-        headlineText = {
+        headlineContent = {
             lunarPhaseDetails.getOrNull()?.let {
                 LunarPhaseName(
                     lunarPhaseDetails = it,
@@ -60,7 +58,7 @@ internal fun LunarCalendarContent(
                 )
             }
         },
-        supportingText = if (showUpcomingPhaseDetails) {
+        supportingContent = if (showUpcomingPhaseDetails) {
             @Composable {
                 upcomingLunarPhase.getOrNull()?.let {
                     UpcomingLunarPhaseDetails(

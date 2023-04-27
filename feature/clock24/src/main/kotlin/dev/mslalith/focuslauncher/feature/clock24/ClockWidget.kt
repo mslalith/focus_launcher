@@ -9,11 +9,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,13 +32,15 @@ import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 fun ClockWidget(
     modifier: Modifier = Modifier,
     horizontalPadding: Dp,
-    verticalPadding: Dp = 0.dp
+    verticalPadding: Dp = 0.dp,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     ClockWidget(
         modifier = modifier,
         clock24ViewModel = hiltViewModel(),
         horizontalPadding = horizontalPadding,
-        verticalPadding = verticalPadding
+        verticalPadding = verticalPadding,
+        contentColor = contentColor
     )
 }
 
@@ -45,7 +49,8 @@ internal fun ClockWidget(
     modifier: Modifier = Modifier,
     clock24ViewModel: Clock24ViewModel,
     horizontalPadding: Dp,
-    verticalPadding: Dp = 0.dp
+    verticalPadding: Dp = 0.dp,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
 
@@ -54,7 +59,8 @@ internal fun ClockWidget(
         clock24State = clock24State,
         refreshTime = clock24ViewModel::refreshTime,
         horizontalPadding = horizontalPadding,
-        verticalPadding = verticalPadding
+        verticalPadding = verticalPadding,
+        contentColor = contentColor
     )
 }
 
@@ -64,7 +70,8 @@ internal fun ClockWidget(
     clock24State: Clock24State,
     refreshTime: () -> Unit,
     horizontalPadding: Dp,
-    verticalPadding: Dp = 0.dp
+    verticalPadding: Dp = 0.dp,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     val updatedRefreshTime by rememberUpdatedState(newValue = refreshTime)
 
@@ -107,12 +114,14 @@ internal fun ClockWidget(
             if (showClock24) {
                 Clock24(
                     currentTime = clock24State.currentTime,
+                    handleColor = contentColor,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
                     colorAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration)
                 )
             } else {
                 CurrentTime(
                     currentTime = clock24State.currentTime,
+                    contentColor = contentColor,
                     modifier = Modifier.padding(vertical = verticalPadding)
                 )
             }
