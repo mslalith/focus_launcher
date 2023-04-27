@@ -18,21 +18,21 @@ class PackageActionUseCase @Inject constructor(
 
     private suspend fun onPackageAction(packageAction: PackageAction) {
         when (packageAction) {
-            is PackageAction.Added -> launcherAppsManager.loadApp(packageAction.packageName)?.let { handleAppInstall(app = it) }
-            is PackageAction.Removed -> handleAppUninstall(packageAction.packageName)
+            is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it) }
+            is PackageAction.Removed -> handleAppUninstall(packageName = packageAction.packageName)
             is PackageAction.Updated -> Unit
         }
     }
 
     internal suspend fun handleAppInstall(app: App) {
-        appDrawerRepo.addApp(app)
+        appDrawerRepo.addApp(app = app)
     }
 
     internal suspend fun handleAppUninstall(packageName: String) {
-        appDrawerRepo.getAppBy(packageName)?.let { app ->
-            favoritesRepo.removeFromFavorites(app.packageName)
-            hiddenAppsRepo.removeFromHiddenApps(app.packageName)
-            appDrawerRepo.removeApp(app)
+        appDrawerRepo.getAppBy(packageName = packageName)?.let { app ->
+            favoritesRepo.removeFromFavorites(packageName = app.packageName)
+            hiddenAppsRepo.removeFromHiddenApps(packageName = app.packageName)
+            appDrawerRepo.removeApp(app = app)
         }
     }
 }

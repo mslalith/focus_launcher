@@ -25,6 +25,7 @@ internal fun RiseAndSetTime(
     } else {
         "-"
     }
+
     Text(
         modifier = modifier,
         text = time,

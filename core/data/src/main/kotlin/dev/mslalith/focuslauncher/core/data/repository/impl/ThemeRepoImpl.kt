@@ -14,10 +14,11 @@ import kotlinx.coroutines.flow.map
 internal class ThemeRepoImpl @Inject constructor(
     @ThemeProvider private val themeDataStore: DataStore<Preferences>
 ) : ThemeRepo {
+
     override val currentThemeFlow: Flow<Theme?> = themeDataStore.data
         .map {
             val themeName = it[themePreferenceKey] ?: return@map null
-            Theme.valueOf(themeName)
+            Theme.valueOf(value = themeName)
         }
 
     override suspend fun changeTheme(theme: Theme) {
@@ -25,6 +26,6 @@ internal class ThemeRepoImpl @Inject constructor(
     }
 
     companion object {
-        val themePreferenceKey = stringPreferencesKey("theme_preference_key")
+        val themePreferenceKey = stringPreferencesKey(name = "theme_preference_key")
     }
 }

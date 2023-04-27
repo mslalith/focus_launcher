@@ -12,7 +12,7 @@ import androidx.compose.ui.composed
 inline fun Modifier.modifyIf(
     predicate: () -> Boolean,
     block: Modifier.() -> Modifier
-): Modifier = if (predicate()) this.then(block()) else this
+): Modifier = if (predicate()) this.then(other = block()) else this
 
 fun Modifier.clickableNoRipple(
     enabled: Boolean = true,

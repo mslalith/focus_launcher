@@ -32,9 +32,9 @@ class MigrationTest {
         // Open latest version of the database. Room will validate the schema
         // once all migrations execute.
         Room.databaseBuilder(
-            InstrumentationRegistry.getInstrumentation().targetContext,
-            AppDatabase::class.java,
-            testDbName
+            context = InstrumentationRegistry.getInstrumentation().targetContext,
+            klass = AppDatabase::class.java,
+            name = testDbName
         ).build().apply {
             openHelper.writableDatabase.close()
         }
@@ -44,16 +44,16 @@ class MigrationTest {
     fun migrateFrom1To2() {
         helper.createDatabase(testDbName, 1).apply {
             execSQL(
-                """INSERT OR REPLACE INTO cities (
-                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
-                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                sql = """INSERT OR REPLACE INTO cities (
+                    id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                    42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
                 """.trimIndent()
             )
             close()
         }
 
         helper.runMigrationsAndValidate(testDbName, 2, true).use { db ->
-            db.query("SELECT * FROM cities").use {
+            db.query(query = "SELECT * FROM cities").use {
                 assertThat(it.count).isEqualTo(1)
                 it.moveToFirst()
 
@@ -72,9 +72,9 @@ class MigrationTest {
     fun migrateFrom2To3() {
         helper.createDatabase(testDbName, 2).apply {
             execSQL(
-                """INSERT OR REPLACE INTO cities (
-                id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
-                42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
+                sql = """INSERT OR REPLACE INTO cities (
+                    id, name, stateId, stateCode, stateName, countryId, countryCode, countryName, latitude, longitude, wikiDataId) VALUES(
+                    42, 'name', 23, 'stateCode', 'stateName', 34, 'countryCode', 'countryName', '10.234', '43.123', 'wikiDataId')
                 """.trimIndent()
             )
             close()

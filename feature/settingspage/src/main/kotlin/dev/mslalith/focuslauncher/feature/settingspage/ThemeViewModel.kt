@@ -18,13 +18,12 @@ class ThemeViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val firstRunStateFlow = generalSettingsRepo.firstRunFlow.withinScope(DEFAULT_FIRST_RUN)
-
+    val firstRunStateFlow = generalSettingsRepo.firstRunFlow.withinScope(initialValue = DEFAULT_FIRST_RUN)
     val currentThemeStateFlow = themeRepo.currentThemeFlow.withinScope(initialValue = null)
 
     fun changeTheme(theme: Theme) {
         appCoroutineDispatcher.launchInIO {
-            themeRepo.changeTheme(theme)
+            themeRepo.changeTheme(theme = theme)
         }
     }
 }

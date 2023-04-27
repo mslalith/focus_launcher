@@ -24,7 +24,7 @@ internal fun TodayLunarMoonPhaseDetails(
         )
         VerticalSpacer(spacing = 8.dp)
         Text(
-            text = "Illumination: ${lunarPhaseDetails.illumination.times(100).asPercent(precision = 3)}",
+            text = "Illumination: ${lunarPhaseDetails.illumination.times(other = 100).asPercent(precision = 3)}",
             color = contentColor,
             style = MaterialTheme.typography.bodyMedium
         )

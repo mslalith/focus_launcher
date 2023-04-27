@@ -18,7 +18,7 @@ class TestCoroutineRule(
 
     override fun starting(description: Description) {
         super.starting(description)
-        Dispatchers.setMain(testDispatcher)
+        Dispatchers.setMain(dispatcher = testDispatcher)
     }
 
     override fun finished(description: Description) {
@@ -28,4 +28,4 @@ class TestCoroutineRule(
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun TestCoroutineRule.newCoroutineScope(): TestScope = TestScope(testDispatcher as CoroutineContext)
+fun TestCoroutineRule.newCoroutineScope(): TestScope = TestScope(context = testDispatcher as CoroutineContext)

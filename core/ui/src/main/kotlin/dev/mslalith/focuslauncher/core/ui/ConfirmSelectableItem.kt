@@ -28,7 +28,7 @@ fun ConfirmSelectableItem(
     cancelText: String = "Cancel",
     onConfirm: (Boolean) -> Unit
 ) {
-    var showConfirm by remember { mutableStateOf(false) }
+    var showConfirm by remember { mutableStateOf(value = false) }
 
     Column {
         when (itemType) {
@@ -62,7 +62,7 @@ fun ConfirmSelectableItem(
                 Row {
                     TextButton(
                         text = cancelText,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(weight = 1f),
                         backgroundColor = backgroundColor,
                         textColor = contentColor,
                         onClick = {

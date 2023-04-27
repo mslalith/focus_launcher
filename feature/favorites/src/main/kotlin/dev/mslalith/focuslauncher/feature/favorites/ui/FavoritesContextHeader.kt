@@ -65,14 +65,18 @@ internal fun FavoritesContextHeader(
             contextModes = listOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as List<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
             iconRes = R.drawable.ic_drag_indicator,
-            onClick = { handleReClickFor(FavoritesContextMode.Reorder) { onReorderClick() } }
+            onClick = {
+                handleReClickFor(contextMode = FavoritesContextMode.Reorder) { onReorderClick() }
+            }
         )
         HorizontalSpacer(spacing = 4.dp)
         FavoritesContextActionItem(
             contextModes = listOf(FavoritesContextMode.Remove::class) as List<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
             iconRes = R.drawable.ic_delete,
-            onClick = { handleReClickFor(FavoritesContextMode.Remove) { onRemoveClick() } }
+            onClick = {
+                handleReClickFor(contextMode = FavoritesContextMode.Remove) { onRemoveClick() }
+            }
         )
     }
 }

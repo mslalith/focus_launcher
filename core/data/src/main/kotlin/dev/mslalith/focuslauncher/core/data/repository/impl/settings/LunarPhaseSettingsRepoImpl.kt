@@ -74,15 +74,9 @@ internal class LunarPhaseSettingsRepoImpl @Inject constructor(
     }
 
     companion object {
-        private val PREFERENCES_SHOW_LUNAR_PHASE = booleanPreferencesKey("preferences_show_lunar_phase")
-
-        private val PREFERENCES_SHOW_ILLUMINATION_PERCENT =
-            booleanPreferencesKey("preferences_show_illumination_percent")
-
-        private val PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS =
-            booleanPreferencesKey("preferences_show_upcoming_phase_details")
-
-        private val PREFERENCES_CURRENT_PLACE =
-            stringPreferencesKey("preferences_current_place_key")
+        private val PREFERENCES_SHOW_LUNAR_PHASE = booleanPreferencesKey(name = "preferences_show_lunar_phase")
+        private val PREFERENCES_SHOW_ILLUMINATION_PERCENT = booleanPreferencesKey(name = "preferences_show_illumination_percent")
+        private val PREFERENCES_SHOW_UPCOMING_PHASE_DETAILS = booleanPreferencesKey(name = "preferences_show_upcoming_phase_details")
+        private val PREFERENCES_CURRENT_PLACE = stringPreferencesKey(name = "preferences_current_place_key")
     }
 }

@@ -17,9 +17,9 @@ fun SystemBroadcastReceiver(
     onSystemEvent: (intent: Intent?) -> Unit
 ) {
     val context = LocalContext.current
-    val currentOnSystemEvent by rememberUpdatedState(onSystemEvent)
+    val currentOnSystemEvent by rememberUpdatedState(newValue = onSystemEvent)
 
-    DisposableEffect(context, systemAction) {
+    DisposableEffect(key1 = context, key2 = systemAction) {
         val intentFilter = IntentFilter(systemAction)
         intentFilter.configure()
 

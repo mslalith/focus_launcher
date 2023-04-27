@@ -22,11 +22,11 @@ import org.shredzone.commons.suncalc.MoonTimes
 import org.shredzone.commons.suncalc.SunTimes
 
 internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo {
-    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(INITIAL_LUNAR_PHASE_DETAILS_STATE)
+    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(value = INITIAL_LUNAR_PHASE_DETAILS_STATE)
     override val lunarPhaseDetailsStateFlow: StateFlow<State<LunarPhaseDetails>>
         get() = _lunarPhaseDetailsStateFlow
 
-    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(INITIAL_UPCOMING_LUNAR_PHASE_STATE)
+    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(value = INITIAL_UPCOMING_LUNAR_PHASE_STATE)
     override val upcomingLunarPhaseStateFlow: StateFlow<State<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
@@ -36,8 +36,13 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
     }
 
     private fun updateStateFlowsWith(instant: Instant, lunarPhaseDetails: LunarPhaseDetails) {
-        _lunarPhaseDetailsStateFlow.value = State.Success(lunarPhaseDetails)
-        _upcomingLunarPhaseStateFlow.value = State.Success(findUpcomingMoonPhaseFor(instant, lunarPhaseDetails.direction))
+        _lunarPhaseDetailsStateFlow.value = State.Success(value = lunarPhaseDetails)
+        _upcomingLunarPhaseStateFlow.value = State.Success(
+            value = findUpcomingMoonPhaseFor(
+                instant = instant,
+                lunarPhaseDirection = lunarPhaseDetails.direction
+            )
+        )
     }
 
     private fun findLunarPhaseDetails(instant: Instant, latLng: LatLng): LunarPhaseDetails {
@@ -69,8 +74,8 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
 
     private fun findUpcomingMoonPhaseFor(instant: Instant, lunarPhaseDirection: LunarPhaseDirection) =
         when (lunarPhaseDirection) {
-            LunarPhaseDirection.NEW_TO_FULL -> findUpcomingLunarPhaseOf(instant, LunarPhase.FULL_MOON)
-            LunarPhaseDirection.FULL_TO_NEW -> findUpcomingLunarPhaseOf(instant, LunarPhase.NEW_MOON)
+            LunarPhaseDirection.NEW_TO_FULL -> findUpcomingLunarPhaseOf(instant = instant, lunarPhase = LunarPhase.FULL_MOON)
+            LunarPhaseDirection.FULL_TO_NEW -> findUpcomingLunarPhaseOf(instant = instant, lunarPhase = LunarPhase.NEW_MOON)
         }
 
     private fun findUpcomingLunarPhaseOf(instant: Instant, lunarPhase: LunarPhase): UpcomingLunarPhase {
@@ -84,7 +89,7 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
     }
 
     companion object {
-        private val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error("Has no Lunar Phase details")
-        private val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error("Has no Upcoming Lunar Phase")
+        private val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error(message = "Has no Lunar Phase details")
+        private val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error(message = "Has no Upcoming Lunar Phase")
     }
 }

@@ -32,7 +32,7 @@ fun AppNavigator() {
 }
 
 private fun NavGraphBuilder.launcherScreen() {
-    composable(Screen.Launcher.id) {
+    composable(route = Screen.Launcher.id) {
         MainContent {
             LauncherScreen()
         }
@@ -40,7 +40,7 @@ private fun NavGraphBuilder.launcherScreen() {
 }
 
 private fun NavGraphBuilder.editFavoritesScreen() {
-    composable(Screen.EditFavorites.id) {
+    composable(route = Screen.EditFavorites.id) {
         val navController = LocalNavController.current
         EditFavoritesScreen(
             goBack = navController::popBackStack
@@ -49,7 +49,7 @@ private fun NavGraphBuilder.editFavoritesScreen() {
 }
 
 private fun NavGraphBuilder.hideAppsScreen() {
-    composable(Screen.HideApps.id) {
+    composable(route = Screen.HideApps.id) {
         val navController = LocalNavController.current
         HideAppsScreen(
             goBack = navController::popBackStack
@@ -58,7 +58,7 @@ private fun NavGraphBuilder.hideAppsScreen() {
 }
 
 private fun NavGraphBuilder.currentPlaceScreen() {
-    composable(Screen.CurrentPlace.id) {
+    composable(route = Screen.CurrentPlace.id) {
         val navController = LocalNavController.current
         CurrentPlaceScreen(
             goBack = navController::popBackStack
@@ -67,7 +67,7 @@ private fun NavGraphBuilder.currentPlaceScreen() {
 }
 
 private fun NavGraphBuilder.iconPackScreen() {
-    composable(Screen.IconPack.id) {
+    composable(route = Screen.IconPack.id) {
         val navController = LocalNavController.current
         IconPackScreen(
             goBack = navController::popBackStack
@@ -76,7 +76,7 @@ private fun NavGraphBuilder.iconPackScreen() {
 }
 
 private fun NavGraphBuilder.aboutScreen() {
-    composable(Screen.About.id) {
+    composable(route = Screen.About.id) {
         val navController = LocalNavController.current
         AboutScreen(
             goBack = navController::popBackStack

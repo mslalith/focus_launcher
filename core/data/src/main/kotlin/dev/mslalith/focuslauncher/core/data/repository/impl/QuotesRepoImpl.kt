@@ -25,11 +25,12 @@ internal open class QuotesRepoImpl @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher,
     private val randomNumberProvider: RandomNumberProvider
 ) : QuotesRepo {
-    private val _currentQuoteStateFlow = MutableStateFlow<State<Quote>>(State.Initial)
+
+    private val _currentQuoteStateFlow = MutableStateFlow<State<Quote>>(value = State.Initial)
     override val currentQuoteStateFlow: StateFlow<State<Quote>>
         get() = _currentQuoteStateFlow
 
-    private val _isFetchingQuotesStateFlow = MutableStateFlow(false)
+    private val _isFetchingQuotesStateFlow = MutableStateFlow(value = false)
     override val isFetchingQuotesStateFlow: StateFlow<Boolean>
         get() = _isFetchingQuotesStateFlow
 
@@ -40,8 +41,8 @@ internal open class QuotesRepoImpl @Inject constructor(
             if (it.isEmpty()) {
                 State.Initial
             } else {
-                val randomNumber = randomNumberProvider.random(it.size)
-                State.Success(it.elementAt(index = randomNumber).toQuote())
+                val randomNumber = randomNumberProvider.random(till = it.size)
+                State.Success(value = it.elementAt(index = randomNumber).toQuote())
             }
         }
         _currentQuoteStateFlow.value = quoteState
@@ -49,8 +50,8 @@ internal open class QuotesRepoImpl @Inject constructor(
 
     override suspend fun fetchQuotes(maxPages: Int) {
         _isFetchingQuotesStateFlow.value = true
-        repeat(maxPages) {
-            withContext(appCoroutineDispatcher.io) { fetchPageQuotes(page = it + 1) }
+        repeat(times = maxPages) {
+            withContext(context = appCoroutineDispatcher.io) { fetchPageQuotes(page = it + 1) }
         }
         _isFetchingQuotesStateFlow.value = false
     }
@@ -63,9 +64,9 @@ internal open class QuotesRepoImpl @Inject constructor(
     override suspend fun quotesSize() = quotesDao.getQuotesSize()
 
     private suspend fun fetchPageQuotes(page: Int) {
-        val quotesApiResponse = quotesApi.getQuotes(page)
+        val quotesApiResponse = quotesApi.getQuotes(page = page)
         val quoteRoomList = quotesApiResponse.results.map(QuoteResponse::toQuoteRoom)
-        addAllQuotes(quoteRoomList)
+        addAllQuotes(quotes = quoteRoomList)
     }
 
     private suspend fun addInitialQuotes() {
@@ -74,7 +75,7 @@ internal open class QuotesRepoImpl @Inject constructor(
             string = INITIAL_QUOTES_JSON
         )
         val initialQuoteRoomList = initialQuoteResponses.map(QuoteResponse::toQuoteRoom)
-        addAllQuotes(initialQuoteRoomList)
+        addAllQuotes(quotes = initialQuoteRoomList)
         nextRandomQuote()
     }
 

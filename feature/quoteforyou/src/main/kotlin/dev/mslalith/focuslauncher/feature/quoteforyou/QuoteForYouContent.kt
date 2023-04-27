@@ -44,7 +44,7 @@ internal fun QuoteForYouContent(
             painter = painterResource(id = R.drawable.ic_quote),
             contentDescription = "Quotation",
             tint = contentColor,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
         VerticalSpacer(spacing = 12.dp)
         Crossfade(

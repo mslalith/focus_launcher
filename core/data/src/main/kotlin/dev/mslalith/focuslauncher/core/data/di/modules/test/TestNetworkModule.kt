@@ -26,8 +26,8 @@ internal object TestNetworkModule {
 
     @Provides
     @Singleton
-    fun provideKtorClient(): HttpClient = HttpClient(Android) {
-        install(ContentNegotiation) {
+    fun provideKtorClient(): HttpClient = HttpClient(engineFactory = Android) {
+        install(plugin = ContentNegotiation) {
             json(
                 json = Json {
                     ignoreUnknownKeys = true
@@ -38,7 +38,7 @@ internal object TestNetworkModule {
         }
 
         val timeout = 15_000L
-        install(HttpTimeout) {
+        install(plugin = HttpTimeout) {
             requestTimeoutMillis = timeout
             connectTimeoutMillis = timeout
             socketTimeoutMillis = timeout

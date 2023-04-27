@@ -108,12 +108,12 @@ private fun PreviewUpdatePlace() {
     MaterialTheme {
         CurrentPlaceScreen(
             currentPlaceState = CurrentPlaceState(
-                latLng = LatLng(0.0, 0.0),
+                latLng = LatLng(latitude = 0.0, longitude = 0.0),
                 addressState = LoadingState.Loading,
                 canSave = false
             ),
             goBack = { },
-            initialLatLngProvider = { LatLng(0.0, 0.0) },
+            initialLatLngProvider = { LatLng(latitude = 0.0, longitude = 0.0) },
             onDoneClick = { },
             onLocationChange = { }
         )

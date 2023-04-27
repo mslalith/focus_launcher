@@ -28,7 +28,7 @@ object CommonModule {
     @Singleton
     fun provideNetworkMonitor(
         @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context)
+    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context = context)
 
     @Provides
     @Singleton

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 internal class AppDrawerSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : AppDrawerSettingsRepo {
+
     override val appDrawerViewTypeFlow: Flow<AppDrawerViewType> = settingsDataStore.data
         .map { preferences ->
             val index = preferences[PREFERENCES_APP_DRAWER_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_VIEW_TYPE.index
@@ -72,16 +73,9 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
     }
 
     companion object {
-        private val PREFERENCES_APP_DRAWER_VIEW_TYPE =
-            intPreferencesKey("preferences_app_drawer_view_type")
-
-        private val PREFERENCES_APP_ICONS_VISIBILITY =
-            booleanPreferencesKey("preferences_app_icons_visibility")
-
-        private val PREFERENCES_SEARCH_BAR_VISIBILITY =
-            booleanPreferencesKey("preferences_search_bar_visibility")
-
-        private val PREFERENCES_APP_GROUP_HEADER_VISIBILITY =
-            booleanPreferencesKey("preferences_app_group_header_visibility")
+        private val PREFERENCES_APP_DRAWER_VIEW_TYPE = intPreferencesKey(name = "preferences_app_drawer_view_type")
+        private val PREFERENCES_APP_ICONS_VISIBILITY = booleanPreferencesKey(name = "preferences_app_icons_visibility")
+        private val PREFERENCES_SEARCH_BAR_VISIBILITY = booleanPreferencesKey(name = "preferences_search_bar_visibility")
+        private val PREFERENCES_APP_GROUP_HEADER_VISIBILITY = booleanPreferencesKey(name = "preferences_app_group_header_visibility")
     }
 }

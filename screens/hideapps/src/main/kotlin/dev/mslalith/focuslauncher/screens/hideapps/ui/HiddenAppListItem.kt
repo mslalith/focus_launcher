@@ -16,7 +16,7 @@ internal fun HiddenAppListItem(
     onAppClick: () -> Unit
 ) {
     val appName = hiddenApp.app.name
-    val confirmToHideMessage = stringResource(R.string.hide_favorite_app_message, appName)
+    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appName)
 
     if (isFavorite) {
         ConfirmSelectableItem(

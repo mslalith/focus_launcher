@@ -33,7 +33,7 @@ fun SettingsSelectableSliderItem(
     ) {
         val activeColor = MaterialTheme.colorScheme.primary
         val inactiveColor = MaterialTheme.colorScheme.onSurface
-        var sliderValue by remember { mutableStateOf(value) }
+        var sliderValue by remember { mutableStateOf(value = value) }
 
         Slider(
             value = sliderValue,

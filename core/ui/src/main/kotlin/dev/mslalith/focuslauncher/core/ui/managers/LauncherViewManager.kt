@@ -19,7 +19,7 @@ class LauncherViewManager constructor(
     val bottomSheetState: ModalBottomSheetState
 ) {
 
-    private val _sheetContentTypeFlow = MutableStateFlow<(@Composable () -> Unit)?>(null)
+    private val _sheetContentTypeFlow = MutableStateFlow<(@Composable () -> Unit)?>(value = null)
     val sheetContentTypeStateFlow = _sheetContentTypeFlow.asStateFlow()
 
     val isBottomSheetVisible: Boolean

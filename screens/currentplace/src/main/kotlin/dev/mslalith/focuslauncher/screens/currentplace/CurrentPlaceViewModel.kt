@@ -45,9 +45,9 @@ internal class CurrentPlaceViewModel @Inject constructor(
     )
 
     val currentPlaceState = flowOf(value = defaultCurrentPlaceState)
-        .combine(_latLngStateFlow) { state, latLng ->
+        .combine(flow = _latLngStateFlow) { state, latLng ->
             state.copy(latLng = latLng)
-        }.combine(_addressStateFlow) { state, addressState ->
+        }.combine(flow = _addressStateFlow) { state, addressState ->
             state.copy(
                 addressState = addressState,
                 canSave = addressState is LoadingState.Loaded
@@ -57,7 +57,7 @@ internal class CurrentPlaceViewModel @Inject constructor(
     init {
         _latLngStateFlow
             .mapLatest(::fetchAddressAndUpdateFlows)
-            .launchIn(viewModelScope)
+            .launchIn(scope = viewModelScope)
     }
 
     suspend fun fetchCurrentPlaceFromDb(): CurrentPlace = lunarPhaseSettingsRepo.currentPlaceFlow.firstOrNull() ?: defaultCurrentPlace

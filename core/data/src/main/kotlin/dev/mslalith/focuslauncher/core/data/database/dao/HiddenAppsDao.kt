@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 internal interface HiddenAppsDao {
 
-    @Query("SELECT * FROM $HIDDEN_APPS_TABLE_NAME")
+    @Query(value = "SELECT * FROM $HIDDEN_APPS_TABLE_NAME")
     fun getHiddenAppsFlow(): Flow<List<HiddenAppRoom>>
 
-    @Query("SELECT * FROM $HIDDEN_APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
+    @Query(value = "SELECT * FROM $HIDDEN_APPS_TABLE_NAME WHERE packageName = :packageName LIMIT 1")
     suspend fun getHiddenAppBy(packageName: String): HiddenAppRoom?
 
-    @Query("DELETE FROM $HIDDEN_APPS_TABLE_NAME")
+    @Query(value = "DELETE FROM $HIDDEN_APPS_TABLE_NAME")
     suspend fun clearHiddenApps()
 
-    @Query("SELECT COUNT(*) $HIDDEN_APPS_TABLE_NAME")
+    @Query(value = "SELECT COUNT(*) $HIDDEN_APPS_TABLE_NAME")
     suspend fun getHiddenAppsSize(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

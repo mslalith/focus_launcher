@@ -73,7 +73,7 @@ internal fun HomePage(
 
     CompositionLocalProvider(LocalHomePadding provides HomePadding()) {
         val contentPaddingValues = LocalHomePadding.current.contentPaddingValues
-        val horizontalPadding = contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
+        val horizontalPadding = contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
         val topPadding = contentPaddingValues.calculateTopPadding()
         val bottomPadding = contentPaddingValues.calculateBottomPadding()
 
@@ -92,7 +92,7 @@ internal fun HomePage(
                 )
                 Box(modifier = Modifier.weight(1f)) {
                     DecoratedQuote(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(alignment = Alignment.Center)
                     )
                 }
                 FavoritesList(

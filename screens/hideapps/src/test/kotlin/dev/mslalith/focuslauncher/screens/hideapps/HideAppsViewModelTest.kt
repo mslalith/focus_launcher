@@ -60,7 +60,7 @@ class HideAppsViewModelTest : CoroutineTest() {
             appCoroutineDispatcher = appCoroutineDispatcher
         )
         runBlocking {
-            appDrawerRepo.addApps(TestApps.all)
+            appDrawerRepo.addApps(apps = TestApps.all)
         }
     }
 
@@ -85,7 +85,7 @@ class HideAppsViewModelTest : CoroutineTest() {
             }
         }
 
-        apps.forEach { viewModel.addToHiddenApps(it) }
+        apps.forEach { viewModel.addToHiddenApps(app = it) }
     }
 
     @Test
@@ -108,7 +108,7 @@ class HideAppsViewModelTest : CoroutineTest() {
     fun `4 - when a favorite app is being hidden, it must be removed from favorites list`() = runCoroutineTest {
         val favoriteApp = TestApps.Phone
         val apps = TestApps.all - setOf(favoriteApp)
-        favoritesRepo.addToFavorites(favoriteApp)
+        favoritesRepo.addToFavorites(app = favoriteApp)
 
         backgroundScope.launch {
             viewModel.hiddenAppsFlow.test {
@@ -119,8 +119,8 @@ class HideAppsViewModelTest : CoroutineTest() {
             }
         }
 
-        hiddenAppsRepo.addToHiddenApps(favoriteApp)
-        favoritesRepo.removeFromFavorites(favoriteApp.packageName)
+        hiddenAppsRepo.addToHiddenApps(app = favoriteApp)
+        favoritesRepo.removeFromFavorites(packageName = favoriteApp.packageName)
     }
 }
 

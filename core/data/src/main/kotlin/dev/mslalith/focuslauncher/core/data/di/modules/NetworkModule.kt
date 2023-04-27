@@ -22,8 +22,8 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideKtorClient(): HttpClient = HttpClient(Android) {
-        install(ContentNegotiation) {
+    fun provideKtorClient(): HttpClient = HttpClient(engineFactory = Android) {
+        install(plugin = ContentNegotiation) {
             json(
                 json = Json {
                     ignoreUnknownKeys = true
@@ -34,7 +34,7 @@ internal object NetworkModule {
         }
 
         val timeout = 15_000L
-        install(HttpTimeout) {
+        install(plugin = HttpTimeout) {
             requestTimeoutMillis = timeout
             connectTimeoutMillis = timeout
             socketTimeoutMillis = timeout
@@ -43,9 +43,9 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiImpl(httpClient)
+    fun provideQuoteApi(httpClient: HttpClient): QuotesApi = QuotesApiImpl(httpClient = httpClient)
 
     @Provides
     @Singleton
-    fun providePlacesApi(httpClient: HttpClient): PlacesApi = PlacesApiImpl(httpClient)
+    fun providePlacesApi(httpClient: HttpClient): PlacesApi = PlacesApiImpl(httpClient = httpClient)
 }

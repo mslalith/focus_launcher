@@ -117,7 +117,7 @@ internal fun FavoritesList(
     val context = LocalContext.current
     val currentContextMode by rememberUpdatedState(newValue = currentContextMode)
 
-    LaunchedEffect(favoritesList.isEmpty()) {
+    LaunchedEffect(key1 = favoritesList.isEmpty()) {
         if (favoritesList.isNotEmpty() || isReordering()) return@LaunchedEffect
 
         hideContextualMode()
@@ -173,7 +173,7 @@ internal fun FavoritesList(
                             changeFavoritesContextMode = changeFavoritesContextMode,
                             onClick = {
                                 when (currentContextMode) {
-                                    FavoritesContextMode.Closed -> context.launchApp(favorite.toApp())
+                                    FavoritesContextMode.Closed -> context.launchApp(app = favorite.toApp())
                                     FavoritesContextMode.Open -> Unit
                                     FavoritesContextMode.Remove -> removeFromFavorites(favorite.toApp())
                                     FavoritesContextMode.Reorder -> changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))

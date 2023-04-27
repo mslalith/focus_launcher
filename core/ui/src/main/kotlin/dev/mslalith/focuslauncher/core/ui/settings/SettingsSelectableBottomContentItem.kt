@@ -33,7 +33,7 @@ fun SettingsSelectableBottomContentItem(
     horizontalPadding: Dp = 24.dp,
     content: @Composable () -> Unit
 ) {
-    var showBottomContent by remember { mutableStateOf(false) }
+    var showBottomContent by remember { mutableStateOf(value = false) }
 
     LaunchedEffect(key1 = disabled) {
         if (disabled) {

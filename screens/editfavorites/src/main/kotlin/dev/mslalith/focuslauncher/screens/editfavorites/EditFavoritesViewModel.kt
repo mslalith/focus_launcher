@@ -25,7 +25,7 @@ internal class EditFavoritesViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    private val _showHiddenAppsInFavorites = MutableStateFlow(false)
+    private val _showHiddenAppsInFavorites = MutableStateFlow(value = false)
     val showHiddenAppsInFavorites = _showHiddenAppsInFavorites.asStateFlow()
 
     fun shouldShowHiddenAppsInFavorites(value: Boolean) {
@@ -34,19 +34,19 @@ internal class EditFavoritesViewModel @Inject constructor(
 
     val favoritesStateFlow: StateFlow<List<SelectedApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedApp(app = app, isSelected = false) } }
-        .combine(favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
+        .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { selectedApp ->
                 val isSelected = onlyFavoritesList.any { it.packageName == selectedApp.app.packageName }
                 selectedApp.copy(isSelected = isSelected)
             }
         }
-        .combine(hiddenAppsRepo.onlyHiddenAppsFlow) { favoriteApps, onlyHiddenApps ->
+        .combine(flow = hiddenAppsRepo.onlyHiddenAppsFlow) { favoriteApps, onlyHiddenApps ->
             favoriteApps.map { selectedApp ->
                 val isHidden = onlyHiddenApps.any { it.packageName == selectedApp.app.packageName }
                 selectedApp.copy(disabled = isHidden)
             }
         }
-        .combine(_showHiddenAppsInFavorites) { filteredApps, filterHidden ->
+        .combine(flow = _showHiddenAppsInFavorites) { filteredApps, filterHidden ->
             when (filterHidden) {
                 true -> filteredApps
                 false -> filteredApps.filterNot { it.disabled }
@@ -54,11 +54,11 @@ internal class EditFavoritesViewModel @Inject constructor(
         }.withinScope(initialValue = emptyList())
 
     fun addToFavorites(app: App) {
-        appCoroutineDispatcher.launchInIO { favoritesRepo.addToFavorites(app) }
+        appCoroutineDispatcher.launchInIO { favoritesRepo.addToFavorites(app = app) }
     }
 
     fun removeFromFavorites(app: App) {
-        appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(app.packageName) }
+        appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(packageName = app.packageName) }
     }
 
     fun clearFavorites() {

@@ -17,7 +17,9 @@ internal fun TodayLunarPhase(
 ) {
     BoxWithConstraints {
         val width = maxWidth
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             TodayLunarMoonIconAndPhase(
                 lunarPhaseDetails = lunarPhaseDetails,
                 moonSize = width

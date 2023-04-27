@@ -64,7 +64,7 @@ private fun PreviewAppsContent(
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = columnCount)
         ) {
-            repeat(columnCount) {
+            repeat(times = columnCount) {
                 item { VerticalSpacer(spacing = verticalSpacing) }
             }
 
@@ -80,7 +80,7 @@ private fun PreviewAppsContent(
                 )
             }
 
-            repeat(columnCount) {
+            repeat(times = columnCount) {
                 item { VerticalSpacer(spacing = verticalSpacing) }
             }
         }

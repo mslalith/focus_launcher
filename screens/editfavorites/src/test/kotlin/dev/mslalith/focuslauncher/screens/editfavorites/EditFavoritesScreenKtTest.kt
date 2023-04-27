@@ -1,13 +1,17 @@
 package dev.mslalith.focuslauncher.screens.editfavorites
 
+import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -27,7 +31,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,11 +45,10 @@ import org.robolectric.annotation.Config
     instrumentedPackages = ["androidx.loader.content"]
 )
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-@Ignore
 class EditFavoritesScreenKtTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
@@ -78,7 +80,7 @@ class EditFavoritesScreenKtTest {
             appCoroutineDispatcher = appCoroutineDispatcher
         )
         runBlocking {
-            appDrawerRepo.addApps(TestApps.all)
+            appDrawerRepo.addApps(apps = TestApps.all)
         }
         composeTestRule.setContent {
             EditFavoritesScreen(
@@ -102,7 +104,7 @@ class EditFavoritesScreenKtTest {
     fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
         val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
         TestApps.all.forEach {
-            favoriteNodes.filterToOne(hasText(it.displayName)).assertSelectedApp(
+            favoriteNodes.filterToOne(matcher = hasText(text = it.displayName)).assertSelectedApp(
                 selectedApp = it.toSelectedAppWith(isSelected = false)
             )
         }
@@ -120,7 +122,7 @@ class EditFavoritesScreenKtTest {
         )
 
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true)
             )
         }
@@ -150,7 +152,7 @@ class EditFavoritesScreenKtTest {
         )
 
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false)
             )
         }
@@ -160,49 +162,65 @@ class EditFavoritesScreenKtTest {
     fun `4 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = with(composeTestRule) {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
-        runBlocking {
-            hiddenAppsRepo.addToHiddenApps(hiddenApps)
-        }
+        runBlocking { hiddenAppsRepo.addToHiddenApps(apps = hiddenApps) }
 
+        onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
+        onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
         val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
-        favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
-            favoriteNodes[index].performClick()
-        }
-
-        favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = apps.toSelectedAppWith(isSelected = true)
-        )
 
         apps.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = true)
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+                selectedApp = app.toSelectedAppWith(isSelected = false)
             )
+        }
+
+        hiddenApps.forEach { app ->
+            val appNodes = favoriteNodes.filter(matcher = hasText(text = app.displayName)).fetchSemanticsNodes()
+            assertThat(appNodes.isEmpty()).isTrue()
         }
     }
 
     @Test
     fun `5 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = with(composeTestRule) {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
-        val apps = TestApps.all
-        runBlocking {
-            hiddenAppsRepo.addToHiddenApps(hiddenApps)
-        }
-        viewModel.shouldShowHiddenAppsInFavorites(value = true)
+        val apps = TestApps.all - hiddenApps.toSet()
+        runBlocking { hiddenAppsRepo.addToHiddenApps(apps = hiddenApps) }
 
+        onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
         val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
-        favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
-            favoriteNodes[index].performClick()
+
+        apps.forEach { app ->
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+                selectedApp = app.toSelectedAppWith(isSelected = false, disabled = false)
+            )
         }
 
         favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = apps.toSelectedAppWith(isSelected = true, disabled = true)
+            selectedApps = hiddenApps.toSelectedAppWith(isSelected = false, disabled = true)
         )
 
-        apps.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = true, disabled = true)
+        hiddenApps.forEach { app ->
+            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+                selectedApp = app.toSelectedAppWith(isSelected = false, disabled = true)
             )
         }
+    }
+
+    @Test
+    fun `6 - when hidden apps are shown & clicked on a hidden app, a snackbar should be shown`(): Unit = with(composeTestRule) {
+        val hiddenApp = TestApps.Phone
+        runBlocking { hiddenAppsRepo.addToHiddenApps(apps = listOf(hiddenApp)) }
+
+        onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
+        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
+
+        favoriteNodes.filter(matcher = hasText(text = hiddenApp.displayName)).onFirst().apply {
+            assertSelectedApp(selectedApp = hiddenApp.toSelectedAppWith(isSelected = false, disabled = true))
+            performClick()
+        }
+
+        val message = activity.getString(R.string.app_hidden_message).replace(oldValue = "{}", newValue = hiddenApp.name)
+        onNodeWithText(text = message).assertIsDisplayed()
     }
 }
 

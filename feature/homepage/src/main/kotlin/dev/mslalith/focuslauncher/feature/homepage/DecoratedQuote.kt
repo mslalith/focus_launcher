@@ -15,7 +15,7 @@ internal fun DecoratedQuote(
     modifier: Modifier = Modifier
 ) {
     val homePadding = LocalHomePadding.current
-    val startPadding = homePadding.contentPaddingValues.calculateStartPadding(LayoutDirection.Ltr)
+    val startPadding = homePadding.contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
 
     QuoteForYou(
         modifier = modifier

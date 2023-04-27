@@ -13,24 +13,25 @@ import kotlinx.coroutines.flow.map
 internal class AppDrawerRepoImpl @Inject constructor(
     private val appsDao: AppsDao
 ) : AppDrawerRepo {
+
     override val allAppsFlow: Flow<List<App>> = appsDao.getAllAppsFlow()
         .map { apps ->
             apps.map(AppRoom::toApp).sortedBy { it.name.lowercase() }
         }
 
     override suspend fun getAppBy(packageName: String): App? {
-        val appRoom = appsDao.getAppBy(packageName)
+        val appRoom = appsDao.getAppBy(packageName = packageName)
         return appRoom?.let(AppRoom::toApp)
     }
 
-    override suspend fun addApps(apps: List<App>) = appsDao.addApps(apps.map(App::toAppRoom))
-    override suspend fun addApp(app: App) = appsDao.addApp(app.toAppRoom())
-    override suspend fun removeApp(app: App) = appsDao.removeApp(app.toAppRoom())
+    override suspend fun addApps(apps: List<App>) = appsDao.addApps(apps = apps.map(App::toAppRoom))
+    override suspend fun addApp(app: App) = appsDao.addApp(app = app.toAppRoom())
+    override suspend fun removeApp(app: App) = appsDao.removeApp(app = app.toAppRoom())
     override suspend fun clearApps() = appsDao.clearApps()
 
     override suspend fun updateDisplayName(app: App, displayName: String) {
         val newApp = app.copy(displayName = displayName)
-        appsDao.updateApp(newApp.toAppRoom())
+        appsDao.updateApp(app = newApp.toAppRoom())
     }
 
     override suspend fun areAppsEmptyInDatabase() = appsDao.getAllApps().isEmpty()

@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <profileable
             android:shell="true"

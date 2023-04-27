@@ -26,7 +26,6 @@ inline fun withTimeZone(
     timeZone: String = "UTC",
     block: () -> Unit
 ) {
-
     val original = java.util.TimeZone.getDefault()
     java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(timeZone))
     block()

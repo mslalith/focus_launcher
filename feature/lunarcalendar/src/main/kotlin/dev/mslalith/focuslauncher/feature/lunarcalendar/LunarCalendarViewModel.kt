@@ -29,11 +29,12 @@ internal class LunarCalendarViewModel @Inject constructor(
 
     init {
         appCoroutineDispatcher.launchInIO {
-            clockRepo.currentInstantStateFlow.combine(lunarPhaseSettingsRepo.currentPlaceFlow) { instant, currentPlace ->
-                instant to currentPlace
-            }.collectLatest { (instant, currentPlace) ->
-                lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant = instant, latLng = currentPlace.latLng)
-            }
+            clockRepo.currentInstantStateFlow
+                .combine(flow = lunarPhaseSettingsRepo.currentPlaceFlow) { instant, currentPlace ->
+                    instant to currentPlace
+                }.collectLatest { (instant, currentPlace) ->
+                    lunarPhaseDetailsRepo.refreshLunarPhaseDetails(instant = instant, latLng = currentPlace.latLng)
+                }
         }
     }
 
@@ -45,20 +46,20 @@ internal class LunarCalendarViewModel @Inject constructor(
         upcomingLunarPhase = INITIAL_UPCOMING_LUNAR_PHASE_STATE
     )
 
-    val lunarCalendarState = flowOf(defaultLunarCalendarState)
-        .combine(lunarPhaseSettingsRepo.showLunarPhaseFlow) { state, showLunarPhase ->
+    val lunarCalendarState = flowOf(value = defaultLunarCalendarState)
+        .combine(flow = lunarPhaseSettingsRepo.showLunarPhaseFlow) { state, showLunarPhase ->
             state.copy(showLunarPhase = showLunarPhase)
-        }.combine(lunarPhaseSettingsRepo.showIlluminationPercentFlow) { state, showIlluminationPercent ->
+        }.combine(flow = lunarPhaseSettingsRepo.showIlluminationPercentFlow) { state, showIlluminationPercent ->
             state.copy(showIlluminationPercent = showIlluminationPercent)
-        }.combine(lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow) { state, showUpcomingPhaseDetails ->
+        }.combine(flow = lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow) { state, showUpcomingPhaseDetails ->
             state.copy(showUpcomingPhaseDetails = showUpcomingPhaseDetails)
-        }.combine(lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow) { state, lunarPhaseDetails ->
+        }.combine(flow = lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow) { state, lunarPhaseDetails ->
             state.copy(lunarPhaseDetails = lunarPhaseDetails)
-        }.combine(lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow) { state, upcomingLunarPhase ->
+        }.combine(flow = lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow) { state, upcomingLunarPhase ->
             state.copy(upcomingLunarPhase = upcomingLunarPhase)
         }.withinScope(initialValue = defaultLunarCalendarState)
 
-    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(DEFAULT_CURRENT_PLACE)
+    val currentPlaceStateFlow = lunarPhaseSettingsRepo.currentPlaceFlow.withinScope(initialValue = DEFAULT_CURRENT_PLACE)
 
     fun toggleShowLunarPhase() {
         appCoroutineDispatcher.launchInIO {
@@ -79,7 +80,7 @@ internal class LunarCalendarViewModel @Inject constructor(
     }
 
     companion object {
-        val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error("Has no Lunar Phase details")
-        val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error("Has no Upcoming Lunar Phase")
+        val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error(message = "Has no Lunar Phase details")
+        val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error(message = "Has no Upcoming Lunar Phase")
     }
 }

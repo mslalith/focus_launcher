@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -86,24 +87,30 @@ fun FocusLauncherTheme(
 ) {
     val systemUiController = LocalSystemUiController.current
     val themeViewModel: ThemeViewModel = viewModel()
+    val isSystemInDarkTheme = isSystemInDarkTheme()
 
     val currentTheme by themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle()
-    val theme = currentTheme ?: if (isSystemInDarkTheme()) Theme.SAID_DARK else DEFAULT_THEME
+    val theme = currentTheme ?: if (isSystemInDarkTheme) Theme.SAID_DARK else DEFAULT_THEME
 
-    val colors = when (theme) {
+    val colorScheme = when (theme) {
         Theme.NOT_WHITE -> lightColors
         Theme.SAID_DARK -> darkColors
     }
-    systemUiController.setSystemBarsColor(color = colors.background)
 
-    LaunchedEffect(Unit) {
+    DisposableEffect(key1 = systemUiController, key2 = colorScheme) {
+        systemUiController.setSystemBarsColor(color = colorScheme.background)
+
+        onDispose {}
+    }
+
+    LaunchedEffect(key1 = Unit) {
         if (themeViewModel.firstRunStateFlow.first()) {
-            themeViewModel.changeTheme(theme)
+            themeViewModel.changeTheme(theme = theme)
         }
     }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )

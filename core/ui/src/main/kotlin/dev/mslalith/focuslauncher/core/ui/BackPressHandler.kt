@@ -13,7 +13,7 @@ fun BackPressHandler(
     enabled: Boolean,
     onBack: () -> Unit
 ) {
-    val currentOnBack by rememberUpdatedState(onBack)
+    val currentOnBack by rememberUpdatedState(newValue = onBack)
     val backPressedCallback = remember {
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -24,9 +24,9 @@ fun BackPressHandler(
 
     LocalOnBackPressedDispatcherOwner.current?.let {
         val backPressedDispatcher = it.onBackPressedDispatcher
-        DisposableEffect(enabled) {
+        DisposableEffect(key1 = enabled) {
             when (enabled) {
-                true -> backPressedDispatcher.addCallback(backPressedCallback)
+                true -> backPressedDispatcher.addCallback(onBackPressedCallback = backPressedCallback)
                 false -> backPressedCallback.remove()
             }
             onDispose { backPressedCallback.remove() }

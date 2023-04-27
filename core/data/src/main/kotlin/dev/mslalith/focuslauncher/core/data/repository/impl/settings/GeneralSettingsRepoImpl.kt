@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.map
 internal class GeneralSettingsRepoImpl @Inject constructor(
     @SettingsProvider private val settingsDataStore: DataStore<Preferences>
 ) : GeneralSettingsRepo {
+
     override val firstRunFlow: Flow<Boolean> = settingsDataStore.data
         .map {
             it[PREFERENCES_FIRST_RUN] ?: DEFAULT_FIRST_RUN
@@ -83,10 +84,10 @@ internal class GeneralSettingsRepoImpl @Inject constructor(
     }
 
     companion object {
-        private val PREFERENCES_FIRST_RUN = booleanPreferencesKey("preferences_first_run")
-        private val PREFERENCES_STATUS_BAR_VISIBILITY = booleanPreferencesKey("preferences_status_bar_visibility")
-        private val PREFERENCES_NOTIFICATION_SHADE = booleanPreferencesKey("preferences_notification_shade")
-        private val PREFERENCES_IS_DEFAULT_LAUNCHER = booleanPreferencesKey("preferences_is_default_launcher")
-        private val PREFERENCES_ICON_PACK_TYPE = stringPreferencesKey("preferences_icon_pack_type")
+        private val PREFERENCES_FIRST_RUN = booleanPreferencesKey(name = "preferences_first_run")
+        private val PREFERENCES_STATUS_BAR_VISIBILITY = booleanPreferencesKey(name = "preferences_status_bar_visibility")
+        private val PREFERENCES_NOTIFICATION_SHADE = booleanPreferencesKey(name = "preferences_notification_shade")
+        private val PREFERENCES_IS_DEFAULT_LAUNCHER = booleanPreferencesKey(name = "preferences_is_default_launcher")
+        private val PREFERENCES_ICON_PACK_TYPE = stringPreferencesKey(name = "preferences_icon_pack_type")
     }
 }

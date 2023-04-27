@@ -35,7 +35,9 @@ internal fun NextMajorPhaseDetails(
                 .fillMaxWidth()
                 .height(intrinsicSize = IntrinsicSize.Min)
         ) {
-            Box(modifier = Modifier.weight(weight = 1f)) {
+            Box(
+                modifier = Modifier.weight(weight = 1f)
+            ) {
                 NextSingleMajorPhaseDetails(
                     illumination = 0.0,
                     localDateTime = nextPhaseDetails.newMoon,
@@ -45,7 +47,9 @@ internal fun NextMajorPhaseDetails(
 
             HorizontalSpacer(spacing = 12.dp)
 
-            Box(modifier = Modifier.weight(weight = 1f)) {
+            Box(
+                modifier = Modifier.weight(weight = 1f)
+            ) {
                 NextSingleMajorPhaseDetails(
                     illumination = 100.0,
                     localDateTime = nextPhaseDetails.fullMoon,

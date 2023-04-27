@@ -42,7 +42,7 @@ internal class ClockRepoTest : CoroutineTest() {
 
     @Test
     fun `when refreshed, the clock time should be updated`() = runCoroutineTest {
-        clockProvider.setInstant(instantOf(hour = 3, minute = 44))
+        clockProvider.setInstant(instant = instantOf(hour = 3, minute = 44))
         repo.refreshTime()
 
         val expected = LocalDateTime.parse("2023-02-12T03:44:00.000").toInstant(TimeZone.UTC)

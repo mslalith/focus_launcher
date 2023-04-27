@@ -47,7 +47,7 @@ internal fun EditFavoritesScreen(
         topBar = {
             AppBarWithBackIcon(
                 title = "Favorites",
-                onBackPressed = { goBack() },
+                onBackPressed = goBack,
                 actions = @Composable {
                     val showHiddenApps by editFavoritesViewModel.showHiddenAppsInFavorites.collectAsStateWithLifecycle()
 
@@ -80,8 +80,8 @@ internal fun EditFavoritesScreen(
                     snackbarHostState.showSnackbar(message = it)
                 }
             },
-            onAddToFavorites = { editFavoritesViewModel.addToFavorites(it) },
-            onRemoveFromFavorites = { editFavoritesViewModel.removeFromFavorites(it) }
+            onAddToFavorites = editFavoritesViewModel::addToFavorites,
+            onRemoveFromFavorites = editFavoritesViewModel::removeFromFavorites
         )
     }
 }

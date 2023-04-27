@@ -8,7 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import dev.mslalith.focuslauncher.R
 
-private val defaultFontRegular = Font(R.font.nunitosans_regular)
+private val defaultFontRegular = Font(resId = R.font.nunitosans_regular)
 
 private val defaultFontFamily = FontFamily(defaultFontRegular)
 

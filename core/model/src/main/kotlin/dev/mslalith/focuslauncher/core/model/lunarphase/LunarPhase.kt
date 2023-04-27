@@ -3,14 +3,14 @@ package dev.mslalith.focuslauncher.core.model.lunarphase
 import org.shredzone.commons.suncalc.MoonPhase
 
 enum class LunarPhase(val phaseName: String) {
-    NEW_MOON("New Moon"),
-    WAXING_CRESCENT("Waxing Crescent"),
-    FIRST_QUARTER("First Quarter"),
-    WAXING_GIBBOUS("Waxing Gibbous"),
-    FULL_MOON("Full Moon"),
-    WANING_GIBBOUS("Waning Gibbous"),
-    LAST_QUARTER("Last Quarter"),
-    WANING_CRESCENT("Waning Crescent");
+    NEW_MOON(phaseName = "New Moon"),
+    WAXING_CRESCENT(phaseName = "Waxing Crescent"),
+    FIRST_QUARTER(phaseName = "First Quarter"),
+    WAXING_GIBBOUS(phaseName = "Waxing Gibbous"),
+    FULL_MOON(phaseName = "Full Moon"),
+    WANING_GIBBOUS(phaseName = "Waning Gibbous"),
+    LAST_QUARTER(phaseName = "Last Quarter"),
+    WANING_CRESCENT(phaseName = "Waning Crescent");
 
     fun toMoonPhase() = when (this) {
         NEW_MOON -> MoonPhase.Phase.NEW_MOON

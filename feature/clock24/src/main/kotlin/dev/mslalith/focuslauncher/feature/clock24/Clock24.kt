@@ -119,22 +119,22 @@ private fun AnalogClock(
     colorAnimationSpec: AnimationSpec<Color>
 ) {
     val size = LocalDensity.current.run { radius.toDp() * 2 }
-    val center = Offset(radius, radius)
+    val center = Offset(x = radius, y = radius)
     val disabledColor = handleColor.copy(alpha = 0.16f)
 
     fun offsetFromAngle(angle: Double) = Offset(
-        x = radius * cos(Math.toRadians(angle)).toFloat(),
-        y = radius * sin(Math.toRadians(angle)).toFloat()
+        x = radius * cos(x = Math.toRadians(angle)).toFloat(),
+        y = radius * sin(x = Math.toRadians(angle)).toFloat()
     ) + center
 
     val endFirst by animateOffsetAsState(
         label = "End first offset",
-        targetValue = offsetFromAngle(analogClockPhase.first.angle),
+        targetValue = offsetFromAngle(angle = analogClockPhase.first.angle),
         animationSpec = offsetAnimationSpec
     )
     val endSecond by animateOffsetAsState(
         label = "End second offset",
-        targetValue = offsetFromAngle(analogClockPhase.second.angle),
+        targetValue = offsetFromAngle(angle = analogClockPhase.second.angle),
         animationSpec = offsetAnimationSpec
     )
     val handleColorFirst by animateColorAsState(
@@ -148,7 +148,9 @@ private fun AnalogClock(
         animationSpec = colorAnimationSpec
     )
 
-    Canvas(modifier = modifier.size(size)) {
+    Canvas(
+        modifier = modifier.size(size = size)
+    ) {
         drawLine(
             color = handleColorFirst,
             start = center,

@@ -19,7 +19,7 @@ internal class LauncherViewModel @Inject constructor(
         appCoroutineDispatcher.launchInIO {
             appDrawerRepo.apply {
                 if (!forceLoad && !areAppsEmptyInDatabase()) return@launchInIO
-                addApps(launcherAppsManager.loadAllApps())
+                addApps(apps = launcherAppsManager.loadAllApps())
             }
         }
     }

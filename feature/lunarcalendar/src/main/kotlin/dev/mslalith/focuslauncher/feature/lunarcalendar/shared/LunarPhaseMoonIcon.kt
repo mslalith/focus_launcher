@@ -27,9 +27,9 @@ internal fun LunarPhaseMoonIcon(
     illumination: Double,
     moonSize: Dp = 40.dp
 ) {
-    val illuminatedColor = Color(0xFFBCC1C5)
-    val moonColor = Color(0xFF66757F)
-    val moonSpotColor = Color(0xFF5B6876)
+    val illuminatedColor = Color(color = 0xFFBCC1C5)
+    val moonColor = Color(color = 0xFF66757F)
+    val moonSpotColor = Color(color = 0xFF5B6876)
 
     val rotationDegrees by animateFloatAsState(
         label = "Lunar Moon Rotation",
@@ -39,8 +39,8 @@ internal fun LunarPhaseMoonIcon(
         }
     )
 
-    val startOffset = Offset(-0.165f, 0f)
-    val endOffset = Offset(1.165f, 0f)
+    val startOffset = Offset(x = -0.165f, y = 0f)
+    val endOffset = Offset(x = 1.165f, y = 0f)
     val percentOffset by animateOffsetAsState(
         label = "Lunar Moon Illumination Percent Offset",
         targetValue = lerp(
@@ -53,7 +53,7 @@ internal fun LunarPhaseMoonIcon(
     Box(
         modifier = modifier
             .size(size = moonSize)
-            .clip(CircleShape)
+            .clip(shape = CircleShape)
             .drawWithContent {
                 val radius = size.minDimension / 2f
                 drawMoonSpots(
@@ -180,7 +180,7 @@ private fun ContentDrawScope.drawIllumination(
 ) {
     Path()
         .apply {
-            moveTo(radius, 0f)
+            moveTo(x = radius, y = 0f)
             quadraticBezierTo(
                 x1 = 0f,
                 y1 = 0f,

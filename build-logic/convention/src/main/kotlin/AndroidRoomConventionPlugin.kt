@@ -20,14 +20,14 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
             // The schemas directory contains a schema file for each version of the Room database.
             // This is required to enable Room auto migrations.
             // See https://developer.android.com/reference/kotlin/androidx/room/AutoMigration.
-            arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
+            arg(RoomSchemaArgProvider(schemaDir = File(projectDir, "schemas")))
         }
 
         val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
         dependencies {
-            add("implementation", libs.findLibrary("room.runtime").get())
-            add("implementation", libs.findLibrary("room.ktx").get())
-            add("ksp", libs.findLibrary("room.compiler").get())
+            add(configurationName = "implementation", libs.findLibrary("room.runtime").get())
+            add(configurationName = "implementation", libs.findLibrary("room.ktx").get())
+            add(configurationName = "ksp", libs.findLibrary("room.compiler").get())
         }
     }
 

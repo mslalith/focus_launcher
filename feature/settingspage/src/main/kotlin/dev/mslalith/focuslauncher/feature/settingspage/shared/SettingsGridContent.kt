@@ -18,8 +18,8 @@ internal fun <T> SettingsGridContent(
     items: List<T>,
     content: @Composable (item: T) -> Unit
 ) {
-    val chunkedItems by remember(items) {
-        derivedStateOf { items.chunked(columnSize) }
+    val chunkedItems by remember(key1 = items) {
+        derivedStateOf { items.chunked(size = columnSize) }
     }
 
     Column(
@@ -37,7 +37,7 @@ internal fun <T> SettingsGridContent(
 
                 if (rowItems.size < columnSize) {
                     val count = columnSize - rowItems.size
-                    repeat(count) {
+                    repeat(times = count) {
                         Box(modifier = itemModifier.weight(weight = 1f))
                     }
                 }

@@ -11,19 +11,19 @@ import dev.mslalith.focuslauncher.core.model.Constants.Database.QUOTES_TABLE_NAM
 @Dao
 internal interface QuotesDao {
 
-    @Query("SELECT * FROM $QUOTES_TABLE_NAME")
+    @Query(value = "SELECT * FROM $QUOTES_TABLE_NAME")
     suspend fun getQuotes(): List<QuoteRoom>
 
-    @Query("SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
+    @Query(value = "SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
     suspend fun getQuoteBy(id: String): QuoteRoom?
 
-    @Query("SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
+    @Query(value = "SELECT * FROM $QUOTES_TABLE_NAME WHERE id = :id LIMIT 1")
     fun getQuoteBySync(id: String): QuoteRoom?
 
-    @Query("DELETE FROM $QUOTES_TABLE_NAME")
+    @Query(value = "DELETE FROM $QUOTES_TABLE_NAME")
     suspend fun clearQuotes()
 
-    @Query("SELECT COUNT(*) FROM $QUOTES_TABLE_NAME")
+    @Query(value = "SELECT COUNT(*) FROM $QUOTES_TABLE_NAME")
     suspend fun getQuotesSize(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

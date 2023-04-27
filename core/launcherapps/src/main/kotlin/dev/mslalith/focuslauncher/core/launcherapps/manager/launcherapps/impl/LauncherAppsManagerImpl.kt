@@ -20,12 +20,12 @@ internal class LauncherAppsManagerImpl @Inject constructor(
 
     override fun loadAllApps(): List<App> = buildList {
         for (launcherActivityInfo in launcherApps.getActivityList(null, Process.myUserHandle())) {
-            val packageName = launcherActivityInfo.applicationInfo.packageName
+            val applicationInfo = launcherActivityInfo.applicationInfo
             add(
                 App(
-                    name = launcherActivityInfo.applicationInfo.loadLabel(context.packageManager).toString(),
-                    packageName = packageName,
-                    isSystem = isSystemApp(packageName = packageName)
+                    name = applicationInfo.loadLabel(context.packageManager).toString(),
+                    packageName = applicationInfo.packageName,
+                    isSystem = applicationInfo.isSystemApp()
                 )
             )
         }
@@ -36,25 +36,25 @@ internal class LauncherAppsManagerImpl @Inject constructor(
         return App(
             name = launcherActivityInfo.label.toString(),
             packageName = packageName,
-            isSystem = isSystemApp(packageName = packageName)
+            isSystem = launcherActivityInfo.applicationInfo.isSystemApp()
         )
     }
 
     override fun defaultFavoriteApps(): List<App> = listOfNotNull(defaultDialerApp(), defaultMessagingApp())
 
-    private fun isSystemApp(packageName: String) = try {
-        (context.packageManager.getApplicationInfo(packageName, 0).flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0
+    private fun ApplicationInfo.isSystemApp() = try {
+        (flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0
     } catch (ex: PackageManager.NameNotFoundException) {
         false
     }
 
     private fun defaultDialerApp(): App? {
         val manager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-        return manager.defaultDialerPackage?.let { loadApp(packageName = it) }
+        return manager.defaultDialerPackage?.let(::loadApp)
     }
 
     private fun defaultMessagingApp(): App? {
         val packageName: String? = Telephony.Sms.getDefaultSmsPackage(context)
-        return packageName?.let { loadApp(packageName = packageName) }
+        return packageName?.let(::loadApp)
     }
 }

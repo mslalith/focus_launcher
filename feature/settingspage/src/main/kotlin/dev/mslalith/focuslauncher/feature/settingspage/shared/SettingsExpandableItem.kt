@@ -40,7 +40,7 @@ internal fun SettingsExpandableItem(
 ) {
     val durationMillis = 350
     val coroutineScope = rememberCoroutineScope()
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(value = false) }
 
     val curvyLineSurroundPaddingValues = curvyLineSurroundPadding ?: PaddingValues(start = 4.dp, top = 4.dp, bottom = 4.dp)
     val dividerColor = MaterialTheme.colorScheme.onSurface
@@ -110,12 +110,22 @@ private fun Modifier.settingsContentCurve(
         val xEnd = xCurveStart + horizontalWidth
         val yEnd = size.height - lineHalf
         val path = Path().apply {
-            moveTo(xEnd, lineHalf)
-            lineTo(xCurveStart, lineHalf)
-            quadraticBezierTo(lineHalf, lineHalf, lineHalf, dividerCurveOffset + lineHalf)
-            lineTo(lineHalf, yCurveEnd - lineHalf)
-            quadraticBezierTo(lineHalf, yEnd, xCurveStart, yEnd)
-            lineTo(xEnd, yEnd)
+            moveTo(x = xEnd, y = lineHalf)
+            lineTo(x = xCurveStart, y = lineHalf)
+            quadraticBezierTo(
+                x1 = lineHalf,
+                y1 = lineHalf,
+                x2 = lineHalf,
+                y2 = dividerCurveOffset + lineHalf
+            )
+            lineTo(x = lineHalf, y = yCurveEnd - lineHalf)
+            quadraticBezierTo(
+                x1 = lineHalf,
+                y1 = yEnd,
+                x2 = xCurveStart,
+                y2 = yEnd
+            )
+            lineTo(x = xEnd, y = yEnd)
         }
         drawPath(
             path = path,

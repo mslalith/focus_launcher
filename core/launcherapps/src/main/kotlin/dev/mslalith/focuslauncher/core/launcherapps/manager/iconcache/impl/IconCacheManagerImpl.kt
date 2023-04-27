@@ -19,7 +19,7 @@ internal class IconCacheManagerImpl @Inject constructor(
         iconCache.clear()
     }
 
-    override fun iconPackFor(packageName: String): IconPackXmlParser = iconPackCache.getOrPut(packageName) {
+    override fun iconPackFor(packageName: String): IconPackXmlParser = iconPackCache.getOrPut(key = packageName) {
         IconPackXmlParser(context = context, iconPackPackageName = packageName)
     }
 
@@ -28,14 +28,14 @@ internal class IconCacheManagerImpl @Inject constructor(
         IconPackType.System -> getSystemTypeIcon(packageName = packageName)
     }
 
-    private fun getSystemTypeIcon(packageName: String): Drawable = iconCache.getOrPut(packageName) {
+    private fun getSystemTypeIcon(packageName: String): Drawable = iconCache.getOrPut(key = packageName) {
         context.packageManager.getApplicationIcon(packageName)
     }
 
-    private fun getCustomTypeIcon(iconPackPackageName: String, packageName: String): Drawable = iconCache.getOrPut(packageName) {
+    private fun getCustomTypeIcon(iconPackPackageName: String, packageName: String): Drawable = iconCache.getOrPut(key = packageName) {
         val componentName = context.packageManager.getLaunchIntentForPackage(packageName)?.component
         val key = componentName?.toString() ?: packageName
         val iconPack = iconPackFor(packageName = iconPackPackageName)
-        iconPack.drawableFor(componentName = key) ?: getSystemTypeIcon(packageName)
+        iconPack.drawableFor(componentName = key) ?: getSystemTypeIcon(packageName = packageName)
     }
 }

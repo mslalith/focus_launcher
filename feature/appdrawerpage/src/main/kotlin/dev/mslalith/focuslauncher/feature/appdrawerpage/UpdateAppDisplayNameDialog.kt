@@ -20,7 +20,7 @@ internal fun UpdateAppDisplayNameDialog(
     onUpdateDisplayName: (String) -> Unit,
     onClose: () -> Unit
 ) {
-    var displayName by remember { mutableStateOf(app.displayName) }
+    var displayName by remember { mutableStateOf(value = app.displayName) }
 
     fun onUpdateClick() {
         onUpdateDisplayName(displayName)
@@ -41,9 +41,7 @@ internal fun UpdateAppDisplayNameDialog(
             )
         },
         confirmButton = {
-            Button(
-                onClick = ::onUpdateClick
-            ) {
+            Button(onClick = ::onUpdateClick) {
                 Text(text = "Update")
             }
         },

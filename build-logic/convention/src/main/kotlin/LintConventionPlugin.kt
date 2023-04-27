@@ -11,8 +11,8 @@ class LintConventionPlugin : Plugin<Project> {
 
         val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
         dependencies {
-            add("implementation", project(":core:lint"))
-            add("detektPlugins", libs.findLibrary("detekt.formatting").get())
+            add(configurationName = "implementation", project(":core:lint"))
+            add(configurationName = "detektPlugins", libs.findLibrary("detekt.formatting").get())
         }
     }
 }

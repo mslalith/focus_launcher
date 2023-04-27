@@ -29,7 +29,7 @@ internal fun AppsGrid(
         columns = GridCells.Fixed(count = columnCount),
         modifier = Modifier.padding(horizontal = 24.dp)
     ) {
-        repeat(columnCount) {
+        repeat(times = columnCount) {
             item { VerticalSpacer(spacing = topSpacing) }
         }
 
@@ -45,7 +45,7 @@ internal fun AppsGrid(
             )
         }
 
-        repeat(columnCount) {
+        repeat(times = columnCount) {
             item { VerticalSpacer(spacing = bottomSpacing) }
         }
     }

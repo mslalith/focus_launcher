@@ -16,23 +16,24 @@ internal class FavoritesRepoImpl @Inject constructor(
     private val appsDao: AppsDao,
     private val favoriteAppsDao: FavoriteAppsDao
 ) : FavoritesRepo {
+
     override val onlyFavoritesFlow: Flow<List<App>> = favoriteAppsDao.getFavoriteAppsFlow()
-        .combine(appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->
+        .combine(flow = appsDao.getAllAppsFlow()) { onlyFavorites, allApps ->
             onlyFavorites.filter { favorite ->
                 allApps.any { it.packageName == favorite.packageName }
             }.mapNotNull {
-                val appRoom = appsDao.getAppBy(it.packageName)
+                val appRoom = appsDao.getAppBy(packageName = it.packageName)
                 appRoom?.let(AppRoom::toApp)
             }
         }
 
     override suspend fun addToFavorites(app: App) {
-        favoriteAppsDao.addFavorite(app.toFavoriteAppRoom())
+        favoriteAppsDao.addFavorite(favoriteApp = app.toFavoriteAppRoom())
     }
 
     override suspend fun addToFavorites(apps: List<App>) {
         val favoriteAppRoomList = apps.map(App::toFavoriteAppRoom)
-        favoriteAppsDao.addFavorites(favoriteAppRoomList)
+        favoriteAppsDao.addFavorites(favoriteApps = favoriteAppRoomList)
     }
 
     override suspend fun reorderFavorite(app: App, withApp: App) {
@@ -50,7 +51,7 @@ internal class FavoritesRepoImpl @Inject constructor(
 
     override suspend fun removeFromFavorites(packageName: String) {
         val appRoom = appsDao.getAppBy(packageName) ?: error("$packageName app was not found in Database")
-        favoriteAppsDao.removeFavorite(appRoom.toFavoriteAppRoom())
+        favoriteAppsDao.removeFavorite(favoriteApp = appRoom.toFavoriteAppRoom())
     }
 
     override suspend fun clearFavorites() = favoriteAppsDao.clearFavoriteApps()

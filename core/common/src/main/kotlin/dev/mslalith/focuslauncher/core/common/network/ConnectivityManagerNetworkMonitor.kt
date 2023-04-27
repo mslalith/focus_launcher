@@ -22,18 +22,18 @@ internal class ConnectivityManagerNetworkMonitor @Inject constructor(
 
         val callback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                channel.trySend(isCurrentlyConnected())
+                channel.trySend(element = isCurrentlyConnected())
             }
 
             override fun onLost(network: Network) {
-                channel.trySend(isCurrentlyConnected())
+                channel.trySend(element = isCurrentlyConnected())
             }
 
             override fun onCapabilitiesChanged(
                 network: Network,
                 networkCapabilities: NetworkCapabilities
             ) {
-                channel.trySend(isCurrentlyConnected())
+                channel.trySend(element = isCurrentlyConnected())
             }
         }
 
@@ -44,7 +44,7 @@ internal class ConnectivityManagerNetworkMonitor @Inject constructor(
             callback
         )
 
-        channel.trySend(isCurrentlyConnected())
+        channel.trySend(element = isCurrentlyConnected())
 
         awaitClose {
             connectivityManager?.unregisterNetworkCallback(callback)
