@@ -12,7 +12,6 @@ import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
 import dev.mslalith.focuslauncher.screens.hideapps.HideAppsScreen
 import dev.mslalith.focuslauncher.screens.iconpack.IconPackScreen
 import dev.mslalith.focuslauncher.screens.launcher.LauncherScreen
-import dev.mslalith.focuslauncher.ui.views.MainContent
 
 @Composable
 fun AppNavigator() {
@@ -33,9 +32,7 @@ fun AppNavigator() {
 
 private fun NavGraphBuilder.launcherScreen() {
     composable(route = Screen.Launcher.id) {
-        MainContent {
-            LauncherScreen()
-        }
+        LauncherScreen()
     }
 }
 

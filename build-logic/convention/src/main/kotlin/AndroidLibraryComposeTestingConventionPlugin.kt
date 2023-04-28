@@ -19,8 +19,8 @@ class AndroidLibraryComposeTestingConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                add(configurationName = "testImplementation", libs.findLibrary("androidx-compose-ui-test").get())
-                add(configurationName = "debugImplementation", libs.findLibrary("androidx-compose-ui-testManifest").get())
+                add(configurationName = "testImplementation", libs.findLibrary("androidx.compose.ui.test").get())
+                add(configurationName = "debugImplementation", libs.findLibrary("androidx.compose.ui.testManifest").get())
 
                 add(configurationName = "implementation", project(":core:testing-compose"))
                 add(configurationName = "testImplementation", project(":core:testing-compose"))

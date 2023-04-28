@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,7 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZON
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_END_PADDING
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppDrawerListItem(
     app: AppWithIcon,
@@ -60,7 +59,7 @@ internal fun AppDrawerListItem(
                 )
             }
         } else null,
-        headlineText = {
+        headlineContent = {
             Text(
                 text = app.displayName,
                 style = MaterialTheme.typography.bodyLarge,

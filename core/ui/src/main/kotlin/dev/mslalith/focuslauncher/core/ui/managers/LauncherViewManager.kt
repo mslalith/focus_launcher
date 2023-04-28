@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.core.ui.managers
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 class LauncherViewManager constructor(
     private val coroutineScope: CoroutineScope,
     private val snackbarHostState: SnackbarHostState,
-    val bottomSheetState: ModalBottomSheetState
+    private val bottomSheetState: SheetState
 ) {
 
     private val _sheetContentTypeFlow = MutableStateFlow<(@Composable () -> Unit)?>(value = null)

@@ -20,7 +20,6 @@ androidxTestRunner = "1.5.2"
 benchmarkMacroJunit4 = "1.1.1"
 detekt = "1.23.0-RC2"
 espressoCore = "3.5.1"
-googleMaterial = "1.8.0"
 hilt = "2.45"
 hiltCompiler = "1.0.0"
 junit4 = "4.13.2"
@@ -31,6 +30,7 @@ kotlinxSerialization = "1.5.0"
 kover = "0.6.1"
 ksp = "1.8.20-1.0.11"
 ktorClient = "2.3.0"
+material3 = "1.1.0-rc01"
 mockk = "1.13.5"
 osmdroid = "6.1.16"
 robolectric = "4.10"
@@ -55,8 +55,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "androidxPalette" }
 androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTestCore" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
@@ -65,7 +64,6 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestJunit" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }

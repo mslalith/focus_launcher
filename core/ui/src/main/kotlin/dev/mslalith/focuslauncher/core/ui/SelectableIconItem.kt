@@ -37,6 +37,6 @@ fun SelectableIconItem(
                 tint = contentColor
             )
         },
-        headlineText = { Text(text = text) }
+        headlineContent = { Text(text = text) }
     )
 }

@@ -22,8 +22,8 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
 internal fun PreviewLunarCalendar(
     showLunarPhase: Boolean,
     horizontalPadding: Dp = 24.dp,
-    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     val height = 74.dp
 

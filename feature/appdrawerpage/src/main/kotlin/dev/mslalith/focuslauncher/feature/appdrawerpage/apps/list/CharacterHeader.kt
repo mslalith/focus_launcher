@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +20,6 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZONTAL_PADDING
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CharacterHeader(
     character: Char,
@@ -32,7 +30,7 @@ internal fun CharacterHeader(
         colors = ListItemDefaults.colors(
             containerColor = Color.Transparent
         ),
-        headlineText = {
+        headlineContent = {
             Box(
                 modifier = Modifier
                     .padding(start = ITEM_START_PADDING - ICON_INNER_HORIZONTAL_PADDING)

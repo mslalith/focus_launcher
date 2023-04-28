@@ -62,7 +62,6 @@ dependencies {
     implementation(project(":screens:about"))
     implementation(project(":feature:settingspage"))
 
-    implementation(libs.google.material)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.accompanist.systemuicontroller)

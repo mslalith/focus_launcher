@@ -13,8 +13,8 @@ import dev.mslalith.focuslauncher.core.common.getOrNull
 @Composable
 fun QuoteForYou(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     QuoteForYou(
         modifier = modifier,

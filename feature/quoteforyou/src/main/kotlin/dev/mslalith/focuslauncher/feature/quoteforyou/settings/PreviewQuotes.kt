@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.feature.quoteforyou.settings
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,13 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
 
 @Composable
 internal fun PreviewQuotes(
-    showQuotes: Boolean
+    showQuotes: Boolean,
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     val height = 72.dp
     val horizontalPadding = 24.dp
@@ -30,9 +34,13 @@ internal fun PreviewQuotes(
             .padding(horizontal = horizontalPadding)
             .padding(top = 16.dp, bottom = 16.dp)
             .clip(shape = MaterialTheme.shapes.small)
+            .background(color = backgroundColor)
     ) {
         if (it) {
-            QuoteForYou()
+            QuoteForYou(
+                backgroundColor = backgroundColor,
+                contentColor = contentColor
+            )
         } else {
             Box(
                 modifier = Modifier
@@ -43,7 +51,7 @@ internal fun PreviewQuotes(
                 Text(
                     text = "Enable Quotes to preview",
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = contentColor
                 )
             }
         }

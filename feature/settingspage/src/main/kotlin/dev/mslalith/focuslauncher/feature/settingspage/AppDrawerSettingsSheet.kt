@@ -31,7 +31,6 @@ internal fun AppDrawerSettingsSheet(
     )
 
     Column {
-        VerticalSpacer(spacing = 24.dp)
         SettingsSelectableChooserItem(
             text = "Apps View Type",
             subText = appDrawerViewType.text,

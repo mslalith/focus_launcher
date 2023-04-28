@@ -2,16 +2,10 @@ package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.filter
-import androidx.compose.ui.test.filterToOne
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -24,7 +18,7 @@ import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedApp
-import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForSelectedAppsToUpdate
+import dev.mslalith.focuslauncher.core.testing.compose.extensions.printToConsole
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -102,27 +96,29 @@ class EditFavoritesScreenKtTest {
 
     @Test
     fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
-        TestApps.all.forEach {
-            favoriteNodes.filterToOne(matcher = hasText(text = it.displayName)).assertSelectedApp(
-                selectedApp = it.toSelectedAppWith(isSelected = false)
+        TestApps.all.forEach { app ->
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
+                selectedApp = app.toSelectedAppWith(isSelected = false)
             )
         }
     }
 
     @Test
     fun `2 - when all apps are added to favorite, every item in the list must be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
-        favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
-            favoriteNodes[index].performClick()
+        TestApps.all.forEach { app ->
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
+                selectedApp = app.toSelectedAppWith(isSelected = false)
+            )
         }
 
-        favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = TestApps.all.toSelectedAppWith(isSelected = true)
-        )
+        TestApps.all.forEach { app ->
+            onNodeWithTag(testTag = app.packageName).performClick()
+        }
 
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true)
             )
         }
@@ -130,29 +126,22 @@ class EditFavoritesScreenKtTest {
 
     @Test
     fun `3 - when favorites are cleared, every item in the list must not be selected`() = with(composeTestRule) {
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
-        favoriteNodes.fetchSemanticsNodes().forEachIndexed { index, _ ->
-            favoriteNodes[index].performClick()
+        TestApps.all.forEach { app ->
+            onNodeWithTag(testTag = app.packageName).performClick()
         }
 
-        favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = TestApps.all.toSelectedAppWith(isSelected = true)
-        )
-
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(hasText(app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = true)
             )
         }
 
         onNodeWithTag(testTag = TestTags.TAG_CLEAR_FAVORITES_FAB).performClick()
 
-        favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = TestApps.all.toSelectedAppWith(isSelected = false)
-        )
-
         TestApps.all.forEach { app ->
-            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false)
             )
         }
@@ -166,17 +155,16 @@ class EditFavoritesScreenKtTest {
 
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
 
         apps.forEach { app ->
-            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false)
             )
         }
 
         hiddenApps.forEach { app ->
-            val appNodes = favoriteNodes.filter(matcher = hasText(text = app.displayName)).fetchSemanticsNodes()
-            assertThat(appNodes.isEmpty()).isTrue()
+            onNodeWithTag(testTag = app.packageName).assertDoesNotExist()
         }
     }
 
@@ -187,20 +175,17 @@ class EditFavoritesScreenKtTest {
         runBlocking { hiddenAppsRepo.addToHiddenApps(apps = hiddenApps) }
 
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
 
         apps.forEach { app ->
-            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false, disabled = false)
             )
         }
 
-        favoriteNodes.waitForSelectedAppsToUpdate(
-            selectedApps = hiddenApps.toSelectedAppWith(isSelected = false, disabled = true)
-        )
-
         hiddenApps.forEach { app ->
-            favoriteNodes.filter(matcher = hasText(text = app.displayName)).onFirst().assertSelectedApp(
+            onNodeWithTag(testTag = app.packageName).printToConsole()
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
                 selectedApp = app.toSelectedAppWith(isSelected = false, disabled = true)
             )
         }
@@ -212,9 +197,9 @@ class EditFavoritesScreenKtTest {
         runBlocking { hiddenAppsRepo.addToHiddenApps(apps = listOf(hiddenApp)) }
 
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
-        val favoriteNodes = onAllNodesWithTag(testTag = TestTags.TAG_FAVORITES_LIST_ITEM)
 
-        favoriteNodes.filter(matcher = hasText(text = hiddenApp.displayName)).onFirst().apply {
+        onNodeWithTag(testTag = hiddenApp.packageName).apply {
+            printToConsole()
             assertSelectedApp(selectedApp = hiddenApp.toSelectedAppWith(isSelected = false, disabled = true))
             performClick()
         }
@@ -228,8 +213,3 @@ private fun App.toSelectedAppWith(
     isSelected: Boolean = false,
     disabled: Boolean = false
 ): SelectedApp = SelectedApp(app = this, isSelected = isSelected, disabled = disabled)
-
-private fun List<App>.toSelectedAppWith(
-    isSelected: Boolean = false,
-    disabled: Boolean = false
-): List<SelectedApp> = map { it.toSelectedAppWith(isSelected = isSelected, disabled = disabled) }

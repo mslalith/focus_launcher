@@ -2,7 +2,6 @@ package dev.mslalith.focuslauncher.core.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -10,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectableCheckboxItem(
     modifier: Modifier = Modifier,
@@ -28,7 +26,7 @@ fun SelectableCheckboxItem(
             headlineColor = if (disabled) disabledColor else onBackgroundColor,
             leadingIconColor = if (disabled) disabledColor else onBackgroundColor
         ),
-        headlineText = {
+        headlineContent = {
             Text(text = text)
         },
         leadingContent = {
