@@ -49,9 +49,11 @@ internal fun FavoritesList(
             items = favorites
         ) { favorite ->
             FavoriteListItem(
-                modifier = Modifier.testSemantics(tag = TestTags.TAG_FAVORITES_LIST_ITEM) {
-                    testSelectedApp(selectedApp = favorite)
-                },
+                modifier = Modifier
+                    .testSemantics(tag = favorite.app.packageName)
+                    .testSemantics(tag = TestTags.TAG_FAVORITES_LIST_ITEM) {
+                        testSelectedApp(selectedApp = favorite)
+                    },
                 selectedApp = favorite,
                 onAppClick = { toggleFavorite(selectedApp = favorite, isHidden = favorite.disabled) }
             )
