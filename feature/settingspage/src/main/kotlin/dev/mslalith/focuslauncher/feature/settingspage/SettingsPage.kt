@@ -123,6 +123,7 @@ private fun Widgets(
                     LunarPhaseSettingsSheet(
                         properties = LunarPhaseSettingsProperties(
                             navigateToCurrentPlace = {
+                                viewManager.hideBottomSheet()
                                 navigateTo(Screen.CurrentPlace)
                             }
                         )
