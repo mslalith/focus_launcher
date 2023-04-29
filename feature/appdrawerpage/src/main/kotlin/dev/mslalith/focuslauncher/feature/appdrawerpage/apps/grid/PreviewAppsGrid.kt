@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
@@ -22,7 +23,9 @@ import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 @Composable
 fun PreviewAppsGrid(
     modifier: Modifier = Modifier,
-    appsState: LoadingState<List<AppWithIcon>>
+    appsState: LoadingState<List<AppWithIcon>>,
+    topSpacing: Dp = 16.dp,
+    bottomSpacing: Dp = 16.dp
 ) {
     Crossfade(
         label = "Apps Grid Cross Fade",
@@ -31,7 +34,11 @@ fun PreviewAppsGrid(
     ) { appsLoadingState ->
         when (appsLoadingState) {
             is LoadingState.Loaded -> {
-                PreviewAppsContent(apps = appsLoadingState.value)
+                PreviewAppsContent(
+                    apps = appsLoadingState.value,
+                    topSpacing = topSpacing,
+                    bottomSpacing = bottomSpacing
+                )
             }
             LoadingState.Loading -> {
                 Box(
@@ -49,10 +56,11 @@ fun PreviewAppsGrid(
 @Composable
 private fun PreviewAppsContent(
     modifier: Modifier = Modifier,
-    apps: List<AppWithIcon>
+    apps: List<AppWithIcon>,
+    columnCount: Int = 4,
+    topSpacing: Dp,
+    bottomSpacing: Dp
 ) {
-    val columnCount = 4
-    val verticalSpacing = 16.dp
 
     Box(
         modifier = modifier
@@ -65,7 +73,7 @@ private fun PreviewAppsContent(
             columns = GridCells.Fixed(count = columnCount)
         ) {
             repeat(times = columnCount) {
-                item { VerticalSpacer(spacing = verticalSpacing) }
+                item { VerticalSpacer(spacing = topSpacing) }
             }
 
             items(
@@ -81,7 +89,7 @@ private fun PreviewAppsContent(
             }
 
             repeat(times = columnCount) {
-                item { VerticalSpacer(spacing = verticalSpacing) }
+                item { VerticalSpacer(spacing = bottomSpacing) }
             }
         }
     }
