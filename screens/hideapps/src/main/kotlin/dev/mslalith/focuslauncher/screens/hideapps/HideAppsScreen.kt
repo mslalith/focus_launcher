@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.screens.hideapps.ui.HiddenAppsList
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
 
@@ -28,6 +29,8 @@ internal fun HideAppsScreen(
     hideAppsViewModel: HideAppsViewModel,
     goBack: () -> Unit
 ) {
+    StatusBarColor(hasTopAppBar = true)
+
     Scaffold(
         topBar = {
             AppBarWithBackIcon(

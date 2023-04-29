@@ -21,6 +21,7 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
+import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -82,10 +83,12 @@ class HideAppsScreenKtTest {
             favoritesRepo.addToFavorites(app = favoriteApp)
         }
         composeTestRule.setContent {
-            HideAppsScreen(
-                hideAppsViewModel = viewModel,
-                goBack = {}
-            )
+            ProvideSystemUiController {
+                HideAppsScreen(
+                    hideAppsViewModel = viewModel,
+                    goBack = {}
+                )
+            }
         }
     }
 

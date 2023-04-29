@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
@@ -90,6 +91,7 @@ internal fun IconPackScreen(
         }
     }
 
+    StatusBarColor(hasTopAppBar = true)
 
     BoxWithConstraints {
         val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }

@@ -20,6 +20,7 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
+import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -78,10 +79,12 @@ class EditFavoritesScreenKtTest {
             appDrawerRepo.addApps(apps = TestApps.all)
         }
         composeTestRule.setContent {
-            EditFavoritesScreen(
-                editFavoritesViewModel = viewModel,
-                goBack = {}
-            )
+            ProvideSystemUiController {
+                EditFavoritesScreen(
+                    editFavoritesViewModel = viewModel,
+                    goBack = {}
+                )
+            }
         }
     }
 
