@@ -92,9 +92,7 @@ internal fun MoreOptionsBottomSheet(
                 contentColor = contentColor,
                 confirmText = "Yes, Hide",
                 onConfirm = {
-                    closeAfterAction {
-                        if (it) addToHiddenApps(appWithIcon.toApp())
-                    }
+                    closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
                 }
             )
         } else {

@@ -30,9 +30,7 @@ internal fun HiddenAppListItem(
             ),
             backgroundColor = MaterialTheme.colorScheme.surface,
             confirmText = "Yes, Hide",
-            onConfirm = {
-                if (it) onAppClick()
-            }
+            onConfirm = onAppClick
         )
     } else {
         SelectableCheckboxItem(

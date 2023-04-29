@@ -27,7 +27,8 @@ fun ConfirmSelectableItem(
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     confirmText: String = "Confirm",
     cancelText: String = "Cancel",
-    onConfirm: (Boolean) -> Unit
+    onCancel: () -> Unit = {},
+    onConfirm: () -> Unit
 ) {
     var showConfirm by remember { mutableStateOf(value = false) }
 
@@ -70,7 +71,7 @@ fun ConfirmSelectableItem(
                         textColor = contentColor,
                         onClick = {
                             showConfirm = false
-                            onConfirm(false)
+                            onCancel()
                         }
                     )
                     HorizontalSpacer(spacing = 8.dp)
@@ -81,7 +82,7 @@ fun ConfirmSelectableItem(
                         textColor = MaterialTheme.colorScheme.onPrimary,
                         onClick = {
                             showConfirm = false
-                            onConfirm(true)
+                            onConfirm()
                         }
                     )
                 }
