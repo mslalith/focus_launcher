@@ -1,7 +1,9 @@
 package dev.mslalith.focuslauncher.screens.iconpack
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -74,9 +75,8 @@ internal fun IconPackScreen(
     onDoneClick: () -> Unit,
     goBack: () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
     val density = LocalDensity.current
-    var bottomSheetHeight by remember { mutableStateOf(value = 0.dp) }
+    var bottomSheetTopOffset by remember { mutableStateOf(value = 0.dp) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
@@ -86,45 +86,47 @@ internal fun IconPackScreen(
 
     LaunchedEffect(key1 = bottomSheetScaffoldState.bottomSheetState) {
         snapshotFlow { bottomSheetScaffoldState.bottomSheetState.requireOffset() }.collectLatest {
-            density.run {
-                val value = configuration.screenHeightDp.dp - it.toDp()
-                bottomSheetHeight = maxOf(0.dp, value)
-            }
+            density.run { bottomSheetTopOffset = it.toDp() }
         }
     }
 
 
-    BottomSheetScaffold(
-        scaffoldState = bottomSheetScaffoldState,
-        sheetSwipeEnabled = false,
-        topBar = {
-            AppBarWithBackIcon(
-                title = "Icon Pack",
-                onBackPressed = goBack,
-                actions = {
-                    RoundIcon(
-                        iconRes = R.drawable.ic_check,
-                        contentDescription = "Done icon",
-                        enabled = iconPackState.canSave,
-                        onClick = onDoneClick
-                    )
-                }
-            )
-        },
-        sheetContent = {
-            IconPackListSheet(
-                modifier = Modifier.navigationBarsPadding(),
-                iconPackState = iconPackState,
-                onIconPackClick = onIconPackClick
+    BoxWithConstraints {
+        val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }
+
+        BottomSheetScaffold(
+            scaffoldState = bottomSheetScaffoldState,
+            containerColor = MaterialTheme.colorScheme.background,
+            sheetSwipeEnabled = false,
+            topBar = {
+                AppBarWithBackIcon(
+                    title = "Icon Pack",
+                    onBackPressed = goBack,
+                    actions = {
+                        RoundIcon(
+                            iconRes = R.drawable.ic_check,
+                            contentDescription = "Done icon",
+                            enabled = iconPackState.canSave,
+                            onClick = onDoneClick
+                        )
+                    }
+                )
+            },
+            sheetContent = {
+                IconPackListSheet(
+                    modifier = Modifier.navigationBarsPadding(),
+                    iconPackState = iconPackState,
+                    onIconPackClick = onIconPackClick
+                )
+            }
+        ) {
+            PreviewAppsGrid(
+                appsState = iconPackState.allApps,
+                topSpacing = 16.dp,
+                bottomSpacing = 16.dp,
+                modifier = Modifier.padding(bottom = sheetHeight)
             )
         }
-    ) { paddingValues ->
-        PreviewAppsGrid(
-            appsState = iconPackState.allApps,
-            modifier = Modifier
-                .padding(paddingValues = paddingValues)
-                .padding(bottom = bottomSheetHeight)
-        )
     }
 }
 
@@ -151,6 +153,7 @@ private fun IconPackListSheet(
 
     LazyRow(
         modifier = modifier
+            .fillMaxWidth()
             .horizontalFadeOutEdge(
                 width = 16.dp,
                 color = MaterialTheme.colorScheme.surface

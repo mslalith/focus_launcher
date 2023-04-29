@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun SelectableCheckboxItem(
@@ -15,16 +16,18 @@ fun SelectableCheckboxItem(
     text: String,
     checked: Boolean,
     disabled: Boolean = false,
+    containerColor: Color = Color.Transparent,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
-    val onBackgroundColor = MaterialTheme.colorScheme.onSurface
-    val disabledColor = onBackgroundColor.copy(alpha = 0.38f)
+    val disabledColor = contentColor.copy(alpha = 0.38f)
 
     ListItem(
         modifier = modifier.clickable { onClick() },
         colors = ListItemDefaults.colors(
-            headlineColor = if (disabled) disabledColor else onBackgroundColor,
-            leadingIconColor = if (disabled) disabledColor else onBackgroundColor
+            containerColor = containerColor,
+            headlineColor = if (disabled) disabledColor else contentColor,
+            leadingIconColor = if (disabled) disabledColor else contentColor
         ),
         headlineContent = {
             Text(text = text)

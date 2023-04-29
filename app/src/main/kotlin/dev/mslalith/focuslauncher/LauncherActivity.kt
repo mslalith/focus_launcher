@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.domain.favorites.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
-import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
 import dev.mslalith.focuslauncher.navigator.AppNavigator
@@ -36,10 +35,8 @@ class LauncherActivity : ComponentActivity() {
             ProvideSystemUiController {
                 ProvideNavController {
                     FocusLauncherTheme {
-                        ProvideBottomSheetManager {
-                            Surface {
-                                AppNavigator()
-                            }
+                        Surface {
+                            AppNavigator()
                         }
                     }
                 }
