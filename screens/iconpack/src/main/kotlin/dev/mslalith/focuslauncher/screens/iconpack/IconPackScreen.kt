@@ -96,6 +96,7 @@ internal fun IconPackScreen(
 
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
+            containerColor = MaterialTheme.colorScheme.background,
             sheetSwipeEnabled = false,
             topBar = {
                 AppBarWithBackIcon(
