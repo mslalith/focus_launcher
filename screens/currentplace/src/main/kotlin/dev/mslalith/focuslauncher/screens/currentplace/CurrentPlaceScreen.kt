@@ -17,6 +17,7 @@ import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
@@ -64,6 +65,8 @@ internal fun CurrentPlaceScreen(
     onDoneClick: () -> Unit,
     onLocationChange: (LatLng) -> Unit
 ) {
+    StatusBarColor(hasTopAppBar = true)
+
     Scaffold(
         topBar = {
             AppBarWithBackIcon(

@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.screens.editfavorites.ui.FavoritesList
 import dev.mslalith.focuslauncher.screens.editfavorites.ui.HiddenAppActionText
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
@@ -37,6 +38,8 @@ internal fun EditFavoritesScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    StatusBarColor(hasTopAppBar = true)
 
     Scaffold(
         snackbarHost = {

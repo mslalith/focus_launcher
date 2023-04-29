@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.about.ui.AppInfo
 import dev.mslalith.focuslauncher.screens.about.ui.Credits
@@ -19,6 +20,8 @@ import dev.mslalith.focuslauncher.screens.about.ui.MadeWithLove
 fun AboutScreen(
     goBack: () -> Unit
 ) {
+    StatusBarColor(hasTopAppBar = true)
+
     Scaffold(
         topBar = {
             AppBarWithBackIcon(

@@ -12,6 +12,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
+import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
 import dev.mslalith.focuslauncher.feature.homepage.HomePage
@@ -34,6 +35,8 @@ internal fun LauncherScreen(
     val pagerState = rememberPagerState(initialPage = 1)
 
     val viewManager = LocalLauncherViewManager.current
+
+    StatusBarColor(hasTopAppBar = false)
 
     LaunchedEffect(key1 = Unit) {
         launcherViewModel.loadApps()
