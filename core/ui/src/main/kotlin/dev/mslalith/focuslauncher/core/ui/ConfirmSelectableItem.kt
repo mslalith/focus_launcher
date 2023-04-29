@@ -19,6 +19,7 @@ import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 
 @Composable
 fun ConfirmSelectableItem(
+    modifier: Modifier = Modifier,
     text: String,
     confirmMessage: String,
     itemType: ConfirmSelectableItemType,
@@ -26,11 +27,14 @@ fun ConfirmSelectableItem(
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     confirmText: String = "Confirm",
     cancelText: String = "Cancel",
-    onConfirm: (Boolean) -> Unit
+    onCancel: () -> Unit = {},
+    onConfirm: () -> Unit
 ) {
     var showConfirm by remember { mutableStateOf(value = false) }
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         when (itemType) {
             is ConfirmSelectableItemType.Icon -> SelectableIconItem(
                 text = text,
@@ -67,7 +71,7 @@ fun ConfirmSelectableItem(
                         textColor = contentColor,
                         onClick = {
                             showConfirm = false
-                            onConfirm(false)
+                            onCancel()
                         }
                     )
                     HorizontalSpacer(spacing = 8.dp)
@@ -78,7 +82,7 @@ fun ConfirmSelectableItem(
                         textColor = MaterialTheme.colorScheme.onPrimary,
                         onClick = {
                             showConfirm = false
-                            onConfirm(true)
+                            onConfirm()
                         }
                     )
                 }

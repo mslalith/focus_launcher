@@ -18,7 +18,8 @@ import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedApp
-import dev.mslalith.focuslauncher.core.testing.compose.extensions.printToConsole
+import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
+import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -97,19 +98,18 @@ class EditFavoritesScreenKtTest {
     @Test
     fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
     }
 
     @Test
     fun `2 - when all apps are added to favorite, every item in the list must be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
 
         TestApps.all.forEach { app ->
@@ -117,33 +117,31 @@ class EditFavoritesScreenKtTest {
         }
 
         TestApps.all.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = true)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = true)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
     }
 
     @Test
     fun `3 - when favorites are cleared, every item in the list must not be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
+            waitForTag(testTag = app.packageName)
             onNodeWithTag(testTag = app.packageName).performClick()
         }
 
         TestApps.all.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = true)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = true)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
 
         onNodeWithTag(testTag = TestTags.TAG_CLEAR_FAVORITES_FAB).performClick()
 
         TestApps.all.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
     }
 
@@ -157,10 +155,9 @@ class EditFavoritesScreenKtTest {
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
 
         apps.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
 
         hiddenApps.forEach { app ->
@@ -177,17 +174,15 @@ class EditFavoritesScreenKtTest {
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
 
         apps.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false, disabled = false)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false, disabled = false)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
 
         hiddenApps.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).printToConsole()
-            onNodeWithTag(testTag = app.packageName).assertSelectedApp(
-                selectedApp = app.toSelectedAppWith(isSelected = false, disabled = true)
-            )
+            val selectedApp = app.toSelectedAppWith(isSelected = false, disabled = true)
+            waitForApp(selectedApp = selectedApp)
+            onNodeWithTag(testTag = app.packageName).assertSelectedApp(selectedApp = selectedApp)
         }
     }
 
@@ -199,8 +194,9 @@ class EditFavoritesScreenKtTest {
         onNodeWithTag(testTag = TestTags.TAG_TOGGLE_HIDDEN_APPS).performClick()
 
         onNodeWithTag(testTag = hiddenApp.packageName).apply {
-            printToConsole()
-            assertSelectedApp(selectedApp = hiddenApp.toSelectedAppWith(isSelected = false, disabled = true))
+            val selectedApp = hiddenApp.toSelectedAppWith(isSelected = false, disabled = true)
+            waitForApp(selectedApp = selectedApp)
+            assertSelectedApp(selectedApp = selectedApp)
             performClick()
         }
 

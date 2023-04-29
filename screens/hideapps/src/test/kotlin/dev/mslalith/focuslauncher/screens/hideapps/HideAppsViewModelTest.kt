@@ -10,9 +10,9 @@ import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
-import dev.mslalith.focuslauncher.screens.hideapps.model.HiddenApp
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ class HideAppsViewModelTest : CoroutineTest() {
         backgroundScope.launch {
             viewModel.hiddenAppsFlow.test {
                 assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(TestApps.all.toHiddenAppWith(isSelected = false))
+                assertThat(awaitItem()).isEqualTo(TestApps.all.toSelectedHiddenAppWith(isSelected = false))
             }
         }
     }
@@ -81,7 +81,7 @@ class HideAppsViewModelTest : CoroutineTest() {
         backgroundScope.launch {
             viewModel.hiddenAppsFlow.test {
                 assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps.toHiddenAppWith(isSelected = true))
+                assertThat(awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
             }
         }
 
@@ -95,8 +95,8 @@ class HideAppsViewModelTest : CoroutineTest() {
         backgroundScope.launch {
             viewModel.hiddenAppsFlow.test {
                 assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps.toHiddenAppWith(isSelected = true))
-                assertThat(awaitItem()).isEqualTo(apps.toHiddenAppWith(isSelected = false))
+                assertThat(awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
+                assertThat(awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = false))
             }
         }
 
@@ -114,8 +114,8 @@ class HideAppsViewModelTest : CoroutineTest() {
             viewModel.hiddenAppsFlow.test {
                 assertThat(awaitItem()).isEmpty()
 
-                assertThat(awaitItem()).isEqualTo(apps.toHiddenAppWith(isSelected = false, isFavorite = true))
-                assertThat(awaitItem()).isEqualTo(apps.toHiddenAppWith(isSelected = true, isFavorite = false))
+                assertThat(awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = false, isFavorite = true))
+                assertThat(awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true, isFavorite = false))
             }
         }
 
@@ -124,12 +124,12 @@ class HideAppsViewModelTest : CoroutineTest() {
     }
 }
 
-private fun App.toHiddenAppWith(
+private fun App.toSelectedHiddenAppWith(
     isSelected: Boolean = false,
     isFavorite: Boolean = false
-): HiddenApp = HiddenApp(app = this, isSelected = isSelected, isFavorite = isFavorite)
+): SelectedHiddenApp = SelectedHiddenApp(app = this, isSelected = isSelected, isFavorite = isFavorite)
 
-private fun List<App>.toHiddenAppWith(
+private fun List<App>.toSelectedHiddenAppWith(
     isSelected: Boolean = false,
     isFavorite: Boolean = false
-): List<HiddenApp> = map { it.toHiddenAppWith(isSelected = isSelected, isFavorite = isFavorite) }
+): List<SelectedHiddenApp> = map { it.toSelectedHiddenAppWith(isSelected = isSelected, isFavorite = isFavorite) }
