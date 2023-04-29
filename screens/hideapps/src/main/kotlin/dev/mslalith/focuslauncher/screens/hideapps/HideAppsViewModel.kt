@@ -7,9 +7,9 @@ import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import dev.mslalith.focuslauncher.screens.hideapps.model.HiddenApp
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -23,8 +23,8 @@ internal class HideAppsViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val hiddenAppsFlow: StateFlow<List<HiddenApp>> = appDrawerRepo.allAppsFlow
-        .map { it.map { app -> HiddenApp(app = app, isSelected = false, isFavorite = false) } }
+    val hiddenAppsFlow: StateFlow<List<SelectedHiddenApp>> = appDrawerRepo.allAppsFlow
+        .map { it.map { app -> SelectedHiddenApp(app = app, isSelected = false, isFavorite = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { hiddenApp ->
                 val isFavorite = onlyFavoritesList.any { it.packageName == hiddenApp.app.packageName }

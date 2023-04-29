@@ -19,6 +19,7 @@ import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 
 @Composable
 fun ConfirmSelectableItem(
+    modifier: Modifier = Modifier,
     text: String,
     confirmMessage: String,
     itemType: ConfirmSelectableItemType,
@@ -30,7 +31,9 @@ fun ConfirmSelectableItem(
 ) {
     var showConfirm by remember { mutableStateOf(value = false) }
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         when (itemType) {
             is ConfirmSelectableItemType.Icon -> SelectableIconItem(
                 text = text,
