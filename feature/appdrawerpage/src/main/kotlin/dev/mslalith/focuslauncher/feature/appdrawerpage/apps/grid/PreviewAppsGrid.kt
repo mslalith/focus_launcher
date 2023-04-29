@@ -30,7 +30,7 @@ fun PreviewAppsGrid(
     Crossfade(
         label = "Apps Grid Cross Fade",
         targetState = appsState,
-        modifier = modifier.padding(horizontal = 24.dp)
+        modifier = modifier
     ) { appsLoadingState ->
         when (appsLoadingState) {
             is LoadingState.Loaded -> {
@@ -68,6 +68,7 @@ private fun PreviewAppsContent(
                 height = 16.dp,
                 color = MaterialTheme.colorScheme.surface
             )
+            .padding(horizontal = 24.dp)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(count = columnCount)
