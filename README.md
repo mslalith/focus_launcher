@@ -1,17 +1,28 @@
-# Focus Launcher [![Build](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml)
+# Focus Launcher
+
+[![Build](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mslalith/focus_launcher/actions/workflows/build.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mslalith/focus_launcher?label=Release)
+![GitHub Repo stars](https://img.shields.io/github/stars/mslalith/focus_launcher?label=Stars)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](/LICENSE)
+
+<a href="https://play.google.com/store/apps/details?id=dev.mslalith.focuslauncher">
+    <img height="80" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+</a>
+
 A minimalist Android Launcher built with Jetpack Compose
 
-![GitHub Preview](https://github.com/mslalith/focus_launcher/blob/main/images/what_is.png)
+![GitHub Preview](/images/what_is.png)
 
-## Features 👓
+## Features
 - Dark mode
+- Icon Packs
 - Lunar Phase info
 - Fancy animated Clock
 - Favorite apps
 - Hide apps
 
 
-## Built With 🛠
+## Built With
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more...
@@ -21,7 +32,7 @@ A minimalist Android Launcher built with Jetpack Compose
   - [Datastore](https://developer.android.com/topic/libraries/architecture/datastore) - Data storage solution that allows you to store key-value pairs or typed objects with protocol buffers.
   - [Room](https://developer.android.com/training/data-storage/room) - A persistence library which provides an abstraction layer over SQLite to allow fluent database access.
   - [Jetpack Compose Navigation](https://developer.android.com/jetpack/compose/navigation) - Navigation refers to the interactions that allow users to navigate across, into, and back out from the different pieces of content within your app
-- [Dependency Injection](https://developer.android.com/training/dependency-injection) -
+- [Dependency Injection](https://developer.android.com/training/dependency-injection)
   - [Hilt-Dagger](https://dagger.dev/hilt/) - Standard library to incorporate Dagger dependency injection into an Android application.
   - [Hilt-ViewModel](https://developer.android.com/training/dependency-injection/hilt-jetpack) - DI for injecting ViewModel.
 - [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose) - Modern UI development toolkit.
@@ -29,27 +40,11 @@ A minimalist Android Launcher built with Jetpack Compose
 - [Ktor](https://ktor.io/) - Lightweight & simple asynchronous HTTP Client
 
 
+## Credits
+- Icons by [Phosphor](https://phosphoricons.com/)
+
+
 ## Donation 💰
 Support this project by buying me a cup of coffee :) 
 
 <a href="https://www.buymeacoffee.com/msLalith" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
-
-## License 🔖
-
-```
-   Copyright 2020 M S Lalith
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       https://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-```
