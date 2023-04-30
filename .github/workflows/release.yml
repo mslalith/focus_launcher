@@ -48,12 +48,23 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Rename APK
+        id: rename
+        run: |
+          file=${{ steps.sign_app.outputs.signedReleaseFile }}
+          dir=$(dirname "$file")
+          filename=$(basename "$file")
+          release_name=$(echo "$file" | sed 's/.*\/\([^-]*-[^-]*-[^-]*\).*/\1/')
+          to_path="$dir/$release_name.apk"
+          echo "::set-output name=to_path::${to_path}"
+          cp "$file" "$to_path"
+
       - name: Upload APK to GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-        run: gh release upload "${{ steps.version.outputs.version }}" "${{ steps.sign_app.outputs.signedReleaseFile }}"
+        run: gh release upload "${{ steps.version.outputs.version }}" "${{ steps.rename.outputs.to_path }}"
 
       - name: Publish release
         uses: release-drafter/release-drafter@v5.23.0
