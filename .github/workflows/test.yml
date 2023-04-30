@@ -37,6 +37,14 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Rename APK
+        run: |
+          dir=$(dirname ${{ steps.sign_app.outputs.signedReleaseFile }})
+          filename=$(basename ${{ steps.sign_app.outputs.signedReleaseFile }})
+          release_name=$(echo ${{ steps.sign_app.outputs.signedReleaseFile }} | sed 's/.*\/\([^-]*-[^-]*-[^-]*\).*/\1/')
+          to_path="$dir/$release_name.apk"
+          cp ${{ steps.sign_app.outputs.signedReleaseFile }} "$to_path"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
