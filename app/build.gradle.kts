@@ -16,6 +16,7 @@ android {
         applicationId = "dev.mslalith.focuslauncher"
         versionCode = 8
         versionName = "0.5.0"
+        setProperty("archivesBaseName", "Focus-Launcher-v$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +41,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     testOptions {
         unitTests.all {
             it.extensions.configure(KoverTaskExtension::class) {
