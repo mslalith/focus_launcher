@@ -1,11 +1,11 @@
 name: PR Build
 
 on:
-  workflow_dispatch:
   pull_request:
   push:
     branches:
       - optimize_workflow
+  workflow_dispatch:
 
 jobs:
   static_analysis:
