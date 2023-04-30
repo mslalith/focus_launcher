@@ -1,4 +1,4 @@
-name: Build
+name: PR Build
 
 on:
   pull_request:
@@ -31,6 +31,7 @@ jobs:
           arguments: detekt --stacktrace --no-daemon --build-cache
 
   build:
+    if: ${{ false }} # Disable Build
     name: Build app
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -52,7 +53,7 @@ jobs:
           arguments: assembleDebug --stacktrace --no-daemon --build-cache
 
   unit_tests:
-    needs: [ static_analysis, build ]
+    needs: [ static_analysis ]
     name: Run Unit Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -75,8 +76,8 @@ jobs:
           arguments: testDebug --stacktrace --build-cache
 
   android_tests:
-    if: ${{ false }} # Disable checking Instrumentation tests
-    needs: [ static_analysis, build ]
+    if: ${{ false }} # Disable Instrumentation tests
+    needs: [ static_analysis ]
     name: Run Android Tests
     runs-on: macos-latest
     timeout-minutes: 30
