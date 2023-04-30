@@ -39,6 +39,7 @@ internal class IconPackXmlParser(
     fun drawableFor(componentName: String): Drawable? {
         val set = iconPackToDrawablesMap[componentName]
         if (set.isNullOrEmpty()) return null
+        @Suppress("DEPRECATION")
         return iconPackResources?.getDrawable(set.first().drawableId)
     }
 

@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
@@ -27,15 +28,24 @@ internal class IconPackManagerImpl @Inject constructor(
     private val _iconPackLoadedTriggerFlow = MutableStateFlow(value = false)
     override val iconPackLoadedTriggerFlow: Flow<Boolean> = _iconPackLoadedTriggerFlow
 
-    @Suppress("DEPRECATION")
     override fun fetchInstalledIconPacks() {
         val packageManager = context.packageManager
-        val themes = packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.GET_META_DATA)
+        val themes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.ResolveInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
+        } else {
+            @Suppress("DEPRECATION")
+            packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.GET_META_DATA)
+        }
 
         _iconPacksFlow.value = themes.mapNotNull {
             val iconPackageName = it.activityInfo.packageName
             try {
-                val applicationInfo = packageManager.getApplicationInfo(iconPackageName, PackageManager.GET_META_DATA)
+                val applicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    packageManager.getApplicationInfo(iconPackageName, PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
+                } else {
+                    @Suppress("DEPRECATION")
+                    packageManager.getApplicationInfo(iconPackageName, PackageManager.GET_META_DATA)
+                }
                 val iconLabel = packageManager.getApplicationLabel(applicationInfo).toString()
                 IconPack(
                     label = iconLabel,
