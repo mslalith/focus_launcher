@@ -1,6 +1,9 @@
-name: Build
+name: Test Workflow
 
 on:
+  push:
+    branches:
+      - optimize_workflow
   workflow_dispatch:
 
 jobs:
