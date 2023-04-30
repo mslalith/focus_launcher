@@ -45,7 +45,7 @@
 #          filename=$(basename "$file")
 #          release_name=$(echo "$file" | sed 's/.*\/\([^-]*-[^-]*-[^-]*\).*/\1/')
 #          to_path="$dir/$release_name.apk"
-#          echo "::set-output name=to_path::${to_path}"
+#          echo "to_path=${to_path}" >> $GITHUB_OUTPUT
 #          cp "$file" "$to_path"
 #
 #      - name: Upload Release APK
