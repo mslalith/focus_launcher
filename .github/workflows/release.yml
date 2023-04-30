@@ -36,13 +36,13 @@ jobs:
       - name: Build release APK
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: assembleDebug --stacktrace --no-daemon --build-cache
+          arguments: assembleRelease --stacktrace --no-daemon --build-cache
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: ${{ github.workspace}}/app/build/outputs/apk/release
+          releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
