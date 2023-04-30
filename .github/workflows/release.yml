@@ -24,7 +24,39 @@ jobs:
           echo "::set-output name=version::${version}"
           echo "::set-output name=major::${major}"
 
-      - uses: release-drafter/release-drafter@v5.23.0
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build release APK
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleDebug --stacktrace --no-daemon --build-cache
+
+      - name: Sign release APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload APK to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: gh release upload "${{ steps.version.outputs.version }}" "${{ steps.sign_app.outputs.signedReleaseFile }}"
+
+      - name: Publish release
+        uses: release-drafter/release-drafter@v5.23.0
         with:
           version: ${{ steps.version.outputs.version }}
           publish: true
