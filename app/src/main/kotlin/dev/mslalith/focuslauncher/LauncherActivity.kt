@@ -7,7 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.mslalith.focuslauncher.core.domain.favorites.PackageActionUseCase
+import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
