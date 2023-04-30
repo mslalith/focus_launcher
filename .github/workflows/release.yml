@@ -59,6 +59,12 @@ jobs:
           echo "to_path=${to_path}" >> $GITHUB_OUTPUT
           cp "$file" "$to_path"
 
+      - name: Upload release APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Release APK
+          path: ${{ steps.rename_apk.outputs.to_path }}
+
       - name: Upload APK to GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,12 +98,11 @@ jobs:
           echo "to_path=${to_path}" >> $GITHUB_OUTPUT
           cp "$file" "$to_path"
 
-      - name: Upload AAB to GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
-        run: gh release upload "v${{ steps.version.outputs.version }}" "${{ steps.rename_aab.outputs.to_path }}"
+      - name: Upload release AAB artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Release AAB
+          path: ${{ steps.rename_aab.outputs.to_path }}
 
       - name: Publish release
         uses: release-drafter/release-drafter@v5.23.0
