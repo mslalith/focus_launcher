@@ -40,7 +40,7 @@ jobs:
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
-        id: sign_app
+        id: sign_app_apk
         with:
           releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
@@ -49,9 +49,9 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Rename APK
-        id: rename
+        id: rename_apk
         run: |
-          file=${{ steps.sign_app.outputs.signedReleaseFile }}
+          file=${{ steps.sign_app_apk.outputs.signedReleaseFile }}
           dir=$(dirname "$file")
           filename=$(basename "$file")
           release_name=$(echo "$file" | sed 's/.*\/\([^-]*-[^-]*-[^-]*\).*/\1/')
@@ -64,7 +64,40 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-        run: gh release upload "v${{ steps.version.outputs.version }}" "${{ steps.rename.outputs.to_path }}"
+        run: gh release upload "v${{ steps.version.outputs.version }}" "${{ steps.rename_apk.outputs.to_path }}"
+
+      - name: Build release AAB
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: bundleRelease --stacktrace --no-daemon --build-cache
+
+      - name: Sign release AAB
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app_aab
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Rename AAB
+        id: rename_aab
+        run: |
+          file=${{ steps.sign_app_aab.outputs.signedReleaseFile }}
+          dir=$(dirname "$file")
+          filename=$(basename "$file")
+          release_name=$(echo "$file" | sed 's/.*\/\([^-]*-[^-]*-[^-]*\).*/\1/')
+          to_path="$dir/$release_name.aab"
+          echo "to_path=${to_path}" >> $GITHUB_OUTPUT
+          cp "$file" "$to_path"
+
+      - name: Upload AAB to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: gh release upload "v${{ steps.version.outputs.version }}" "${{ steps.rename_aab.outputs.to_path }}"
 
       - name: Publish release
         uses: release-drafter/release-drafter@v5.23.0
