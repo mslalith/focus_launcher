@@ -17,7 +17,6 @@ class PackageActionUseCase @Inject constructor(
     private val hiddenAppsRepo: HiddenAppsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) {
-
     suspend operator fun invoke(packageAction: PackageAction) = onPackageAction(packageAction = packageAction)
 
     private suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
