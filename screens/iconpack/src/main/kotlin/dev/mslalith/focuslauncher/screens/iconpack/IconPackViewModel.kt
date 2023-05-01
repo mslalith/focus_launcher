@@ -1,22 +1,20 @@
 package dev.mslalith.focuslauncher.screens.iconpack
 
-import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
-import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsWithIconsGivenIconPackTypeUseCase
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
+import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,14 +25,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
-    private val iconPackManager: IconPackManager,
-    private val iconProvider: IconProvider,
+    private val getAllAppsWithIconsGivenIconPackTypeUseCase: GetAllAppsWithIconsGivenIconPackTypeUseCase,
+    getIconPackAppsWithIconsUseCase: GetIconPackAppsWithIconsUseCase,
+    fetchIconPacksUseCase: FetchIconPacksUseCase,
+    private val loadIconPackUseCase: LoadIconPackUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
-    private val appDrawerRepo: AppDrawerRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
@@ -49,7 +49,7 @@ internal class IconPackViewModel @Inject constructor(
     )
 
     init {
-        iconPackManager.fetchInstalledIconPacks()
+        fetchIconPacksUseCase()
         generalSettingsRepo.iconPackTypeFlow
             .onEach { _iconPackType.value = it }
             .launchIn(scope = viewModelScope)
@@ -60,12 +60,8 @@ internal class IconPackViewModel @Inject constructor(
             .launchIn(scope = viewModelScope)
     }
 
-    private val iconPackApps: Flow<List<App>> = appDrawerRepo.allAppsFlow
-        .combine(flow = iconPackManager.iconPacksFlow) { allApps, iconPacks ->
-            allApps.filter { app ->
-                iconPacks.any { it.packageName == app.packageName }
-            }
-        }
+    private val iconPackAppsWithIcons: Flow<List<AppWithIcon>> = getIconPackAppsWithIconsUseCase()
+        .flowOn(context = appCoroutineDispatcher.io)
 
     val iconPackState = flowOf(value = defaultIconPackState)
         .combine(flow = _allAppsStateFlow) { state, allAppsState ->
@@ -73,9 +69,8 @@ internal class IconPackViewModel @Inject constructor(
                 allApps = allAppsState,
                 canSave = allAppsState is LoadingState.Loaded
             )
-        }.combine(flow = iconPackApps) { state, iconPackApps ->
-            val iconPackType = generalSettingsRepo.iconPackTypeFlow.first()
-            state.copy(iconPacks = with(iconProvider) { iconPackApps.toAppWithIcons(iconPackType = iconPackType) })
+        }.combine(flow = iconPackAppsWithIcons) { state, iconPackApps ->
+            state.copy(iconPacks = iconPackApps)
         }.combine(flow = _iconPackType) { state, iconPackType ->
             state.copy(iconPackType = iconPackType)
         }.withinScope(initialValue = defaultIconPackState)
@@ -83,10 +78,8 @@ internal class IconPackViewModel @Inject constructor(
     private suspend fun updateAllAppsWithNewIcons(iconPackType: IconPackType?) {
         iconPackType ?: return
         _allAppsStateFlow.value = LoadingState.Loading
-        iconPackManager.loadIconPack(iconPackType = iconPackType)
-        val allApps = appDrawerRepo.allAppsFlow.first()
-        val allAppsWithIcon = with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
-        _allAppsStateFlow.value = LoadingState.Loaded(value = allAppsWithIcon)
+        loadIconPackUseCase(iconPackType = iconPackType)
+        _allAppsStateFlow.value = LoadingState.Loaded(value = getAllAppsWithIconsGivenIconPackTypeUseCase(iconPackType = iconPackType).first())
     }
 
     fun updateSelectedIconPackApp(iconPackType: IconPackType) {
@@ -98,20 +91,5 @@ internal class IconPackViewModel @Inject constructor(
             val iconPackType = _iconPackType.value ?: return@launchInIO
             generalSettingsRepo.updateIconPackType(iconPackType = iconPackType)
         }
-    }
-}
-
-context (IconProvider)
-private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
-    try {
-        AppWithIcon(
-            name = app.name,
-            displayName = app.displayName,
-            packageName = app.packageName,
-            icon = iconFor(app.packageName, iconPackType),
-            isSystem = app.isSystem
-        )
-    } catch (e: PackageManager.NameNotFoundException) {
-        null
     }
 }

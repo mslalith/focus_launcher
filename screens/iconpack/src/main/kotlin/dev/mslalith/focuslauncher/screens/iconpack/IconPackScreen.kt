@@ -28,11 +28,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.StatusBarColor
-import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState

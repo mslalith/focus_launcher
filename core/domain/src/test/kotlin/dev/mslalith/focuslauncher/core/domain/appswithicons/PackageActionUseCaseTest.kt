@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.favorites
+package dev.mslalith.focuslauncher.core.domain.appswithicons
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
+import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import io.mockk.mockk

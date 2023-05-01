@@ -1,7 +1,6 @@
-package dev.mslalith.focuslauncher.core.ui.model
+package dev.mslalith.focuslauncher.core.model
 
 import android.graphics.drawable.Drawable
-import dev.mslalith.focuslauncher.core.model.App
 
 data class AppWithIcon(
     val name: String,

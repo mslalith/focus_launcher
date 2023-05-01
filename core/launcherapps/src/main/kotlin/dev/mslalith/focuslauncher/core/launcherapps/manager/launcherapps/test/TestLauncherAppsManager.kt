@@ -5,7 +5,9 @@ import dev.mslalith.focuslauncher.core.model.App
 
 class TestLauncherAppsManager : LauncherAppsManager {
 
-    override fun loadAllApps(): List<App> = emptyList()
+    private var allApps = emptyList<App>()
+
+    override fun loadAllApps(): List<App> = allApps
 
     override fun loadApp(packageName: String): App = App(
         name = packageName,
@@ -14,4 +16,8 @@ class TestLauncherAppsManager : LauncherAppsManager {
     )
 
     override fun defaultFavoriteApps(): List<App> = emptyList()
+
+    fun setAllApps(apps: List<App>) {
+        allApps = apps
+    }
 }

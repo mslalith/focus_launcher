@@ -9,10 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:launcherapps"))
     implementation(project(":feature:homepage"))
     implementation(project(":feature:settingspage"))
     implementation(project(":feature:appdrawerpage"))
-
-    testImplementation(project(":core:testing"))
 }

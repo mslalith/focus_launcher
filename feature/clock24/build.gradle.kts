@@ -10,6 +10,4 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.datetime)
-
-    testImplementation(project(":core:testing"))
 }

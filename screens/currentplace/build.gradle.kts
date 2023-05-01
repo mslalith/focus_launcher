@@ -10,5 +10,4 @@ android {
 
 dependencies {
     implementation(libs.osmdroid)
-    testImplementation(project(":core:testing"))
 }

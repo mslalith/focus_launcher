@@ -25,8 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
-import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem

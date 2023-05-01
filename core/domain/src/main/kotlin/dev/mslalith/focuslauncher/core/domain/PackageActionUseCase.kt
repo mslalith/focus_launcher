@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.favorites
+package dev.mslalith.focuslauncher.core.domain
 
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
