@@ -6,10 +6,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.mslalith.focuslauncher.ThemeViewModel
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 
@@ -80,12 +76,11 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun FocusLauncherTheme(
-    themeViewModel: ThemeViewModel = viewModel(),
+    currentTheme: Theme,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val systemUiController = LocalSystemUiController.current
-    val currentTheme by themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle()
 
     val colorScheme = when (currentTheme) {
         Theme.NOT_WHITE -> lightColors
