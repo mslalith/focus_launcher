@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.domain.favorites.GetFavoriteAppsWithIconsUseCase
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
@@ -28,8 +28,7 @@ import kotlinx.coroutines.withContext
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
     private val launcherAppsManager: LauncherAppsManager,
-    private val iconPackManager: IconPackManager,
-    private val iconProvider: IconProvider,
+    getFavoriteAppsWithIconsUseCase: GetFavoriteAppsWithIconsUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -42,11 +41,8 @@ internal class FavoritesViewModel @Inject constructor(
         favoritesList = emptyList()
     )
 
-    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = generalSettingsRepo.iconPackTypeFlow
-        .combine(flow = favoritesRepo.onlyFavoritesFlow) { iconPackType, favorites ->
-            iconPackManager.loadIconPack(iconPackType = iconPackType)
-            with(iconProvider) { favorites.toAppWithIcons(iconPackType = iconPackType) }
-        }.flowOn(context = appCoroutineDispatcher.io)
+    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = getFavoriteAppsWithIconsUseCase()
+        .flowOn(context = appCoroutineDispatcher.io)
 
     val favoritesState = flowOf(value = defaultFavoritesState)
         .combine(flow = allAppsIconPackAware) { state, favorites ->
