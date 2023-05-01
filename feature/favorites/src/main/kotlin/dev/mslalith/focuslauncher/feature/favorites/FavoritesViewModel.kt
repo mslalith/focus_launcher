@@ -6,7 +6,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithIconsUseCase
-import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
-    private val launcherAppsManager: LauncherAppsManager,
+    private val getDefaultFavoriteAppsUseCase: GetDefaultFavoriteAppsUseCase,
     getFavoriteAppsWithIconsUseCase: GetFavoriteAppsWithIconsUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
@@ -50,10 +50,9 @@ internal class FavoritesViewModel @Inject constructor(
 
     fun addDefaultAppsIfRequired() {
         appCoroutineDispatcher.launchInIO {
-            val isFirstRun = generalSettingsRepo.firstRunFlow.first()
-            if (isFirstRun) {
+            if (generalSettingsRepo.firstRunFlow.first()) {
                 generalSettingsRepo.overrideFirstRun()
-                favoritesRepo.addToFavorites(launcherAppsManager.defaultFavoriteApps())
+                favoritesRepo.addToFavorites(apps = getDefaultFavoriteAppsUseCase())
             }
         }
     }

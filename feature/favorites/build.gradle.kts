@@ -8,8 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:launcherapps"))
-
     implementation(libs.androidx.palette.ktx)
     implementation(libs.accompanist.flowlayout)
 
