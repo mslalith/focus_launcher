@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.favorites
+package dev.mslalith.focuslauncher.core.domain.appswithicons
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat

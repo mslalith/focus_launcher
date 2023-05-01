@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.favorites
+package dev.mslalith.focuslauncher.core.domain.appswithicons
 
 import android.content.pm.PackageManager
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo

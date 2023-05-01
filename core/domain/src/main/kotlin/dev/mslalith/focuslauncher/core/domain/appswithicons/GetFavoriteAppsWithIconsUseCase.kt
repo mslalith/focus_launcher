@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.favorites
+package dev.mslalith.focuslauncher.core.domain.appswithicons
 
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
