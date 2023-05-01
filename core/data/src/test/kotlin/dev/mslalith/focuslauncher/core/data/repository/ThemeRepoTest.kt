@@ -4,6 +4,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.helpers.verifyChange
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_THEME
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
@@ -36,7 +37,7 @@ internal class ThemeRepoTest : CoroutineTest() {
     fun `verify theme change`() = runCoroutineTest {
         verifyChange(
             flow = repo.currentThemeFlow,
-            initialItem = null,
+            initialItem = DEFAULT_THEME,
             mutate = {
                 val newTheme = Theme.NOT_WHITE
                 repo.changeTheme(newTheme)

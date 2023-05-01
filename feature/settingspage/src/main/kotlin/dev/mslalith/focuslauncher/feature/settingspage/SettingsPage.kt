@@ -38,7 +38,6 @@ fun SettingsPage() {
     val navController = LocalNavController.current
 
     SettingsPage(
-        themeViewModel = hiltViewModel(),
         settingsPageViewModel = hiltViewModel(),
         navigateTo = { navController.navigate(it.id) }
     )
@@ -46,7 +45,6 @@ fun SettingsPage() {
 
 @Composable
 internal fun SettingsPage(
-    themeViewModel: ThemeViewModel,
     settingsPageViewModel: SettingsPageViewModel,
     navigateTo: (Screen) -> Unit
 ) {
@@ -65,8 +63,8 @@ internal fun SettingsPage(
         VerticalSpacer(spacing = 12.dp)
 
         ChangeTheme(
-            currentTheme = themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle().value,
-            changeTheme = themeViewModel::changeTheme
+            currentTheme = settingsPageViewModel.currentThemeStateFlow.collectAsStateWithLifecycle().value,
+            changeTheme = settingsPageViewModel::changeTheme
         )
 
         EditFavorites { navigateTo(Screen.EditFavorites) }
