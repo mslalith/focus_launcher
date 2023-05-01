@@ -8,7 +8,8 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsWithIconsGivenIconPackTypeUseCase
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
@@ -29,9 +30,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
-    private val iconPackManager: IconPackManager,
     private val getAllAppsWithIconsGivenIconPackTypeUseCase: GetAllAppsWithIconsGivenIconPackTypeUseCase,
     getIconPackAppsWithIconsUseCase: GetIconPackAppsWithIconsUseCase,
+    fetchIconPacksUseCase: FetchIconPacksUseCase,
+    private val loadIconPackUseCase: LoadIconPackUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
@@ -47,7 +49,7 @@ internal class IconPackViewModel @Inject constructor(
     )
 
     init {
-        iconPackManager.fetchInstalledIconPacks()
+        fetchIconPacksUseCase()
         generalSettingsRepo.iconPackTypeFlow
             .onEach { _iconPackType.value = it }
             .launchIn(scope = viewModelScope)
@@ -76,7 +78,7 @@ internal class IconPackViewModel @Inject constructor(
     private suspend fun updateAllAppsWithNewIcons(iconPackType: IconPackType?) {
         iconPackType ?: return
         _allAppsStateFlow.value = LoadingState.Loading
-        iconPackManager.loadIconPack(iconPackType = iconPackType)
+        loadIconPackUseCase(iconPackType = iconPackType)
         _allAppsStateFlow.value = LoadingState.Loaded(value = getAllAppsWithIconsGivenIconPackTypeUseCase(iconPackType = iconPackType).first())
     }
 
