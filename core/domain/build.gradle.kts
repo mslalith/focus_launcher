@@ -13,5 +13,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:launcherapps"))
 
+    implementation(libs.androidx.palette.ktx)
+
     testImplementation(project(":core:testing"))
 }

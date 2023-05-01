@@ -5,10 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithIconsUseCase
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithColorUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
     private val getDefaultFavoriteAppsUseCase: GetDefaultFavoriteAppsUseCase,
-    getFavoriteAppsWithIconsUseCase: GetFavoriteAppsWithIconsUseCase,
+    getFavoriteAppsWithColorUseCase: GetFavoriteAppsWithColorUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -38,11 +38,11 @@ internal class FavoritesViewModel @Inject constructor(
         favoritesList = emptyList()
     )
 
-    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = getFavoriteAppsWithIconsUseCase()
+    private val allAppsWithIcons: Flow<List<AppWithColor>> = getFavoriteAppsWithColorUseCase()
         .flowOn(context = appCoroutineDispatcher.io)
 
     val favoritesState = flowOf(value = defaultFavoritesState)
-        .combine(flow = allAppsIconPackAware) { state, favorites ->
+        .combine(flow = allAppsWithIcons) { state, favorites ->
             state.copy(favoritesList = favorites)
         }.combine(flow = _favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)

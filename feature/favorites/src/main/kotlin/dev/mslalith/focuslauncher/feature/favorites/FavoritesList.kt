@@ -25,7 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
@@ -102,7 +102,7 @@ internal fun FavoritesList(
 
 @Composable
 internal fun FavoritesList(
-    favoritesList: List<AppWithIcon>,
+    favoritesList: List<AppWithColor>,
     addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
@@ -164,22 +164,22 @@ internal fun FavoritesList(
                 mainAxisSpacing = 16.dp,
                 crossAxisSpacing = 12.dp
             ) {
-                favoritesList.forEach { favorite ->
-                    ReusableContent(key = favorite) {
+                favoritesList.forEach { favoriteAppWithColor ->
+                    ReusableContent(key = favoriteAppWithColor) {
                         FavoriteItem(
-                            app = favorite,
+                            appWithColor = favoriteAppWithColor,
                             isInContextualMode = isInContextualMode,
-                            isAppAboutToReorder = { isAppAboutToReorder(favorite.toApp()) },
+                            isAppAboutToReorder = { isAppAboutToReorder(favoriteAppWithColor.app) },
                             changeFavoritesContextMode = changeFavoritesContextMode,
                             onClick = {
                                 when (currentContextMode) {
-                                    FavoritesContextMode.Closed -> context.launchApp(app = favorite.toApp())
+                                    FavoritesContextMode.Closed -> context.launchApp(app = favoriteAppWithColor.app)
                                     FavoritesContextMode.Open -> Unit
-                                    FavoritesContextMode.Remove -> removeFromFavorites(favorite.toApp())
-                                    FavoritesContextMode.Reorder -> changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favorite.toApp()))
+                                    FavoritesContextMode.Remove -> removeFromFavorites(favoriteAppWithColor.app)
+                                    FavoritesContextMode.Reorder -> changeFavoritesContextMode(FavoritesContextMode.ReorderPickPosition(favoriteAppWithColor.app))
                                     is FavoritesContextMode.ReorderPickPosition -> {
                                         val reorderPickPosition = currentContextMode as FavoritesContextMode.ReorderPickPosition
-                                        reorderFavorite(reorderPickPosition.app, favorite.toApp()) {
+                                        reorderFavorite(reorderPickPosition.app, favoriteAppWithColor.app) {
                                             changeFavoritesContextMode(FavoritesContextMode.Reorder)
                                         }
                                     }
