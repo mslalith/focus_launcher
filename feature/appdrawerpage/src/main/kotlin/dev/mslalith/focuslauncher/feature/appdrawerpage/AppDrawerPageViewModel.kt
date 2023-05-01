@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
@@ -37,7 +38,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
     private val searchBarQueryStateFlow = MutableStateFlow(value = "")
 
     private val defaultAppDrawerPageState = AppDrawerPageState(
-        allApps = emptyList(),
+        allAppsState = LoadingState.Loading,
         appDrawerViewType = DEFAULT_APP_DRAWER_VIEW_TYPE,
         showAppIcons = DEFAULT_APP_ICONS,
         showAppGroupHeader = DEFAULT_APP_GROUP_HEADER,
@@ -45,7 +46,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQuery = searchBarQueryStateFlow.value
     )
 
-    private val allAppsIconPackAware: Flow<List<AppWithIcon>> = getAppDrawerAppsWithIconsUseCase(
+    private val allAppsIconPackAware: Flow<LoadingState<List<AppWithIcon>>> = getAppDrawerAppsWithIconsUseCase(
         searchQueryFlow = searchBarQueryStateFlow
     ).flowOn(context = appCoroutineDispatcher.io)
 
@@ -61,7 +62,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
         }.combine(flow = searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
         }.combine(flow = allAppsIconPackAware) { state, apps ->
-            state.copy(allApps = apps)
+            state.copy(allAppsState = apps)
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
     fun searchAppQuery(query: String) {
