@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAllAppsWithIconsGivenIconPackTypeUseCase @Inject constructor(
-    private val getAppsWithIconsGivenIconPackTypeUseCase: GetAppsWithIconsGivenIconPackTypeUseCase,
+    private val getAppsStateGivenAppsAndIconPackTypeUseCase: GetAppsStateGivenAppsAndIconPackTypeUseCase,
     private val appDrawerRepo: AppDrawerRepo
 ) {
-    operator fun invoke(iconPackType: IconPackType): Flow<List<AppWithIcon>> = getAppsWithIconsGivenIconPackTypeUseCase(
+    operator fun invoke(iconPackType: IconPackType): Flow<List<AppWithIcon>> = getAppsStateGivenAppsAndIconPackTypeUseCase(
         appsFlow = appDrawerRepo.allAppsFlow,
         iconPackType = iconPackType
     ).filterAppsWithIconsState()

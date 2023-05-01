@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.transformLatest
 import javax.inject.Inject
 
 class GetFavoriteAppsWithColorUseCase @Inject constructor(
-    private val getAppsWithIconsUseCase: GetAppsWithIconsUseCase,
+    private val getAppsStateGivenAppsUseCase: GetAppsStateGivenAppsUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(): Flow<List<AppWithColor>> = getAppsWithIconsUseCase(
+    operator fun invoke(): Flow<List<AppWithColor>> = getAppsStateGivenAppsUseCase(
         appsFlow = favoritesRepo.onlyFavoritesFlow
     ).transformLatest { getAppsState ->
         when (getAppsState) {

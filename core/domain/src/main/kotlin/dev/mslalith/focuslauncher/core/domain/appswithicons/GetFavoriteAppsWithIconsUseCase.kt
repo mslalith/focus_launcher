@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetFavoriteAppsWithIconsUseCase @Inject constructor(
-    private val getAppsWithIconsUseCase: GetAppsWithIconsUseCase,
+    private val getAppsStateGivenAppsUseCase: GetAppsStateGivenAppsUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {
-    operator fun invoke(): Flow<List<AppWithIcon>> = getAppsWithIconsUseCase(
+    operator fun invoke(): Flow<List<AppWithIcon>> = getAppsStateGivenAppsUseCase(
         appsFlow = favoritesRepo.onlyFavoritesFlow
     ).filterAppsWithIconsState()
 }

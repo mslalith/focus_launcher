@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAppDrawerAppsWithIconsUseCase @Inject constructor(
-    private val getAppsWithIconsUseCase: GetAppsWithIconsUseCase,
+    private val getAppsStateGivenAppsUseCase: GetAppsStateGivenAppsUseCase,
     private val getAppDrawerAppsUseCase: GetAppDrawerAppsUseCase
 ) {
-    operator fun invoke(searchQueryFlow: Flow<String>): Flow<List<AppWithIcon>> = getAppsWithIconsUseCase(
+    operator fun invoke(searchQueryFlow: Flow<String>): Flow<List<AppWithIcon>> = getAppsStateGivenAppsUseCase(
         appsFlow = getAppDrawerAppsUseCase(searchQueryFlow = searchQueryFlow)
     ).filterAppsWithIconsState()
 }

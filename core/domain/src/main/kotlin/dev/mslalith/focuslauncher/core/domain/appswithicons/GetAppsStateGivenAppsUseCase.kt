@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
-class GetAppsWithIconsUseCase @Inject constructor(
-    private val getAppsWithIconsGivenIconPackTypeUseCase: GetAppsWithIconsGivenIconPackTypeUseCase,
+class GetAppsStateGivenAppsUseCase @Inject constructor(
+    private val getAppsStateGivenAppsAndIconPackTypeUseCase: GetAppsStateGivenAppsAndIconPackTypeUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(appsFlow: Flow<List<App>>): Flow<GetAppsState> = generalSettingsRepo.iconPackTypeFlow
         .flatMapLatest {
-            getAppsWithIconsGivenIconPackTypeUseCase(
+            getAppsStateGivenAppsAndIconPackTypeUseCase(
                 appsFlow = appsFlow,
                 iconPackType = it
             )

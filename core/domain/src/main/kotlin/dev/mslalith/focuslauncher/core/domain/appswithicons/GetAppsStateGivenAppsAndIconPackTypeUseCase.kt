@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 import javax.inject.Inject
 
-class GetAppsWithIconsGivenIconPackTypeUseCase @Inject constructor(
+class GetAppsStateGivenAppsAndIconPackTypeUseCase @Inject constructor(
     private val iconPackManager: IconPackManager,
     private val iconProvider: IconProvider
 ) {
