@@ -8,6 +8,7 @@ import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsWithIconsGivenIconPackTypeUseCase
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
@@ -33,8 +34,9 @@ import kotlinx.coroutines.flow.onEach
 internal class IconPackViewModel @Inject constructor(
     private val iconPackManager: IconPackManager,
     private val iconProvider: IconProvider,
+    private val getAllAppsWithIconsGivenIconPackTypeUseCase: GetAllAppsWithIconsGivenIconPackTypeUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
-    private val appDrawerRepo: AppDrawerRepo,
+    appDrawerRepo: AppDrawerRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
@@ -84,9 +86,7 @@ internal class IconPackViewModel @Inject constructor(
         iconPackType ?: return
         _allAppsStateFlow.value = LoadingState.Loading
         iconPackManager.loadIconPack(iconPackType = iconPackType)
-        val allApps = appDrawerRepo.allAppsFlow.first()
-        val allAppsWithIcon = with(iconProvider) { allApps.toAppWithIcons(iconPackType = iconPackType) }
-        _allAppsStateFlow.value = LoadingState.Loaded(value = allAppsWithIcon)
+        _allAppsStateFlow.value = LoadingState.Loaded(value = getAllAppsWithIconsGivenIconPackTypeUseCase(iconPackType = iconPackType).first())
     }
 
     fun updateSelectedIconPackApp(iconPackType: IconPackType) {
