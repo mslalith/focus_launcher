@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.appswithicons
 
+import dev.mslalith.focuslauncher.core.domain.extensions.filterAppsWithIconsState
 import dev.mslalith.focuslauncher.core.domain.iconpack.GetIconPackAppsUseCase
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import kotlinx.coroutines.flow.Flow
@@ -11,5 +12,5 @@ class GetIconPackAppsWithIconsUseCase @Inject constructor(
 ) {
     operator fun invoke(): Flow<List<AppWithIcon>> = getAppsWithIconsUseCase(
         appsFlow = getIconPackAppsUseCase()
-    )
+    ).filterAppsWithIconsState()
 }
