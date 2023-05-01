@@ -8,7 +8,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithIconsUseCase
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithColorUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
@@ -43,7 +43,7 @@ class FavoritesViewModelTest : CoroutineTest() {
     lateinit var getDefaultFavoriteAppsUseCase: GetDefaultFavoriteAppsUseCase
 
     @Inject
-    lateinit var getFavoriteAppsWithIconsUseCase: GetFavoriteAppsWithIconsUseCase
+    lateinit var getFavoriteAppsWithColorUseCase: GetFavoriteAppsWithColorUseCase
 
     @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
@@ -64,7 +64,7 @@ class FavoritesViewModelTest : CoroutineTest() {
         hiltRule.inject()
         viewModel = FavoritesViewModel(
             getDefaultFavoriteAppsUseCase = getDefaultFavoriteAppsUseCase,
-            getFavoriteAppsWithIconsUseCase = getFavoriteAppsWithIconsUseCase,
+            getFavoriteAppsWithColorUseCase = getFavoriteAppsWithColorUseCase,
             generalSettingsRepo = generalSettingsRepo,
             favoritesRepo = favoritesRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
@@ -100,6 +100,6 @@ class FavoritesViewModelTest : CoroutineTest() {
 
 context (CoroutineScope)
 private suspend fun StateFlow<FavoritesState>.assertFavoritesList(expected: List<App>) {
-    val actual = awaitItemChange { it.favoritesList }.map { it.toApp() }
+    val actual = awaitItemChange { it.favoritesList }.map { it.app }
     assertThat(actual).isEqualTo(expected)
 }

@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.feature.favorites.model
 
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithColor
 
 internal data class FavoritesState(
-    val favoritesList: List<AppWithIcon>,
+    val favoritesList: List<AppWithColor>,
     val favoritesContextualMode: FavoritesContextMode
 )

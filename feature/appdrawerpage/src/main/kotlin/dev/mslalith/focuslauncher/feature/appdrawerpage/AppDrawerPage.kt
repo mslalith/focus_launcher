@@ -11,16 +11,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
@@ -87,21 +90,33 @@ internal fun AppDrawerPage(
                     color = MaterialTheme.colorScheme.surface
                 )
         ) {
-            when (appDrawerPageState.appDrawerViewType) {
-                AppDrawerViewType.LIST -> AppsList(
-                    apps = appDrawerPageState.allApps,
-                    showAppIcons = appDrawerPageState.showAppIcons,
-                    showAppGroupHeader = appDrawerPageState.showAppGroupHeader,
-                    isSearchQueryEmpty = appDrawerPageState.searchBarQuery.isEmpty(),
-                    onAppClick = ::onAppClick,
-                    onAppLongClick = ::showMoreOptions
-                )
+            when (val allAppsState = appDrawerPageState.allAppsState) {
+                is LoadingState.Loaded -> {
+                    when (appDrawerPageState.appDrawerViewType) {
+                        AppDrawerViewType.LIST -> AppsList(
+                            apps = allAppsState.value,
+                            showAppIcons = appDrawerPageState.showAppIcons,
+                            showAppGroupHeader = appDrawerPageState.showAppGroupHeader,
+                            isSearchQueryEmpty = appDrawerPageState.searchBarQuery.isEmpty(),
+                            onAppClick = ::onAppClick,
+                            onAppLongClick = ::showMoreOptions
+                        )
 
-                AppDrawerViewType.GRID -> AppsGrid(
-                    apps = appDrawerPageState.allApps,
-                    onAppClick = ::onAppClick,
-                    onAppLongClick = ::showMoreOptions
-                )
+                        AppDrawerViewType.GRID -> AppsGrid(
+                            apps = allAppsState.value,
+                            onAppClick = ::onAppClick,
+                            onAppLongClick = ::showMoreOptions
+                        )
+                    }
+                }
+                LoadingState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        DotWaveLoader()
+                    }
+                }
             }
         }
 

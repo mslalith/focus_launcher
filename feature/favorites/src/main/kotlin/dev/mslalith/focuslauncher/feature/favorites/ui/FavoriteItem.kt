@@ -11,24 +11,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
-import androidx.palette.graphics.Palette
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithColor
 import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun FavoriteItem(
-    app: AppWithIcon,
+    appWithColor: AppWithColor,
     isInContextualMode: () -> Boolean,
     isAppAboutToReorder: () -> Boolean,
     changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
@@ -36,15 +36,18 @@ internal fun FavoriteItem(
 ) {
     val backgroundColor = MaterialTheme.colorScheme.surface
     val contentColor = MaterialTheme.colorScheme.onSurface
+    val primaryColor = MaterialTheme.colorScheme.primary
 
-    val color = remember(key1 = app) {
-        val appIconPalette = Palette.from(app.icon.toBitmap()).generate()
-        val extractedColor = Color(color = appIconPalette.getDominantColor(contentColor.toArgb()))
-        extractedColor.luminate(threshold = 0.36f, value = 0.6f)
+    var appIconBasedColor by remember { mutableStateOf(value = primaryColor) }
+
+    LaunchedEffect(key1 = appWithColor, key2 = primaryColor) {
+        val color = appWithColor.color?.toArgb()?.let(::Color) ?: primaryColor
+        appIconBasedColor = color.luminate(threshold = 0.36f, value = 0.6f)
     }
+
     val animatedColor by animateColorAsState(
         label = "Animated color",
-        targetValue = if (isAppAboutToReorder()) contentColor else color,
+        targetValue = if (isAppAboutToReorder()) contentColor else appIconBasedColor,
         animationSpec = tween(durationMillis = 600)
     )
 
@@ -72,7 +75,7 @@ internal fun FavoriteItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = app.displayName,
+            text = appWithColor.app.displayName,
             color = textColor(),
             style = MaterialTheme.typography.bodyMedium
         )
