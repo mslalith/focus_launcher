@@ -7,7 +7,3 @@ plugins {
 android {
     namespace = "dev.mslalith.focuslauncher.screens.editfavorites"
 }
-
-dependencies {
-    testImplementation(project(":core:testing"))
-}

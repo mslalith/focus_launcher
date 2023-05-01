@@ -10,5 +10,4 @@ android {
 
 dependencies {
     implementation(project(":feature:appdrawerpage"))
-    testImplementation(project(":core:testing"))
 }

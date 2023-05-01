@@ -7,7 +7,3 @@ plugins {
 android {
     namespace = "dev.mslalith.focuslauncher.screens.hideapps"
 }
-
-dependencies {
-    testImplementation(project(":core:testing"))
-}
