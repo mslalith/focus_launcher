@@ -15,6 +15,9 @@ class GetAppsWithIconsUseCase @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(appsFlow: Flow<List<App>>): Flow<List<AppWithIcon>> = generalSettingsRepo.iconPackTypeFlow
         .flatMapLatest {
-            getAppsWithIconsGivenIconPackTypeUseCase(appsFlow = appsFlow, iconPackType = it)
+            getAppsWithIconsGivenIconPackTypeUseCase(
+                appsFlow = appsFlow,
+                iconPackType = it
+            )
         }
 }

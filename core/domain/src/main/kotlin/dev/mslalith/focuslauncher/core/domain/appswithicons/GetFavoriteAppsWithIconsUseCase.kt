@@ -9,5 +9,7 @@ class GetFavoriteAppsWithIconsUseCase @Inject constructor(
     private val getAppsWithIconsUseCase: GetAppsWithIconsUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {
-    operator fun invoke(): Flow<List<AppWithIcon>> = getAppsWithIconsUseCase(appsFlow = favoritesRepo.onlyFavoritesFlow)
+    operator fun invoke(): Flow<List<AppWithIcon>> = getAppsWithIconsUseCase(
+        appsFlow = favoritesRepo.onlyFavoritesFlow
+    )
 }
