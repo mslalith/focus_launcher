@@ -11,8 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,14 +38,16 @@ internal fun FavoriteItem(
     val contentColor = MaterialTheme.colorScheme.onSurface
     val primaryColor = MaterialTheme.colorScheme.primary
 
-    val color = remember(key1 = appWithColor, key2 = primaryColor) {
+    var appIconBasedColor by remember { mutableStateOf(value = primaryColor) }
+
+    LaunchedEffect(key1 = appWithColor, key2 = primaryColor) {
         val color = appWithColor.color?.toArgb()?.let(::Color) ?: primaryColor
-        color.luminate(threshold = 0.36f, value = 0.6f)
+        appIconBasedColor = color.luminate(threshold = 0.36f, value = 0.6f)
     }
 
     val animatedColor by animateColorAsState(
         label = "Animated color",
-        targetValue = if (isAppAboutToReorder()) contentColor else color,
+        targetValue = if (isAppAboutToReorder()) contentColor else appIconBasedColor,
         animationSpec = tween(durationMillis = 600)
     )
 
