@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage.model
 
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithIcon
 
 internal data class AppDrawerPageState(
     val allApps: List<AppWithIcon>,

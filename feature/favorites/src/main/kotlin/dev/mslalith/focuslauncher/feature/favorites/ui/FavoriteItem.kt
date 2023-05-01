@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
-import dev.mslalith.focuslauncher.core.ui.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 
