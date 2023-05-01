@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  static_analysis:
-    name: Run Static Analysis
+  build:
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -30,99 +30,104 @@ jobs:
         with:
           arguments: detekt --stacktrace --no-daemon --build-cache
 
-  build:
-    if: ${{ false }} # Disable Build
-    name: Build app
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - uses: gradle/gradle-build-action@v2
-        with:
-          arguments: assembleDebug --stacktrace --no-daemon --build-cache
-
-  unit_tests:
-    needs: [ static_analysis ]
-    name: Run Unit Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
       - uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: true
           arguments: testDebug --stacktrace --build-cache
 
-  android_tests:
-    if: ${{ false }} # Disable Instrumentation tests
-    needs: [ static_analysis ]
-    name: Run Android Tests
-    runs-on: macos-latest
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        api-level: [ 29 ]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: 17
-
-      - name: Gradle cache
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: true
-
-      - name: Cache AVD
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ matrix.api-level }}
-
-      - name: Create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
-
-      - name: Run Android Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: ./gradlew connectedCheck --stacktrace --build-cache
+#  build:
+#    if: ${{ false }} # Disable Build
+#    name: Build app
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 30
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'zulu'
+#          java-version: 17
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#
+#      - uses: gradle/gradle-build-action@v2
+#        with:
+#          arguments: assembleDebug --stacktrace --no-daemon --build-cache
+#
+#  unit_tests:
+#    needs: [ static_analysis ]
+#    name: Run Unit Tests
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 30
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'zulu'
+#          java-version: 17
+#
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#
+#      - uses: gradle/gradle-build-action@v2
+#        with:
+#          cache-read-only: true
+#          arguments: testDebug --stacktrace --build-cache
+#
+#  android_tests:
+#    if: ${{ false }} # Disable Instrumentation tests
+#    needs: [ static_analysis ]
+#    name: Run Android Tests
+#    runs-on: macos-latest
+#    timeout-minutes: 30
+#    strategy:
+#      matrix:
+#        api-level: [ 29 ]
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'adopt'
+#          java-version: 17
+#
+#      - name: Gradle cache
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          cache-read-only: true
+#
+#      - name: Cache AVD
+#        uses: actions/cache@v3
+#        id: avd-cache
+#        with:
+#          path: |
+#            ~/.android/avd/*
+#            ~/.android/adb*
+#          key: avd-${{ matrix.api-level }}
+#
+#      - name: Create AVD and generate snapshot for caching
+#        if: steps.avd-cache.outputs.cache-hit != 'true'
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: ${{ matrix.api-level }}
+#          force-avd-creation: false
+#          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+#          disable-animations: false
+#          script: echo "Generated AVD snapshot for caching."
+#
+#      - name: Run Android Tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: ${{ matrix.api-level }}
+#          force-avd-creation: false
+#          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+#          disable-animations: true
+#          script: ./gradlew connectedCheck --stacktrace --build-cache
