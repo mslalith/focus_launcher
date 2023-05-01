@@ -62,7 +62,6 @@ dependencies {
     implementation(project(":screens:currentplace"))
     implementation(project(":screens:iconpack"))
     implementation(project(":screens:about"))
-    implementation(project(":feature:settingspage"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)

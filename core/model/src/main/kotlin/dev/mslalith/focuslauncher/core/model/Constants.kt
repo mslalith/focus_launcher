@@ -26,7 +26,7 @@ object Constants {
 
             object General {
                 const val DEFAULT_FIRST_RUN = true
-                val DEFAULT_THEME = Theme.SAID_DARK
+                val DEFAULT_THEME = Theme.FOLLOW_SYSTEM
                 const val DEFAULT_STATUS_BAR = false
                 const val DEFAULT_NOTIFICATION_SHADE = true
                 const val DEFAULT_IS_DEFAULT_LAUNCHER = false

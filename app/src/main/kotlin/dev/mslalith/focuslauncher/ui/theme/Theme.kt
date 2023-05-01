@@ -6,15 +6,8 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_THEME
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
-import dev.mslalith.focuslauncher.feature.settingspage.ThemeViewModel
-import kotlinx.coroutines.flow.first
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -83,30 +76,22 @@ private val darkColors = darkColorScheme(
 
 @Composable
 fun FocusLauncherTheme(
+    currentTheme: Theme,
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val systemUiController = LocalSystemUiController.current
-    val themeViewModel: ThemeViewModel = viewModel()
-    val isSystemInDarkTheme = isSystemInDarkTheme()
 
-    val currentTheme by themeViewModel.currentThemeStateFlow.collectAsStateWithLifecycle()
-    val theme = currentTheme ?: if (isSystemInDarkTheme) Theme.SAID_DARK else DEFAULT_THEME
-
-    val colorScheme = when (theme) {
+    val colorScheme = when (currentTheme) {
         Theme.NOT_WHITE -> lightColors
         Theme.SAID_DARK -> darkColors
+        Theme.FOLLOW_SYSTEM -> if (useDarkTheme) darkColors else lightColors
     }
 
     DisposableEffect(key1 = systemUiController, key2 = colorScheme) {
         systemUiController.setSystemBarsColor(color = colorScheme.background)
 
         onDispose {}
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        if (themeViewModel.firstRunStateFlow.first()) {
-            themeViewModel.changeTheme(theme = theme)
-        }
     }
 
     MaterialTheme(
