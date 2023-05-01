@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.feature.favorites
 
-import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -8,15 +7,12 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.favorites.GetFavoriteAppsWithIconsUseCase
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
-import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -24,6 +20,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
@@ -99,20 +96,5 @@ internal class FavoritesViewModel @Inject constructor(
 
     fun hideContextualMode() {
         _favoritesContextualMode.value = FavoritesContextMode.Closed
-    }
-}
-
-context (IconProvider)
-private fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
-    try {
-        AppWithIcon(
-            name = app.name,
-            displayName = app.displayName,
-            packageName = app.packageName,
-            icon = iconFor(app.packageName, iconPackType),
-            isSystem = app.isSystem
-        )
-    } catch (e: PackageManager.NameNotFoundException) {
-        null
     }
 }
