@@ -12,4 +12,9 @@
     <string name="clock">Clock</string>
     <string name="lunar_phase">Lunar Phase</string>
     <string name="quotes">Quotes</string>
+    <string name="selected_theme">Selected Theme</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="follow_system">Follow System</string>
+    <string name="not_white">Not White</string>
+    <string name="said_dark">Said Dark</string>
 </resources>
