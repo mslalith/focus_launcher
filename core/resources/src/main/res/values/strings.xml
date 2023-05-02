@@ -23,4 +23,10 @@
     <string name="clock_position">Clock Position</string>
     <string name="enable_clock_24">Enable Clock 24</string>
     <string name="animation_duration">Animation Duration</string>
+    <string name="list">List</string>
+    <string name="grid">Grid</string>
+    <string name="apps_view_type">Apps View Type</string>
+    <string name="show_search_bar">Show Search Bar</string>
+    <string name="group_apps_by_character">Group Apps by Character</string>
+    <string name="show_app_icons">Show App Icons</string>
 </resources>

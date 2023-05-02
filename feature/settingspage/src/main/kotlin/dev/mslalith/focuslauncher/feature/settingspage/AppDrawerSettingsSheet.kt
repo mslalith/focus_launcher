@@ -5,10 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.extensions.string
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 
@@ -16,6 +19,8 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 internal fun AppDrawerSettingsSheet(
     settingsPageViewModel: SettingsPageViewModel
 ) {
+    val context = LocalContext.current
+
     val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsStateWithLifecycle()
     val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsStateWithLifecycle()
     val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsStateWithLifecycle()
@@ -25,36 +30,38 @@ internal fun AppDrawerSettingsSheet(
         derivedStateOf { appDrawerViewType == AppDrawerViewType.GRID }
     }
 
-    val textIconsList = listOf(
-        AppDrawerViewType.LIST.text to R.drawable.ic_list,
-        AppDrawerViewType.GRID.text to R.drawable.ic_grid
-    )
+    val textIconsList = remember {
+        listOf(
+            AppDrawerViewType.LIST.uiText to R.drawable.ic_list,
+            AppDrawerViewType.GRID.uiText to R.drawable.ic_grid
+        ).map { it.first.string(context = context) to it.second }
+    }
 
     Column {
         SettingsSelectableChooserItem(
-            text = "Apps View Type",
-            subText = appDrawerViewType.text,
+            text = stringResource(id = R.string.apps_view_type),
+            subText = appDrawerViewType.uiText.string(),
             textIconsList = textIconsList,
-            selectedItem = appDrawerViewType.text,
+            selectedItem = appDrawerViewType.uiText.string(),
             onItemSelected = { index ->
                 val viewTypeName = textIconsList[index].first
-                val viewType = AppDrawerViewType.values().first { it.text == viewTypeName }
+                val viewType = AppDrawerViewType.values().first { it.uiText.string(context = context) == viewTypeName }
                 settingsPageViewModel.updateAppDrawerViewType(appDrawerViewType = viewType)
             }
         )
         SettingsSelectableSwitchItem(
-            text = "Show Search Bar",
+            text = stringResource(id = R.string.show_search_bar),
             checked = showSearchBar,
             onClick = settingsPageViewModel::toggleSearchBarVisibility
         )
         SettingsSelectableSwitchItem(
-            text = "Group Apps by Character",
+            text = stringResource(id = R.string.group_apps_by_character),
             checked = showAppGroupHeader,
             disabled = isViewTypeGrid,
             onClick = settingsPageViewModel::toggleAppGroupHeaderVisibility
         )
         SettingsSelectableSwitchItem(
-            text = "Show App Icons",
+            text = stringResource(id = R.string.show_app_icons),
             checked = showAppIcons,
             disabled = isViewTypeGrid,
             onClick = settingsPageViewModel::toggleAppIconsVisibility
