@@ -22,11 +22,11 @@ import org.shredzone.commons.suncalc.MoonTimes
 import org.shredzone.commons.suncalc.SunTimes
 
 internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo {
-    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(value = INITIAL_LUNAR_PHASE_DETAILS_STATE)
+    private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(value = State.Initial)
     override val lunarPhaseDetailsStateFlow: StateFlow<State<LunarPhaseDetails>>
         get() = _lunarPhaseDetailsStateFlow
 
-    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(value = INITIAL_UPCOMING_LUNAR_PHASE_STATE)
+    private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(value = State.Initial)
     override val upcomingLunarPhaseStateFlow: StateFlow<State<UpcomingLunarPhase>>
         get() = _upcomingLunarPhaseStateFlow
 
@@ -86,10 +86,5 @@ internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetai
             isMicroMoon = moonPhase.isMicroMoon,
             isSuperMoon = moonPhase.isSuperMoon
         )
-    }
-
-    companion object {
-        private val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error(message = "Has no Lunar Phase details")
-        private val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error(message = "Has no Upcoming Lunar Phase")
     }
 }

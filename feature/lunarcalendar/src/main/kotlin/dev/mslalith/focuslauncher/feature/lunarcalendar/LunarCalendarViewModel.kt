@@ -42,8 +42,8 @@ internal class LunarCalendarViewModel @Inject constructor(
         showLunarPhase = DEFAULT_SHOW_LUNAR_PHASE,
         showIlluminationPercent = DEFAULT_SHOW_ILLUMINATION_PERCENT,
         showUpcomingPhaseDetails = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS,
-        lunarPhaseDetails = INITIAL_LUNAR_PHASE_DETAILS_STATE,
-        upcomingLunarPhase = INITIAL_UPCOMING_LUNAR_PHASE_STATE
+        lunarPhaseDetails = State.Initial,
+        upcomingLunarPhase = State.Initial
     )
 
     val lunarCalendarState = flowOf(value = defaultLunarCalendarState)
@@ -77,10 +77,5 @@ internal class LunarCalendarViewModel @Inject constructor(
         appCoroutineDispatcher.launchInIO {
             lunarPhaseSettingsRepo.toggleShowUpcomingPhaseDetails()
         }
-    }
-
-    companion object {
-        val INITIAL_LUNAR_PHASE_DETAILS_STATE = State.Error(message = "Has no Lunar Phase details")
-        val INITIAL_UPCOMING_LUNAR_PHASE_STATE = State.Error(message = "Has no Upcoming Lunar Phase")
     }
 }
