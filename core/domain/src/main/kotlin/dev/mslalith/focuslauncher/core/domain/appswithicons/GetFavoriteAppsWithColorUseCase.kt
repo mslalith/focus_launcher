@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 import javax.inject.Inject
 
-class GetFavoriteAppsWithColorUseCase @Inject constructor(
+class GetFavoriteAppsWithColorUseCase @Inject internal constructor(
     private val getAppsStateGivenAppsUseCase: GetAppsStateGivenAppsUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {

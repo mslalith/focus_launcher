@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.core.model.IconPackType
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllAppsWithIconsGivenIconPackTypeUseCase @Inject constructor(
+class GetAllAppsWithIconsGivenIconPackTypeUseCase @Inject internal constructor(
     private val getAppsStateGivenAppsAndIconPackTypeUseCase: GetAppsStateGivenAppsAndIconPackTypeUseCase,
     private val appDrawerRepo: AppDrawerRepo
 ) {

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
-class GetAppsStateGivenAppsUseCase @Inject constructor(
+internal class GetAppsStateGivenAppsUseCase @Inject constructor(
     private val getAppsStateGivenAppsAndIconPackTypeUseCase: GetAppsStateGivenAppsAndIconPackTypeUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo
 ) {

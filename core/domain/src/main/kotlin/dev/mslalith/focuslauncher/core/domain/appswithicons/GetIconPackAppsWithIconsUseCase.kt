@@ -6,7 +6,7 @@ import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetIconPackAppsWithIconsUseCase @Inject constructor(
+class GetIconPackAppsWithIconsUseCase @Inject internal constructor(
     private val getAppsStateGivenAppsUseCase: GetAppsStateGivenAppsUseCase,
     private val getIconPackAppsUseCase: GetIconPackAppsUseCase
 ) {
