@@ -90,6 +90,7 @@
     <string name="github_icon">GitHub icon</string>
     <string name="location_icon">Location icon</string>
     <string name="address_icon">Address icon</string>
+    <string name="done_icon">Done icon</string>
     <string name="openstreetmap_contributors">© %s contributors</string>
     <string name="openstreetmap">OpenStreetMap</string>
     <string name="update_place">Update Place</string>

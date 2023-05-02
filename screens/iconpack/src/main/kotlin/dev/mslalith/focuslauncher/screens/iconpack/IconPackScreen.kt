@@ -25,6 +25,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -102,12 +103,12 @@ internal fun IconPackScreen(
             sheetSwipeEnabled = false,
             topBar = {
                 AppBarWithBackIcon(
-                    title = "Icon Pack",
+                    title = stringResource(id = R.string.icon_pack),
                     onBackPressed = goBack,
                     actions = {
                         RoundIcon(
                             iconRes = R.drawable.ic_check,
-                            contentDescription = "Done icon",
+                            contentDescription = stringResource(id = R.string.done_icon),
                             enabled = iconPackState.canSave,
                             onClick = onDoneClick
                         )
