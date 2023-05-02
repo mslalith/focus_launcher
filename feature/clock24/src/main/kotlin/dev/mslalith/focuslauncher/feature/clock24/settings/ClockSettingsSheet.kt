@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +14,7 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_STEP
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.extensions.string
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
@@ -30,38 +33,39 @@ fun ClockSettingsSheet() {
 internal fun ClockSettingsSheet(
     clock24ViewModel: Clock24ViewModel
 ) {
+    val context = LocalContext.current
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
 
     val textIconsList = remember {
         listOf(
-            ClockAlignment.START.text to R.drawable.ic_align_horizontal_left,
-            ClockAlignment.CENTER.text to R.drawable.ic_align_horizontal_center,
-            ClockAlignment.END.text to R.drawable.ic_align_horizontal_right
-        )
+            ClockAlignment.START.uiText to R.drawable.ic_align_horizontal_left,
+            ClockAlignment.CENTER.uiText to R.drawable.ic_align_horizontal_center,
+            ClockAlignment.END.uiText to R.drawable.ic_align_horizontal_right
+        ).map { it.first.string(context = context) to it.second }
     }
 
     Column {
         PreviewClock()
         SettingsSelectableChooserItem(
-            text = "Clock Position",
-            subText = clock24State.clockAlignment.text,
+            text = stringResource(id = R.string.clock_position),
+            subText = clock24State.clockAlignment.uiText.string(),
             textIconsList = textIconsList,
-            selectedItem = clock24State.clockAlignment.text,
+            selectedItem = clock24State.clockAlignment.uiText.string(),
             showText = false,
             itemHorizontalArrangement = Arrangement.Center,
             onItemSelected = { index ->
                 val alignmentName = textIconsList[index].first
-                val alignment = ClockAlignment.values().first { it.text == alignmentName }
+                val alignment = ClockAlignment.values().first { it.uiText.string(context = context) == alignmentName }
                 clock24ViewModel.updateClockAlignment(clockAlignment = alignment)
             }
         )
         SettingsSelectableSwitchItem(
-            text = "Enable Clock 24",
+            text = stringResource(id = R.string.enable_clock_24),
             checked = clock24State.showClock24,
             onClick = clock24ViewModel::toggleClock24
         )
         SettingsSelectableSliderItem(
-            text = "Animation Duration",
+            text = stringResource(id = R.string.animation_duration),
             subText = "${clock24State.clock24AnimationDuration}ms",
             disabled = !clock24State.showClock24,
             value = clock24State.clock24AnimationDuration.toFloat(),
