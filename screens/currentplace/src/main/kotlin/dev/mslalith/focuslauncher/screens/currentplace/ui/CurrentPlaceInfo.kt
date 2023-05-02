@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
@@ -53,7 +54,7 @@ private fun LatLngInfo(
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_map_pin),
-            contentDescription = "Location icon",
+            contentDescription = stringResource(id = R.string.location_icon),
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .align(alignment = Alignment.CenterVertically)
@@ -86,7 +87,7 @@ private fun AddressInfo(
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_house),
-            contentDescription = "Address icon",
+            contentDescription = stringResource(id = R.string.address_icon),
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .align(alignment = Alignment.CenterVertically)

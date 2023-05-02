@@ -88,4 +88,9 @@
     <string name="from_india">from India</string>
     <string name="twitter_icon">Twitter icon</string>
     <string name="github_icon">GitHub icon</string>
+    <string name="location_icon">Location icon</string>
+    <string name="address_icon">Address icon</string>
+    <string name="openstreetmap_contributors">© %s contributors</string>
+    <string name="openstreetmap">OpenStreetMap</string>
+    <string name="update_place">Update Place</string>
 </resources>
