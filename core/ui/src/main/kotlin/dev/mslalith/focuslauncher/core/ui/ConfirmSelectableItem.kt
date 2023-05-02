@@ -15,7 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
+import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
 
 @Composable
 fun ConfirmSelectableItem(

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.ui.model
+package dev.mslalith.focuslauncher.core.model
 
 import androidx.annotation.DrawableRes
 

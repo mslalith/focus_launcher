@@ -4,11 +4,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableCheckboxItem
-import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 
 @Composable
 internal fun HiddenAppListItem(
