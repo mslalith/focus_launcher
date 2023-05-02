@@ -65,4 +65,8 @@
     <string name="show_upcoming_phase_details">Show Upcoming Phase Details</string>
     <string name="current_place">Current Place</string>
     <string name="enable_lunar_phase_to_preview">Enable Lunar Phase to preview</string>
+    <string name="enable_quotes_to_preview">Enable Quotes to preview</string>
+    <string name="enable_quotes">Enable Quotes</string>
+    <string name="fetch_quotes">Fetch Quotes</string>
+    <string name="quotation">Quotation</string>
 </resources>

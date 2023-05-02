@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
+import dev.mslalith.focuslauncher.feature.quoteforyou.R
 
 @Composable
 internal fun PreviewQuotes(
@@ -49,7 +51,7 @@ internal fun PreviewQuotes(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Enable Quotes to preview",
+                    text = stringResource(id = R.string.enable_quotes_to_preview),
                     textAlign = TextAlign.Center,
                     color = contentColor
                 )
