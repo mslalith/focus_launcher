@@ -94,5 +94,6 @@
     <string name="openstreetmap">OpenStreetMap</string>
     <string name="update_place">Update Place</string>
     <string name="hidden_apps">Hidden Apps</string>
+    <string name="clear_hidden_apps">Clear Hidden Apps</string>
     <string name="clear_favorites">Clear Favorites</string>
 </resources>
