@@ -69,4 +69,15 @@
     <string name="enable_quotes">Enable Quotes</string>
     <string name="fetch_quotes">Fetch Quotes</string>
     <string name="quotation">Quotation</string>
+    <string name="about">About</string>
+    <string name="app_drawer">App Drawer</string>
+    <string name="edit_favorites">Edit Favorites</string>
+    <string name="hide_apps">Hide Apps</string>
+    <string name="icon_pack">Icon Pack</string>
+    <string name="disable_pull_down_notifications">Disable Pull down Notifications</string>
+    <string name="enable_pull_down_notifications">Enable Pull down Notifications</string>
+    <string name="set_as_default_launcher">Set as Default Launcher</string>
+    <string name="settings">Settings</string>
+    <string name="hide_status_bar">Hide Status Bar</string>
+    <string name="show_status_bar">Show Status Bar</string>
 </resources>
