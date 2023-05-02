@@ -6,9 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
+import dev.mslalith.focuslauncher.screens.editfavorites.R
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 
 @Composable
@@ -16,6 +18,7 @@ internal fun HiddenAppActionText(
     showHiddenApps: Boolean,
     onToggleHiddenApps: (Boolean) -> Unit
 ) {
+    val text = stringResource(id = R.string.hidden_apps)
     val textDecoration = when (showHiddenApps) {
         true -> TextDecoration.None
         false -> TextDecoration.LineThrough
@@ -28,7 +31,7 @@ internal fun HiddenAppActionText(
             .padding(end = 8.dp)
     ) {
         Text(
-            text = " Hidden Apps ",
+            text = " $text ",
             textDecoration = textDecoration,
             style = MaterialTheme.typography.bodySmall
         )
