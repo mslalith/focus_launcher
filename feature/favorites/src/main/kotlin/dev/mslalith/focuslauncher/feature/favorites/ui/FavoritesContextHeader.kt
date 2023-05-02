@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
@@ -35,10 +36,11 @@ internal fun FavoritesContextHeader(
         if (currentContextMode == contextMode) changeContextModeToOpen() else action()
     }
 
+    @Composable
     fun headerText(): String = when (currentContextMode) {
-        FavoritesContextMode.Open, FavoritesContextMode.Closed -> "Favorites"
-        FavoritesContextMode.Remove -> "Remove"
-        FavoritesContextMode.Reorder, is FavoritesContextMode.ReorderPickPosition -> "Reorder"
+        FavoritesContextMode.Open, FavoritesContextMode.Closed -> stringResource(id = R.string.favorites)
+        FavoritesContextMode.Remove -> stringResource(id = R.string.remove)
+        FavoritesContextMode.Reorder, is FavoritesContextMode.ReorderPickPosition -> stringResource(id = R.string.reorder)
     }
 
     Row(
