@@ -46,7 +46,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQuery = searchBarQueryStateFlow.value
     )
 
-    private val allAppsIconPackAware: Flow<LoadingState<List<AppWithIcon>>> = getAppDrawerAppsWithIconsUseCase(
+    private val allAppsWithIcons: Flow<List<AppWithIcon>> = getAppDrawerAppsWithIconsUseCase(
         searchQueryFlow = searchBarQueryStateFlow
     ).flowOn(context = appCoroutineDispatcher.io)
 
@@ -61,8 +61,8 @@ internal class AppDrawerPageViewModel @Inject constructor(
             state.copy(showSearchBar = showSearchBar)
         }.combine(flow = searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
-        }.combine(flow = allAppsIconPackAware) { state, apps ->
-            state.copy(allAppsState = apps)
+        }.combine(flow = allAppsWithIcons) { state, apps ->
+            state.copy(allAppsState = LoadingState.Loaded(value = apps))
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
     fun searchAppQuery(query: String) {
