@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.model.Constants.Urls.PHOSPHOR_ICONS_URL
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.TextIconButton
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -31,7 +32,7 @@ internal fun Credits(
         TextIconButton(
             icon = R.drawable.ic_logo_phosphor,
             text = stringResource(id = R.string.phosphor_icons),
-            onClick = { uriHandler.openUri(uri = "https://phosphoricons.com/") },
+            onClick = { uriHandler.openUri(uri = PHOSPHOR_ICONS_URL) },
             backgroundColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.38f),
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
         )

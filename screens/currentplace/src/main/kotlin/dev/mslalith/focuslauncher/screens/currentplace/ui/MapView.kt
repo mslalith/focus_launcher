@@ -16,6 +16,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.model.Constants.Urls.OPENSTREETMAP_COPYRIGHT_URL
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.screens.currentplace.R
 import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
@@ -74,7 +75,7 @@ private fun MapCredits() {
             )
             addStringAnnotation(
                 tag = "url",
-                annotation = "https://www.openstreetmap.org/copyright",
+                annotation = OPENSTREETMAP_COPYRIGHT_URL,
                 start = start,
                 end = end
             )

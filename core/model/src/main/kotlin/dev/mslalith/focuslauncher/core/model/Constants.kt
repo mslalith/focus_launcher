@@ -3,6 +3,12 @@ package dev.mslalith.focuslauncher.core.model
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {
+
+    object Urls {
+        const val OPENSTREETMAP_COPYRIGHT_URL = "https://www.openstreetmap.org/copyright"
+        const val PHOSPHOR_ICONS_URL = "https://phosphoricons.com/"
+    }
+
     object DataStore {
         const val THEME_DATASTORE = "theme_datastore.pb"
         const val SETTINGS_DATASTORE = "settings_datastore.pb"
