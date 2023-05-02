@@ -5,6 +5,7 @@
     <string name="app_hidden_message">Unhide {} to mark it as favorite</string>
     <string name="added_app_to_favorites">Added %s to Favorites</string>
     <string name="removed_app_from_favorites">%s removed from Favorites</string>
+    <string name="ok">OK</string>
     <string name="go_back">Go Back</string>
     <string name="search">Search</string>
     <string name="clear">Clear</string>
@@ -54,4 +55,14 @@
     <string name="app_info">App Info</string>
     <string name="uninstall">Uninstall</string>
     <string name="search_app_hint">Search app…</string>
+    <string name="upcoming_phases">Upcoming Phases</string>
+    <string name="moon">Moon</string>
+    <string name="sun">Sun</string>
+    <string name="rise">Rise</string>
+    <string name="set">Set</string>
+    <string name="enable_lunar_phase">Enable Lunar Phase</string>
+    <string name="show_illumination_percent">Show Illumination Percent</string>
+    <string name="show_upcoming_phase_details">Show Upcoming Phase Details</string>
+    <string name="current_place">Current Place</string>
+    <string name="enable_lunar_phase_to_preview">Enable Lunar Phase to preview</string>
 </resources>
