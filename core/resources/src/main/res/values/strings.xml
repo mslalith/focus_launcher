@@ -8,4 +8,8 @@
     <string name="go_back">Go Back</string>
     <string name="search">Search</string>
     <string name="clear">Clear</string>
+    <string name="widgets">Widgets</string>
+    <string name="clock">Clock</string>
+    <string name="lunar_phase">Lunar Phase</string>
+    <string name="quotes">Quotes</string>
 </resources>

@@ -1,19 +1,12 @@
 package dev.mslalith.focuslauncher.core.common.extensions
 
-import java.time.Month
-import java.time.ZonedDateTime
-import java.util.Locale
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-
-fun ZonedDateTime.isSameAsToday(): Boolean {
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-    val (year, month, day) = this.toString().substringBefore(delimiter = "T").split("-")
-    return today.year == year.toInt() && today.monthNumber == month.toInt() && today.dayOfMonth == day.toInt()
-}
+import java.time.Month
+import java.time.ZonedDateTime
+import java.util.Locale
 
 fun ZonedDateTime.inShortReadableFormat(): String {
     val (_, month, day) = this.toString().substringBefore(delimiter = "T").split("-")
