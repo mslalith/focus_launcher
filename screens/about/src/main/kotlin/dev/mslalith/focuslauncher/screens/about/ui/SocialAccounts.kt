@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.resources.R
@@ -26,12 +27,12 @@ internal fun SocialAccounts() {
     Row {
         SocialAccount(
             iconRes = R.drawable.ic_logo_twitter,
-            contentDescription = "Twitter icon",
+            contentDescription = stringResource(id = R.string.twitter_icon),
             onClick = { uriHandler.openUri(uri = "https://twitter.com/mslalith") }
         )
         SocialAccount(
             iconRes = R.drawable.ic_logo_github,
-            contentDescription = "Twitter icon",
+            contentDescription = stringResource(id = R.string.github_icon),
             onClick = { uriHandler.openUri(uri = "https://github.com/mslalith") }
         )
     }

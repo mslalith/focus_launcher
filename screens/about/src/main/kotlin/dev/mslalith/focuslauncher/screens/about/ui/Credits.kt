@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.TextIconButton
@@ -23,13 +24,13 @@ internal fun Credits(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Credits",
+            text = stringResource(id = R.string.credits),
             style = MaterialTheme.typography.titleLarge
         )
         VerticalSpacer(spacing = 12.dp)
         TextIconButton(
             icon = R.drawable.ic_logo_phosphor,
-            text = "Phosphor Icons",
+            text = stringResource(id = R.string.phosphor_icons),
             onClick = { uriHandler.openUri(uri = "https://phosphoricons.com/") },
             backgroundColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.38f),
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer

@@ -68,7 +68,7 @@
     <string name="enable_quotes_to_preview">Enable Quotes to preview</string>
     <string name="enable_quotes">Enable Quotes</string>
     <string name="fetch_quotes">Fetch Quotes</string>
-    <string name="quotation">Quotation</string>
+    <string name="quotation_icon">Quotation icon</string>
     <string name="about">About</string>
     <string name="app_drawer">App Drawer</string>
     <string name="edit_favorites">Edit Favorites</string>
@@ -80,4 +80,12 @@
     <string name="settings">Settings</string>
     <string name="hide_status_bar">Hide Status Bar</string>
     <string name="show_status_bar">Show Status Bar</string>
+    <string name="app_icon">App Icon</string>
+    <string name="credits">Credits</string>
+    <string name="phosphor_icons">Phosphor Icons</string>
+    <string name="love_icon">Love icon</string>
+    <string name="made_with">Made with</string>
+    <string name="from_india">from India</string>
+    <string name="twitter_icon">Twitter icon</string>
+    <string name="github_icon">GitHub icon</string>
 </resources>

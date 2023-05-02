@@ -43,7 +43,7 @@ internal fun QuoteForYouContent(
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_quote),
-            contentDescription = stringResource(id = R.string.quotation),
+            contentDescription = stringResource(id = R.string.quotation_icon),
             tint = contentColor,
             modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
         )
