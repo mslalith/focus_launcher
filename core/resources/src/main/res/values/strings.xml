@@ -5,4 +5,7 @@
     <string name="app_hidden_message">Unhide {} to mark it as favorite</string>
     <string name="added_app_to_favorites">Added %s to Favorites</string>
     <string name="removed_app_from_favorites">%s removed from Favorites</string>
+    <string name="go_back">Go Back</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
 </resources>

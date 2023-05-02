@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,7 +18,7 @@ fun AppBarWithBackIcon(
         navigationIcon = {
             RoundIcon(
                 iconRes = R.drawable.ic_arrow_left,
-                contentDescription = "Back",
+                contentDescription = stringResource(id = R.string.go_back),
                 onClick = onBackPressed
             )
         },
