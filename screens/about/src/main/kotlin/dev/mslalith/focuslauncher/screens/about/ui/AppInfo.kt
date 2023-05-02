@@ -35,7 +35,7 @@ internal fun AppInfo(
     ) {
         Image(
             bitmap = appIcon,
-            contentDescription = "App Icon"
+            contentDescription = stringResource(id = R.string.app_icon)
         )
         VerticalSpacer(spacing = 8.dp)
         Text(

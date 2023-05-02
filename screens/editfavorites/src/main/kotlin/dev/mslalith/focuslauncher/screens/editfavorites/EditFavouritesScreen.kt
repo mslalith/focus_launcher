@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
@@ -47,7 +48,7 @@ internal fun EditFavoritesScreen(
         },
         topBar = {
             AppBarWithBackIcon(
-                title = "Favorites",
+                title = stringResource(id = R.string.favorites),
                 onBackPressed = goBack,
                 actions = @Composable {
                     val showHiddenApps by editFavoritesViewModel.showHiddenAppsInFavorites.collectAsStateWithLifecycle()
@@ -66,7 +67,7 @@ internal fun EditFavoritesScreen(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_broom),
-                    contentDescription = "Clear Favorites"
+                    contentDescription = stringResource(id = R.string.clear_favorites)
                 )
             }
         }

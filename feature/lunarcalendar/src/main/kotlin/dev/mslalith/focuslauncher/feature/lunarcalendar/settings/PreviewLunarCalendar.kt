@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.feature.lunarcalendar.R
 import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
 
 @Composable
@@ -51,7 +53,7 @@ internal fun PreviewLunarCalendar(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Enable Lunar Phase to preview",
+                    text = stringResource(id = R.string.enable_lunar_phase_to_preview),
                     textAlign = TextAlign.Center,
                     color = contentColor,
                     style = MaterialTheme.typography.bodyLarge

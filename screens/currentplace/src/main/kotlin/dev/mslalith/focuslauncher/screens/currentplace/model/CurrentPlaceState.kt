@@ -5,6 +5,6 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 internal data class CurrentPlaceState(
     val latLng: LatLng,
-    val addressState: LoadingState<String>,
+    val addressState: LoadingState<String?>,
     val canSave: Boolean
 )

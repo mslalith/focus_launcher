@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.model.App
 
 @Composable
@@ -37,7 +38,7 @@ internal fun UpdateAppDisplayNameDialog(
     AlertDialog(
         onDismissRequest = onClose,
         title = {
-            Text(text = "Update Display Name")
+            Text(text = stringResource(id = R.string.update_display_name))
         },
         text = {
             OutlinedTextField(
@@ -50,12 +51,12 @@ internal fun UpdateAppDisplayNameDialog(
         },
         confirmButton = {
             Button(onClick = ::onUpdateClick) {
-                Text(text = "Update")
+                Text(text = stringResource(id = R.string.update))
             }
         },
         dismissButton = {
             TextButton(onClick = onClose) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel))
             }
         }
     )

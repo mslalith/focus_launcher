@@ -11,10 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.feature.lunarcalendar.R
 
 @Composable
 internal fun NextMajorPhaseDetails(
@@ -23,7 +25,7 @@ internal fun NextMajorPhaseDetails(
 ) {
     Column {
         Text(
-            text = "Upcoming Phases",
+            text = stringResource(id = R.string.upcoming_phases),
             color = contentColor,
             style = MaterialTheme.typography.titleMedium
         )

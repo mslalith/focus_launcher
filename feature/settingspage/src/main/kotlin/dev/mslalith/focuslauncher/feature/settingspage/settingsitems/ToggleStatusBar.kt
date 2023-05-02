@@ -2,7 +2,9 @@ package dev.mslalith.focuslauncher.feature.settingspage.settingsitems
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
+import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
 
 @Composable
@@ -16,13 +18,13 @@ internal fun ToggleStatusBar(
         systemUiController.isStatusBarVisible = showStatusBar
     }
 
-    val showOrHideText = when (showStatusBar) {
-        true -> "Hide"
-        false -> "Show"
+    val stringRes = when (showStatusBar) {
+        true -> R.string.hide_status_bar
+        false -> R.string.show_status_bar
     }
 
     SettingsItem(
-        text = "$showOrHideText Status Bar",
+        text = stringResource(id = stringRes),
         onClick = onClick
     )
 }

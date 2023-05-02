@@ -20,10 +20,11 @@ import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
 import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
+import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableIconItem
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.core.ui.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.feature.appdrawerpage.R
 
 @Composable
@@ -67,7 +68,7 @@ internal fun MoreOptionsBottomSheet(
         VerticalSpacer(spacing = 16.dp)
 
         SelectableIconItem(
-            text = if (isFavoriteApp) "Remove from Favorites" else "Add to Favorites",
+            text = stringResource(id = if (isFavoriteApp) R.string.remove_from_favorites else R.string.add_to_favorites),
             iconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star,
             contentColor = contentColor,
             onClick = {
@@ -84,20 +85,20 @@ internal fun MoreOptionsBottomSheet(
         )
         if (isFavoriteApp) {
             ConfirmSelectableItem(
-                text = "Hide App",
+                text = stringResource(id = R.string.hide_app),
                 confirmMessage = confirmToHideMessage,
                 itemType = ConfirmSelectableItemType.Icon(
                     iconRes = R.drawable.ic_visibility_off
                 ),
                 contentColor = contentColor,
-                confirmText = "Yes, Hide",
+                confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
                 onConfirm = {
                     closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
                 }
             )
         } else {
             SelectableIconItem(
-                text = "Hide App",
+                text = stringResource(id = R.string.hide_app),
                 iconRes = R.drawable.ic_visibility_off,
                 contentColor = contentColor,
                 onClick = {
@@ -106,7 +107,7 @@ internal fun MoreOptionsBottomSheet(
             )
         }
         SelectableIconItem(
-            text = "Update Display Name",
+            text = stringResource(id = R.string.update_display_name),
             iconRes = R.drawable.ic_edit,
             contentColor = contentColor,
             onClick = {
@@ -114,7 +115,7 @@ internal fun MoreOptionsBottomSheet(
             }
         )
         SelectableIconItem(
-            text = "App Info",
+            text = stringResource(id = R.string.app_info),
             iconRes = R.drawable.ic_info,
             contentColor = contentColor,
             onClick = {
@@ -124,7 +125,7 @@ internal fun MoreOptionsBottomSheet(
 
         if (!appWithIcon.isSystem) {
             SelectableIconItem(
-                text = "Uninstall",
+                text = stringResource(id = R.string.uninstall),
                 iconRes = R.drawable.ic_delete,
                 contentColor = contentColor,
                 onClick = {

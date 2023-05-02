@@ -171,7 +171,8 @@ class HideAppsScreenKtTest {
 
         val message = activity.getString(R.string.hide_favorite_app_message, favoriteApp.displayName)
         onNodeWithText(text = message).assertIsDisplayed()
-        onNodeWithText(text = "Cancel").performClick()
+        val text = activity.getString(R.string.cancel)
+        onNodeWithText(text = text).performClick()
 
         val selectedHiddenApp = favoriteApp.toSelectedHiddenAppWith(isSelected = false, isFavorite = true)
         waitForApp(selectedHiddenApp = selectedHiddenApp)
@@ -185,7 +186,8 @@ class HideAppsScreenKtTest {
 
         val message = activity.getString(R.string.hide_favorite_app_message, favoriteApp.displayName)
         onNodeWithText(text = message).assertIsDisplayed()
-        onNodeWithText(text = "Yes, Hide").performClick()
+        val text = activity.getString(R.string.yes_comma_hide)
+        onNodeWithText(text = text).performClick()
 
         onNodeWithText(text = message).assertDoesNotExist()
 

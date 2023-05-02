@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import dev.mslalith.focuslauncher.core.common.extensions.asPercent
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
+import dev.mslalith.focuslauncher.core.ui.extensions.string
 
 @Composable
 internal fun LunarPhaseName(
@@ -17,7 +18,7 @@ internal fun LunarPhaseName(
     textColor: Color
 ) {
     val phaseNameAndIlluminationPercentPair = lunarPhaseDetails.run {
-        lunarPhase.phaseName to (illumination * 100).asPercent()
+        lunarPhase.phaseNameUiText.string() to (illumination * 100).asPercent()
     }
     val text = phaseNameAndIlluminationPercentPair.let {
         it.first + if (showIlluminationPercent) " (${it.second})" else ""

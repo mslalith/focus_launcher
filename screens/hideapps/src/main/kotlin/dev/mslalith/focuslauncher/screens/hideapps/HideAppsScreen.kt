@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
@@ -34,7 +35,7 @@ internal fun HideAppsScreen(
     Scaffold(
         topBar = {
             AppBarWithBackIcon(
-                title = "Hide Apps",
+                title = stringResource(id = R.string.hide_apps),
                 onBackPressed = goBack
             )
         },
@@ -45,7 +46,7 @@ internal fun HideAppsScreen(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_broom),
-                    contentDescription = "Clear Hidden Apps"
+                    contentDescription = stringResource(id = R.string.clear_hidden_apps)
                 )
             }
         }

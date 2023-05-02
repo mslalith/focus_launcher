@@ -11,11 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.model.Constants.Urls.OPENSTREETMAP_COPYRIGHT_URL
 import dev.mslalith.focuslauncher.core.model.location.LatLng
+import dev.mslalith.focuslauncher.screens.currentplace.R
 import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
 
 @Composable
@@ -53,15 +56,15 @@ private fun BoxScope.MapOverlay() {
 private fun MapCredits() {
     val uriHandler = LocalUriHandler.current
 
+    val openStreetMapText = stringResource(id = R.string.openstreetmap)
+    val openStreetMapCredits = stringResource(id = R.string.openstreetmap_contributors, openStreetMapText)
+
     val annotatedString = remember {
         buildAnnotatedString {
-            val textToShow = "© OpenStreetMap contributors"
-            val clickableText = "OpenStreetMap"
+            val start = openStreetMapCredits.indexOf(openStreetMapText)
+            val end = start + openStreetMapText.length
 
-            val start = textToShow.indexOf(clickableText)
-            val end = start + clickableText.length
-
-            append(textToShow)
+            append(openStreetMapCredits)
             addStyle(
                 style = SpanStyle(
                     color = Color.Blue,
@@ -72,7 +75,7 @@ private fun MapCredits() {
             )
             addStringAnnotation(
                 tag = "url",
-                annotation = "https://www.openstreetmap.org/copyright",
+                annotation = OPENSTREETMAP_COPYRIGHT_URL,
                 start = start,
                 end = end
             )

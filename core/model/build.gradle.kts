@@ -9,7 +9,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
+
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.androidx.annotation)
     implementation(libs.suncalc)
 }

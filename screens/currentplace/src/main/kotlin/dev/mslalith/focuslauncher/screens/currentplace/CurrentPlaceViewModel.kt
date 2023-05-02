@@ -28,14 +28,12 @@ internal class CurrentPlaceViewModel @Inject constructor(
     private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo
 ) : ViewModel() {
 
-    private val defaultAddress = DEFAULT_CURRENT_PLACE.address
-
     private val _latLngStateFlow: MutableStateFlow<LatLng> = MutableStateFlow(value = DEFAULT_CURRENT_PLACE.latLng)
-    private val _addressStateFlow: MutableStateFlow<LoadingState<String>> = MutableStateFlow(value = LoadingState.Loading)
+    private val _addressStateFlow: MutableStateFlow<LoadingState<String?>> = MutableStateFlow(value = LoadingState.Loading)
 
     private val defaultCurrentPlace = CurrentPlace(
         latLng = _latLngStateFlow.value,
-        address = defaultAddress
+        address = DEFAULT_CURRENT_PLACE.address
     )
 
     private val defaultCurrentPlaceState = CurrentPlaceState(
@@ -65,7 +63,7 @@ internal class CurrentPlaceViewModel @Inject constructor(
     private suspend fun fetchAddressAndUpdateFlows(latLng: LatLng) {
         _addressStateFlow.value = LoadingState.Loading
         val place = placesRepo.fetchPlace(latLng = latLng)
-        val address = place?.displayName ?: defaultAddress
+        val address = place?.displayName ?: defaultCurrentPlace.address
         _addressStateFlow.value = LoadingState.Loaded(value = address)
     }
 
