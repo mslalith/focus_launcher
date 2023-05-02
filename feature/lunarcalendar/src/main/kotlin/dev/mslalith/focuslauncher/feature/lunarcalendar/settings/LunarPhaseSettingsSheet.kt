@@ -53,7 +53,7 @@ internal fun LunarPhaseSettingsSheet(
         )
         SettingsSelectableItem(
             text = stringResource(id = R.string.current_place),
-            subText = currentPlace.address,
+            subText = currentPlace.address ?: stringResource(id = R.string.not_available),
             disabled = !lunarCalendarState.showLunarPhase,
             onClick = navigateToCurrentPlace
         )

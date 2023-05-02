@@ -97,4 +97,5 @@
     <string name="hidden_apps">Hidden Apps</string>
     <string name="clear_hidden_apps">Clear Hidden Apps</string>
     <string name="clear_favorites">Clear Favorites</string>
+    <string name="not_available">Not Available</string>
 </resources>
