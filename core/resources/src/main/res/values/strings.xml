@@ -30,6 +30,7 @@
     <string name="group_apps_by_character">Group Apps by Character</string>
     <string name="show_app_icons">Show App Icons</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
     <string name="confirm">Confirm</string>
     <string name="yes_comma_hide">Yes, Hide</string>
     <string name="new_moon">New Moon</string>
@@ -43,4 +44,11 @@
     <string name="next_phase_is_on_date">next %s is on %s</string>
     <string name="illumination_value">Illumination: %s</string>
     <string name="angle_value">Angle: %s</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="hide_app">Hide App</string>
+    <string name="update_display_name">Update Display Name</string>
+    <string name="app_info">App Info</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="search_app_hint">Search app…</string>
 </resources>
