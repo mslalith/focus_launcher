@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage.model
 
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 
 internal data class AppDrawerPageState(
     val allAppsState: LoadingState<List<AppWithIcon>>,

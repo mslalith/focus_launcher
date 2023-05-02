@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.screens.editfavorites.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.mslalith.focuslauncher.core.model.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.ui.SelectableCheckboxItem
 
 @Composable

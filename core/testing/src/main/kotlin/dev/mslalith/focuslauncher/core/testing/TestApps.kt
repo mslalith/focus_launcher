@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.testing
 
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 
 object TestApps {
     val Chrome = App(name = "Chrome", packageName = "com.android.chrome", isSystem = true)

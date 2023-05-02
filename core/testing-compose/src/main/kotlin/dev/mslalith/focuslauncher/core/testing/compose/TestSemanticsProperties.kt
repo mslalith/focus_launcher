@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.core.testing.compose
 
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.semantics.SemanticsPropertyKey
-import dev.mslalith.focuslauncher.core.model.SelectedApp
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 
 object TestSemanticsProperties {
     val BiasAlignmentHorizontal = SemanticsPropertyKey<BiasAlignment.Horizontal>(name = "BiasAlignmentHorizontal")

@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 import java.lang.reflect.Method
 
 fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {

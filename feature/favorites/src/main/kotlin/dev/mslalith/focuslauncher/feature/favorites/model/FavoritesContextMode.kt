@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.feature.favorites.model
 
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 
 internal sealed class FavoritesContextMode {
     object Open : FavoritesContextMode()

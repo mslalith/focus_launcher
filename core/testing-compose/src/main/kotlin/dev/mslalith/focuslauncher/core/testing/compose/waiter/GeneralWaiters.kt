@@ -3,8 +3,8 @@ package dev.mslalith.focuslauncher.core.testing.compose.waiter
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.ComposeTestRule
-import dev.mslalith.focuslauncher.core.model.SelectedApp
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasSelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasSelectedHiddenApp
 

@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.appswithicons
 
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.domain.extensions.filterAppsWithIconsState
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

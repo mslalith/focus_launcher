@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics
 
 import androidx.compose.ui.BiasAlignment
-import dev.mslalith.focuslauncher.core.model.SelectedApp
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 
 interface TestSemanticsScope {
     fun testBiasAlignment(biasAlignment: BiasAlignment.Horizontal)

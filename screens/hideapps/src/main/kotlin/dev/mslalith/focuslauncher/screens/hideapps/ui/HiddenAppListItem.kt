@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
