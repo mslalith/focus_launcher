@@ -29,4 +29,7 @@
     <string name="show_search_bar">Show Search Bar</string>
     <string name="group_apps_by_character">Group Apps by Character</string>
     <string name="show_app_icons">Show App Icons</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="yes_comma_hide">Yes, Hide</string>
 </resources>

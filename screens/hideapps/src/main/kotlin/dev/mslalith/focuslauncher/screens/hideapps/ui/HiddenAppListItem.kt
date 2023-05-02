@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableCheckboxItem
@@ -29,7 +30,7 @@ internal fun HiddenAppListItem(
                 checked = selectedHiddenApp.isSelected
             ),
             backgroundColor = MaterialTheme.colorScheme.surface,
-            confirmText = "Yes, Hide",
+            confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
             onConfirm = onAppClick
         )
     } else {

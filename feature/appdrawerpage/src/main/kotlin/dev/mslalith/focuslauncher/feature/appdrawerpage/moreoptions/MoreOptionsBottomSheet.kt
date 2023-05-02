@@ -21,6 +21,7 @@ import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
+import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableIconItem
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -90,7 +91,7 @@ internal fun MoreOptionsBottomSheet(
                     iconRes = R.drawable.ic_visibility_off
                 ),
                 contentColor = contentColor,
-                confirmText = "Yes, Hide",
+                confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
                 onConfirm = {
                     closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
                 }
