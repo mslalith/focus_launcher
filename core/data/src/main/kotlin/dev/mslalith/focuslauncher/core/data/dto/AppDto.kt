@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.core.data.dto
 import dev.mslalith.focuslauncher.core.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.FavoriteAppRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.HiddenAppRoom
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 
 internal fun AppRoom.toApp(): App = App(
     name = name,

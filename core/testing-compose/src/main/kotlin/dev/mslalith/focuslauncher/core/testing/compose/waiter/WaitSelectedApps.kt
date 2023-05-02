@@ -5,7 +5,7 @@ import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onFirst
-import dev.mslalith.focuslauncher.core.model.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasSelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.onMatchWith
 

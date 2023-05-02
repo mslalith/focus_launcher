@@ -7,8 +7,8 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetFavoriteAppsWithColorUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.AppWithColor
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode

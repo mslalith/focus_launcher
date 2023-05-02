@@ -9,7 +9,7 @@ import android.provider.Telephony
 import android.telecom.TelecomManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 import javax.inject.Inject
 
 internal class LauncherAppsManagerImpl @Inject constructor(

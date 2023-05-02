@@ -5,7 +5,7 @@ import dev.mslalith.focuslauncher.core.data.database.entities.AppRoom
 import dev.mslalith.focuslauncher.core.data.dto.toApp
 import dev.mslalith.focuslauncher.core.data.dto.toAppRoom
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -10,7 +10,7 @@ import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsWithIconsG
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope

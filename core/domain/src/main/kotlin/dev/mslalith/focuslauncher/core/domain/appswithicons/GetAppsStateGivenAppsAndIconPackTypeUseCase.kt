@@ -4,15 +4,15 @@ import android.content.pm.PackageManager
 import dev.mslalith.focuslauncher.core.domain.model.GetAppsState
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 import javax.inject.Inject
 
-class GetAppsStateGivenAppsAndIconPackTypeUseCase @Inject constructor(
+internal class GetAppsStateGivenAppsAndIconPackTypeUseCase @Inject constructor(
     private val iconPackManager: IconPackManager,
     private val iconProvider: IconProvider
 ) {

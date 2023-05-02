@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon

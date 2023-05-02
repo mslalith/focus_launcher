@@ -21,9 +21,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge

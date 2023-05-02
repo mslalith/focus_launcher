@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.model.AppWithColor
+import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 

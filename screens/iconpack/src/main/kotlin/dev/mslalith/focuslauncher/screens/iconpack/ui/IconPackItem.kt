@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import dev.mslalith.focuslauncher.core.model.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.clickableNoRipple
 

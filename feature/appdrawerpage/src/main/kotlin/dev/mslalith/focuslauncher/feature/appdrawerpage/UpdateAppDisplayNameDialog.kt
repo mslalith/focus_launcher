@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 
 @Composable
 internal fun UpdateAppDisplayNameDialog(

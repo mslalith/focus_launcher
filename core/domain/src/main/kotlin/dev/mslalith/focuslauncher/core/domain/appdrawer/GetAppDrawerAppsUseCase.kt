@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.appdrawer
 
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

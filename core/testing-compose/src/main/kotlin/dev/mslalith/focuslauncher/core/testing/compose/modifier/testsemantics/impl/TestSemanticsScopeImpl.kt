@@ -2,8 +2,8 @@ package dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.i
 
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
-import dev.mslalith.focuslauncher.core.model.SelectedApp
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.TestSemanticsProperties
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.TestSemanticsScope
 

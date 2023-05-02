@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 
 @OptIn(ExperimentalBaselineProfilesApi::class)
 @RunWith(AndroidJUnit4::class)
-class BaselineProfileTest {
+internal class BaselineProfileTest {
 
     @get:Rule
     val baselineProfileRule = BaselineProfileRule()

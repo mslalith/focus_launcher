@@ -1,11 +1,10 @@
 package dev.mslalith.focuslauncher.screens.hideapps.ui
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
@@ -29,7 +28,6 @@ internal fun HiddenAppListItem(
             itemType = ConfirmSelectableItemType.Checkbox(
                 checked = selectedHiddenApp.isSelected
             ),
-            backgroundColor = MaterialTheme.colorScheme.surface,
             confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
             onConfirm = onAppClick
         )

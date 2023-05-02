@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.model
+package dev.mslalith.focuslauncher.core.model.app
 
 data class SelectedApp(
     val app: App,

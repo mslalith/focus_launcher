@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test
 
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
-import dev.mslalith.focuslauncher.core.model.App
+import dev.mslalith.focuslauncher.core.model.app.App
 
 class TestLauncherAppsManager : LauncherAppsManager {
 

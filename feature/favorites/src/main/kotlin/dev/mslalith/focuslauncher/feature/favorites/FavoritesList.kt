@@ -24,8 +24,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.AppWithColor
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState

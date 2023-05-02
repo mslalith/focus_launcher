@@ -55,8 +55,9 @@ internal fun LauncherScreen(
 
     Scaffold {
         HorizontalPager(
-            pageCount = 3,
             state = pagerState,
+            pageCount = 3,
+            beyondBoundsPageCount = 2,
             modifier = Modifier.padding(paddingValues = it)
         ) { page ->
             when (page) {

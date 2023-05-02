@@ -6,8 +6,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.SelectedHiddenApp
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags

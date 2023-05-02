@@ -14,8 +14,8 @@ import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
-import dev.mslalith.focuslauncher.core.model.App
-import dev.mslalith.focuslauncher.core.model.SelectedApp
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
@@ -203,7 +203,7 @@ class EditFavoritesScreenKtTest {
             performClick()
         }
 
-        val message = activity.getString(R.string.app_hidden_message).replace(oldValue = "{}", newValue = hiddenApp.name)
+        val message = activity.getString(R.string.app_hidden_message, hiddenApp.name)
         onNodeWithText(text = message).assertIsDisplayed()
     }
 }
