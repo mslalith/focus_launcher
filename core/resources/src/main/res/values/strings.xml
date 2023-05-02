@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Focus Launcher</string>
     <string name="hide_favorite_app_message">You marked %s as favorite. By hiding, this will be removed from favorites also</string>
-    <string name="app_hidden_message">Unhide {} to mark it as favorite</string>
+    <string name="app_hidden_message">Unhide %s to mark it as favorite</string>
     <string name="added_app_to_favorites">Added %s to Favorites</string>
     <string name="removed_app_from_favorites">%s removed from Favorites</string>
     <string name="ok">OK</string>

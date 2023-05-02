@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.App
 import dev.mslalith.focuslauncher.core.model.SelectedApp
@@ -23,7 +23,7 @@ internal fun FavoritesList(
     onAddToFavorites: (App) -> Unit,
     onRemoveFromFavorites: (App) -> Unit
 ) {
-    val appHiddenMessage = stringResource(id = R.string.app_hidden_message)
+    val context = LocalContext.current
 
     fun toggleFavorite(selectedApp: SelectedApp, isHidden: Boolean) {
         if (!isHidden) {
@@ -33,7 +33,7 @@ internal fun FavoritesList(
                 onAddToFavorites(selectedApp.app)
             }
         } else {
-            showSnackbar(appHiddenMessage.replace(oldValue = "{}", newValue = selectedApp.app.name))
+            showSnackbar(context.getString(R.string.app_hidden_message, selectedApp.app.name))
         }
     }
 
