@@ -16,6 +16,7 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChange
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
@@ -100,6 +101,6 @@ class FavoritesViewModelTest : CoroutineTest() {
 
 context (CoroutineScope)
 private suspend fun StateFlow<FavoritesState>.assertFavoritesList(expected: List<App>) {
-    val actual = awaitItemChange { it.favoritesList }.map { it.app }
+    val actual = awaitItemChange { it.favoritesList.toImmutableList() }.map { it.app }
     assertThat(actual).isEqualTo(expected)
 }

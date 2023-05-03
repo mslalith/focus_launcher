@@ -10,11 +10,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
+import kotlinx.collections.immutable.ImmutableList
 import kotlin.reflect.KClass
 
 @Composable
 internal fun FavoritesContextActionItem(
-    contextModes: List<KClass<FavoritesContextMode>>,
+    contextModes: ImmutableList<KClass<FavoritesContextMode>>,
     currentContextMode: FavoritesContextMode,
     @DrawableRes iconRes: Int,
     onClick: () -> Unit

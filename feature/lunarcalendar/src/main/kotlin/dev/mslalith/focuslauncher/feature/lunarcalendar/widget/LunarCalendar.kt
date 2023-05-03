@@ -25,9 +25,8 @@ fun LunarCalendar(
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: (() -> Unit)? = null
 ) {
-    LunarCalendar(
+    LunarCalendarInternal(
         modifier = modifier,
-        lunarCalendarViewModel = hiltViewModel(),
         height = height,
         iconSize = iconSize,
         horizontalPadding = horizontalPadding,
@@ -38,9 +37,9 @@ fun LunarCalendar(
 }
 
 @Composable
-internal fun LunarCalendar(
+internal fun LunarCalendarInternal(
     modifier: Modifier = Modifier,
-    lunarCalendarViewModel: LunarCalendarViewModel,
+    lunarCalendarViewModel: LunarCalendarViewModel = hiltViewModel(),
     height: Dp,
     iconSize: Dp,
     horizontalPadding: Dp,

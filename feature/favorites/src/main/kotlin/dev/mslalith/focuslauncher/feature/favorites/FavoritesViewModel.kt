@@ -13,6 +13,8 @@ import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -35,7 +37,7 @@ internal class FavoritesViewModel @Inject constructor(
 
     private val defaultFavoritesState = FavoritesState(
         favoritesContextualMode = _favoritesContextualMode.value,
-        favoritesList = emptyList()
+        favoritesList = persistentListOf()
     )
 
     private val allAppsWithIcons: Flow<List<AppWithColor>> = getFavoriteAppsWithColorUseCase()
@@ -43,7 +45,7 @@ internal class FavoritesViewModel @Inject constructor(
 
     val favoritesState = flowOf(value = defaultFavoritesState)
         .combine(flow = allAppsWithIcons) { state, favorites ->
-            state.copy(favoritesList = favorites)
+            state.copy(favoritesList = favorites.toImmutableList())
         }.combine(flow = _favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
         }.withinScope(initialValue = defaultFavoritesState)

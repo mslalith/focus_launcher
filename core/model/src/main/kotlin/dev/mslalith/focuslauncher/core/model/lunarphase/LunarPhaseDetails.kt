@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.model.lunarphase
 
+import androidx.compose.runtime.Immutable
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.FIRST_QUARTER
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.FULL_MOON
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.LAST_QUARTER
@@ -9,6 +10,7 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.WANING_GIBBOU
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.WAXING_CRESCENT
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase.WAXING_GIBBOUS
 
+@Immutable
 data class LunarPhaseDetails(
     val lunarPhase: LunarPhase,
     val illumination: Double,
