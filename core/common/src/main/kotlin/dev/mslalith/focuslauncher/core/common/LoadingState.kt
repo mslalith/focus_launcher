@@ -4,10 +4,7 @@ import javax.annotation.concurrent.Immutable
 
 @Immutable
 sealed interface LoadingState<out T> {
-    @Immutable
     object Loading : LoadingState<Nothing>
-
-    @Immutable
     data class Loaded<out R>(val value: R) : LoadingState<R>
 }
 

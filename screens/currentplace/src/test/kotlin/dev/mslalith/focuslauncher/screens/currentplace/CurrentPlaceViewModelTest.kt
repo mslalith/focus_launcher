@@ -5,6 +5,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.LoadingState
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
@@ -18,6 +19,7 @@ import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -43,6 +45,9 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     @Inject
     lateinit var lunarPhaseSettingsRepo: LunarPhaseSettingsRepo
 
+    @Inject
+    lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
+
     private lateinit var viewModel: CurrentPlaceViewModel
 
     @Before
@@ -50,7 +55,8 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
         hiltRule.inject()
         viewModel = CurrentPlaceViewModel(
             placesRepo = placesRepo,
-            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
+            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo,
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
     }
 
@@ -58,6 +64,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     fun `initially, latLng and address show be default`() = runCoroutineTest {
         val expected = CurrentPlaceState(
             latLng = DEFAULT_CURRENT_PLACE.latLng,
+            initialLatLng = DEFAULT_CURRENT_PLACE.latLng,
             addressState = LoadingState.Loading,
             canSave = false
         )
@@ -67,15 +74,16 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     @Test
     fun `when current place is already saved to DB, initially saved placed should be loaded`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
-        viewModel.savePlaceToDbAndAwait(latLng = latLng)
+        viewModel.savePlaceToDbAndAwait(latLng = latLng, initialLatLng = latLng)
 
         val viewModel = CurrentPlaceViewModel(
             placesRepo = placesRepo,
-            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
+            lunarPhaseSettingsRepo = lunarPhaseSettingsRepo,
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
-        viewModel.updateCurrentLatLng(latLng = latLng)
 
-        viewModel.assertCurrentPlaceState(latLng = latLng)
+        val currentPlace = viewModel.currentPlaceState.awaitItemChangeUntil { it.initialLatLng == latLng }
+        assertThat(currentPlace.initialLatLng).isEqualTo(latLng)
     }
 
     @Test
@@ -83,19 +91,20 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
         viewModel.savePlaceToDbAndAwait(latLng = latLng)
 
-        val dbPlace = viewModel.fetchCurrentPlaceFromDb()
+        val dbPlace = lunarPhaseSettingsRepo.currentPlaceFlow.first()
         assertThat(dbPlace.toCurrentPlaceState()).isEqualTo(latLng.toCurrentPlaceState())
     }
 
     @Test
     fun `when latLng is changed, it's address must be fetch`() = runCoroutineTest {
-        var latLng = LatLng(latitude = 23.0, longitude = 60.0)
+        val initialLatLng = LatLng(latitude = 23.0, longitude = 60.0)
+        var latLng = initialLatLng
         viewModel.updateCurrentLatLng(latLng = latLng)
-        viewModel.assertCurrentPlaceState(latLng = latLng)
+        viewModel.assertCurrentPlaceState(latLng = latLng, initialLatLng = initialLatLng)
 
         latLng = LatLng(latitude = 46.0, longitude = 30.0)
         viewModel.updateCurrentLatLng(latLng = latLng)
-        viewModel.assertCurrentPlaceState(latLng = latLng)
+        viewModel.assertCurrentPlaceState(latLng = latLng, initialLatLng = initialLatLng)
     }
 
     @Test
@@ -125,26 +134,38 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
 }
 
 context (CoroutineScope)
-private suspend fun CurrentPlaceViewModel.assertCurrentPlaceState(latLng: LatLng) {
-    val expectedState = latLng.toCurrentPlaceState()
+private suspend fun CurrentPlaceViewModel.assertCurrentPlaceState(
+    latLng: LatLng,
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) {
+    val expectedState = latLng.toCurrentPlaceState(initialLatLng = initialLatLng)
     val newInitialState = currentPlaceState.awaitItemChangeUntil { it == expectedState }
     assertThat(newInitialState).isEqualTo(expectedState)
 }
 
 context (CoroutineScope)
-private suspend fun CurrentPlaceViewModel.savePlaceToDbAndAwait(latLng: LatLng) {
-    updateCurrentLatLngAndAwait(latLng = latLng)
+private suspend fun CurrentPlaceViewModel.savePlaceToDbAndAwait(
+    latLng: LatLng,
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) {
+    updateCurrentLatLngAndAwait(latLng = latLng, initialLatLng = initialLatLng)
     savePlace()
 }
 
 context (CoroutineScope)
-private suspend fun CurrentPlaceViewModel.updateCurrentLatLngAndAwait(latLng: LatLng) {
+private suspend fun CurrentPlaceViewModel.updateCurrentLatLngAndAwait(
+    latLng: LatLng,
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) {
     updateCurrentLatLng(latLng = latLng)
-    this.currentPlaceState.awaitItemChangeUntil { it == latLng.toCurrentPlaceState() }
+    this.currentPlaceState.awaitItemChangeUntil { it == latLng.toCurrentPlaceState(initialLatLng = initialLatLng) }
 }
 
-private fun LatLng.toCurrentPlaceState() = CurrentPlaceState(
+private fun LatLng.toCurrentPlaceState(
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) = CurrentPlaceState(
     latLng = this,
+    initialLatLng = initialLatLng,
     addressState = LoadingState.Loaded(value = dummyPlaceFor(latLng = this).displayName),
     canSave = true
 )
