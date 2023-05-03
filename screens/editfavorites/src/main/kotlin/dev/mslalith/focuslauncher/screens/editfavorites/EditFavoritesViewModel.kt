@@ -10,6 +10,9 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +35,7 @@ internal class EditFavoritesViewModel @Inject constructor(
         _showHiddenAppsInFavorites.value = value
     }
 
-    val favoritesStateFlow: StateFlow<List<SelectedApp>> = appDrawerRepo.allAppsFlow
+    val favoritesStateFlow: StateFlow<ImmutableList<SelectedApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedApp(app = app, isSelected = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { selectedApp ->
@@ -50,8 +53,8 @@ internal class EditFavoritesViewModel @Inject constructor(
             when (filterHidden) {
                 true -> filteredApps
                 false -> filteredApps.filterNot { it.disabled }
-            }
-        }.withinScope(initialValue = emptyList())
+            }.toImmutableList()
+        }.withinScope(initialValue = persistentListOf())
 
     fun addToFavorites(app: App) {
         appCoroutineDispatcher.launchInIO { favoritesRepo.addToFavorites(app = app) }

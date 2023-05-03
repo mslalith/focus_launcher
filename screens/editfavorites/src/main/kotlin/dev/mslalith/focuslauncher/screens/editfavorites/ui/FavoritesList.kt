@@ -13,11 +13,12 @@ import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.te
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.editfavorites.R
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun FavoritesList(
     modifier: Modifier = Modifier,
-    favorites: List<SelectedApp>,
+    favorites: ImmutableList<SelectedApp>,
     contentPadding: PaddingValues = PaddingValues(),
     showSnackbar: (String) -> Unit,
     onAddToFavorites: (App) -> Unit,

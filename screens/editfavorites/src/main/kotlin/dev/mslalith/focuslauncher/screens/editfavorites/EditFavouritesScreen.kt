@@ -26,15 +26,14 @@ import kotlinx.coroutines.launch
 fun EditFavoritesScreen(
     goBack: () -> Unit
 ) {
-    EditFavoritesScreen(
-        editFavoritesViewModel = hiltViewModel(),
+    EditFavoritesScreenInternal(
         goBack = goBack
     )
 }
 
 @Composable
-internal fun EditFavoritesScreen(
-    editFavoritesViewModel: EditFavoritesViewModel,
+internal fun EditFavoritesScreenInternal(
+    editFavoritesViewModel: EditFavoritesViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
