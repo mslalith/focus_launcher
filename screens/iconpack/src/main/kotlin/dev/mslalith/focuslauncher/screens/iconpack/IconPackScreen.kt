@@ -45,14 +45,15 @@ fun IconPackScreen(
     goBack: () -> Unit
 ) {
     IconPackScreen(
-        iconPackViewModel = hiltViewModel(),
+        modifier = Modifier,
         goBack = goBack
     )
 }
 
 @Composable
 internal fun IconPackScreen(
-    iconPackViewModel: IconPackViewModel,
+    modifier: Modifier = Modifier,
+    iconPackViewModel: IconPackViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
 
@@ -62,6 +63,7 @@ internal fun IconPackScreen(
     }
 
     IconPackScreen(
+        modifier = modifier,
         iconPackState = iconPackViewModel.iconPackState.collectAsStateWithLifecycle().value,
         onIconPackClick = iconPackViewModel::updateSelectedIconPackApp,
         onDoneClick = ::onDoneClick,
@@ -72,6 +74,7 @@ internal fun IconPackScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun IconPackScreen(
+    modifier: Modifier = Modifier,
     iconPackState: IconPackState,
     onIconPackClick: (IconPackType) -> Unit,
     onDoneClick: () -> Unit,
@@ -94,7 +97,9 @@ internal fun IconPackScreen(
 
     StatusBarColor(hasTopAppBar = true)
 
-    BoxWithConstraints {
+    BoxWithConstraints(
+        modifier = modifier
+    ) {
         val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }
 
         BottomSheetScaffold(

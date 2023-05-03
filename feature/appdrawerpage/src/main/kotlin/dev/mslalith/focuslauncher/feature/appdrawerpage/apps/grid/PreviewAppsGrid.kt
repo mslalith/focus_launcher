@@ -19,11 +19,12 @@ import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun PreviewAppsGrid(
     modifier: Modifier = Modifier,
-    appsState: LoadingState<List<AppWithIconFavorite>>,
+    appsState: LoadingState<ImmutableList<AppWithIconFavorite>>,
     topSpacing: Dp = 16.dp,
     bottomSpacing: Dp = 16.dp
 ) {
@@ -56,7 +57,7 @@ fun PreviewAppsGrid(
 @Composable
 private fun PreviewAppsContent(
     modifier: Modifier = Modifier,
-    apps: List<AppWithIconFavorite>,
+    apps: ImmutableList<AppWithIconFavorite>,
     columnCount: Int = 4,
     topSpacing: Dp,
     bottomSpacing: Dp
