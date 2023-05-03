@@ -1,7 +1,9 @@
 package dev.mslalith.focuslauncher.core.model.app
 
 import android.graphics.drawable.Drawable
+import androidx.compose.runtime.Immutable
 
+@Immutable
 data class AppWithIcon(
     val name: String,
     val displayName: String,

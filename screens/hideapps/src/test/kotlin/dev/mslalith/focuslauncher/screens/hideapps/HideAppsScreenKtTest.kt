@@ -84,7 +84,7 @@ class HideAppsScreenKtTest {
         }
         composeTestRule.setContent {
             ProvideSystemUiController {
-                HideAppsScreen(
+                HideAppsScreenInternal(
                     hideAppsViewModel = viewModel,
                     goBack = {}
                 )

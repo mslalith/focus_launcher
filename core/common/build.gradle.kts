@@ -9,6 +9,8 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections.immutable)
 }

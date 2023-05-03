@@ -19,15 +19,14 @@ import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
 fun HideAppsScreen(
     goBack: () -> Unit
 ) {
-    HideAppsScreen(
-        hideAppsViewModel = hiltViewModel(),
+    HideAppsScreenInternal(
         goBack = goBack
     )
 }
 
 @Composable
-internal fun HideAppsScreen(
-    hideAppsViewModel: HideAppsViewModel,
+internal fun HideAppsScreenInternal(
+    hideAppsViewModel: HideAppsViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
     StatusBarColor(hasTopAppBar = true)

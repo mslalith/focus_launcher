@@ -23,7 +23,7 @@ import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
@@ -33,14 +33,13 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
 import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
 
 @Composable
-fun AppDrawerPage(
-) {
-    AppDrawerPage(appDrawerPageViewModel = hiltViewModel())
+fun AppDrawerPage() {
+    AppDrawerPageInternal()
 }
 
 @Composable
-internal fun AppDrawerPage(
-    appDrawerPageViewModel: AppDrawerPageViewModel
+internal fun AppDrawerPageInternal(
+    appDrawerPageViewModel: AppDrawerPageViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -50,21 +49,20 @@ internal fun AppDrawerPage(
 
     var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
 
-    fun onAppClick(app: AppWithIcon) {
+    fun onAppClick(appWithIconFavorite: AppWithIconFavorite) {
         focusManager.clearFocus()
-        context.launchApp(app = app.toApp())
+        context.launchApp(app = appWithIconFavorite.appWithIcon.toApp())
     }
 
-    fun showMoreOptions(app: AppWithIcon) {
+    fun showMoreOptions(appWithIconFavorite: AppWithIconFavorite) {
         focusManager.clearFocus()
         viewManager.showBottomSheet {
             MoreOptionsBottomSheet(
-                appWithIcon = app,
-                isFavorite = { appDrawerPageViewModel.isFavorite(packageName = it.packageName) },
+                appWithIconFavorite = appWithIconFavorite,
                 addToFavorites = appDrawerPageViewModel::addToFavorites,
                 removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
                 addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
-                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = app.toApp() },
+                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appWithIconFavorite.appWithIcon.toApp() },
                 onClose = { viewManager.hideBottomSheet() }
             )
         }

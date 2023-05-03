@@ -7,3 +7,7 @@ plugins {
 android {
     namespace = "dev.mslalith.focuslauncher.screens.editfavorites"
 }
+
+dependencies {
+    implementation(libs.kotlinx.collections.immutable)
+}

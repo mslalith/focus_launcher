@@ -44,15 +44,14 @@ import kotlinx.coroutines.flow.collectLatest
 fun IconPackScreen(
     goBack: () -> Unit
 ) {
-    IconPackScreen(
-        iconPackViewModel = hiltViewModel(),
+    IconPackScreenInternal(
         goBack = goBack
     )
 }
 
 @Composable
-internal fun IconPackScreen(
-    iconPackViewModel: IconPackViewModel,
+internal fun IconPackScreenInternal(
+    iconPackViewModel: IconPackViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
 

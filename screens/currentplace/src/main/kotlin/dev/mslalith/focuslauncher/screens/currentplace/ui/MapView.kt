@@ -24,12 +24,12 @@ import dev.mslalith.focuslauncher.screens.currentplace.ui.interop.AndroidMapView
 @Composable
 internal fun MapView(
     modifier: Modifier = Modifier,
-    initialLatLngProvider: suspend () -> LatLng,
+    initialLatLng: LatLng,
     onLocationChange: (LatLng) -> Unit
 ) {
     Box(modifier = modifier) {
         AndroidMapView(
-            initialLatLngProvider = initialLatLngProvider,
+            initialLatLng = initialLatLng,
             onLocationChange = onLocationChange
         )
         MapOverlay()

@@ -7,6 +7,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.DoubleReceiveException
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.serialization.JsonConvertException
@@ -27,6 +28,8 @@ internal class PlacesApiImpl @Inject constructor(
     } catch (e: NoTransformationFoundException) {
         null
     } catch (e: DoubleReceiveException) {
+        null
+    } catch (e: HttpRequestTimeoutException) {
         null
     }
 }

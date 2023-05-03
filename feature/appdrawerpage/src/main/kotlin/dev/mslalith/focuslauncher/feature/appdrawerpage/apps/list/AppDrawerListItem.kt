@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.graphics.drawable.toBitmap
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZONTAL_PADDING
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_END_PADDING
@@ -25,13 +25,13 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppDrawerListItem(
-    app: AppWithIcon,
+    appWithIconFavorite: AppWithIconFavorite,
     showAppIcons: Boolean,
-    onClick: (AppWithIcon) -> Unit,
-    onLongClick: (AppWithIcon) -> Unit
+    onClick: (AppWithIconFavorite) -> Unit,
+    onLongClick: (AppWithIconFavorite) -> Unit
 ) {
-    val iconBitmap = remember(key1 = app.packageName) {
-        app.icon.toBitmap().asImageBitmap()
+    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.packageName) {
+        appWithIconFavorite.appWithIcon.icon.toBitmap().asImageBitmap()
     }
 
     val textStartPadding = when (showAppIcons) {
@@ -45,14 +45,14 @@ internal fun AppDrawerListItem(
         ),
         modifier = Modifier
             .combinedClickable(
-                onClick = { onClick(app) },
-                onLongClick = { onLongClick(app) }
+                onClick = { onClick(appWithIconFavorite) },
+                onLongClick = { onLongClick(appWithIconFavorite) }
             ),
         leadingContent = if (showAppIcons) {
             @Composable {
                 Image(
                     bitmap = iconBitmap,
-                    contentDescription = app.displayName,
+                    contentDescription = appWithIconFavorite.appWithIcon.displayName,
                     modifier = Modifier
                         .padding(start = ITEM_START_PADDING)
                         .size(size = APP_ICON_SIZE)
@@ -61,7 +61,7 @@ internal fun AppDrawerListItem(
         } else null,
         headlineContent = {
             Text(
-                text = app.displayName,
+                text = appWithIconFavorite.appWithIcon.displayName,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

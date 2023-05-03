@@ -10,6 +10,9 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -23,7 +26,7 @@ internal class HideAppsViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val hiddenAppsFlow: StateFlow<List<SelectedHiddenApp>> = appDrawerRepo.allAppsFlow
+    val hiddenAppsFlow: StateFlow<ImmutableList<SelectedHiddenApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedHiddenApp(app = app, isSelected = false, isFavorite = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { hiddenApp ->
@@ -34,8 +37,8 @@ internal class HideAppsViewModel @Inject constructor(
             appsList.map { hiddenApp ->
                 val isSelected = onlyHiddenAppsList.any { it.packageName == hiddenApp.app.packageName }
                 hiddenApp.copy(isSelected = isSelected)
-            }
-        }.withinScope(initialValue = emptyList())
+            }.toImmutableList()
+        }.withinScope(initialValue = persistentListOf())
 
     fun removeFromFavorites(app: App) {
         appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(packageName = app.packageName) }

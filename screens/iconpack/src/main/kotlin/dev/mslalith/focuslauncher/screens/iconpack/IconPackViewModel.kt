@@ -6,15 +6,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsWithIconsGivenIconPackTypeUseCase
+import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsOnIconPackChangeUseCase
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +34,7 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
-    private val getAllAppsWithIconsGivenIconPackTypeUseCase: GetAllAppsWithIconsGivenIconPackTypeUseCase,
+    private val getAllAppsOnIconPackChangeUseCase: GetAllAppsOnIconPackChangeUseCase,
     getIconPackAppsWithIconsUseCase: GetIconPackAppsWithIconsUseCase,
     fetchIconPacksUseCase: FetchIconPacksUseCase,
     private val loadIconPackUseCase: LoadIconPackUseCase,
@@ -39,11 +43,11 @@ internal class IconPackViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _iconPackType = MutableStateFlow<IconPackType?>(value = null)
-    private val _allAppsStateFlow = MutableStateFlow<LoadingState<List<AppWithIcon>>>(value = LoadingState.Loading)
+    private val _allAppsStateFlow = MutableStateFlow<LoadingState<ImmutableList<AppWithIconFavorite>>>(value = LoadingState.Loading)
 
     private val defaultIconPackState = IconPackState(
         allApps = _allAppsStateFlow.value,
-        iconPacks = emptyList(),
+        iconPacks = persistentListOf(),
         iconPackType = _iconPackType.value,
         canSave = false
     )
@@ -70,7 +74,7 @@ internal class IconPackViewModel @Inject constructor(
                 canSave = allAppsState is LoadingState.Loaded
             )
         }.combine(flow = iconPackAppsWithIcons) { state, iconPackApps ->
-            state.copy(iconPacks = iconPackApps)
+            state.copy(iconPacks = iconPackApps.toImmutableList())
         }.combine(flow = _iconPackType) { state, iconPackType ->
             state.copy(iconPackType = iconPackType)
         }.withinScope(initialValue = defaultIconPackState)
@@ -79,7 +83,7 @@ internal class IconPackViewModel @Inject constructor(
         iconPackType ?: return
         _allAppsStateFlow.value = LoadingState.Loading
         loadIconPackUseCase(iconPackType = iconPackType)
-        _allAppsStateFlow.value = LoadingState.Loaded(value = getAllAppsWithIconsGivenIconPackTypeUseCase(iconPackType = iconPackType).first())
+        _allAppsStateFlow.value = LoadingState.Loaded(value = getAllAppsOnIconPackChangeUseCase(iconPackType = iconPackType).first().toImmutableList())
     }
 
     fun updateSelectedIconPackApp(iconPackType: IconPackType) {

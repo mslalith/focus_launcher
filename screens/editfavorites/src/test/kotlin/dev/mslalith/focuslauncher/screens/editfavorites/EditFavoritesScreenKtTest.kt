@@ -80,7 +80,7 @@ class EditFavoritesScreenKtTest {
         }
         composeTestRule.setContent {
             ProvideSystemUiController {
-                EditFavoritesScreen(
+                EditFavoritesScreenInternal(
                     editFavoritesViewModel = viewModel,
                     goBack = {}
                 )

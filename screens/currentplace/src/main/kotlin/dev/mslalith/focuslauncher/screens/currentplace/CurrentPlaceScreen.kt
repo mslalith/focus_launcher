@@ -29,15 +29,14 @@ import kotlinx.coroutines.launch
 fun CurrentPlaceScreen(
     goBack: () -> Unit
 ) {
-    CurrentPlaceScreen(
-        currentPlaceViewModel = hiltViewModel(),
+    CurrentPlaceScreenInternal(
         goBack = goBack
     )
 }
 
 @Composable
-internal fun CurrentPlaceScreen(
-    currentPlaceViewModel: CurrentPlaceViewModel,
+internal fun CurrentPlaceScreenInternal(
+    currentPlaceViewModel: CurrentPlaceViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -52,7 +51,6 @@ internal fun CurrentPlaceScreen(
     CurrentPlaceScreen(
         currentPlaceState = currentPlaceViewModel.currentPlaceState.collectAsStateWithLifecycle().value,
         goBack = goBack,
-        initialLatLngProvider = { currentPlaceViewModel.fetchCurrentPlaceFromDb().latLng },
         onDoneClick = ::onDoneClick,
         onLocationChange = currentPlaceViewModel::updateCurrentLatLng
     )
@@ -62,7 +60,6 @@ internal fun CurrentPlaceScreen(
 internal fun CurrentPlaceScreen(
     currentPlaceState: CurrentPlaceState,
     goBack: () -> Unit,
-    initialLatLngProvider: suspend () -> LatLng,
     onDoneClick: () -> Unit,
     onLocationChange: (LatLng) -> Unit
 ) {
@@ -96,7 +93,7 @@ internal fun CurrentPlaceScreen(
                     .fillMaxWidth()
                     .weight(weight = 1f)
                     .clip(shape = MaterialTheme.shapes.small),
-                initialLatLngProvider = initialLatLngProvider,
+                initialLatLng = currentPlaceState.initialLatLng,
                 onLocationChange = onLocationChange
             )
             VerticalSpacer(spacing = 8.dp)
@@ -111,11 +108,11 @@ private fun PreviewUpdatePlace() {
         CurrentPlaceScreen(
             currentPlaceState = CurrentPlaceState(
                 latLng = LatLng(latitude = 0.0, longitude = 0.0),
+                initialLatLng = LatLng(latitude = 0.0, longitude = 0.0),
                 addressState = LoadingState.Loading,
                 canSave = false
             ),
             goBack = { },
-            initialLatLngProvider = { LatLng(latitude = 0.0, longitude = 0.0) },
             onDoneClick = { },
             onLocationChange = { }
         )
