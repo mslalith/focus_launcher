@@ -20,18 +20,17 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.clock24.Clock24ViewModel
 import dev.mslalith.focuslauncher.feature.clock24.R
+import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.roundToInt
 
 @Composable
 fun ClockSettingsSheet() {
-    ClockSettingsSheet(
-        clock24ViewModel = hiltViewModel()
-    )
+    ClockSettingsSheetInternal()
 }
 
 @Composable
-internal fun ClockSettingsSheet(
-    clock24ViewModel: Clock24ViewModel
+internal fun ClockSettingsSheetInternal(
+    clock24ViewModel: Clock24ViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
@@ -41,7 +40,7 @@ internal fun ClockSettingsSheet(
             ClockAlignment.START.uiText to R.drawable.ic_align_horizontal_left,
             ClockAlignment.CENTER.uiText to R.drawable.ic_align_horizontal_center,
             ClockAlignment.END.uiText to R.drawable.ic_align_horizontal_right
-        ).map { it.first.string(context = context) to it.second }
+        ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
     Column {

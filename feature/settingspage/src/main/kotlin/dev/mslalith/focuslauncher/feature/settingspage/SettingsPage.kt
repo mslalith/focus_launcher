@@ -37,15 +37,14 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
 fun SettingsPage() {
     val navController = LocalNavController.current
 
-    SettingsPage(
-        settingsPageViewModel = hiltViewModel(),
+    SettingsPageInternal(
         navigateTo = { navController.navigate(it.id) }
     )
 }
 
 @Composable
-internal fun SettingsPage(
-    settingsPageViewModel: SettingsPageViewModel,
+internal fun SettingsPageInternal(
+    settingsPageViewModel: SettingsPageViewModel = hiltViewModel(),
     navigateTo: (Screen) -> Unit
 ) {
     val context = LocalContext.current
@@ -86,7 +85,7 @@ internal fun SettingsPage(
 
         AppDrawer {
             viewManager.showBottomSheet {
-                AppDrawerSettingsSheet(settingsPageViewModel = settingsPageViewModel)
+                AppDrawerSettingsSheet()
             }
         }
 

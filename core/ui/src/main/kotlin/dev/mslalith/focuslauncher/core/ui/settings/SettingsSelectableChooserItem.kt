@@ -7,13 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.ui.ChooserGroup
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SettingsSelectableChooserItem(
     modifier: Modifier = Modifier,
     text: String,
     subText: String,
-    textIconsList: List<Pair<String, Int>>,
+    textIconsList: ImmutableList<Pair<String, Int>>,
     selectedItem: String,
     showText: Boolean = true,
     itemHorizontalArrangement: Arrangement.Horizontal = Arrangement.Start,

@@ -28,15 +28,14 @@ import kotlinx.coroutines.flow.Flow
 fun HomePage(
     pagerCurrentPage: Flow<Int>
 ) {
-    HomePage(
-        homePageViewModel = hiltViewModel(),
+    HomePageInternal(
         pagerCurrentPage = pagerCurrentPage
     )
 }
 
 @Composable
-internal fun HomePage(
-    homePageViewModel: HomePageViewModel,
+internal fun HomePageInternal(
+    homePageViewModel: HomePageViewModel = hiltViewModel(),
     pagerCurrentPage: Flow<Int>
 ) {
     MoonCalendarDetailsDialog(

@@ -8,16 +8,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.string
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun AppDrawerSettingsSheet(
-    settingsPageViewModel: SettingsPageViewModel
+    settingsPageViewModel: SettingsPageViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -34,7 +36,7 @@ internal fun AppDrawerSettingsSheet(
         listOf(
             AppDrawerViewType.LIST.uiText to R.drawable.ic_list,
             AppDrawerViewType.GRID.uiText to R.drawable.ic_grid
-        ).map { it.first.string(context = context) to it.second }
+        ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
     Column {

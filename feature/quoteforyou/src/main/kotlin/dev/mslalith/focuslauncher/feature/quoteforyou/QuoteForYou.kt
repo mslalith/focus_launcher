@@ -16,18 +16,17 @@ fun QuoteForYou(
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
-    QuoteForYou(
+    QuoteForYouInternal(
         modifier = modifier,
-        quoteForYouViewModel = hiltViewModel(),
         backgroundColor = backgroundColor,
         contentColor = contentColor
     )
 }
 
 @Composable
-internal fun QuoteForYou(
+internal fun QuoteForYouInternal(
     modifier: Modifier = Modifier,
-    quoteForYouViewModel: QuoteForYouViewModel,
+    quoteForYouViewModel: QuoteForYouViewModel = hiltViewModel(),
     backgroundColor: Color,
     contentColor: Color
 ) {

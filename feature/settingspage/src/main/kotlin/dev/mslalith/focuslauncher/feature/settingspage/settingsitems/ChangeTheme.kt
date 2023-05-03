@@ -9,13 +9,16 @@ import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsExpandableItem
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridContent
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridItem
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun ChangeTheme(
     currentTheme: Theme?,
     changeTheme: (Theme) -> Unit
 ) {
-    val allThemes = remember { Theme.values().toList() }
+    val allThemes = remember {
+        Theme.values().toList().toImmutableList()
+    }
 
     SettingsExpandableItem(text = stringResource(id = R.string.change_theme)) { closeExpandable ->
         SettingsGridContent(items = allThemes) { theme ->

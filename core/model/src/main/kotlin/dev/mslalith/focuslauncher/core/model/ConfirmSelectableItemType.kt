@@ -1,7 +1,9 @@
 package dev.mslalith.focuslauncher.core.model
 
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Immutable
 
+@Immutable
 sealed class ConfirmSelectableItemType {
     data class Icon(
         @DrawableRes val iconRes: Int,

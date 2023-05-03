@@ -77,8 +77,8 @@ private fun DigitWithAnalogClocks(
     analogClockSpacing: Dp,
     handleColor: Color,
     handleWidth: Float,
-    offsetAnimationSpec: AnimationSpec<Offset>,
-    colorAnimationSpec: AnimationSpec<Color>
+    offsetAnimationSpec: AnimationSpec<Offset> = tween(durationMillis = 900),
+    colorAnimationSpec: AnimationSpec<Color> = tween(durationMillis = 900)
 ) {
     Column {
         digit.analogHandles.forEachIndexed { index, list ->
@@ -115,8 +115,8 @@ private fun AnalogClock(
     analogClockPhase: AnalogClockPhase,
     handleColor: Color,
     handleWidth: Float,
-    offsetAnimationSpec: AnimationSpec<Offset>,
-    colorAnimationSpec: AnimationSpec<Color>
+    offsetAnimationSpec: AnimationSpec<Offset> = tween(durationMillis = 900),
+    colorAnimationSpec: AnimationSpec<Color> = tween(durationMillis = 900)
 ) {
     val size = LocalDensity.current.run { radius.toDp() * 2 }
     val center = Offset(x = radius, y = radius)

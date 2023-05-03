@@ -18,15 +18,14 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettings
 fun LunarPhaseSettingsSheet(
     properties: LunarPhaseSettingsProperties
 ) {
-    LunarPhaseSettingsSheet(
-        lunarCalendarViewModel = hiltViewModel(),
+    LunarPhaseSettingsSheetInternal(
         navigateToCurrentPlace = properties.navigateToCurrentPlace
     )
 }
 
 @Composable
-internal fun LunarPhaseSettingsSheet(
-    lunarCalendarViewModel: LunarCalendarViewModel,
+internal fun LunarPhaseSettingsSheetInternal(
+    lunarCalendarViewModel: LunarCalendarViewModel = hiltViewModel(),
     navigateToCurrentPlace: () -> Unit
 ) {
     val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()

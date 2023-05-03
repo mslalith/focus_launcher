@@ -15,14 +15,12 @@ import dev.mslalith.focuslauncher.feature.quoteforyou.R
 
 @Composable
 fun QuotesSettingsSheet() {
-    QuotesSettingsSheet(
-        quoteForYouViewModel = hiltViewModel()
-    )
+    QuotesSettingsSheetInternal()
 }
 
 @Composable
-internal fun QuotesSettingsSheet(
-    quoteForYouViewModel: QuoteForYouViewModel
+internal fun QuotesSettingsSheetInternal(
+    quoteForYouViewModel: QuoteForYouViewModel = hiltViewModel()
 ) {
     val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsStateWithLifecycle()
     val isFetchingQuotes by quoteForYouViewModel.isFetchingQuotes.collectAsStateWithLifecycle()

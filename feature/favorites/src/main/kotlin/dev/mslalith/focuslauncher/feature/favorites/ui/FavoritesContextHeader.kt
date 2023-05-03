@@ -22,6 +22,8 @@ import dev.mslalith.focuslauncher.core.ui.FillSpacer
 import dev.mslalith.focuslauncher.core.ui.HorizontalSpacer
 import dev.mslalith.focuslauncher.feature.favorites.R
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlin.reflect.KClass
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -64,7 +66,7 @@ internal fun FavoritesContextHeader(
         }
         FillSpacer()
         FavoritesContextActionItem(
-            contextModes = listOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as List<KClass<FavoritesContextMode>>,
+            contextModes = persistentListOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as ImmutableList<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
             iconRes = R.drawable.ic_drag_indicator,
             onClick = {
@@ -73,7 +75,7 @@ internal fun FavoritesContextHeader(
         )
         HorizontalSpacer(spacing = 4.dp)
         FavoritesContextActionItem(
-            contextModes = listOf(FavoritesContextMode.Remove::class) as List<KClass<FavoritesContextMode>>,
+            contextModes = persistentListOf(FavoritesContextMode.Remove::class) as ImmutableList<KClass<FavoritesContextMode>>,
             currentContextMode = currentContextMode,
             iconRes = R.drawable.ic_delete,
             onClick = {

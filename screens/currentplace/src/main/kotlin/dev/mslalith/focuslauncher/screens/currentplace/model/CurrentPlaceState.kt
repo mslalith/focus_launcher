@@ -1,8 +1,8 @@
 package dev.mslalith.focuslauncher.screens.currentplace.model
 
+import androidx.compose.runtime.Immutable
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
-import javax.annotation.concurrent.Immutable
 
 @Immutable
 internal data class CurrentPlaceState(

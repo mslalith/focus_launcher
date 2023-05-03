@@ -31,6 +31,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
@@ -39,16 +40,15 @@ fun FavoritesList(
     pagerCurrentPage: Flow<Int>,
     contentPadding: Dp
 ) {
-    FavoritesList(
-        favoritesViewModel = hiltViewModel(),
+    FavoritesListInternal(
         pagerCurrentPage = pagerCurrentPage,
         contentPadding = contentPadding
     )
 }
 
 @Composable
-internal fun FavoritesList(
-    favoritesViewModel: FavoritesViewModel,
+internal fun FavoritesListInternal(
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     pagerCurrentPage: Flow<Int>,
     contentPadding: Dp
 ) {
@@ -102,7 +102,7 @@ internal fun FavoritesList(
 
 @Composable
 internal fun FavoritesList(
-    favoritesList: List<AppWithColor>,
+    favoritesList: ImmutableList<AppWithColor>,
     addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,

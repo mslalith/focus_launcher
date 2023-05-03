@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.common
 
-import javax.annotation.concurrent.Immutable
+import androidx.compose.runtime.Immutable
 
 @Immutable
 sealed interface LoadingState<out T> {

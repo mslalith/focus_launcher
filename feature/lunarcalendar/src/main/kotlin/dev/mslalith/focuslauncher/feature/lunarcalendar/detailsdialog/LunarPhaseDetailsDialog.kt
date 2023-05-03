@@ -24,15 +24,14 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.R
 fun LunarPhaseDetailsDialog(
     onClose: () -> Unit
 ) {
-    LunarPhaseDetailsDialog(
-        lunarCalendarViewModel = hiltViewModel(),
+    LunarPhaseDetailsDialogInternal(
         onClose = onClose
     )
 }
 
 @Composable
-internal fun LunarPhaseDetailsDialog(
-    lunarCalendarViewModel: LunarCalendarViewModel,
+internal fun LunarPhaseDetailsDialogInternal(
+    lunarCalendarViewModel: LunarCalendarViewModel = hiltViewModel(),
     onClose: () -> Unit
 ) {
     val lunarPhaseDetailsState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
