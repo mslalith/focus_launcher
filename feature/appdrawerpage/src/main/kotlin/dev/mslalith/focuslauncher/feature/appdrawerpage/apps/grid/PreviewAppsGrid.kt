@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.LoadingState
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
@@ -23,7 +23,7 @@ import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 @Composable
 fun PreviewAppsGrid(
     modifier: Modifier = Modifier,
-    appsState: LoadingState<List<AppWithIcon>>,
+    appsState: LoadingState<List<AppWithIconFavorite>>,
     topSpacing: Dp = 16.dp,
     bottomSpacing: Dp = 16.dp
 ) {
@@ -56,7 +56,7 @@ fun PreviewAppsGrid(
 @Composable
 private fun PreviewAppsContent(
     modifier: Modifier = Modifier,
-    apps: List<AppWithIcon>,
+    apps: List<AppWithIconFavorite>,
     columnCount: Int = 4,
     topSpacing: Dp,
     bottomSpacing: Dp
@@ -79,10 +79,10 @@ private fun PreviewAppsContent(
 
             items(
                 items = apps,
-                key = { it.uniqueKey }
+                key = { it.appWithIcon.uniqueKey }
             ) { app ->
                 AppDrawerGridItem(
-                    app = app,
+                    appWithIconFavorite = app,
                     onClick = {},
                     onLongClick = {},
                     modifier = Modifier.animateItemPlacement()

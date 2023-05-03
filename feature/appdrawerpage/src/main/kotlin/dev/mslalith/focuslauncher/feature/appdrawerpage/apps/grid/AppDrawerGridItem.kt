@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
 
@@ -29,12 +29,12 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
 @Composable
 internal fun AppDrawerGridItem(
     modifier: Modifier,
-    app: AppWithIcon,
-    onClick: (AppWithIcon) -> Unit,
-    onLongClick: (AppWithIcon) -> Unit
+    appWithIconFavorite: AppWithIconFavorite,
+    onClick: (AppWithIconFavorite) -> Unit,
+    onLongClick: (AppWithIconFavorite) -> Unit
 ) {
-    val iconBitmap = remember(key1 = app.packageName) {
-        app.icon.toBitmap().asImageBitmap()
+    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.packageName) {
+        appWithIconFavorite.appWithIcon.icon.toBitmap().asImageBitmap()
     }
 
     Column(
@@ -43,8 +43,8 @@ internal fun AppDrawerGridItem(
             .padding(horizontal = 0.dp, vertical = 4.dp)
             .clip(shape = MaterialTheme.shapes.small)
             .combinedClickable(
-                onClick = { onClick(app) },
-                onLongClick = { onLongClick(app) }
+                onClick = { onClick(appWithIconFavorite) },
+                onLongClick = { onLongClick(appWithIconFavorite) }
             )
             .padding(horizontal = 4.dp, vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -54,13 +54,13 @@ internal fun AppDrawerGridItem(
         ) {
             Image(
                 bitmap = iconBitmap,
-                contentDescription = app.displayName,
+                contentDescription = appWithIconFavorite.appWithIcon.displayName,
                 modifier = Modifier.fillMaxSize()
             )
         }
         VerticalSpacer(spacing = 8.dp)
         Text(
-            text = app.displayName,
+            text = appWithIconFavorite.appWithIcon.displayName,
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,

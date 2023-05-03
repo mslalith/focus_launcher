@@ -9,15 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppsGrid(
-    apps: List<AppWithIcon>,
-    onAppClick: (AppWithIcon) -> Unit,
-    onAppLongClick: (AppWithIcon) -> Unit
+    apps: ImmutableList<AppWithIconFavorite>,
+    onAppClick: (AppWithIconFavorite) -> Unit,
+    onAppLongClick: (AppWithIconFavorite) -> Unit
 ) {
     val columnCount = 4
 
@@ -35,10 +36,10 @@ internal fun AppsGrid(
 
         items(
             items = apps,
-            key = { it.uniqueKey }
+            key = { it.appWithIcon.uniqueKey }
         ) { app ->
             AppDrawerGridItem(
-                app = app,
+                appWithIconFavorite = app,
                 onClick = onAppClick,
                 onLongClick = onAppLongClick,
                 modifier = Modifier.animateItemPlacement()

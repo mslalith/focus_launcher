@@ -9,16 +9,17 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAppDrawerAppsWithIconsUseCase
-import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
 import javax.inject.Inject
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -46,7 +47,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQuery = searchBarQueryStateFlow.value
     )
 
-    private val allAppsWithIcons: Flow<List<AppWithIcon>> = getAppDrawerAppsWithIconsUseCase(
+    private val allAppsWithIcons: Flow<List<AppWithIconFavorite>> = getAppDrawerAppsWithIconsUseCase(
         searchQueryFlow = searchBarQueryStateFlow
     ).flowOn(context = appCoroutineDispatcher.io)
 
@@ -62,7 +63,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
         }.combine(flow = searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
         }.combine(flow = allAppsWithIcons) { state, apps ->
-            state.copy(allAppsState = LoadingState.Loaded(value = apps))
+            state.copy(allAppsState = LoadingState.Loaded(value = apps.toImmutableList()))
         }.withinScope(initialValue = defaultAppDrawerPageState)
 
     fun searchAppQuery(query: String) {
@@ -74,8 +75,6 @@ internal class AppDrawerPageViewModel @Inject constructor(
             appDrawerRepo.updateDisplayName(app = app, displayName = displayName)
         }
     }
-
-    suspend fun isFavorite(packageName: String) = favoritesRepo.isFavorite(packageName = packageName)
 
     fun addToFavorites(app: App) {
         appCoroutineDispatcher.launchInIO {

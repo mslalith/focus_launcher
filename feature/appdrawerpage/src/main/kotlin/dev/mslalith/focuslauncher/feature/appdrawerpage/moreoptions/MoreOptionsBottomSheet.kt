@@ -7,8 +7,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -18,10 +16,10 @@ import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
 import dev.mslalith.focuslauncher.core.common.extensions.toast
 import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
 import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
-import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.core.model.UiText
+import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.ConfirmSelectableItem
 import dev.mslalith.focuslauncher.core.ui.SelectableIconItem
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -30,8 +28,7 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.R
 @Composable
 @IgnoreLongMethod
 internal fun MoreOptionsBottomSheet(
-    appWithIcon: AppWithIcon,
-    isFavorite: suspend (App) -> Boolean,
+    appWithIconFavorite: AppWithIconFavorite,
     addToFavorites: (App) -> Unit,
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App) -> Unit,
@@ -41,13 +38,9 @@ internal fun MoreOptionsBottomSheet(
     val context = LocalContext.current
     val contentColor = MaterialTheme.colorScheme.onSurface
 
-    val isFavoriteApp by produceState(initialValue = false, key1 = appWithIcon) {
-        this.value = isFavorite(appWithIcon.toApp())
-    }
-
-    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appWithIcon.displayName)
-    val addedAppToFavoritesMessage = stringResource(id = R.string.added_app_to_favorites, appWithIcon.displayName)
-    val removedAppFromFavoritesMessage = stringResource(id = R.string.removed_app_from_favorites, appWithIcon.displayName)
+    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appWithIconFavorite.appWithIcon.displayName)
+    val addedAppToFavoritesMessage = stringResource(id = R.string.added_app_to_favorites, appWithIconFavorite.appWithIcon.displayName)
+    val removedAppFromFavoritesMessage = stringResource(id = R.string.removed_app_from_favorites, appWithIconFavorite.appWithIcon.displayName)
 
     fun closeAfterAction(action: () -> Unit) {
         action()
@@ -56,7 +49,7 @@ internal fun MoreOptionsBottomSheet(
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = appWithIcon.displayName,
+            text = appWithIconFavorite.appWithIcon.displayName,
             color = contentColor,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 12.dp)
@@ -68,22 +61,22 @@ internal fun MoreOptionsBottomSheet(
         VerticalSpacer(spacing = 16.dp)
 
         SelectableIconItem(
-            text = stringResource(id = if (isFavoriteApp) R.string.remove_from_favorites else R.string.add_to_favorites),
-            iconRes = if (isFavoriteApp) R.drawable.ic_star_outline else R.drawable.ic_star,
+            text = stringResource(id = if (appWithIconFavorite.isFavorite) R.string.remove_from_favorites else R.string.add_to_favorites),
+            iconRes = if (appWithIconFavorite.isFavorite) R.drawable.ic_star_outline else R.drawable.ic_star,
             contentColor = contentColor,
             onClick = {
                 closeAfterAction {
-                    if (isFavoriteApp) {
-                        removeFromFavorites(appWithIcon.toApp())
+                    if (appWithIconFavorite.isFavorite) {
+                        removeFromFavorites(appWithIconFavorite.appWithIcon.toApp())
                         context.toast(message = removedAppFromFavoritesMessage)
                     } else {
-                        addToFavorites(appWithIcon.toApp())
+                        addToFavorites(appWithIconFavorite.appWithIcon.toApp())
                         context.toast(message = addedAppToFavoritesMessage)
                     }
                 }
             }
         )
-        if (isFavoriteApp) {
+        if (appWithIconFavorite.isFavorite) {
             ConfirmSelectableItem(
                 text = stringResource(id = R.string.hide_app),
                 confirmMessage = confirmToHideMessage,
@@ -93,7 +86,7 @@ internal fun MoreOptionsBottomSheet(
                 contentColor = contentColor,
                 confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
                 onConfirm = {
-                    closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
+                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.toApp()) }
                 }
             )
         } else {
@@ -102,7 +95,7 @@ internal fun MoreOptionsBottomSheet(
                 iconRes = R.drawable.ic_visibility_off,
                 contentColor = contentColor,
                 onClick = {
-                    closeAfterAction { addToHiddenApps(appWithIcon.toApp()) }
+                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.toApp()) }
                 }
             )
         }
@@ -119,17 +112,17 @@ internal fun MoreOptionsBottomSheet(
             iconRes = R.drawable.ic_info,
             contentColor = contentColor,
             onClick = {
-                closeAfterAction { context.showAppInfo(packageName = appWithIcon.packageName) }
+                closeAfterAction { context.showAppInfo(packageName = appWithIconFavorite.appWithIcon.packageName) }
             }
         )
 
-        if (!appWithIcon.isSystem) {
+        if (!appWithIconFavorite.appWithIcon.isSystem) {
             SelectableIconItem(
                 text = stringResource(id = R.string.uninstall),
                 iconRes = R.drawable.ic_delete,
                 contentColor = contentColor,
                 onClick = {
-                    closeAfterAction { context.uninstallApp(app = appWithIcon.toApp()) }
+                    closeAfterAction { context.uninstallApp(app = appWithIconFavorite.appWithIcon.toApp()) }
                 }
             )
         }

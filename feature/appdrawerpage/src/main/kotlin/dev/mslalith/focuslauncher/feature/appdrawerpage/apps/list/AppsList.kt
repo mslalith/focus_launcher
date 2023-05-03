@@ -12,19 +12,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.common.extensions.groupByImmutable
 import dev.mslalith.focuslauncher.core.common.extensions.isAlphabet
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppsList(
-    apps: List<AppWithIcon>,
+    apps: ImmutableList<AppWithIconFavorite>,
     showAppIcons: Boolean,
     showAppGroupHeader: Boolean,
     isSearchQueryEmpty: Boolean,
-    onAppClick: (AppWithIcon) -> Unit,
-    onAppLongClick: (AppWithIcon) -> Unit
+    onAppClick: (AppWithIconFavorite) -> Unit,
+    onAppLongClick: (AppWithIconFavorite) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
@@ -32,8 +34,8 @@ internal fun AppsList(
 
     val groupedApps by remember(key1 = apps) {
         derivedStateOf {
-            apps.groupBy { appModel ->
-                appModel.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
+            apps.groupByImmutable { appModel ->
+                appModel.appWithIcon.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
             }
         }
     }
