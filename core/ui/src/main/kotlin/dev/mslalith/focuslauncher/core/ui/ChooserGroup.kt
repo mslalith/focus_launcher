@@ -11,11 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ChooserGroup(
     modifier: Modifier = Modifier,
-    textIconsList: List<Pair<String, Int>>,
+    textIconsList: ImmutableList<Pair<String, Int>>,
     selectedItem: String,
     showText: Boolean = true,
     itemHorizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
