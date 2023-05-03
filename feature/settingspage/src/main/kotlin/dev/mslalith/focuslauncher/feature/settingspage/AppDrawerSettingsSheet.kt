@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -17,7 +18,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 
 @Composable
 internal fun AppDrawerSettingsSheet(
-    settingsPageViewModel: SettingsPageViewModel
+    settingsPageViewModel: SettingsPageViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 

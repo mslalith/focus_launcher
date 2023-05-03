@@ -24,14 +24,12 @@ import kotlin.math.roundToInt
 
 @Composable
 fun ClockSettingsSheet() {
-    ClockSettingsSheet(
-        clock24ViewModel = hiltViewModel()
-    )
+    ClockSettingsSheetInternal()
 }
 
 @Composable
-internal fun ClockSettingsSheet(
-    clock24ViewModel: Clock24ViewModel
+internal fun ClockSettingsSheetInternal(
+    clock24ViewModel: Clock24ViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()

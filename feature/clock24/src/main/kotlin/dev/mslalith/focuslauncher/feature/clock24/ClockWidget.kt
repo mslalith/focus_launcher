@@ -35,9 +35,8 @@ fun ClockWidget(
     verticalPadding: Dp = 0.dp,
     contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
-    ClockWidget(
+    ClockWidgetInternal(
         modifier = modifier,
-        clock24ViewModel = hiltViewModel(),
         horizontalPadding = horizontalPadding,
         verticalPadding = verticalPadding,
         contentColor = contentColor
@@ -45,9 +44,9 @@ fun ClockWidget(
 }
 
 @Composable
-internal fun ClockWidget(
+internal fun ClockWidgetInternal(
     modifier: Modifier = Modifier,
-    clock24ViewModel: Clock24ViewModel,
+    clock24ViewModel: Clock24ViewModel = hiltViewModel(),
     horizontalPadding: Dp,
     verticalPadding: Dp = 0.dp,
     contentColor: Color = MaterialTheme.colorScheme.onSurface

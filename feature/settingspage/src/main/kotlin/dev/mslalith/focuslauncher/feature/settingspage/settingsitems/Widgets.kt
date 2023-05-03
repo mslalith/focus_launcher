@@ -9,13 +9,14 @@ import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsExpandableItem
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridContent
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridItem
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun Widgets(
     onWidgetClick: (WidgetType) -> Unit
 ) {
     val widgetValues = remember {
-        WidgetType.values().filter { it != WidgetType.QUOTES }
+        WidgetType.values().filter { it != WidgetType.QUOTES }.toImmutableList()
     }
 
     SettingsExpandableItem(text = stringResource(id = R.string.widgets)) {

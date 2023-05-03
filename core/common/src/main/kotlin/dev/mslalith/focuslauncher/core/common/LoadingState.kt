@@ -1,8 +1,5 @@
 package dev.mslalith.focuslauncher.core.common
 
-import javax.annotation.concurrent.Immutable
-
-@Immutable
 sealed interface LoadingState<out T> {
     object Loading : LoadingState<Nothing>
     data class Loaded<out R>(val value: R) : LoadingState<R>

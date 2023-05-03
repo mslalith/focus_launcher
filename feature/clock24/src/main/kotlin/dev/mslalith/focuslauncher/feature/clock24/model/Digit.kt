@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.clock24.model
 
+import androidx.compose.runtime.Immutable
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.VERTICAL
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.BOTTOM
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.BOTTOM_LEFT
@@ -11,6 +12,7 @@ import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.TOP
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.TOP_LEFT
 import dev.mslalith.focuslauncher.feature.clock24.model.AnalogClockPhase.TOP_RIGHT
 
+@Immutable
 internal data class Digit(
     val analogHandles: List<List<AnalogClockPhase>>
 ) {
