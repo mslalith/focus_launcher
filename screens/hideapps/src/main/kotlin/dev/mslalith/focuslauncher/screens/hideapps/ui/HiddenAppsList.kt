@@ -11,11 +11,12 @@ import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun HiddenAppsList(
     modifier: Modifier = Modifier,
-    selectedHiddenApps: List<SelectedHiddenApp>,
+    selectedHiddenApps: ImmutableList<SelectedHiddenApp>,
     contentPadding: PaddingValues = PaddingValues(),
     onRemoveFromFavorites: (App) -> Unit,
     onAddToHiddenApps: (App) -> Unit,

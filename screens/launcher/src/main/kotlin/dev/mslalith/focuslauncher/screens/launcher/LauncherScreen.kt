@@ -21,15 +21,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LauncherScreen() {
-    LauncherScreen(
-        launcherViewModel = hiltViewModel()
-    )
+    LauncherScreenInternal()
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun LauncherScreen(
-    launcherViewModel: LauncherViewModel
+internal fun LauncherScreenInternal(
+    launcherViewModel: LauncherViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(initialPage = 1)

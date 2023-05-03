@@ -34,12 +34,11 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsB
 
 @Composable
 fun AppDrawerPage() {
-    AppDrawerPage(modifier = Modifier)
+    AppDrawerPageInternal()
 }
 
 @Composable
-internal fun AppDrawerPage(
-    modifier: Modifier = Modifier,
+internal fun AppDrawerPageInternal(
     appDrawerPageViewModel: AppDrawerPageViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -78,7 +77,7 @@ internal fun AppDrawerPage(
     }
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .imePadding()
     ) {
