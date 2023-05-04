@@ -64,5 +64,6 @@ dependencies {
     implementation(project(":screens:about"))
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.profile.installer)
 }
