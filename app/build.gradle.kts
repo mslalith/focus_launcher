@@ -52,10 +52,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
+    implementation(project(":feature:theme"))
     implementation(project(":screens:launcher"))
     implementation(project(":screens:editfavorites"))
     implementation(project(":screens:hideapps"))
@@ -64,8 +64,5 @@ dependencies {
     implementation(project(":screens:about"))
 
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.accompanist.systemuicontroller)
-    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.profile.installer)
 }

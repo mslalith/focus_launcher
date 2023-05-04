@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.navigator
+package dev.mslalith.focuslauncher
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder

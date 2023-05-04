@@ -1,15 +1,9 @@
-package dev.mslalith.focuslauncher.ui.theme
+package dev.mslalith.focuslauncher.feature.theme.data
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import dev.mslalith.focuslauncher.core.model.Theme
-import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 
-private val lightColors = lightColorScheme(
+internal val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -41,8 +35,7 @@ private val lightColors = lightColorScheme(
     onSurfaceVariant = md_theme_light_onSurfaceVariant
 )
 
-
-private val darkColors = darkColorScheme(
+internal val darkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -73,30 +66,3 @@ private val darkColors = darkColorScheme(
     surfaceVariant = md_theme_dark_surfaceVariant,
     onSurfaceVariant = md_theme_dark_onSurfaceVariant
 )
-
-@Composable
-fun FocusLauncherTheme(
-    currentTheme: Theme,
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val systemUiController = LocalSystemUiController.current
-
-    val colorScheme = when (currentTheme) {
-        Theme.NOT_WHITE -> lightColors
-        Theme.SAID_DARK -> darkColors
-        Theme.FOLLOW_SYSTEM -> if (useDarkTheme) darkColors else lightColors
-    }
-
-    DisposableEffect(key1 = systemUiController, key2 = colorScheme) {
-        systemUiController.setSystemBarsColor(color = colorScheme.background)
-
-        onDispose {}
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
-}
