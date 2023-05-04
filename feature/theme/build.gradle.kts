@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.kotlinx.collections.immutable)
 }

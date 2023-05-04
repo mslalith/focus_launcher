@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:theme"))
     implementation(project(":feature:clock24"))
     implementation(project(":feature:lunarcalendar"))
     implementation(project(":feature:quoteforyou"))

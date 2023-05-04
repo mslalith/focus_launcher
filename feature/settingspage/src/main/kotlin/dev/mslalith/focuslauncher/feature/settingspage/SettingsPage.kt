@@ -32,6 +32,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaul
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
+import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
 
 @Composable
 fun SettingsPage() {
@@ -62,8 +63,13 @@ internal fun SettingsPageInternal(
         VerticalSpacer(spacing = 12.dp)
 
         ChangeTheme(
-            currentTheme = settingsPageViewModel.currentThemeStateFlow.collectAsStateWithLifecycle().value,
-            changeTheme = settingsPageViewModel::changeTheme
+            onClick = {
+                viewManager.showBottomSheet {
+                    ThemeSelectionSheet(
+                        closeBottomSheet = viewManager::hideBottomSheet
+                    )
+                }
+            }
         )
 
         EditFavorites { navigateTo(Screen.EditFavorites) }
