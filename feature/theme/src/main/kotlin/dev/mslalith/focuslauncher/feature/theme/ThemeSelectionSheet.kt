@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.Theme
+import dev.mslalith.focuslauncher.feature.theme.model.ThemeWithIcon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -25,14 +26,23 @@ internal fun ThemeSelectionSheetInternal(
     closeBottomSheet: () -> Unit
 ) {
     val allThemes = remember {
-        Theme.values().toList().toImmutableList()
+        Theme.values().map { theme ->
+            ThemeWithIcon(
+                theme = theme,
+                iconRes = when (theme) {
+                    Theme.FOLLOW_SYSTEM -> R.drawable.ic_device_mobile
+                    Theme.NOT_WHITE -> R.drawable.ic_sun_dim
+                    Theme.SAID_DARK -> R.drawable.ic_moon_stars
+                }
+            )
+        }.toImmutableList()
     }
 
     ThemeSelectionSheetInternal(
         currentTheme = launcherThemeViewModel.currentTheme.collectAsStateWithLifecycle().value,
         allThemes = allThemes,
-        onThemeSelected = {
-            launcherThemeViewModel.changeTheme(it)
+        onThemeSelected = { theme ->
+            if (theme != null) launcherThemeViewModel.changeTheme(theme)
             closeBottomSheet()
         }
     )
@@ -41,18 +51,19 @@ internal fun ThemeSelectionSheetInternal(
 @Composable
 internal fun ThemeSelectionSheetInternal(
     currentTheme: Theme,
-    allThemes: ImmutableList<Theme>,
-    onThemeSelected: (Theme) -> Unit
+    allThemes: ImmutableList<ThemeWithIcon>,
+    onThemeSelected: (Theme?) -> Unit
 ) {
     LazyColumn {
         items(
             items = allThemes,
-            key = { it }
-        ) { theme ->
+            key = { it.theme }
+        ) { themeWithIcon ->
             ThemeSelectionListItem(
-                theme = theme,
-                isSelected = theme == currentTheme,
-                onClick = { onThemeSelected(theme) }
+                theme = themeWithIcon.theme,
+                iconRes = themeWithIcon.iconRes,
+                isSelected = themeWithIcon.theme == currentTheme,
+                onClick = { onThemeSelected(if (currentTheme != themeWithIcon.theme) themeWithIcon.theme else null) }
             )
         }
     }
