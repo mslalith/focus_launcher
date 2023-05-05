@@ -27,7 +27,7 @@ internal fun ThemeSelectionListItem(
         leadingContent = @Composable {
             Blob(
                 size = 48.dp,
-                numberOfPoints = 8,
+                numberOfPoints = 6,
                 color = MaterialTheme.colorScheme.primary,
                 content = @Composable {
                     Icon(
