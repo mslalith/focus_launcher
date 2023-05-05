@@ -1,11 +1,11 @@
 package dev.mslalith.focuslauncher.feature.homepage.model
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-internal val LocalHomePadding = staticCompositionLocalOf<HomePadding> {
+internal val LocalHomePadding = compositionLocalOf<HomePadding> {
     error("No LocalHomePadding provided")
 }
 

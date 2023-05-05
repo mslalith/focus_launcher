@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
+import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
 import dev.mslalith.focuslauncher.screens.about.AboutScreen
 import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceScreen
 import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
@@ -34,7 +35,9 @@ fun AppNavigator() {
 private fun NavGraphBuilder.launcherScreen() {
     composable(route = Screen.Launcher.id) {
         ProvideBottomSheetManager {
-            LauncherScreen()
+            ProvideLauncherPagerState {
+                LauncherScreen()
+            }
         }
     }
 }

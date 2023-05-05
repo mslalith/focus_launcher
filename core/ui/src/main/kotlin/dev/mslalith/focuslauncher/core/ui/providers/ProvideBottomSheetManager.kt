@@ -7,14 +7,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.ui.managers.LauncherViewManager
 
-val LocalLauncherViewManager = staticCompositionLocalOf<LauncherViewManager> {
+val LocalLauncherViewManager = compositionLocalOf<LauncherViewManager> {
     error("No LauncherViewManager provided")
 }
 

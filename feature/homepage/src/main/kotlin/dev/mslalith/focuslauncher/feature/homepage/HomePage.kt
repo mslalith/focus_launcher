@@ -22,21 +22,15 @@ import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePageState
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
 import dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
-import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun HomePage(
-    pagerCurrentPage: Flow<Int>
-) {
-    HomePageInternal(
-        pagerCurrentPage = pagerCurrentPage
-    )
+fun HomePage() {
+    HomePageInternal()
 }
 
 @Composable
 internal fun HomePageInternal(
     homePageViewModel: HomePageViewModel = hiltViewModel(),
-    pagerCurrentPage: Flow<Int>
 ) {
     MoonCalendarDetailsDialog(
         showMoonCalendarDetailsDialogProvider = homePageViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsStateWithLifecycle().value,
@@ -45,7 +39,6 @@ internal fun HomePageInternal(
 
     HomePage(
         homePageState = homePageViewModel.homePageState.collectAsStateWithLifecycle().value,
-        pagerCurrentPage = pagerCurrentPage,
         onMoonCalendarClick = homePageViewModel::showMoonCalendarDetailsDialog
     )
 }
@@ -65,7 +58,6 @@ internal fun MoonCalendarDetailsDialog(
 @Composable
 internal fun HomePage(
     homePageState: HomePageState,
-    pagerCurrentPage: Flow<Int>,
     onMoonCalendarClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -94,10 +86,7 @@ internal fun HomePage(
                         modifier = Modifier.align(alignment = Alignment.Center)
                     )
                 }
-                FavoritesList(
-                    pagerCurrentPage = pagerCurrentPage,
-                    contentPadding = horizontalPadding
-                )
+                FavoritesList(contentPadding = horizontalPadding)
                 VerticalSpacer(spacing = bottomPadding)
             }
         }

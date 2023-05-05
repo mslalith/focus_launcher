@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReusableContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,33 +29,33 @@ import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
+import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun FavoritesList(
-    pagerCurrentPage: Flow<Int>,
     contentPadding: Dp
 ) {
     FavoritesListInternal(
-        pagerCurrentPage = pagerCurrentPage,
         contentPadding = contentPadding
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun FavoritesListInternal(
     favoritesViewModel: FavoritesViewModel = hiltViewModel(),
-    pagerCurrentPage: Flow<Int>,
     contentPadding: Dp
 ) {
-    LaunchedEffect(key1 = pagerCurrentPage) {
-        pagerCurrentPage.collectLatest { page ->
+    val pagerState = LocalLauncherPagerState.current
+
+    LaunchedEffect(key1 = pagerState) {
+        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
             if (page != 1) favoritesViewModel.hideContextualMode()
         }
     }
