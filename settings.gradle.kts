@@ -50,5 +50,6 @@ include(
     ":feature:clock24",
     ":feature:lunarcalendar",
     ":feature:quoteforyou",
-    ":feature:favorites"
+    ":feature:favorites",
+    ":feature:theme"
 )
