@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsOnIconPackChangeUseCase
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
+import dev.mslalith.focuslauncher.core.domain.apps.GetAllAppsOnIconPackChangeUseCase
+import dev.mslalith.focuslauncher.core.domain.apps.GetIconPackAppsWithIconsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon

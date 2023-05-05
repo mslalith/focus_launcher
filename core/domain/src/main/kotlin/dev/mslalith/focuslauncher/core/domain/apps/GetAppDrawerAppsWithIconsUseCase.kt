@@ -1,21 +1,19 @@
-package dev.mslalith.focuslauncher.core.domain.appswithicons
+package dev.mslalith.focuslauncher.core.domain.apps
 
-import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
-import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.domain.appdrawer.GetAppDrawerAppsUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
-class GetAllAppsOnIconPackChangeUseCase @Inject internal constructor(
-    private val getAppsUseCase: GetAppsUseCase,
-    private val appDrawerRepo: AppDrawerRepo,
+class GetAppDrawerAppsWithIconsUseCase @Inject internal constructor(
+    private val getAppsIconPackAwareUseCase: GetAppsIconPackAwareUseCase,
+    private val getAppDrawerAppsUseCase: GetAppDrawerAppsUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {
-    operator fun invoke(iconPackType: IconPackType): Flow<List<AppWithIconFavorite>> = getAppsUseCase.appsWithIcons(
-        appsFlow = appDrawerRepo.allAppsFlow,
-        iconPackType = iconPackType
+    operator fun invoke(searchQueryFlow: Flow<String>): Flow<List<AppWithIconFavorite>> = getAppsIconPackAwareUseCase.appsWithIcons(
+        appsFlow = getAppDrawerAppsUseCase(searchQueryFlow = searchQueryFlow)
     ).combine(flow = favoritesRepo.onlyFavoritesFlow) { appsWithIcons, favorites ->
         appsWithIcons.map { appWithIcon ->
             AppWithIconFavorite(
