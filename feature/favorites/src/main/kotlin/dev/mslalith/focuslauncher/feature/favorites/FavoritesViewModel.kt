@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteAppsWithColorUseCase
+import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class FavoritesViewModel @Inject constructor(
     private val getDefaultFavoriteAppsUseCase: GetDefaultFavoriteAppsUseCase,
-    getFavoriteAppsWithColorUseCase: GetFavoriteAppsWithColorUseCase,
+    getFavoriteColoredAppsUseCase: GetFavoriteColoredAppsUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -40,7 +40,7 @@ internal class FavoritesViewModel @Inject constructor(
         favoritesList = persistentListOf()
     )
 
-    private val allAppsWithIcons: Flow<List<AppWithColor>> = getFavoriteAppsWithColorUseCase()
+    private val allAppsWithIcons: Flow<List<AppWithColor>> = getFavoriteColoredAppsUseCase()
         .flowOn(context = appCoroutineDispatcher.io)
 
     val favoritesState = flowOf(value = defaultFavoritesState)

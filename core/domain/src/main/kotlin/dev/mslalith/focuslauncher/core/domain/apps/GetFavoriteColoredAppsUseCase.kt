@@ -6,7 +6,7 @@ import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetFavoriteAppsWithColorUseCase @Inject internal constructor(
+class GetFavoriteColoredAppsUseCase @Inject internal constructor(
     private val getAppsIconPackAwareUseCase: GetAppsIconPackAwareUseCase,
     private val favoritesRepo: FavoritesRepo
 ) {

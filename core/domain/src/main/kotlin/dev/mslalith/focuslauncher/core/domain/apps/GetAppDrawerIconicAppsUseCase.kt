@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
-class GetAppDrawerAppsWithIconsUseCase @Inject internal constructor(
+class GetAppDrawerIconicAppsUseCase @Inject internal constructor(
     private val getAppsIconPackAwareUseCase: GetAppsIconPackAwareUseCase,
     private val getAppDrawerAppsUseCase: GetAppDrawerAppsUseCase,
     private val favoritesRepo: FavoritesRepo
