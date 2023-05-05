@@ -30,7 +30,7 @@ fun HomePage() {
 
 @Composable
 internal fun HomePageInternal(
-    homePageViewModel: HomePageViewModel = hiltViewModel(),
+    homePageViewModel: HomePageViewModel = hiltViewModel()
 ) {
     MoonCalendarDetailsDialog(
         showMoonCalendarDetailsDialogProvider = homePageViewModel.showMoonCalendarDetailsDialogStateFlow.collectAsStateWithLifecycle().value,
