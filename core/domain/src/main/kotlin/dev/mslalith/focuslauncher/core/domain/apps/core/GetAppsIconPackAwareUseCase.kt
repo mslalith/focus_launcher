@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.apps
+package dev.mslalith.focuslauncher.core.domain.apps.core
 
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.model.app.App

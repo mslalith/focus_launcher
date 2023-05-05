@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.domain.apps
+package dev.mslalith.focuslauncher.core.domain.apps.core
 
 import dev.mslalith.focuslauncher.core.domain.extensions.toAppWithIcons
 import dev.mslalith.focuslauncher.core.domain.extensions.toAppsWithColor

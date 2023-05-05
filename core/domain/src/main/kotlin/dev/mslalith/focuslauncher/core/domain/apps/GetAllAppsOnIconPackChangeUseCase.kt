@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.apps
 
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
+import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsUseCase
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import kotlinx.coroutines.flow.Flow

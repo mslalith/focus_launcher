@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.apps
 
+import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsIconPackAwareUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.GetIconPackAppsUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import kotlinx.coroutines.flow.Flow
