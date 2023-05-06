@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
 import dev.mslalith.focuslauncher.core.ui.StatusBarColor
@@ -144,11 +145,13 @@ private fun IconPackListSheet(
     val systemIconPackApp: AppWithIcon? = remember {
         context.getDrawable(R.drawable.ic_launcher)?.let { icon ->
             AppWithIcon(
-                name = context.getString(R.string.app_name),
-                displayName = context.getString(R.string.app_name),
-                packageName = context.packageName,
-                icon = icon,
-                isSystem = false
+                app = App(
+                    name = context.getString(R.string.app_name),
+                    displayName = context.getString(R.string.app_name),
+                    packageName = context.packageName,
+                    isSystem = false
+                ),
+                icon = icon
             )
         }
     }
@@ -167,7 +170,7 @@ private fun IconPackListSheet(
             if (systemIconPackApp != null) {
                 ReusableContent(key = systemIconPackApp.uniqueKey) {
                     IconPackItem(
-                        app = systemIconPackApp,
+                        appWithIcon = systemIconPackApp,
                         isSelected = iconPackState.iconPackType == IconPackType.System,
                         onClick = { onIconPackClick(IconPackType.System) }
                     )
@@ -177,11 +180,11 @@ private fun IconPackListSheet(
         items(
             items = iconPackState.iconPacks,
             key = { it.uniqueKey }
-        ) { app ->
-            val customIconPackType = IconPackType.Custom(packageName = app.packageName)
+        ) { appWithIcon ->
+            val customIconPackType = IconPackType.Custom(packageName = appWithIcon.app.packageName)
 
             IconPackItem(
-                app = app,
+                appWithIcon = appWithIcon,
                 isSelected = iconPackState.iconPackType == customIconPackType,
                 onClick = { onIconPackClick(customIconPackType) },
                 modifier = Modifier.animateItemPlacement()

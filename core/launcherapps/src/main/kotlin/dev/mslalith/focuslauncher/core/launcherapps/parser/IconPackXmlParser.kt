@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreCyclomaticComplexMethod
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreNestedBlockDepth
+import dev.mslalith.focuslauncher.core.launcherapps.model.CalendarDrawableInfo
+import dev.mslalith.focuslauncher.core.launcherapps.model.DrawableInfo
 import dev.mslalith.focuslauncher.core.launcherapps.model.SimpleDrawableInfo
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreCyclomaticComplexMethod
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreNestedBlockDepth
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 
@@ -18,10 +21,10 @@ internal class IconPackXmlParser(
 
     private var iconPackResources: Resources? = null
 
-    private val iconPackToDrawablesMap: HashMap<String, HashSet<SimpleDrawableInfo>> = HashMap(0)
-    private val backImages = mutableListOf<SimpleDrawableInfo>()
-    private var maskImage: SimpleDrawableInfo? = null
-    private var frontImage: SimpleDrawableInfo? = null
+    private val iconPackToDrawablesMap: HashMap<String, HashSet<DrawableInfo>> = HashMap(0)
+    private val backImages = mutableListOf<DrawableInfo>()
+    private var maskImage: DrawableInfo? = null
+    private var frontImage: DrawableInfo? = null
     private var scaleFactor = 1.0f
 
     val packageName: String
@@ -39,13 +42,15 @@ internal class IconPackXmlParser(
     fun drawableFor(componentName: String): Drawable? {
         val set = iconPackToDrawablesMap[componentName]
         if (set.isNullOrEmpty()) return null
+        val drawableInfo = set.firstOrNull { it is CalendarDrawableInfo } ?: set.first()
         @Suppress("DEPRECATION")
-        return iconPackResources?.getDrawable(set.first().drawableId)
+        return iconPackResources?.getDrawable(drawableInfo.getDrawableResId())
     }
 
     @SuppressLint("DiscouragedApi")
     @IgnoreNestedBlockDepth
     @IgnoreCyclomaticComplexMethod
+    @IgnoreLongMethod
     private fun parseAppFilterXML() {
         val packResources = iconPackResources ?: return
         try {
@@ -86,6 +91,7 @@ internal class IconPackXmlParser(
                         xmlPullParser.name == "item" -> {
                             var componentName: String? = null
                             var drawableName: String? = null
+
                             for (i in 0 until xmlPullParser.attributeCount) {
                                 if (xmlPullParser.getAttributeName(i) == "component") {
                                     componentName = xmlPullParser.getAttributeValue(i)
@@ -104,6 +110,31 @@ internal class IconPackXmlParser(
                                     iconPackToDrawablesMap.putIfAbsent(componentName, HashSet())
                                     iconPackToDrawablesMap.getValue(key = componentName).add(element = drawableInfo)
                                 }
+                            }
+                        }
+                        xmlPullParser.name == "calendar" -> {
+                            var componentName: String? = null
+                            var prefix: String? = null
+
+                            for (i in 0 until xmlPullParser.attributeCount) {
+                                if (xmlPullParser.getAttributeName(i) == "component") {
+                                    componentName = xmlPullParser.getAttributeValue(i)
+                                } else if (xmlPullParser.getAttributeName(i) == "prefix") {
+                                    prefix = xmlPullParser.getAttributeValue(i)
+                                }
+                            }
+
+                            if (componentName != null && prefix != null) {
+                                val drawableInfo = CalendarDrawableInfo(drawableName = prefix + "1..31")
+                                var day = 0
+                                while (day < 31) {
+                                    val drawableName = prefix + (1 + day)
+                                    val drawableId = packResources.getIdentifier(drawableName, "drawable", iconPackPackageName)
+                                    drawableInfo.setDrawableForDay(day = day, drawableId = drawableId)
+                                    day += 1
+                                }
+                                iconPackToDrawablesMap.putIfAbsent(componentName, HashSet())
+                                iconPackToDrawablesMap.getValue(key = componentName).add(element = drawableInfo)
                             }
                         }
                     }

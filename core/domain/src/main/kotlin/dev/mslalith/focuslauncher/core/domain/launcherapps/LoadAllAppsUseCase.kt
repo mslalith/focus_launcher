@@ -11,7 +11,7 @@ class LoadAllAppsUseCase @Inject constructor(
     suspend operator fun invoke(forceLoad: Boolean = false) {
         appDrawerRepo.apply {
             if (!forceLoad && !areAppsEmptyInDatabase()) return
-            addApps(apps = launcherAppsManager.loadAllApps())
+            addApps(apps = launcherAppsManager.loadAllApps().map { it.app })
         }
     }
 }

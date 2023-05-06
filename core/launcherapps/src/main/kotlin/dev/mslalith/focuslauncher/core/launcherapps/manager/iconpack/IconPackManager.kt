@@ -10,4 +10,5 @@ interface IconPackManager {
 
     fun fetchInstalledIconPacks()
     suspend fun loadIconPack(iconPackType: IconPackType)
+    fun reloadIconPack()
 }

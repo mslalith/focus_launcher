@@ -30,7 +30,7 @@ internal fun AppDrawerListItem(
     onClick: (AppWithIconFavorite) -> Unit,
     onLongClick: (AppWithIconFavorite) -> Unit
 ) {
-    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.packageName) {
+    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.app.packageName) {
         appWithIconFavorite.appWithIcon.icon.toBitmap().asImageBitmap()
     }
 
@@ -52,7 +52,7 @@ internal fun AppDrawerListItem(
             @Composable {
                 Image(
                     bitmap = iconBitmap,
-                    contentDescription = appWithIconFavorite.appWithIcon.displayName,
+                    contentDescription = appWithIconFavorite.appWithIcon.app.displayName,
                     modifier = Modifier
                         .padding(start = ITEM_START_PADDING)
                         .size(size = APP_ICON_SIZE)
@@ -61,7 +61,7 @@ internal fun AppDrawerListItem(
         } else null,
         headlineContent = {
             Text(
-                text = appWithIconFavorite.appWithIcon.displayName,
+                text = appWithIconFavorite.appWithIcon.app.displayName,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

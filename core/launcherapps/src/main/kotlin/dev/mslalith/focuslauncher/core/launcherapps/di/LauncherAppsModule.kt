@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.impl.IconCacheManagerImpl
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl.IconPackManagerImpl

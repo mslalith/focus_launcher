@@ -20,6 +20,7 @@ internal class IconPackManagerImpl @Inject constructor(
     private val iconCacheManager: IconCacheManager
 ) : IconPackManager {
 
+    private var currentIconPackType: IconPackType? = null
     private var currentIconPackParser: IconPackXmlParser? = null
 
     private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
@@ -57,24 +58,41 @@ internal class IconPackManagerImpl @Inject constructor(
         }
     }
 
-    override suspend fun loadIconPack(iconPackType: IconPackType) {
+    override suspend fun loadIconPack(iconPackType: IconPackType) = loadIconPack(
+        iconPackType = iconPackType,
+        forceLoad = false
+    )
+
+    override fun reloadIconPack() {
+        val iconPackType = currentIconPackType ?: return
+        loadIconPack(
+            iconPackType = iconPackType,
+            forceLoad = true
+        )
+    }
+
+    private fun loadIconPack(iconPackType: IconPackType, forceLoad: Boolean) {
         when (iconPackType) {
-            is IconPackType.Custom -> loadCustomTypeIcons(packageName = iconPackType.packageName)
-            IconPackType.System -> loadSystemTypeIcons()
+            is IconPackType.Custom -> loadCustomTypeIcons(iconPackType = iconPackType, forceLoad = forceLoad)
+            IconPackType.System -> loadSystemTypeIcons(forceLoad = forceLoad)
         }
     }
 
-    private fun loadSystemTypeIcons() {
+    private fun loadSystemTypeIcons(forceLoad: Boolean) {
+        if (!forceLoad && currentIconPackType == IconPackType.System) return
+
+        currentIconPackType = IconPackType.System
         iconCacheManager.clearCache()
         currentIconPackParser = null
         _iconPackLoadedTriggerFlow.update { !it }
     }
 
-    private fun loadCustomTypeIcons(packageName: String) {
-        if (currentIconPackParser?.packageName == packageName) return
+    private fun loadCustomTypeIcons(iconPackType: IconPackType.Custom, forceLoad: Boolean) {
+        if (!forceLoad && currentIconPackParser?.packageName == iconPackType.packageName) return
 
+        currentIconPackType = iconPackType
         iconCacheManager.clearCache()
-        currentIconPackParser = iconCacheManager.iconPackFor(packageName = packageName)
+        currentIconPackParser = iconCacheManager.iconPackFor(packageName = iconPackType.packageName)
         currentIconPackParser?.load()
         _iconPackLoadedTriggerFlow.update { !it }
     }

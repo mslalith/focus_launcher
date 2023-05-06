@@ -10,7 +10,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.di.LauncherAppsModule
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl.IconPackManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.impl.IconCacheManagerImpl
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider

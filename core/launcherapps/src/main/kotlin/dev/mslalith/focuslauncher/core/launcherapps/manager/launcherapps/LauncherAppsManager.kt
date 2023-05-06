@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps
 
-import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 
 interface LauncherAppsManager {
-    fun loadAllApps(): List<App>
-    fun loadApp(packageName: String): App?
-    fun defaultFavoriteApps(): List<App>
+    fun loadAllApps(): List<AppWithComponent>
+    fun loadApp(packageName: String): AppWithComponent?
+    fun defaultFavoriteApps(): List<AppWithComponent>
 }
