@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.Te
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import dev.mslalith.focuslauncher.core.testing.toAppsWithComponents
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -52,7 +53,7 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
     fun `1 - when installed apps are queried and added, they must be added to apps DB`() = runCoroutineTest {
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
 
-        launcherAppsManager.setAllApps(apps = TestApps.all)
+        launcherAppsManager.setAllApps(apps = TestApps.all.toAppsWithComponents())
         useCase()
 
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
@@ -63,20 +64,20 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
         var appsAdded = listOf(TestApps.Chrome)
 
-        launcherAppsManager.setAllApps(apps = appsAdded)
+        launcherAppsManager.setAllApps(apps = appsAdded.toAppsWithComponents())
         useCase()
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(appsAdded)
 
         appsAdded = TestApps.all
 
-        launcherAppsManager.setAllApps(apps = appsAdded)
+        launcherAppsManager.setAllApps(apps = appsAdded.toAppsWithComponents())
         useCase(forceLoad = true)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(appsAdded)
     }
 
     @Test
     fun `3 - when installed apps are loaded, they must not be loaded again`() = runCoroutineTest {
-        launcherAppsManager.setAllApps(apps = TestApps.all)
+        launcherAppsManager.setAllApps(apps = TestApps.all.toAppsWithComponents())
         useCase()
 
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
@@ -87,7 +88,7 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
 
     @Test
     fun `4 - when installed apps are queried and added, they must be added to apps DB`() = runCoroutineTest {
-        launcherAppsManager.setAllApps(apps = TestApps.all)
+        launcherAppsManager.setAllApps(apps = TestApps.all.toAppsWithComponents())
         useCase()
 
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)

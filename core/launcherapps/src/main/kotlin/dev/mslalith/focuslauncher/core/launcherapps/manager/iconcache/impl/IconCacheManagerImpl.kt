@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
 import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import javax.inject.Inject
 
 internal class IconCacheManagerImpl @Inject constructor(
@@ -23,19 +24,19 @@ internal class IconCacheManagerImpl @Inject constructor(
         IconPackXmlParser(context = context, iconPackPackageName = packageName)
     }
 
-    override fun iconFor(packageName: String, iconPackType: IconPackType): Drawable = when (iconPackType) {
-        is IconPackType.Custom -> getCustomTypeIcon(iconPackPackageName = iconPackType.packageName, packageName = packageName)
-        IconPackType.System -> getSystemTypeIcon(packageName = packageName)
+    override fun iconFor(appWithComponent: AppWithComponent, iconPackType: IconPackType): Drawable = when (iconPackType) {
+        is IconPackType.Custom -> getCustomTypeIcon(iconPackPackageName = iconPackType.packageName, appWithComponent = appWithComponent)
+        IconPackType.System -> getSystemTypeIcon(appWithComponent = appWithComponent)
     }
 
-    private fun getSystemTypeIcon(packageName: String): Drawable = iconCache.getOrPut(key = packageName) {
-        context.packageManager.getApplicationIcon(packageName)
+    private fun getSystemTypeIcon(appWithComponent: AppWithComponent): Drawable = iconCache.getOrPut(key = appWithComponent.app.packageName) {
+        context.packageManager.getApplicationIcon(appWithComponent.app.packageName)
     }
 
-    private fun getCustomTypeIcon(iconPackPackageName: String, packageName: String): Drawable = iconCache.getOrPut(key = packageName) {
-        val componentName = context.packageManager.getLaunchIntentForPackage(packageName)?.component
-        val key = componentName?.toString() ?: packageName
+    private fun getCustomTypeIcon(iconPackPackageName: String, appWithComponent: AppWithComponent): Drawable = iconCache.getOrPut(key = appWithComponent.app.packageName) {
+        val componentName = context.packageManager.getLaunchIntentForPackage(appWithComponent.app.packageName)?.component
+        val key = componentName?.toString() ?: appWithComponent.app.packageName
         val iconPack = iconPackFor(packageName = iconPackPackageName)
-        iconPack.drawableFor(componentName = key) ?: getSystemTypeIcon(packageName = packageName)
+        iconPack.drawableFor(componentName = key) ?: getSystemTypeIcon(appWithComponent = appWithComponent)
     }
 }

@@ -21,7 +21,7 @@ class PackageActionUseCase @Inject constructor(
 
     private suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
         when (packageAction) {
-            is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it) }
+            is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
             is PackageAction.Removed -> handleAppUninstall(packageName = packageAction.packageName)
             is PackageAction.Updated -> Unit
         }
