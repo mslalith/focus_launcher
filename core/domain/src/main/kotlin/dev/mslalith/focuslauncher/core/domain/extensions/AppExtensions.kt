@@ -14,11 +14,13 @@ context (IconProvider)
 internal fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { app ->
     try {
         AppWithIcon(
-            name = app.name,
-            displayName = app.displayName,
-            packageName = app.packageName,
+            app = App(
+                name = app.name,
+                displayName = app.displayName,
+                packageName = app.packageName,
+                isSystem = app.isSystem
+            ),
             icon = iconFor(app.packageName, iconPackType),
-            isSystem = app.isSystem
         )
     } catch (e: PackageManager.NameNotFoundException) {
         null
@@ -32,11 +34,11 @@ internal fun List<App>.toAppsWithNoColor(): List<AppWithColor> = map { app ->
     )
 }
 
-internal fun List<AppWithIcon>.toAppsWithColor(): List<AppWithColor> = map { app ->
-    val appIconPalette = Palette.from(app.icon.toBitmap()).generate()
+internal fun List<AppWithIcon>.toAppsWithColor(): List<AppWithColor> = map { appWithIcon ->
+    val appIconPalette = Palette.from(appWithIcon.icon.toBitmap()).generate()
     val extractedColor = appIconPalette.dominantSwatch?.rgb?.toColor()
     AppWithColor(
-        app = app.toApp(),
+        app = appWithIcon.app,
         color = extractedColor
     )
 }

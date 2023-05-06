@@ -35,7 +35,7 @@ internal fun AppsList(
     val groupedApps by remember(key1 = apps) {
         derivedStateOf {
             apps.groupByImmutable { appModel ->
-                appModel.appWithIcon.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
+                appModel.appWithIcon.app.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
             }
         }
     }

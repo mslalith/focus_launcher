@@ -38,9 +38,9 @@ internal fun MoreOptionsBottomSheet(
     val context = LocalContext.current
     val contentColor = MaterialTheme.colorScheme.onSurface
 
-    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appWithIconFavorite.appWithIcon.displayName)
-    val addedAppToFavoritesMessage = stringResource(id = R.string.added_app_to_favorites, appWithIconFavorite.appWithIcon.displayName)
-    val removedAppFromFavoritesMessage = stringResource(id = R.string.removed_app_from_favorites, appWithIconFavorite.appWithIcon.displayName)
+    val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appWithIconFavorite.appWithIcon.app.displayName)
+    val addedAppToFavoritesMessage = stringResource(id = R.string.added_app_to_favorites, appWithIconFavorite.appWithIcon.app.displayName)
+    val removedAppFromFavoritesMessage = stringResource(id = R.string.removed_app_from_favorites, appWithIconFavorite.appWithIcon.app.displayName)
 
     fun closeAfterAction(action: () -> Unit) {
         action()
@@ -49,7 +49,7 @@ internal fun MoreOptionsBottomSheet(
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = appWithIconFavorite.appWithIcon.displayName,
+            text = appWithIconFavorite.appWithIcon.app.displayName,
             color = contentColor,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 12.dp)
@@ -67,10 +67,10 @@ internal fun MoreOptionsBottomSheet(
             onClick = {
                 closeAfterAction {
                     if (appWithIconFavorite.isFavorite) {
-                        removeFromFavorites(appWithIconFavorite.appWithIcon.toApp())
+                        removeFromFavorites(appWithIconFavorite.appWithIcon.app)
                         context.toast(message = removedAppFromFavoritesMessage)
                     } else {
-                        addToFavorites(appWithIconFavorite.appWithIcon.toApp())
+                        addToFavorites(appWithIconFavorite.appWithIcon.app)
                         context.toast(message = addedAppToFavoritesMessage)
                     }
                 }
@@ -86,7 +86,7 @@ internal fun MoreOptionsBottomSheet(
                 contentColor = contentColor,
                 confirmUiText = UiText.Resource(stringRes = R.string.yes_comma_hide),
                 onConfirm = {
-                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.toApp()) }
+                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.app) }
                 }
             )
         } else {
@@ -95,7 +95,7 @@ internal fun MoreOptionsBottomSheet(
                 iconRes = R.drawable.ic_visibility_off,
                 contentColor = contentColor,
                 onClick = {
-                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.toApp()) }
+                    closeAfterAction { addToHiddenApps(appWithIconFavorite.appWithIcon.app) }
                 }
             )
         }
@@ -112,17 +112,17 @@ internal fun MoreOptionsBottomSheet(
             iconRes = R.drawable.ic_info,
             contentColor = contentColor,
             onClick = {
-                closeAfterAction { context.showAppInfo(packageName = appWithIconFavorite.appWithIcon.packageName) }
+                closeAfterAction { context.showAppInfo(packageName = appWithIconFavorite.appWithIcon.app.packageName) }
             }
         )
 
-        if (!appWithIconFavorite.appWithIcon.isSystem) {
+        if (!appWithIconFavorite.appWithIcon.app.isSystem) {
             SelectableIconItem(
                 text = stringResource(id = R.string.uninstall),
                 iconRes = R.drawable.ic_delete,
                 contentColor = contentColor,
                 onClick = {
-                    closeAfterAction { context.uninstallApp(app = appWithIconFavorite.appWithIcon.toApp()) }
+                    closeAfterAction { context.uninstallApp(app = appWithIconFavorite.appWithIcon.app) }
                 }
             )
         }

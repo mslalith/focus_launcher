@@ -34,12 +34,12 @@ internal val APP_ICON_SIZE = 28.dp
 @Composable
 internal fun IconPackItem(
     modifier: Modifier = Modifier,
-    app: AppWithIcon,
+    appWithIcon: AppWithIcon,
     isSelected: Boolean,
     onClick: (AppWithIcon) -> Unit
 ) {
-    val iconBitmap = remember(key1 = app.packageName) {
-        app.icon.toBitmap().asImageBitmap()
+    val iconBitmap = remember(key1 = appWithIcon.app.packageName) {
+        appWithIcon.icon.toBitmap().asImageBitmap()
     }
 
     val backgroundColor by animateColorAsState(
@@ -59,17 +59,17 @@ internal fun IconPackItem(
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor)
             .padding(horizontal = 12.dp, vertical = 8.dp)
-            .clickableNoRipple { onClick(app) },
+            .clickableNoRipple { onClick(appWithIcon) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var appName by remember { mutableStateOf(value = app.displayName) }
+        var appName by remember { mutableStateOf(value = appWithIcon.app.displayName) }
 
         Box(
             modifier = Modifier.width(width = APP_ICON_SIZE * 1.5f)
         ) {
             Image(
                 bitmap = iconBitmap,
-                contentDescription = app.displayName
+                contentDescription = appName
             )
         }
         VerticalSpacer(spacing = 8.dp)

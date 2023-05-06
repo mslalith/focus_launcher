@@ -21,7 +21,7 @@ class GetAllAppsOnIconPackChangeUseCase @Inject internal constructor(
         appsWithIcons.map { appWithIcon ->
             AppWithIconFavorite(
                 appWithIcon = appWithIcon,
-                isFavorite = favorites.any { it.packageName == appWithIcon.packageName }
+                isFavorite = favorites.any { it.packageName == appWithIcon.app.packageName }
             )
         }
     }

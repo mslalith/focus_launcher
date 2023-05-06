@@ -51,7 +51,7 @@ internal fun AppDrawerPageInternal(
 
     fun onAppClick(appWithIconFavorite: AppWithIconFavorite) {
         focusManager.clearFocus()
-        context.launchApp(app = appWithIconFavorite.appWithIcon.toApp())
+        context.launchApp(app = appWithIconFavorite.appWithIcon.app)
     }
 
     fun showMoreOptions(appWithIconFavorite: AppWithIconFavorite) {
@@ -62,7 +62,7 @@ internal fun AppDrawerPageInternal(
                 addToFavorites = appDrawerPageViewModel::addToFavorites,
                 removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
                 addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
-                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appWithIconFavorite.appWithIcon.toApp() },
+                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appWithIconFavorite.appWithIcon.app },
                 onClose = { viewManager.hideBottomSheet() }
             )
         }

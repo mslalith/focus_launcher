@@ -33,7 +33,7 @@ internal fun AppDrawerGridItem(
     onClick: (AppWithIconFavorite) -> Unit,
     onLongClick: (AppWithIconFavorite) -> Unit
 ) {
-    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.packageName) {
+    val iconBitmap = remember(key1 = appWithIconFavorite.appWithIcon.app.packageName) {
         appWithIconFavorite.appWithIcon.icon.toBitmap().asImageBitmap()
     }
 
@@ -54,13 +54,13 @@ internal fun AppDrawerGridItem(
         ) {
             Image(
                 bitmap = iconBitmap,
-                contentDescription = appWithIconFavorite.appWithIcon.displayName,
+                contentDescription = appWithIconFavorite.appWithIcon.app.displayName,
                 modifier = Modifier.fillMaxSize()
             )
         }
         VerticalSpacer(spacing = 8.dp)
         Text(
-            text = appWithIconFavorite.appWithIcon.displayName,
+            text = appWithIconFavorite.appWithIcon.app.displayName,
             textAlign = TextAlign.Center,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
