@@ -1,9 +1,8 @@
-package dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.impl
+package dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
 import dev.mslalith.focuslauncher.core.launcherapps.utils.GoogleCalendarIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
