@@ -66,6 +66,7 @@ internal fun CurrentPlaceScreen(
     StatusBarColor(hasTopAppBar = true)
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(
                 title = stringResource(id = R.string.update_place),

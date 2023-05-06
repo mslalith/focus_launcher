@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.screens.hideapps
 
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ internal fun HideAppsScreenInternal(
     StatusBarColor(hasTopAppBar = true)
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(
                 title = stringResource(id = R.string.hide_apps),
