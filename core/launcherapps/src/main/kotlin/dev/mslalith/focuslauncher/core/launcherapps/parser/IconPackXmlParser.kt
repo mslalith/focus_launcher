@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.model.CalendarDrawableInfo
 import dev.mslalith.focuslauncher.core.launcherapps.model.DrawableInfo
 import dev.mslalith.focuslauncher.core.launcherapps.model.SimpleDrawableInfo
 import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreCyclomaticComplexMethod
+import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreNestedBlockDepth
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -48,6 +49,7 @@ internal class IconPackXmlParser(
     @SuppressLint("DiscouragedApi")
     @IgnoreNestedBlockDepth
     @IgnoreCyclomaticComplexMethod
+    @IgnoreLongMethod
     private fun parseAppFilterXML() {
         val packResources = iconPackResources ?: return
         try {
