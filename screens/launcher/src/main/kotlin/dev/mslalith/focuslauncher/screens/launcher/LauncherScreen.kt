@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.launcher
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +34,7 @@ internal fun LauncherScreenInternal(
     val pagerState = LocalLauncherPagerState.current
     val viewManager = LocalLauncherViewManager.current
 
-    StatusBarColor(hasTopAppBar = false)
+    StatusBarColor()
 
     LaunchedEffect(key1 = Unit) {
         launcherViewModel.loadApps()
@@ -50,7 +51,9 @@ internal fun LauncherScreenInternal(
         }
     }
 
-    Scaffold {
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface
+    ) {
         HorizontalPager(
             state = pagerState,
             pageCount = 3,

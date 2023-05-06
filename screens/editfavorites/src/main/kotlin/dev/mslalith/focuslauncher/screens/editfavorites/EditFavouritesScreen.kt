@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -39,9 +40,10 @@ internal fun EditFavoritesScreenInternal(
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },

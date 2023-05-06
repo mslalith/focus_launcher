@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.about
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +22,10 @@ import dev.mslalith.focuslauncher.screens.about.ui.MadeWithLove
 fun AboutScreen(
     goBack: () -> Unit
 ) {
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(
                 title = stringResource(id = R.string.about),

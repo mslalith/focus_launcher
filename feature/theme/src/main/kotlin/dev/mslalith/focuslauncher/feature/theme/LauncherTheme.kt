@@ -47,7 +47,7 @@ internal fun LauncherThemeInternal(
     }
 
     LaunchedEffect(key1 = systemUiController, key2 = colorScheme) {
-        systemUiController.setSystemBarsColor(color = colorScheme.background)
+        systemUiController.setSystemBarsColor(color = colorScheme.surface)
     }
 
     MaterialTheme(

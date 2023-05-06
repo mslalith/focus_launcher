@@ -92,14 +92,14 @@ internal fun IconPackScreen(
         }
     }
 
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     BoxWithConstraints {
         val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }
 
         BottomSheetScaffold(
             scaffoldState = bottomSheetScaffoldState,
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = MaterialTheme.colorScheme.surface,
             sheetSwipeEnabled = false,
             topBar = {
                 AppBarWithBackIcon(

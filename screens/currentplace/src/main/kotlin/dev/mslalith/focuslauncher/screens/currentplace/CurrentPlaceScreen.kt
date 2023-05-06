@@ -63,9 +63,10 @@ internal fun CurrentPlaceScreen(
     onDoneClick: () -> Unit,
     onLocationChange: (LatLng) -> Unit
 ) {
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(
                 title = stringResource(id = R.string.update_place),
