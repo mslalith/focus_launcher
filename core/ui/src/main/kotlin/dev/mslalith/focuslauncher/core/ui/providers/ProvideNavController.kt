@@ -2,11 +2,11 @@ package dev.mslalith.focuslauncher.core.ui.providers
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-val LocalNavController = staticCompositionLocalOf<NavHostController> {
+val LocalNavController = compositionLocalOf<NavHostController> {
     error("No NavHostController provided")
 }
 

@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetAllAppsOnIconPackChangeUseCase
-import dev.mslalith.focuslauncher.core.domain.appswithicons.GetIconPackAppsWithIconsUseCase
+import dev.mslalith.focuslauncher.core.domain.apps.GetAllAppsOnIconPackChangeUseCase
+import dev.mslalith.focuslauncher.core.domain.apps.GetIconPackIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
@@ -35,7 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
     private val getAllAppsOnIconPackChangeUseCase: GetAllAppsOnIconPackChangeUseCase,
-    getIconPackAppsWithIconsUseCase: GetIconPackAppsWithIconsUseCase,
+    getIconPackIconicAppsUseCase: GetIconPackIconicAppsUseCase,
     fetchIconPacksUseCase: FetchIconPacksUseCase,
     private val loadIconPackUseCase: LoadIconPackUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
@@ -64,7 +64,7 @@ internal class IconPackViewModel @Inject constructor(
             .launchIn(scope = viewModelScope)
     }
 
-    private val iconPackAppsWithIcons: Flow<List<AppWithIcon>> = getIconPackAppsWithIconsUseCase()
+    private val iconPackAppsWithIcons: Flow<List<AppWithIcon>> = getIconPackIconicAppsUseCase()
         .flowOn(context = appCoroutineDispatcher.io)
 
     val iconPackState = flowOf(value = defaultIconPackState)
