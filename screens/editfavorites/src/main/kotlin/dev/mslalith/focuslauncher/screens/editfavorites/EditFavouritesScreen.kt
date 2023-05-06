@@ -40,7 +40,7 @@ internal fun EditFavoritesScreenInternal(
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,

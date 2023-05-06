@@ -22,7 +22,7 @@ import dev.mslalith.focuslauncher.screens.about.ui.MadeWithLove
 fun AboutScreen(
     goBack: () -> Unit
 ) {
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,

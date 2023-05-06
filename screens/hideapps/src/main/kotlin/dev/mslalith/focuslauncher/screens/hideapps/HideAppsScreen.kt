@@ -30,7 +30,7 @@ internal fun HideAppsScreenInternal(
     hideAppsViewModel: HideAppsViewModel = hiltViewModel(),
     goBack: () -> Unit
 ) {
-    StatusBarColor(hasTopAppBar = true)
+    StatusBarColor()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,

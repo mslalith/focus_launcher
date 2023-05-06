@@ -34,7 +34,7 @@ internal fun LauncherScreenInternal(
     val pagerState = LocalLauncherPagerState.current
     val viewManager = LocalLauncherViewManager.current
 
-    StatusBarColor(hasTopAppBar = false)
+    StatusBarColor()
 
     LaunchedEffect(key1 = Unit) {
         launcherViewModel.loadApps()

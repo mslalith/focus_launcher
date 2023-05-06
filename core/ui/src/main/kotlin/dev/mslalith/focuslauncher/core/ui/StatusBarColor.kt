@@ -6,9 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 
 @Composable
-fun StatusBarColor(
-    hasTopAppBar: Boolean
-) {
+fun StatusBarColor() {
     val systemUiController = LocalSystemUiController.current
     val color = MaterialTheme.colorScheme.surface
 
