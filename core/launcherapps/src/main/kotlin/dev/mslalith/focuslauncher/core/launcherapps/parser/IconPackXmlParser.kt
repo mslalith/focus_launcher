@@ -42,8 +42,9 @@ internal class IconPackXmlParser(
     fun drawableFor(componentName: String): Drawable? {
         val set = iconPackToDrawablesMap[componentName]
         if (set.isNullOrEmpty()) return null
+        val drawableInfo = set.firstOrNull { it is CalendarDrawableInfo } ?: set.first()
         @Suppress("DEPRECATION")
-        return iconPackResources?.getDrawable(set.first().getDrawableResId())
+        return iconPackResources?.getDrawable(drawableInfo.getDrawableResId())
     }
 
     @SuppressLint("DiscouragedApi")
