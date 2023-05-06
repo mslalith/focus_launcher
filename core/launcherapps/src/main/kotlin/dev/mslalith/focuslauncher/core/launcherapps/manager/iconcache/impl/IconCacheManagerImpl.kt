@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
+import dev.mslalith.focuslauncher.core.launcherapps.utils.GoogleCalendarIcon
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import javax.inject.Inject
@@ -30,6 +31,10 @@ internal class IconCacheManagerImpl @Inject constructor(
     }
 
     private fun getSystemTypeIcon(appWithComponent: AppWithComponent): Drawable = iconCache.getOrPut(key = appWithComponent.app.packageName) {
+        if (appWithComponent.app.packageName == GoogleCalendarIcon.GOOGLE_CALENDAR_PACKAGE_NAME) {
+            val drawable = GoogleCalendarIcon.getDrawable(context = context, activityName = appWithComponent.componentName.className)
+            if (drawable != null) return@getOrPut drawable
+        }
         context.packageManager.getApplicationIcon(appWithComponent.app.packageName)
     }
 
