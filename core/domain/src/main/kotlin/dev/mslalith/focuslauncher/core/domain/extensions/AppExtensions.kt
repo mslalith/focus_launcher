@@ -20,7 +20,7 @@ internal fun List<App>.toAppWithIcons(iconPackType: IconPackType): List<AppWithI
                 packageName = app.packageName,
                 isSystem = app.isSystem
             ),
-            icon = iconFor(app.packageName, iconPackType),
+            icon = iconFor(app.packageName, iconPackType)
         )
     } catch (e: PackageManager.NameNotFoundException) {
         null

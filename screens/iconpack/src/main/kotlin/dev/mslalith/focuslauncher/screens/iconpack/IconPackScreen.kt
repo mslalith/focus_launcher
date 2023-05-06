@@ -151,7 +151,7 @@ private fun IconPackListSheet(
                     packageName = context.packageName,
                     isSystem = false
                 ),
-                icon = icon,
+                icon = icon
             )
         }
     }
