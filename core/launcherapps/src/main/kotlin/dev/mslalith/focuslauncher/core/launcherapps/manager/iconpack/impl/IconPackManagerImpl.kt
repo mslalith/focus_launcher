@@ -5,15 +5,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack
 import dev.mslalith.focuslauncher.core.launcherapps.parser.IconPackXmlParser
+import dev.mslalith.focuslauncher.core.model.IconPackLoadEvent
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 
 internal class IconPackManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -26,8 +27,8 @@ internal class IconPackManagerImpl @Inject constructor(
     private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
     override val iconPacksFlow: Flow<List<IconPack>> = _iconPacksFlow
 
-    private val _iconPackLoadedTriggerFlow = MutableStateFlow(value = false)
-    override val iconPackLoadedTriggerFlow: Flow<Boolean> = _iconPackLoadedTriggerFlow
+    private val _iconPackLoadEventFlow = MutableSharedFlow<IconPackLoadEvent>()
+    override val iconPackLoadEventFlow: Flow<IconPackLoadEvent> = _iconPackLoadEventFlow
 
     override fun fetchInstalledIconPacks() {
         val packageManager = context.packageManager
@@ -81,19 +82,39 @@ internal class IconPackManagerImpl @Inject constructor(
     private fun loadSystemTypeIcons(forceLoad: Boolean) {
         if (!forceLoad && currentIconPackType == IconPackType.System) return
 
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad)
         currentIconPackType = IconPackType.System
         iconCacheManager.clearCache()
         currentIconPackParser = null
-        _iconPackLoadedTriggerFlow.update { !it }
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad)
     }
 
     private fun loadCustomTypeIcons(iconPackType: IconPackType.Custom, forceLoad: Boolean) {
         if (!forceLoad && currentIconPackParser?.packageName == iconPackType.packageName) return
 
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad)
         currentIconPackType = iconPackType
         iconCacheManager.clearCache()
         currentIconPackParser = iconCacheManager.iconPackFor(packageName = iconPackType.packageName)
         currentIconPackParser?.load()
-        _iconPackLoadedTriggerFlow.update { !it }
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad)
     }
+}
+
+private fun MutableSharedFlow<IconPackLoadEvent>.updateStartLoad(forceLoad: Boolean) {
+    tryEmit(
+        value = when (forceLoad) {
+            true -> IconPackLoadEvent.Reloading
+            false -> IconPackLoadEvent.Loading
+        }
+    )
+}
+
+private fun MutableSharedFlow<IconPackLoadEvent>.updateEndLoad(forceLoad: Boolean) {
+    tryEmit(
+        value = when (forceLoad) {
+            true -> IconPackLoadEvent.Reloaded
+            false -> IconPackLoadEvent.Loaded
+        }
+    )
 }
