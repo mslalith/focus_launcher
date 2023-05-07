@@ -27,7 +27,7 @@ internal class IconPackManagerImpl @Inject constructor(
     private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
     override val iconPacksFlow: Flow<List<IconPack>> = _iconPacksFlow
 
-    private val _iconPackLoadEventFlow = MutableSharedFlow<IconPackLoadEvent>()
+    private val _iconPackLoadEventFlow = MutableSharedFlow<IconPackLoadEvent>(replay = 1)
     override val iconPackLoadEventFlow: Flow<IconPackLoadEvent> = _iconPackLoadEventFlow
 
     override fun fetchInstalledIconPacks() {

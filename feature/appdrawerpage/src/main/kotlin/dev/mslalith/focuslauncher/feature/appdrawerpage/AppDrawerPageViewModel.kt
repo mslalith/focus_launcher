@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.flowOn
 internal class AppDrawerPageViewModel @Inject constructor(
     getAppDrawerIconicAppsUseCase: GetAppDrawerIconicAppsUseCase,
     appDrawerSettingsRepo: AppDrawerSettingsRepo,
+    private val reloadIconPackUseCase: ReloadIconPackUseCase,
     private val appDrawerRepo: AppDrawerRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
     private val favoritesRepo: FavoritesRepo,
@@ -69,6 +71,8 @@ internal class AppDrawerPageViewModel @Inject constructor(
     fun searchAppQuery(query: String) {
         searchBarQueryStateFlow.value = query
     }
+
+    fun reloadIconPack() = reloadIconPackUseCase()
 
     fun updateDisplayName(app: App, displayName: String) {
         appCoroutineDispatcher.launchInIO {

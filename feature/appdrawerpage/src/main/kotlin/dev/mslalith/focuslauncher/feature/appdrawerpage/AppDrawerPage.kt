@@ -26,6 +26,7 @@ import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
+import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
@@ -74,6 +75,10 @@ internal fun AppDrawerPageInternal(
             onUpdateDisplayName = { appDrawerPageViewModel.updateDisplayName(app = updatedApp, displayName = it) },
             onClose = { updateAppDisplayAppDialog = null }
         )
+    }
+
+    OnDayChangeListener {
+        appDrawerPageViewModel.reloadIconPack()
     }
 
     Column(
