@@ -81,7 +81,7 @@ internal fun HomePage(
                 SpacedMoonCalendar(
                     onMoonCalendarClick = onMoonCalendarClick
                 )
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(weight = 1f)) {
                     DecoratedQuote(
                         modifier = Modifier.align(alignment = Alignment.Center)
                     )

@@ -17,7 +17,7 @@ fun Modifier.horizontalFadeOutEdge(
     )
 )
 
-private class HorizontalFadeOutEdge constructor(
+private class HorizontalFadeOutEdge(
     private val width: Dp,
     private val color: Color
 ) : DrawModifier {
