@@ -6,8 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
-import dev.mslalith.focuslauncher.core.domain.theme.ChangeThemeUseCase
-import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
@@ -15,37 +13,45 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDraw
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_SHOW_ICON_PACK
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
-import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
-import javax.inject.Inject
+import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsPageViewModel @Inject constructor(
-    getThemeUseCase: GetThemeUseCase,
-    private val changeThemeUseCase: ChangeThemeUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val currentThemeStateFlow = getThemeUseCase().withinScope(initialValue = null)
+    private val defaultSettingsState = SettingsState(
+        showStatusBar = DEFAULT_STATUS_BAR,
+        canDrawNotificationShade = DEFAULT_NOTIFICATION_SHADE,
+        showIconPack = DEFAULT_SHOW_ICON_PACK,
+        isDefaultLauncher = DEFAULT_IS_DEFAULT_LAUNCHER
+    )
 
-    fun changeTheme(theme: Theme) {
-        appCoroutineDispatcher.launchInIO {
-            changeThemeUseCase(theme = theme)
-        }
-    }
-
-    val statusBarVisibilityStateFlow = generalSettingsRepo.statusBarVisibilityFlow.withinScope(initialValue = DEFAULT_STATUS_BAR)
-    val notificationShadeStateFlow = generalSettingsRepo.notificationShadeFlow.withinScope(initialValue = DEFAULT_NOTIFICATION_SHADE)
-    val isDefaultLauncherStateFlow = generalSettingsRepo.isDefaultLauncher.withinScope(initialValue = DEFAULT_IS_DEFAULT_LAUNCHER)
-    val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
+    private val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
         .combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { appDrawerViewType, areAppIconsVisible ->
             appDrawerViewType == AppDrawerViewType.GRID || areAppIconsVisible
-        }.withinScope(initialValue = true)
+        }.withinScope(initialValue = DEFAULT_SHOW_ICON_PACK)
+
+    val settingsState: StateFlow<SettingsState> = flowOf(value = defaultSettingsState)
+        .combine(flow = generalSettingsRepo.statusBarVisibilityFlow) { state, showStatusBar ->
+            state.copy(showStatusBar = showStatusBar)
+        }.combine(flow = generalSettingsRepo.notificationShadeFlow) { state, canDrawNotificationShade ->
+            state.copy(canDrawNotificationShade = canDrawNotificationShade)
+        }.combine(flow = generalSettingsRepo.isDefaultLauncher) { state, isDefaultLauncher ->
+            state.copy(isDefaultLauncher = isDefaultLauncher)
+        }.combine(flow = canShowIconPackStateFlow) { state, showIconPack ->
+            state.copy(showIconPack = showIconPack)
+        }.withinScope(initialValue = defaultSettingsState)
 
     fun toggleStatusBarVisibility() {
         appCoroutineDispatcher.launchInIO {

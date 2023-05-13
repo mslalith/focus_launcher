@@ -6,21 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.Screen
-import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.core.ui.managers.LauncherViewManager
-import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
-import dev.mslalith.focuslauncher.feature.clock24.settings.ClockSettingsSheet
-import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
-import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
-import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
+import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ChangeTheme
@@ -32,7 +27,6 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaul
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
-import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
 
 @Composable
 fun SettingsPage() {
@@ -49,8 +43,25 @@ internal fun SettingsPageInternal(
     navigateTo: (Screen) -> Unit
 ) {
     val context = LocalContext.current
-    val viewManager = LocalLauncherViewManager.current
+    val settingsState by settingsPageViewModel.settingsState.collectAsStateWithLifecycle()
 
+    SettingsPageInternal(
+        settingsState = settingsState,
+        toggleStatusBarVisibility = settingsPageViewModel::toggleStatusBarVisibility,
+        toggleNotificationShade = settingsPageViewModel::toggleNotificationShade,
+        refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) },
+        navigateTo = navigateTo
+    )
+}
+
+@Composable
+internal fun SettingsPageInternal(
+    settingsState: SettingsState,
+    toggleStatusBarVisibility: () -> Unit,
+    toggleNotificationShade: () -> Unit,
+    refreshIsDefaultLauncher: () -> Unit,
+    navigateTo: (Screen) -> Unit
+) {
     val scrollState = rememberScrollState()
 
     Column(
@@ -62,80 +73,38 @@ internal fun SettingsPageInternal(
         SettingsHeader()
         VerticalSpacer(spacing = 12.dp)
 
-        ChangeTheme(
-            onClick = {
-                viewManager.showBottomSheet {
-                    ThemeSelectionSheet(
-                        closeBottomSheet = viewManager::hideBottomSheet
-                    )
-                }
-            }
-        )
+        ChangeTheme()
 
         EditFavorites { navigateTo(Screen.EditFavorites) }
         HideApps { navigateTo(Screen.HideApps) }
 
         ToggleStatusBar(
-            showStatusBar = settingsPageViewModel.statusBarVisibilityStateFlow.collectAsStateWithLifecycle().value,
-            onClick = settingsPageViewModel::toggleStatusBarVisibility
+            showStatusBar = settingsState.showStatusBar,
+            onClick = toggleStatusBarVisibility
         )
         PullDownNotifications(
-            enableNotificationShade = settingsPageViewModel.notificationShadeStateFlow.collectAsStateWithLifecycle().value,
-            onClick = settingsPageViewModel::toggleNotificationShade
+            enableNotificationShade = settingsState.canDrawNotificationShade,
+            onClick = toggleNotificationShade
         )
 
         IconPack(
-            shouldShow = settingsPageViewModel.canShowIconPackStateFlow.collectAsStateWithLifecycle().value,
+            shouldShow = settingsState.showIconPack,
             onClick = { navigateTo(Screen.IconPack) }
         )
 
-        AppDrawer {
-            viewManager.showBottomSheet {
-                AppDrawerSettingsSheet()
-            }
-        }
+        AppDrawer()
 
         Widgets(
-            viewManager = viewManager,
-            navigateTo = navigateTo
+            navigateToCurrentPlace = { navigateTo(Screen.CurrentPlace) }
         )
 
         SetAsDefaultLauncher(
-            isDefaultLauncher = settingsPageViewModel.isDefaultLauncherStateFlow.collectAsStateWithLifecycle().value,
-            refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) }
+            isDefaultLauncher = settingsState.isDefaultLauncher,
+            refreshIsDefaultLauncher = refreshIsDefaultLauncher
         )
 
         About { navigateTo(Screen.About) }
 
         VerticalSpacer(spacing = 12.dp)
-    }
-}
-
-@Composable
-private fun Widgets(
-    viewManager: LauncherViewManager,
-    navigateTo: (Screen) -> Unit
-) {
-    Widgets { widgetType ->
-        when (widgetType) {
-            WidgetType.CLOCK -> {
-                viewManager.showBottomSheet { ClockSettingsSheet() }
-            }
-            WidgetType.LUNAR_PHASE -> {
-                viewManager.showBottomSheet {
-                    LunarPhaseSettingsSheet(
-                        properties = LunarPhaseSettingsProperties(
-                            navigateToCurrentPlace = {
-                                viewManager.hideBottomSheet()
-                                navigateTo(Screen.CurrentPlace)
-                            }
-                        )
-                    )
-                }
-            }
-            WidgetType.QUOTES -> {
-                viewManager.showBottomSheet { QuotesSettingsSheet() }
-            }
-        }
     }
 }

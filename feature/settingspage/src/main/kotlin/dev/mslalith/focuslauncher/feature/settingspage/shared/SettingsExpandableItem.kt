@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun SettingsExpandableItem(
+    modifier: Modifier = Modifier,
     text: String,
     contentPadding: Dp = 40.dp,
     bottomPadding: Dp = 8.dp,
@@ -47,7 +48,7 @@ internal fun SettingsExpandableItem(
     val dividerWidth = 3f
 
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Column {
             SettingsItem(

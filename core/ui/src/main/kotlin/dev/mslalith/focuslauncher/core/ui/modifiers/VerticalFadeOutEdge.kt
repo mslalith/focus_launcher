@@ -17,7 +17,7 @@ fun Modifier.verticalFadeOutEdge(
     )
 )
 
-private class VerticalFadeOutEdge constructor(
+private class VerticalFadeOutEdge(
     private val height: Dp,
     private val color: Color
 ) : DrawModifier {

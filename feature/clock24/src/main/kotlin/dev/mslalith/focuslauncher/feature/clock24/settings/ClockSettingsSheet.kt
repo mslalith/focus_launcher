@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,12 +25,15 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.roundToInt
 
 @Composable
-fun ClockSettingsSheet() {
-    ClockSettingsSheetInternal()
+fun ClockSettingsSheet(
+    modifier: Modifier = Modifier
+) {
+    ClockSettingsSheetInternal(modifier = modifier)
 }
 
 @Composable
 internal fun ClockSettingsSheetInternal(
+    modifier: Modifier = Modifier,
     clock24ViewModel: Clock24ViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -43,7 +47,9 @@ internal fun ClockSettingsSheetInternal(
         ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         PreviewClock()
         SettingsSelectableChooserItem(
             text = stringResource(id = R.string.clock_position),

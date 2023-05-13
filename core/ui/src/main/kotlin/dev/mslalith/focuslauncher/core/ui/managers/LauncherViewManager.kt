@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
-class LauncherViewManager constructor(
+class LauncherViewManager(
     private val coroutineScope: CoroutineScope,
     private val snackbarHostState: SnackbarHostState,
     private val bottomSheetState: SheetState
