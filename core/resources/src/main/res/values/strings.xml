@@ -42,7 +42,7 @@
     <string name="waning_gibbous">Waning Gibbous</string>
     <string name="last_quarter">Last Quarter</string>
     <string name="waning_crescent">Waning Crescent</string>
-    <string name="next_phase_is_on_date">next %s is on %s</string>
+    <string name="next_phase_is_on_date">next %1$s is on %2$s</string>
     <string name="illumination_value">Illumination: %s</string>
     <string name="angle_value">Angle: %s</string>
     <string name="favorites">Favorites</string>
