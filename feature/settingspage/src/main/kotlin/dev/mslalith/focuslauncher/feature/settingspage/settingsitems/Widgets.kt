@@ -54,7 +54,7 @@ internal fun Widgets(
             WidgetType.QUOTES -> {
                 viewManager.showBottomSheet {
                     QuotesSettingsSheet(
-                        modifier = Modifier.testSemantics(tag = TestTags.QUOTE_SETTINGS_SHEET),
+                        modifier = Modifier.testSemantics(tag = TestTags.QUOTE_SETTINGS_SHEET)
                     )
                 }
             }
