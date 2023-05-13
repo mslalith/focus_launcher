@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,22 +17,27 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettings
 
 @Composable
 fun LunarPhaseSettingsSheet(
+    modifier: Modifier = Modifier,
     properties: LunarPhaseSettingsProperties
 ) {
     LunarPhaseSettingsSheetInternal(
+        modifier = modifier,
         navigateToCurrentPlace = properties.navigateToCurrentPlace
     )
 }
 
 @Composable
 internal fun LunarPhaseSettingsSheetInternal(
+    modifier: Modifier = Modifier,
     lunarCalendarViewModel: LunarCalendarViewModel = hiltViewModel(),
     navigateToCurrentPlace: () -> Unit
 ) {
     val lunarCalendarState by lunarCalendarViewModel.lunarCalendarState.collectAsStateWithLifecycle()
     val currentPlace by lunarCalendarViewModel.currentPlaceStateFlow.collectAsStateWithLifecycle()
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         PreviewLunarCalendar(showLunarPhase = lunarCalendarState.showLunarPhase)
         SettingsSelectableSwitchItem(
             text = stringResource(id = R.string.enable_lunar_phase),

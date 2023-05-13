@@ -32,11 +32,16 @@ internal fun Widgets(
     fun onWidgetClick(widgetType: WidgetType) {
         when (widgetType) {
             WidgetType.CLOCK -> {
-                viewManager.showBottomSheet { ClockSettingsSheet() }
+                viewManager.showBottomSheet {
+                    ClockSettingsSheet(
+                        modifier = Modifier.testSemantics(tag = TestTags.CLOCK_SETTINGS_SHEET)
+                    )
+                }
             }
             WidgetType.LUNAR_PHASE -> {
                 viewManager.showBottomSheet {
                     LunarPhaseSettingsSheet(
+                        modifier = Modifier.testSemantics(tag = TestTags.LUNAR_PHASE_SETTINGS_SHEET),
                         properties = LunarPhaseSettingsProperties(
                             navigateToCurrentPlace = {
                                 viewManager.hideBottomSheet()
@@ -47,7 +52,11 @@ internal fun Widgets(
                 }
             }
             WidgetType.QUOTES -> {
-                viewManager.showBottomSheet { QuotesSettingsSheet() }
+                viewManager.showBottomSheet {
+                    QuotesSettingsSheet(
+                        modifier = Modifier.testSemantics(tag = TestTags.QUOTE_SETTINGS_SHEET),
+                    )
+                }
             }
         }
     }

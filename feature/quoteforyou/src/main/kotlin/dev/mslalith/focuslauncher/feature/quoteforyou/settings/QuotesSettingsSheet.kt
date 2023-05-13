@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.feature.quoteforyou.settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -14,18 +15,23 @@ import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYouViewModel
 import dev.mslalith.focuslauncher.feature.quoteforyou.R
 
 @Composable
-fun QuotesSettingsSheet() {
-    QuotesSettingsSheetInternal()
+fun QuotesSettingsSheet(
+    modifier: Modifier = Modifier
+) {
+    QuotesSettingsSheetInternal(modifier = modifier)
 }
 
 @Composable
 internal fun QuotesSettingsSheetInternal(
+    modifier: Modifier = Modifier,
     quoteForYouViewModel: QuoteForYouViewModel = hiltViewModel()
 ) {
     val quoteForYouState by quoteForYouViewModel.quoteForYouState.collectAsStateWithLifecycle()
     val isFetchingQuotes by quoteForYouViewModel.isFetchingQuotes.collectAsStateWithLifecycle()
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         PreviewQuotes(showQuotes = quoteForYouState.showQuotes)
         SettingsSelectableSwitchItem(
             text = stringResource(id = R.string.enable_quotes),

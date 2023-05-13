@@ -11,7 +11,6 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.lifecycle.Lifecycle
 import com.google.common.truth.Truth.assertThat
@@ -82,7 +81,6 @@ class SettingsPageKtTest {
             appCoroutineDispatcher = appCoroutineDispatcher
         )
         currentScreen = null
-//        mockkStatic("dev.mslalith.focuslauncher.feature.settingspage.ExtensionsKt")
         mockkStatic(Context::isDefaultLauncher)
         composeTestRule.setContent {
             ProvideBottomSheetManager {
