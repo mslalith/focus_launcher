@@ -177,11 +177,17 @@ class SettingsPageKtTest {
     @Test
     @Ignore("TODO")
     fun `09 - on click of clock widget, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
+        onNodeWithTag(testTag = TestTags.CLOCK_SETTINGS_SHEET).assertDoesNotExist()
+        onNode(matcher = hasWidgetType(widgetType = WidgetType.CLOCK)).performScrollToAndClick()
+        waitForTagAndAssertIsDisplayed(testTag = TestTags.CLOCK_SETTINGS_SHEET)
     }
 
     @Test
     @Ignore("TODO")
     fun `10 - when lunar phase widget is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
+        onNodeWithTag(testTag = TestTags.LUNAR_PHASE_SETTINGS_SHEET).assertDoesNotExist()
+        onNode(matcher = hasWidgetType(widgetType = WidgetType.LUNAR_PHASE)).performScrollToAndClick()
+        waitForTagAndAssertIsDisplayed(testTag = TestTags.LUNAR_PHASE_SETTINGS_SHEET)
     }
 
     @OptIn(ExperimentalTestApi::class)
