@@ -25,6 +25,7 @@ import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTagAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndAssertIsDisplayed
+import dev.mslalith.focuslauncher.core.testing.compose.extensions.performScrollToAndClick
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasWidgetType
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
@@ -104,23 +105,21 @@ class SettingsPageKtTest {
     @Ignore("TODO")
     fun `01 - when change theme is clicked, theme selection bottom sheet must be shown`(): Unit = with(composeTestRule) {
         onNodeWithTag(testTag = TestTags.THEME_SELECTION_SHEET).assertDoesNotExist()
-        onNodeWithTag(testTag = TestTags.ITEM_CHANGE_THEME).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_CHANGE_THEME).performScrollToAndClick()
         onNodeWithTag(testTag = TestTags.THEME_SELECTION_SHEET).assertIsDisplayed()
     }
 
     @Test
     fun `02 - when edit favorites is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
-        onNodeWithTag(testTag = TestTags.ITEM_EDIT_FAVORITES).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_EDIT_FAVORITES).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_EDIT_FAVORITES).performScrollToAndClick()
         assertThat(currentScreen).isEqualTo(Screen.EditFavorites)
     }
 
     @Test
     fun `03 - when hide apps is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
-        onNodeWithTag(testTag = TestTags.ITEM_HIDE_APPS).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_HIDE_APPS).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_HIDE_APPS).performScrollToAndClick()
         assertThat(currentScreen).isEqualTo(Screen.HideApps)
     }
 
@@ -131,8 +130,7 @@ class SettingsPageKtTest {
 
         onNodeWithText(text = showStatusBar).assertIsDisplayed()
 
-        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_STATUS_BAR).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_STATUS_BAR).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_STATUS_BAR).performScrollToAndClick()
         waitForTextAndAssertIsDisplayed(text = hideStatusBar)
 
         onNodeWithText(text = hideStatusBar).assertIsDisplayed()
@@ -145,8 +143,7 @@ class SettingsPageKtTest {
 
         onNodeWithText(text = disableText).assertIsDisplayed()
 
-        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_PULL_DOWN_NOTIFICATION).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_PULL_DOWN_NOTIFICATION).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_TOGGLE_PULL_DOWN_NOTIFICATION).performScrollToAndClick()
         waitForTextAndAssertIsDisplayed(text = enableText)
 
         onNodeWithText(text = enableText).assertIsDisplayed()
@@ -155,8 +152,7 @@ class SettingsPageKtTest {
     @Test
     fun `06 - when icon packs is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
-        onNodeWithTag(testTag = TestTags.ITEM_ICON_PACK).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_ICON_PACK).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_ICON_PACK).performScrollToAndClick()
         assertThat(currentScreen).isEqualTo(Screen.IconPack)
     }
 
@@ -164,7 +160,7 @@ class SettingsPageKtTest {
     @Ignore("TODO")
     fun `07 - when app drawer is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
         onNodeWithTag(testTag = TestTags.APP_DRAWER_SETTINGS_SHEET).assertDoesNotExist()
-        onNodeWithTag(testTag = TestTags.ITEM_APP_DRAWER).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_APP_DRAWER).performScrollToAndClick()
         waitForTagAndAssertIsDisplayed(testTag = TestTags.APP_DRAWER_SETTINGS_SHEET)
     }
 
@@ -172,12 +168,8 @@ class SettingsPageKtTest {
     fun `08 - when widgets is clicked, it's section must be expanded`(): Unit = with(composeTestRule) {
         val clockText = activity.getString(R.string.clock)
 
-        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollTo()
         onNodeWithText(text = clockText).assertDoesNotExist()
-
-        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).assertIsDisplayed()
-        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performClick()
-
+        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollToAndClick()
         onNode(matcher = hasWidgetType(widgetType = WidgetType.CLOCK)).apply {
             performScrollTo()
             assertIsDisplayed()
@@ -199,8 +191,7 @@ class SettingsPageKtTest {
     fun `11 - when set as default is clicked & selected to be default, app must hide the view`(): Unit = with(composeTestRule) {
         every { activity.isDefaultLauncher() } returns true
 
-        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performScrollToAndClick()
 
         activityRule.scenario.moveToState(Lifecycle.State.STARTED)
         activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
@@ -213,8 +204,7 @@ class SettingsPageKtTest {
     fun `12 - when set as default is clicked & selected to be not default, app must not hide the view`(): Unit = with(composeTestRule) {
         every { activity.isDefaultLauncher() } returns false
 
-        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_SET_AS_DEFAULT).performScrollToAndClick()
 
         activityRule.scenario.moveToState(Lifecycle.State.STARTED)
         activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
@@ -225,8 +215,7 @@ class SettingsPageKtTest {
     @Test
     fun `13 - when about is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
-        onNodeWithTag(testTag = TestTags.ITEM_ABOUT).performScrollTo()
-        onNodeWithTag(testTag = TestTags.ITEM_ABOUT).performClick()
+        onNodeWithTag(testTag = TestTags.ITEM_ABOUT).performScrollToAndClick()
         assertThat(currentScreen).isEqualTo(Screen.About)
     }
 }
