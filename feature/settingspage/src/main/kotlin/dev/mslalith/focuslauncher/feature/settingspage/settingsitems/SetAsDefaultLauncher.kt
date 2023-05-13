@@ -13,12 +13,15 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
+import dev.mslalith.focuslauncher.feature.settingspage.util.TestTags
 
 @Composable
 internal fun SetAsDefaultLauncher(
@@ -52,8 +55,10 @@ internal fun SetAsDefaultLauncher(
         enter = slideInVertically() + fadeIn(),
         exit = slideOutVertically() + fadeOut()
     ) {
-        SettingsItem(text = stringResource(id = R.string.set_as_default_launcher)) {
-            askToSetAsDefaultLauncher()
-        }
+        SettingsItem(
+            modifier = Modifier.testSemantics(tag = TestTags.ITEM_SET_AS_DEFAULT),
+            text = stringResource(id = R.string.set_as_default_launcher),
+            onClick = ::askToSetAsDefaultLauncher
+        )
     }
 }

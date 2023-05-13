@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.i
 
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.testing.compose.TestSemanticsProperties
@@ -29,5 +30,9 @@ internal class TestSemanticsScopeImpl(
 
     override fun testSelectedHiddenApp(selectedHiddenApp: SelectedHiddenApp) = with(semanticsPropertyReceiver) {
         this[TestSemanticsProperties.SelectedHiddenApp] = selectedHiddenApp
+    }
+
+    override fun testWidgetType(widgetType: WidgetType) = with(semanticsPropertyReceiver) {
+        this[TestSemanticsProperties.WidgetType] = widgetType
     }
 }

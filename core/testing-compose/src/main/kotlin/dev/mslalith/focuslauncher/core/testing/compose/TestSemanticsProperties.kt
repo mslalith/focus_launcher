@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.testing.compose
 
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.semantics.SemanticsPropertyKey
+import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 
@@ -11,4 +12,6 @@ object TestSemanticsProperties {
 
     val SelectedApp = SemanticsPropertyKey<SelectedApp>(name = "SelectedApp")
     val SelectedHiddenApp = SemanticsPropertyKey<SelectedHiddenApp>(name = "SelectedHiddenApp")
+
+    val WidgetType = SemanticsPropertyKey<WidgetType>(name = "WidgetType")
 }
