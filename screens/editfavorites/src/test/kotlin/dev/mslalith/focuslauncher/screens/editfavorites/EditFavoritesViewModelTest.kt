@@ -67,12 +67,8 @@ class EditFavoritesViewModelTest : CoroutineTest() {
 
     @Test
     fun `01 - initially favorites must not be selected`() = runCoroutineTest {
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
-            }
-        }
+        assertThat(viewModel.favoritesStateFlow.value).isEmpty()
+        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
     }
 
     @Test

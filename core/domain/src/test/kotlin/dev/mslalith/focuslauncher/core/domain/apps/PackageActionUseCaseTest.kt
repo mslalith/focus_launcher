@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.core.domain.apps
 
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -12,10 +11,10 @@ import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import io.mockk.mockk
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -62,70 +61,50 @@ class PackageActionUseCaseTest : CoroutineTest() {
     }
 
     @Test
-    fun `1 - when an app is installed, it must be added to apps DB`() = runCoroutineTest {
+    fun `01 - when an app is installed, it must be added to apps DB`() = runCoroutineTest {
         val appToInstall = TestApps.Chrome
         val allApps = TestApps.all
         val installedApps = allApps - setOf(appToInstall)
         appDrawerRepo.addApps(apps = installedApps)
 
-        backgroundScope.launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEqualTo(installedApps)
-                assertThat(awaitItem()).isEqualTo(allApps)
-            }
-        }
-
+        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(installedApps)
         packageActionUseCase.handleAppInstall(app = appToInstall)
+        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
     }
 
     @Test
-    fun `2 - when an app is uninstalled, it must be removed from apps DB`() = runCoroutineTest {
+    fun `02 - when an app is uninstalled, it must be removed from apps DB`() = runCoroutineTest {
         val appToUninstall = TestApps.Chrome
         val allApps = TestApps.all
         val appsAfterUninstall = allApps - setOf(appToUninstall)
         appDrawerRepo.addApps(apps = allApps)
 
-        backgroundScope.launch {
-            appDrawerRepo.allAppsFlow.test {
-                assertThat(awaitItem()).isEqualTo(allApps)
-                assertThat(awaitItem()).isEqualTo(appsAfterUninstall)
-            }
-        }
-
+        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
         packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(appsAfterUninstall)
     }
 
     @Test
-    fun `3 - when a favorite app is uninstalled, it must be removed from DB`() = runCoroutineTest {
+    fun `03 - when a favorite app is uninstalled, it must be removed from DB`() = runCoroutineTest {
         val appToUninstall = TestApps.Chrome
         val allApps = TestApps.all
         appDrawerRepo.addApps(apps = allApps)
         favoritesRepo.addToFavorites(app = appToUninstall)
 
-        backgroundScope.launch {
-            favoritesRepo.onlyFavoritesFlow.test {
-                assertThat(awaitItem()).isEqualTo(listOf(appToUninstall))
-                assertThat(awaitItem()).isEmpty()
-            }
-        }
-
+        assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
         packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+        assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEmpty()
     }
 
     @Test
-    fun `4 - when a hidden app is uninstalled, it must be removed from DB`() = runCoroutineTest {
+    fun `04 - when a hidden app is uninstalled, it must be removed from DB`() = runCoroutineTest {
         val appToUninstall = TestApps.Chrome
         val allApps = TestApps.all
         appDrawerRepo.addApps(apps = allApps)
         hiddenAppsRepo.addToHiddenApps(app = appToUninstall)
 
-        backgroundScope.launch {
-            hiddenAppsRepo.onlyHiddenAppsFlow.test {
-                assertThat(awaitItem()).isEqualTo(listOf(appToUninstall))
-                assertThat(awaitItem()).isEmpty()
-            }
-        }
-
+        assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
         packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+        assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEmpty()
     }
 }
