@@ -15,6 +15,7 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChange
+import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -73,29 +74,31 @@ class FavoritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `when apps are loaded and favorites are added, we should get the default favorites back`() = runCoroutineTest {
+    fun `01 - when apps are loaded and favorites are added, we should get the default favorites back`() = runCoroutineTest {
         val defaultApps = listOf(TestApps.Youtube)
-        assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
 
+        assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
+
         appDrawerRepo.addApps(apps = TestApps.all)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         favoritesRepo.addToFavorites(apps = defaultApps)
-        viewModel.favoritesState.assertFavoritesList(expected = defaultApps)
+        assertThat(viewModel.favoritesState.awaitItemChange { it.favoritesList }.map { it.app }).isEqualTo(defaultApps)
     }
 
     @Test
-    fun `when apps are not loaded and favorites are added, we should get the default favorites back`() = runCoroutineTest {
-        val defaultApps = listOf(TestApps.Youtube)
+    fun `02 - when apps are not loaded and favorites are added, we should get the default favorites back`() = runCoroutineTest {
+        val defaultApps = listOf(TestApps.Youtube).toPackageNamed()
         favoritesRepo.addToFavorites(apps = defaultApps)
-        assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
 
+        assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
+
         appDrawerRepo.addApps(apps = TestApps.all)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
-        viewModel.favoritesState.assertFavoritesList(expected = defaultApps)
+        assertThat(viewModel.favoritesState.value.favoritesList.map { it.app }).isEqualTo(defaultApps)
     }
 }
 

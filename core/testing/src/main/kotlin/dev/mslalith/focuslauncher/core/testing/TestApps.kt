@@ -18,3 +18,14 @@ fun List<App>.toAppsWithComponents(): List<AppWithComponent> = map { app ->
         componentName = ComponentName(app.packageName, "")
     )
 }
+
+fun List<App>.toPackageNamed(): List<App> = map(App::toPackageNamed)
+
+fun App.toPackageNamed(): App = copy(
+    name = packageName,
+    displayName = packageName
+)
+
+fun List<App>.disableAsSystem(): List<App> = map(App::disableAsSystem)
+
+fun App.disableAsSystem(): App = copy(isSystem = false)
