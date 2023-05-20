@@ -12,8 +12,8 @@ import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChange
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -79,7 +79,7 @@ class FavoritesViewModelTest : CoroutineTest() {
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         favoritesRepo.addToFavorites(apps = defaultApps)
-        assertThat(viewModel.favoritesState.awaitItemChange { it.favoritesList }.map { it.app }).isEqualTo(defaultApps)
+        viewModel.favoritesState.assertFor(expected = defaultApps) { it.favoritesList.map { it.app } }
     }
 
     @Test
@@ -93,6 +93,6 @@ class FavoritesViewModelTest : CoroutineTest() {
         appDrawerRepo.addApps(apps = TestApps.all)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
-        assertThat(viewModel.favoritesState.value.favoritesList.map { it.app }).isEqualTo(defaultApps)
+        viewModel.favoritesState.assertFor(expected = defaultApps) { it.favoritesList.map { it.app } }
     }
 }

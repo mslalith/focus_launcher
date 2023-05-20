@@ -10,7 +10,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -59,9 +58,6 @@ class EditFavoritesScreenKtTest {
     lateinit var hiddenAppsRepo: HiddenAppsRepo
 
     @Inject
-    lateinit var closeDatabase: CloseDatabase
-
-    @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
     private lateinit var viewModel: EditFavoritesViewModel
@@ -94,7 +90,6 @@ class EditFavoritesScreenKtTest {
             favoritesRepo.clearFavorites()
             hiddenAppsRepo.clearHiddenApps()
             appDrawerRepo.clearApps()
-            closeDatabase()
         }
     }
 
