@@ -57,7 +57,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on toggle clock24 visibility, verify state change`() = runCoroutineTest {
+    fun `01 - on toggle clock24 visibility, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().showClock24).isTrue()
 
         viewModel.toggleClock24()
@@ -68,7 +68,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on update clock alignment, verify state change`() = runCoroutineTest {
+    fun `02 - on update clock alignment, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().clockAlignment).isEqualTo(ClockAlignment.START)
 
         viewModel.updateClockAlignment(clockAlignment = ClockAlignment.CENTER)
@@ -79,7 +79,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on update clock24 animation duration, verify state change`() = runCoroutineTest {
+    fun `03 - on update clock24 animation duration, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().clock24AnimationDuration).isEqualTo(2100)
 
         viewModel.updateClock24AnimationDuration(duration = 300)
@@ -90,7 +90,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on update time, verify state change`() = runCoroutineTest {
+    fun `04 - on update time, verify state change`() = runCoroutineTest {
         withTimeZone {
             clockProvider.setInstant(instantOf(hour = 23, minute = 4))
             viewModel.refreshTime()
