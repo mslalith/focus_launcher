@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
+import dev.mslalith.focuslauncher.core.model.Constants
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
@@ -60,7 +61,18 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `01 - when current place is already saved to DB, initially saved placed should be loaded`() = runCoroutineTest {
+    fun `01 - initially, latLng and address show be default`() = runCoroutineTest {
+        val expected = CurrentPlaceState(
+            latLng = Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE.latLng,
+            initialLatLng = Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE.latLng,
+            addressState = LoadingState.Loading,
+            canSave = false
+        )
+        assertThat(viewModel.currentPlaceState.value).isEqualTo(expected)
+    }
+
+    @Test
+    fun `02 - when current place is already saved to DB, initially saved placed should be loaded`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
         viewModel.updateCurrentLatLngAndAwait(latLng = latLng)
 
@@ -75,7 +87,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `02 - when a place is saved to DB, we should get the same back from DB`() = runCoroutineTest {
+    fun `03 - when a place is saved to DB, we should get the same back from DB`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
         viewModel.updateCurrentLatLngAndAwait(latLng = latLng)
 
@@ -84,7 +96,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `03 - when latLng is changed, it's address must be fetch`() = runCoroutineTest {
+    fun `04 - when latLng is changed, it's address must be fetch`() = runCoroutineTest {
         val initialLatLng = LatLng(latitude = 23.0, longitude = 60.0)
         var latLng = initialLatLng
         viewModel.updateCurrentLatLng(latLng = latLng)
@@ -96,7 +108,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `04 - when fetching for address, verify the loading state`() = runCoroutineTest {
+    fun `05 - when fetching for address, verify the loading state`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
         val expectedState = latLng.toCurrentPlaceState()
         viewModel.updateCurrentLatLng(latLng = latLng)
@@ -106,7 +118,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `05 - when fetching for address, verify save option state`() = runCoroutineTest {
+    fun `06 - when fetching for address, verify save option state`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.0, longitude = 60.0)
         viewModel.updateCurrentLatLng(latLng = latLng)
 
