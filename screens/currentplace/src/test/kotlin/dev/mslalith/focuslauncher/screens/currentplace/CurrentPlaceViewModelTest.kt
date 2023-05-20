@@ -130,7 +130,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     private suspend fun CurrentPlaceViewModel.updateCurrentLatLngAndAwait(latLng: LatLng) {
         updateCurrentLatLng(latLng = latLng)
         savePlace()
-        lunarPhaseSettingsRepo.currentPlaceFlow.assertFor(expected = latLng, log = true) { it.latLng }
+        lunarPhaseSettingsRepo.currentPlaceFlow.assertFor(expected = latLng) { it.latLng }
     }
 }
 
