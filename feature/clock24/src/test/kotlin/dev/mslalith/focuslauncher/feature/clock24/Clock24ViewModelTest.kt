@@ -15,7 +15,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import dev.mslalith.focuslauncher.core.testing.extensions.withTimeZone
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)

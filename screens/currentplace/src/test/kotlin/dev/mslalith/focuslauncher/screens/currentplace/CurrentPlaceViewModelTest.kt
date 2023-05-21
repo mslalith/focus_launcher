@@ -18,7 +18,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChangeUntil
 import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -29,7 +28,6 @@ import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)

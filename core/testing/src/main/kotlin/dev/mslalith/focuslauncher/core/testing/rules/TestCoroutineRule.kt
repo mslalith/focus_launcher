@@ -27,5 +27,4 @@ class TestCoroutineRule(
     }
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
 fun TestCoroutineRule.newCoroutineScope(): TestScope = TestScope(context = testDispatcher as CoroutineContext)
