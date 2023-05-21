@@ -17,10 +17,10 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.graphics.drawable.toBitmap
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZONTAL_PADDING
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_END_PADDING
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.APP_ICON_SIZE
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.ICON_INNER_HORIZONTAL_PADDING
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.ITEM_END_PADDING
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.ITEM_START_PADDING
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

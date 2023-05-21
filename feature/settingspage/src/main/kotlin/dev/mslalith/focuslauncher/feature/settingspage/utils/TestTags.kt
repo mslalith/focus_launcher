@@ -1,5 +1,8 @@
 package dev.mslalith.focuslauncher.feature.settingspage.utils
 
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
+
+@IgnoreInKoverReport
 object TestTags {
     const val ITEM_CHANGE_THEME = "settings_item_change_theme"
     const val ITEM_EDIT_FAVORITES = "settings_item_edit_favorites"

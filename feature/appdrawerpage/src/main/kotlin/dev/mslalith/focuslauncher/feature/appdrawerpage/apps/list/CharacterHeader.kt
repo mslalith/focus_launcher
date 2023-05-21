@@ -16,9 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.APP_ICON_SIZE
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ICON_INNER_HORIZONTAL_PADDING
-import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.ITEM_START_PADDING
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.APP_ICON_SIZE
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.ICON_INNER_HORIZONTAL_PADDING
+import dev.mslalith.focuslauncher.feature.appdrawerpage.utils.Constants.ITEM_START_PADDING
 
 @Composable
 internal fun CharacterHeader(
