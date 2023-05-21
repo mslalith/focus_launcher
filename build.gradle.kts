@@ -1,5 +1,4 @@
 apply(from = "./buildScripts/install-git-hooks.gradle.kts")
-apply(plugin = "kover")
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -7,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.kotlinx.kover) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -21,31 +20,6 @@ detekt {
     toolVersion = libs.versions.detekt.get()
     config.from(files("config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
-}
-
-kover {
-    isDisabled.set(false)
-    engine.set(kotlinx.kover.api.DefaultIntellijEngine)
-}
-
-koverMerged {
-    enable()
-    htmlReport {
-        reportDir.set(layout.buildDirectory.dir("kover-report/html-report"))
-        filters {
-            projects {
-                excludes += listOf(":core:testing")
-            }
-            classes {
-                excludes += listOf(
-                    "jdk.internal.*",
-                    "dagger.hilt.internal.aggregatedroot.codegen.**",
-                    "hilt_aggregated_deps.**",
-                    "dev.mslalith.focuslauncher.**.*_Factory"
-                )
-            }
-        }
-    }
 }
 
 tasks.register("clean", Delete::class) {
