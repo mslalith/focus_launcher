@@ -69,11 +69,13 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     fun `02 - on update clock alignment, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().clockAlignment).isEqualTo(ClockAlignment.START)
 
+        println("updating to center")
         viewModel.updateClockAlignment(clockAlignment = ClockAlignment.CENTER)
-        viewModel.clock24State.assertFor(expected = ClockAlignment.CENTER) { it.clockAlignment }
+        viewModel.clock24State.assertFor(expected = ClockAlignment.CENTER, debug = true) { it.clockAlignment }
 
+        println("updating to end")
         viewModel.updateClockAlignment(clockAlignment = ClockAlignment.END)
-        viewModel.clock24State.assertFor(expected = ClockAlignment.END) { it.clockAlignment }
+        viewModel.clock24State.assertFor(expected = ClockAlignment.END, debug = true) { it.clockAlignment }
     }
 
     @Test
