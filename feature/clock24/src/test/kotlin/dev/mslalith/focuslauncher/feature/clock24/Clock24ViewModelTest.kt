@@ -13,9 +13,8 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
-import dev.mslalith.focuslauncher.core.testing.extensions.withTimeZone
+import dev.mslalith.focuslauncher.core.testing.extensions.withUtcTimeZone
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
@@ -91,7 +89,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
 
     @Test
     fun `04 - on update time, verify state change`() = runCoroutineTest {
-        withTimeZone {
+        withUtcTimeZone {
             clockProvider.setInstant(instantOf(hour = 23, minute = 4))
             viewModel.refreshTime()
             viewModel.clock24State.assertFor(expected = "23:04") { it.currentTime }

@@ -12,7 +12,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.toAppsWithComponents
 import io.mockk.spyk
 import io.mockk.verify
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -23,7 +22,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
