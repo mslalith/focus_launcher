@@ -23,7 +23,7 @@ fun instantOf(
 ).toInstant(timeZone = TimeZone.UTC)
 
 inline fun withTimeZone(
-    timeZone: String = "UTC",
+    timeZone: String,
     block: () -> Unit
 ) {
     val original = java.util.TimeZone.getDefault()
@@ -31,3 +31,10 @@ inline fun withTimeZone(
     block()
     java.util.TimeZone.setDefault(original)
 }
+
+inline fun withUtcTimeZone(
+    block: () -> Unit
+) = withTimeZone(
+    timeZone = "UTC",
+    block = block
+)
