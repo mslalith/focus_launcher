@@ -18,7 +18,7 @@ suspend fun <T, R> Flow<T>.assertFor(
         assertThat(changedItem).isEqualTo(expected)
         return
     }
-    turbine.cancelAndIgnoreRemainingEvents()
+    turbine.cancel()
 
     changedItem = awaitItemChange(valueFor)
     assertThat(changedItem).isEqualTo(expected)
