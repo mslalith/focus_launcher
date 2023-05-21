@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -26,6 +27,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
 internal class AppDrawerPageViewModel @Inject constructor(
@@ -39,6 +42,13 @@ internal class AppDrawerPageViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val searchBarQueryStateFlow = MutableStateFlow(value = "")
+
+    init {
+        appDrawerSettingsRepo.searchBarVisibilityFlow
+            .onEach { searchAppQuery(query = "") }
+            .flowOn(context = appCoroutineDispatcher.io)
+            .launchIn(scope = viewModelScope)
+    }
 
     private val defaultAppDrawerPageState = AppDrawerPageState(
         allAppsState = LoadingState.Loading,
