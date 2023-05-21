@@ -13,10 +13,13 @@ suspend fun <T, R> Flow<T>.assertFor(
     val turbine = testIn(scope = this@CoroutineScope)
     var changedItem = valueFor(turbine.expectMostRecentItem())
 
-    if (changedItem != expected) {
-        changedItem = awaitItemChange(valueFor)
+    if (changedItem == expected) {
+        turbine.cancelAndIgnoreRemainingEvents()
+        assertThat(changedItem).isEqualTo(expected)
+        return
     }
-
     turbine.cancelAndIgnoreRemainingEvents()
+
+    changedItem = awaitItemChange(valueFor)
     assertThat(changedItem).isEqualTo(expected)
 }
