@@ -14,12 +14,15 @@ suspend fun <T, R> Flow<T>.assertFor(
     var changedItem = valueFor(turbine.expectMostRecentItem())
 
     if (changedItem == expected) {
-        turbine.cancel()
+        turbine.cancelAndIgnoreRemainingEvents()
         assertThat(changedItem).isEqualTo(expected)
         return
     }
-    turbine.cancel()
 
-    changedItem = awaitItemChange(valueFor)
+    while (changedItem != expected) {
+        changedItem = valueFor(turbine.awaitItem())
+    }
+
+    turbine.cancelAndIgnoreRemainingEvents()
     assertThat(changedItem).isEqualTo(expected)
 }
