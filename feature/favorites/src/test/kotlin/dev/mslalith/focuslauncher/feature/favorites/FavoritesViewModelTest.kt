@@ -70,7 +70,7 @@ class FavoritesViewModelTest : CoroutineTest() {
 
     @Test
     fun `01 - when apps are loaded and favorites are added, we should get the default favorites back`() = runCoroutineTest {
-        val defaultApps = listOf(TestApps.Youtube)
+        val defaultApps = listOf(TestApps.Youtube).toPackageNamed()
 
         assertThat(viewModel.favoritesState.awaitItem().favoritesList).isEmpty()
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEmpty()
