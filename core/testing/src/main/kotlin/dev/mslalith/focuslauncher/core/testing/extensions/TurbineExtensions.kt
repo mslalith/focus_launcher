@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 context (CoroutineScope)
-suspend inline fun <T> Flow<T>.awaitItem(): T {
+suspend fun <T> Flow<T>.awaitItem(): T {
     val turbine = testIn(scope = this@CoroutineScope)
     val item = turbine.awaitItem()
     turbine.cancel()
@@ -13,7 +13,7 @@ suspend inline fun <T> Flow<T>.awaitItem(): T {
 }
 
 context (CoroutineScope)
-suspend inline fun <T> Flow<T>.awaitItemChangeUntil(
+suspend fun <T> Flow<T>.awaitItemChangeUntil(
     awaitTill: (T) -> Boolean
 ): T {
     val turbine = testIn(scope = this@CoroutineScope)
