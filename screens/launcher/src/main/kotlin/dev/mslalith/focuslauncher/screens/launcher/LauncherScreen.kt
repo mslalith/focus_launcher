@@ -37,7 +37,7 @@ internal fun LauncherScreenInternal(
     StatusBarColor()
 
     LaunchedEffect(key1 = Unit) {
-        launcherViewModel.loadApps()
+        launcherViewModel.loadApps(forceLoad = true)
     }
 
     BackPressHandler(enabled = true) {
