@@ -103,7 +103,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `1 - initially hidden apps must not be selected`() = with(composeTestRule) {
+    fun `01 - initially hidden apps must not be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
             val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = false, isFavorite = app.packageName == favoriteApp.packageName)
             waitForApp(selectedHiddenApp = selectedHiddenApp)
@@ -112,7 +112,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `2 - when un-favorite apps are hidden, they must be selected`() = with(composeTestRule) {
+    fun `02 - when un-favorite apps are hidden, they must be selected`() = with(composeTestRule) {
         val unFavoriteApps = TestApps.all - favoriteApp
 
         unFavoriteApps.forEach { app ->
@@ -133,7 +133,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `3 - when hidden apps are cleared, every item in the list must not be selected`() = with(composeTestRule) {
+    fun `03 - when hidden apps are cleared, every item in the list must not be selected`() = with(composeTestRule) {
         val unFavoriteApps = TestApps.all - favoriteApp
         unFavoriteApps.forEach { app ->
             waitForTag(testTag = app.packageName)
@@ -156,7 +156,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `4 - when a favorite app is being hidden, confirmation UI must be shown`(): Unit = with(composeTestRule) {
+    fun `04 - when a favorite app is being hidden, confirmation UI must be shown`(): Unit = with(composeTestRule) {
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
@@ -165,7 +165,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `5 - when a favorite app is being hidden, on click of cancel in confirmation UI, it should dismiss & no action must be taken`(): Unit = with(composeTestRule) {
+    fun `05 - when a favorite app is being hidden, on click of cancel in confirmation UI, it should dismiss & no action must be taken`(): Unit = with(composeTestRule) {
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
@@ -180,7 +180,7 @@ class HideAppsScreenKtTest {
     }
 
     @Test
-    fun `6 - when a favorite app is being hidden, on click of hide in confirmation UI, it should be hidden`(): Unit = with(composeTestRule) {
+    fun `06 - when a favorite app is being hidden, on click of hide in confirmation UI, it should be hidden`(): Unit = with(composeTestRule) {
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
