@@ -28,12 +28,12 @@ jobs:
       - name: Run detekt
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: detekt --stacktrace --no-daemon --build-cache
+          arguments: detekt --stacktrace --no-daemon
 
       - uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: true
-          arguments: testDebug --stacktrace --build-cache
+          arguments: testDebug --stacktrace
 
 #  build:
 #    if: ${{ false }} # Disable Build
@@ -55,7 +55,7 @@ jobs:
 #
 #      - uses: gradle/gradle-build-action@v2
 #        with:
-#          arguments: assembleDebug --stacktrace --no-daemon --build-cache
+#          arguments: assembleDebug --stacktrace --no-daemon
 #
 #  unit_tests:
 #    needs: [ static_analysis ]
@@ -78,7 +78,7 @@ jobs:
 #      - uses: gradle/gradle-build-action@v2
 #        with:
 #          cache-read-only: true
-#          arguments: testDebug --stacktrace --build-cache
+#          arguments: testDebug --stacktrace
 #
 #  android_tests:
 #    if: ${{ false }} # Disable Instrumentation tests
@@ -130,4 +130,4 @@ jobs:
 #          force-avd-creation: false
 #          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 #          disable-animations: true
-#          script: ./gradlew connectedCheck --stacktrace --build-cache
+#          script: ./gradlew connectedCheck --stacktrace
