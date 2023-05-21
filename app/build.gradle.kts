@@ -56,15 +56,12 @@ koverReport {
                     "dev.mslalith.**.*_MembersInjector",
                     "dev.mslalith.**.BuildConfig",
                     "dev.mslalith.focuslauncher.**.di.**",
-                    "dev.mslalith.focuslauncher.**.model.**",
-                    "dev.mslalith.focuslauncher.**.*Constants*",
-//                    "dev.mslalith.focuslauncher.**.*TestTags*",
-                    "dev.mslalith.focuslauncher.**.MigrationTest"
+                    "dev.mslalith.focuslauncher.**.model.**"
                 )
                 annotatedBy(
                     "androidx.compose.runtime.Composable",
                     "androidx.compose.ui.tooling.preview.Preview",
-                    "dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport"
+                    "*IgnoreInKoverReport"
                 )
             }
         }
