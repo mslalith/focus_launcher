@@ -14,7 +14,7 @@ suspend fun <T, R> Flow<T>.assertFor(
     var changedItem = valueFor(turbine.expectMostRecentItem())
 
     if (changedItem == expected) {
-        turbine.cancelAndIgnoreRemainingEvents()
+        turbine.cancel()
         assertThat(changedItem).isEqualTo(expected)
         return
     }
