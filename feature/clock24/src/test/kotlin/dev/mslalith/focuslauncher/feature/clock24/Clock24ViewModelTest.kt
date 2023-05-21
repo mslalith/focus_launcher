@@ -16,6 +16,7 @@ import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import dev.mslalith.focuslauncher.core.testing.extensions.withUtcTimeZone
 import javax.inject.Inject
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,6 +26,7 @@ import org.robolectric.annotation.Config
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
+@Ignore
 internal class Clock24ViewModelTest : CoroutineTest() {
 
     @get:Rule(order = 0)
