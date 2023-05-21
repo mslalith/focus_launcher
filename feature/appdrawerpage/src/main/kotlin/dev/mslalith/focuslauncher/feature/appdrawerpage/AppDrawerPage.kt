@@ -1,20 +1,25 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,13 +33,30 @@ import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
+import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
 import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AppDrawerPage() {
+    AppDrawerPageKeyboardAware()
+}
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
+@Composable
+internal fun AppDrawerPageKeyboardAware() {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val pagerState = LocalLauncherPagerState.current
+
+    LaunchedEffect(key1 = pagerState) {
+        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
+            if (page != 2) keyboardController?.hide()
+        }
+    }
+
     AppDrawerPageInternal()
 }
 
