@@ -8,7 +8,7 @@ context (CoroutineScope)
 suspend fun <T> Flow<T>.awaitItem(): T {
     val turbine = testIn(scope = this@CoroutineScope)
     val item = turbine.awaitItem()
-    turbine.cancel()
+    turbine.cancelAndIgnoreRemainingEvents()
     return item
 }
 
@@ -23,7 +23,7 @@ suspend fun <T> Flow<T>.awaitItemChangeUntil(
         lastItem = turbine.awaitItem()
     }
 
-    turbine.cancel()
+    turbine.cancelAndIgnoreRemainingEvents()
     return lastItem
 }
 
@@ -39,6 +39,6 @@ suspend fun <T, R> Flow<T>.awaitItemChange(
         item = valueFor(turbine.awaitItem())
     }
 
-    turbine.cancel()
+    turbine.cancelAndIgnoreRemainingEvents()
     return item
 }

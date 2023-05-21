@@ -10,7 +10,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -59,9 +58,6 @@ class EditFavoritesScreenKtTest {
     lateinit var hiddenAppsRepo: HiddenAppsRepo
 
     @Inject
-    lateinit var closeDatabase: CloseDatabase
-
-    @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
     private lateinit var viewModel: EditFavoritesViewModel
@@ -94,12 +90,11 @@ class EditFavoritesScreenKtTest {
             favoritesRepo.clearFavorites()
             hiddenAppsRepo.clearHiddenApps()
             appDrawerRepo.clearApps()
-            closeDatabase()
         }
     }
 
     @Test
-    fun `1 - initially favorites must not be selected`() = with(composeTestRule) {
+    fun `01 - initially favorites must not be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
             val selectedApp = app.toSelectedAppWith(isSelected = false)
             waitForApp(selectedApp = selectedApp)
@@ -108,7 +103,7 @@ class EditFavoritesScreenKtTest {
     }
 
     @Test
-    fun `2 - when all apps are added to favorite, every item in the list must be selected`() = with(composeTestRule) {
+    fun `02 - when all apps are added to favorite, every item in the list must be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
             val selectedApp = app.toSelectedAppWith(isSelected = false)
             waitForApp(selectedApp = selectedApp)
@@ -127,7 +122,7 @@ class EditFavoritesScreenKtTest {
     }
 
     @Test
-    fun `3 - when favorites are cleared, every item in the list must not be selected`() = with(composeTestRule) {
+    fun `03 - when favorites are cleared, every item in the list must not be selected`() = with(composeTestRule) {
         TestApps.all.forEach { app ->
             waitForTag(testTag = app.packageName)
             onNodeWithTag(testTag = app.packageName).performClick()
@@ -149,7 +144,7 @@ class EditFavoritesScreenKtTest {
     }
 
     @Test
-    fun `4 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = with(composeTestRule) {
+    fun `04 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = with(composeTestRule) {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
         runBlocking { hiddenAppsRepo.addToHiddenApps(apps = hiddenApps) }
@@ -169,7 +164,7 @@ class EditFavoritesScreenKtTest {
     }
 
     @Test
-    fun `5 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = with(composeTestRule) {
+    fun `05 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = with(composeTestRule) {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
         runBlocking { hiddenAppsRepo.addToHiddenApps(apps = hiddenApps) }
@@ -190,7 +185,7 @@ class EditFavoritesScreenKtTest {
     }
 
     @Test
-    fun `6 - when hidden apps are shown & clicked on a hidden app, a snackbar should be shown`(): Unit = with(composeTestRule) {
+    fun `06 - when hidden apps are shown & clicked on a hidden app, a snackbar should be shown`(): Unit = with(composeTestRule) {
         val hiddenApp = TestApps.Phone
         runBlocking { hiddenAppsRepo.addToHiddenApps(apps = listOf(hiddenApp)) }
 

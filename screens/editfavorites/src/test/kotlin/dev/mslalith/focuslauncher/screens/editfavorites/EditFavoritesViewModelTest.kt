@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.screens.editfavorites
 
-import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -13,9 +12,9 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -65,85 +64,59 @@ class EditFavoritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `1 - initially favorites must not be selected`() = runCoroutineTest {
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
-            }
-        }
+    fun `01 - initially favorites must not be selected`() = runCoroutineTest {
+        assertThat(viewModel.favoritesStateFlow.value).isEmpty()
+        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
     }
 
     @Test
-    fun `2 - when all apps are added to favorite, every item in the list must be selected`() = runCoroutineTest {
+    fun `02 - when all apps are added to favorite, every item in the list must be selected`() = runCoroutineTest {
         val apps = TestApps.all
 
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
-            }
-        }
-
         apps.forEach { viewModel.addToFavorites(app = it) }
+        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
     }
 
     @Test
-    fun `3 - when favorites are cleared, every item in the list must not be selected`() = runCoroutineTest {
+    fun `03 - when favorites are cleared, every item in the list must not be selected`() = runCoroutineTest {
         val apps = TestApps.all
 
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-                assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
-                assertThat(awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = false))
-            }
-        }
-
         apps.forEach { viewModel.addToFavorites(app = it) }
+        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
+
         viewModel.clearFavorites()
+        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = false))
     }
 
     @Test
-    fun `4 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = runCoroutineTest {
+    fun `04 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = runCoroutineTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
 
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-
-                val actualApps = awaitItem()
-                assertThat(actualApps.size).isEqualTo(apps.size)
-                assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
-            }
-        }
-
         hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
+        val actualApps = viewModel.favoritesStateFlow.awaitItem()
+        assertThat(actualApps.size).isEqualTo(apps.size)
+        assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
     }
 
     @Test
-    fun `5 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = runCoroutineTest {
+    fun `05 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = runCoroutineTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val totalApps = TestApps.all
         val apps = totalApps - hiddenApps.toSet()
 
-        backgroundScope.launch {
-            viewModel.favoritesStateFlow.test {
-                assertThat(awaitItem()).isEmpty()
-
-                var actualApps = awaitItem()
-                assertThat(actualApps.size).isEqualTo(apps.size)
-                assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
-
-                actualApps = awaitItem()
-                assertThat(actualApps.size).isEqualTo(totalApps.size)
-                assertThat(actualApps).isEqualTo(totalApps.toSelectedAppWith(isSelected = false))
-            }
-        }
-
         hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
+
+        var actualApps = viewModel.favoritesStateFlow.awaitItem()
+        assertThat(actualApps.size).isEqualTo(apps.size)
+        assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
+
         viewModel.shouldShowHiddenAppsInFavorites(value = true)
+
+        actualApps = viewModel.favoritesStateFlow.awaitItem()
+        val expected = totalApps.map { it.toSelectedAppWith(isSelected = false, disabled = hiddenApps.contains(it)) }
+        assertThat(actualApps.size).isEqualTo(expected.size)
+        assertThat(actualApps).isEqualTo(expected)
     }
 }
 

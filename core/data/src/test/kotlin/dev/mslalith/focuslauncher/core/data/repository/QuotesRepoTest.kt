@@ -53,9 +53,10 @@ internal class QuotesRepoTest : CoroutineTest() {
     }
 
     @Test
-    fun `fetch quotes and make sure they are added to database`() = runCoroutineTest {
+    fun `01 - fetch quotes and make sure they are added to database`() = runCoroutineTest {
         backgroundScope.launch {
             repo.isFetchingQuotesStateFlow.test {
+                assertThat(awaitItem()).isFalse()
                 assertThat(awaitItem()).isTrue()
                 assertThat(awaitItem()).isFalse()
             }
@@ -70,7 +71,7 @@ internal class QuotesRepoTest : CoroutineTest() {
     }
 
     @Test
-    fun `when quotes are empty, initial quotes must be added`() = runCoroutineTest {
+    fun `02 - when quotes are empty, initial quotes must be added`() = runCoroutineTest {
         testRandomNumberProvider.setRandomNumber(randomNumber = 3)
         repo.nextRandomQuote()
 
@@ -95,19 +96,19 @@ internal class QuotesRepoTest : CoroutineTest() {
     }
 
     @Test
-    fun `when one page of quotes are added, quotes size must be same`() = runCoroutineTest {
+    fun `03 - when one page of quotes are added, quotes size must be same`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
         assertThat(repo.quotesSize()).isEqualTo(QUOTES_LIMIT_PER_PAGE)
     }
 
     @Test
-    fun `when quotes size is less than limit, hasQuotesReachedLimit must return false`() = runCoroutineTest {
+    fun `04 - when quotes size is less than limit, hasQuotesReachedLimit must return false`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 1)
         assertThat(repo.hasQuotesReachedLimit()).isFalse()
     }
 
     @Test
-    fun `when quotes size is greater than limit, hasQuotesReachedLimit must return true`() = runCoroutineTest {
+    fun `05 - when quotes size is greater than limit, hasQuotesReachedLimit must return true`() = runCoroutineTest {
         repo.fetchQuotes(maxPages = 2)
         assertThat(repo.hasQuotesReachedLimit()).isTrue()
     }

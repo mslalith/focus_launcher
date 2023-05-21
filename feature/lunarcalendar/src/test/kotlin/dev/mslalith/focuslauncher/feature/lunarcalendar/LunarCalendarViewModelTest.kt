@@ -55,7 +55,7 @@ class LunarCalendarViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on toggle lunar phase visibility, verify state change`() = runCoroutineTest {
+    fun `01 - on toggle lunar phase visibility, verify state change`() = runCoroutineTest {
         assertThat(viewModel.lunarCalendarState.awaitItem().showLunarPhase).isTrue()
 
         viewModel.toggleShowLunarPhase()
@@ -66,7 +66,7 @@ class LunarCalendarViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on toggle lunar illumination visibility, verify state change`() = runCoroutineTest {
+    fun `02 - on toggle lunar illumination visibility, verify state change`() = runCoroutineTest {
         assertThat(viewModel.lunarCalendarState.awaitItem().showIlluminationPercent).isTrue()
 
         viewModel.toggleShowIlluminationPercent()
@@ -77,8 +77,8 @@ class LunarCalendarViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `on toggle upcoming lunar visibility, verify state change`() = runCoroutineTest {
-        assertThat(viewModel.lunarCalendarState.awaitItem().showUpcomingPhaseDetails).isTrue()
+    fun `03 - on toggle upcoming lunar visibility, verify state change`() = runCoroutineTest {
+        assertThat(viewModel.lunarCalendarState.value.showUpcomingPhaseDetails).isTrue()
 
         viewModel.toggleShowUpcomingPhaseDetails()
         viewModel.lunarCalendarState.assertFor(expected = false) { it.showUpcomingPhaseDetails }
