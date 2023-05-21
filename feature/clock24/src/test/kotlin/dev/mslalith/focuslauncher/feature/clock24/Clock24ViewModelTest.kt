@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.feature.clock24
 
-import androidx.test.filters.FlakyTest
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -56,7 +55,6 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    @FlakyTest
     fun `01 - on toggle clock24 visibility, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().showClock24).isTrue()
 
@@ -68,7 +66,6 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    @FlakyTest
     fun `02 - on update clock alignment, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().clockAlignment).isEqualTo(ClockAlignment.START)
 
@@ -80,7 +77,6 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    @FlakyTest
     fun `03 - on update clock24 animation duration, verify state change`() = runCoroutineTest {
         assertThat(viewModel.clock24State.awaitItem().clock24AnimationDuration).isEqualTo(2100)
 
@@ -92,7 +88,6 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     }
 
     @Test
-    @FlakyTest
     fun `04 - on update time, verify state change`() = runCoroutineTest {
         withUtcTimeZone {
             clockProvider.setInstant(instantOf(hour = 23, minute = 4))
