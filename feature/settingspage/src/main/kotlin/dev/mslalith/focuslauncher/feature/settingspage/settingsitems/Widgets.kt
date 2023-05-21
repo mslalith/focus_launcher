@@ -16,7 +16,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsExpandableItem
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridContent
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsGridItem
-import dev.mslalith.focuslauncher.feature.settingspage.util.TestTags
+import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable

@@ -28,7 +28,7 @@ import dev.mslalith.focuslauncher.core.testing.compose.extensions.performScrollT
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasWidgetType
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
-import dev.mslalith.focuslauncher.feature.settingspage.util.TestTags
+import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll

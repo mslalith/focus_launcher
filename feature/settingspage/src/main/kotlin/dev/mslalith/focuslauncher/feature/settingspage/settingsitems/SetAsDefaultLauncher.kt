@@ -21,7 +21,7 @@ import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.te
 import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
-import dev.mslalith.focuslauncher.feature.settingspage.util.TestTags
+import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 
 @Composable
 internal fun SetAsDefaultLauncher(

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.settingspage.util
+package dev.mslalith.focuslauncher.feature.settingspage.utils
 
 object TestTags {
     const val ITEM_CHANGE_THEME = "settings_item_change_theme"
