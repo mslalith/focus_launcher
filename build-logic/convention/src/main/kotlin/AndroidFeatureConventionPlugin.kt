@@ -10,17 +10,18 @@ import org.gradle.kotlin.dsl.project
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
             pluginManager.apply {
                 apply("focuslauncher.android.library")
                 apply("focuslauncher.android.hilt")
+                apply(libs.findPlugin("kotlinx-kover").get().get().pluginId)
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
             }
-
-            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
                 add(configurationName = "implementation", project(":core:model"))

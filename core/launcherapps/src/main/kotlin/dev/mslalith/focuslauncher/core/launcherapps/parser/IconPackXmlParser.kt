@@ -8,9 +8,9 @@ import android.graphics.drawable.Drawable
 import dev.mslalith.focuslauncher.core.launcherapps.model.CalendarDrawableInfo
 import dev.mslalith.focuslauncher.core.launcherapps.model.DrawableInfo
 import dev.mslalith.focuslauncher.core.launcherapps.model.SimpleDrawableInfo
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreCyclomaticComplexMethod
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreNestedBlockDepth
+import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreCyclomaticComplexMethod
+import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreLongMethod
+import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreNestedBlockDepth
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 

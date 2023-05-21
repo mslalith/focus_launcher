@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.extensions.showAppInfo
 import dev.mslalith.focuslauncher.core.common.extensions.toast
 import dev.mslalith.focuslauncher.core.common.extensions.uninstallApp
-import dev.mslalith.focuslauncher.core.lint.ignore.IgnoreLongMethod
+import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.model.ConfirmSelectableItemType
 import dev.mslalith.focuslauncher.core.model.UiText
 import dev.mslalith.focuslauncher.core.model.app.App

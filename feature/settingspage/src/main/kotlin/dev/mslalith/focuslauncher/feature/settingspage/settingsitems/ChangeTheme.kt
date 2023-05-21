@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.te
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
-import dev.mslalith.focuslauncher.feature.settingspage.util.TestTags
+import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
 
 @Composable

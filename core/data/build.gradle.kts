@@ -1,5 +1,3 @@
-import kotlinx.kover.api.KoverTaskExtension
-
 plugins {
     id("focuslauncher.android.library")
     id("focuslauncher.android.hilt")
@@ -7,8 +5,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
-
-apply(plugin = "kover")
 
 android {
     namespace = "dev.mslalith.focuslauncher.core.data"
@@ -18,14 +14,6 @@ android {
     }
     sourceSets {
         getByName("test").assets.srcDir("$projectDir/schemas")
-    }
-    testOptions {
-        unitTests.isIncludeAndroidResources = true
-        unitTests.all {
-            it.extensions.configure(KoverTaskExtension::class) {
-                isDisabled.set(it.name != "testDebugUnitTest")
-            }
-        }
     }
 }
 
