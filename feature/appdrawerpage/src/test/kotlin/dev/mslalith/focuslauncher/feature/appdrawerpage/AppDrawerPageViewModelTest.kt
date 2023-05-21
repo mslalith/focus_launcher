@@ -16,7 +16,9 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
+import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
@@ -62,9 +64,7 @@ class AppDrawerPageViewModelTest : CoroutineTest() {
 
     private lateinit var viewModel: AppDrawerPageViewModel
 
-    private val allApps by lazy {
-        TestApps.all.map { it.copy(name = it.packageName, displayName = it.packageName, isSystem = false) }
-    }
+    private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
     @Before
     fun setup() {

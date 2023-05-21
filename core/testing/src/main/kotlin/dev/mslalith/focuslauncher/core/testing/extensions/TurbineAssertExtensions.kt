@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 context (CoroutineScope)
-suspend fun <T, R> Flow<T>.assertFor(
+suspend inline fun <T, R> Flow<T>.assertFor(
     expected: R,
     valueFor: (T) -> R
 ) {
@@ -18,8 +18,11 @@ suspend fun <T, R> Flow<T>.assertFor(
         assertThat(changedItem).isEqualTo(expected)
         return
     }
-    turbine.cancel()
 
-    changedItem = awaitItemChange(valueFor)
+    while (changedItem != expected) {
+        changedItem = valueFor(turbine.awaitItem())
+    }
+
+    turbine.cancel()
     assertThat(changedItem).isEqualTo(expected)
 }

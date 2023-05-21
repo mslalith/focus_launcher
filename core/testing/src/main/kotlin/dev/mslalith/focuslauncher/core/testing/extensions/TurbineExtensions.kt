@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 context (CoroutineScope)
-suspend fun <T> Flow<T>.awaitItem(): T {
+suspend inline fun <T> Flow<T>.awaitItem(): T {
     val turbine = testIn(scope = this@CoroutineScope)
     val item = turbine.awaitItem()
     turbine.cancel()
@@ -13,7 +13,7 @@ suspend fun <T> Flow<T>.awaitItem(): T {
 }
 
 context (CoroutineScope)
-suspend fun <T> Flow<T>.awaitItemChangeUntil(
+suspend inline fun <T> Flow<T>.awaitItemChangeUntil(
     awaitTill: (T) -> Boolean
 ): T {
     val turbine = testIn(scope = this@CoroutineScope)
@@ -25,20 +25,4 @@ suspend fun <T> Flow<T>.awaitItemChangeUntil(
 
     turbine.cancel()
     return lastItem
-}
-
-context (CoroutineScope)
-suspend fun <T, R> Flow<T>.awaitItemChange(
-    valueFor: (T) -> R
-): R {
-    val turbine = testIn(scope = this@CoroutineScope)
-    val lastItem = valueFor(turbine.expectMostRecentItem())
-
-    var item = valueFor(turbine.awaitItem())
-    while (lastItem == item) {
-        item = valueFor(turbine.awaitItem())
-    }
-
-    turbine.cancel()
-    return item
 }
