@@ -7,10 +7,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.launcherapps.di.LauncherAppsModule
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.impl.IconPackManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManagerImpl
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.IconProvider
@@ -34,10 +34,7 @@ internal object TestLauncherAppsModule {
 
     @Provides
     @Singleton
-    fun provideIconPackManager(
-        @ApplicationContext context: Context,
-        iconCacheManager: IconCacheManager
-    ): IconPackManager = IconPackManagerImpl(context = context, iconCacheManager = iconCacheManager)
+    fun provideIconPackManager(): IconPackManager = TestIconPackManager()
 
     @Provides
     @Singleton

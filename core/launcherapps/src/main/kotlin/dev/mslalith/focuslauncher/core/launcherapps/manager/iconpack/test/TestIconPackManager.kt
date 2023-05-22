@@ -1,0 +1,28 @@
+package dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test
+
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
+import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack
+import dev.mslalith.focuslauncher.core.model.IconPackLoadEvent
+import dev.mslalith.focuslauncher.core.model.IconPackType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
+
+class TestIconPackManager @Inject constructor() : IconPackManager {
+    private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
+    override val iconPacksFlow: Flow<List<IconPack>> = _iconPacksFlow
+
+    private val _iconPackLoadEventFlow = MutableSharedFlow<IconPackLoadEvent>(replay = 1)
+    override val iconPackLoadEventFlow: Flow<IconPackLoadEvent> = _iconPackLoadEventFlow
+
+    override fun fetchInstalledIconPacks() = Unit
+
+    override suspend fun loadIconPack(iconPackType: IconPackType) = Unit
+
+    override fun reloadIconPack() = Unit
+
+    fun setIconPackApps(iconPacks: List<IconPack>) {
+        _iconPacksFlow.value = iconPacks
+    }
+}
