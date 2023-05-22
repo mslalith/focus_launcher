@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import dev.mslalith.focuslauncher.core.data.di.modules.ThemeProvider
 import javax.inject.Inject
 
-class ClearThemDataStoreUseCase @Inject internal constructor(
+class ClearThemeDataStoreUseCase @Inject internal constructor(
     private val clearDataStoreUseCase: ClearDataStoreUseCase,
     @ThemeProvider private val themeDataStore: DataStore<Preferences>
 ) {

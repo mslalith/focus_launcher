@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.data.database.usecase.datastore.ClearThemDataStoreUseCase
+import dev.mslalith.focuslauncher.core.data.database.usecase.datastore.ClearThemeDataStoreUseCase
 import dev.mslalith.focuslauncher.core.data.repository.ThemeRepo
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
@@ -34,7 +34,7 @@ internal class GetThemeUseCaseTest : CoroutineTest() {
     lateinit var themeRepo: ThemeRepo
 
     @Inject
-    lateinit var clearThemeDataStoreUseCase: ClearThemDataStoreUseCase
+    lateinit var clearThemeDataStoreUseCase: ClearThemeDataStoreUseCase
 
     private lateinit var useCase: GetThemeUseCase
 

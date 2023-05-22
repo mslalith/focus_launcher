@@ -6,6 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
+import dev.mslalith.focuslauncher.core.data.database.usecase.datastore.ClearSettingsDataStoreUseCase
 import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.ClockSettingsRepo
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
@@ -14,6 +15,7 @@ import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import dev.mslalith.focuslauncher.core.testing.extensions.withUtcTimeZone
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import org.junit.Before
 import org.junit.Rule
@@ -42,6 +44,9 @@ internal class Clock24ViewModelTest : CoroutineTest() {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
+    @Inject
+    lateinit var clearSettingsDataStoreUseCase: ClearSettingsDataStoreUseCase
+
     private lateinit var viewModel: Clock24ViewModel
 
     @Before
@@ -52,6 +57,7 @@ internal class Clock24ViewModelTest : CoroutineTest() {
             clockSettingsRepo = clockSettingsRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
         )
+        runBlocking { clearSettingsDataStoreUseCase() }
     }
 
     @Test
