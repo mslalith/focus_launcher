@@ -4,8 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.domain.utils.toIconPacks
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
-import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -41,12 +41,7 @@ class FetchIconPacksUseCaseTest : CoroutineTest() {
 
     @Test
     fun `01 - fetch icon packs must return proper list`() = runCoroutineTest {
-        val iconPacks = TestApps.all.map {
-            IconPack(
-                label = it.name,
-                packageName = it.packageName
-            )
-        }
+        val iconPacks = TestApps.all.toIconPacks()
 
         testIconPackManager.setIconPackApps(iconPacks = iconPacks)
         useCase()
