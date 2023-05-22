@@ -76,7 +76,21 @@ class HideAppsViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `03 - when hidden apps are cleared, every item in the list must not be selected`() = runCoroutineTest {
+    fun `03 - when a hidden app is un-hidden, it must not be selected`() = runCoroutineTest {
+        val apps = TestApps.all
+        val hiddenApp = TestApps.Chrome
+
+        apps.forEach { viewModel.addToHiddenApps(app = it) }
+        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
+
+        viewModel.removeFromHiddenApps(app = hiddenApp)
+
+        val appsWithoutHidden = apps.map { it.toSelectedHiddenAppWith(isSelected = it != hiddenApp) }
+        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(appsWithoutHidden)
+    }
+
+    @Test
+    fun `04 - when hidden apps are cleared, every item in the list must not be selected`() = runCoroutineTest {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToHiddenApps(it) }
@@ -87,7 +101,7 @@ class HideAppsViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `04 - when a favorite app is being hidden, it must be removed from favorites list`() = runCoroutineTest {
+    fun `05 - when a favorite app is being hidden, it must be removed from favorites list`() = runCoroutineTest {
         val allApps = TestApps.all
         val favoriteApp = TestApps.Phone
 
