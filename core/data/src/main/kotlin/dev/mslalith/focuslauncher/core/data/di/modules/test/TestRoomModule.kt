@@ -13,7 +13,6 @@ import dev.mslalith.focuslauncher.core.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.PlacesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
-import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import dev.mslalith.focuslauncher.core.data.di.modules.RoomModule
 import javax.inject.Singleton
 
@@ -30,10 +29,6 @@ internal object TestRoomModule {
         context = context,
         klass = AppDatabase::class.java
     ).allowMainThreadQueries().build()
-
-    @Provides
-    @Singleton
-    fun provideCloseDatabase(appDatabase: AppDatabase): CloseDatabase = { appDatabase.close() }
 
     @Provides
     @Singleton
