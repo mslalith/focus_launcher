@@ -2,10 +2,12 @@ package dev.mslalith.focuslauncher.core.data.utils
 
 import dev.mslalith.focuslauncher.core.data.network.entities.AddressResponse
 import dev.mslalith.focuslauncher.core.data.network.entities.PlaceResponse
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.model.place.Address
 import dev.mslalith.focuslauncher.core.model.place.Place
 
+@IgnoreInKoverReport
 internal fun dummyPlaceResponseFor(latLng: LatLng): PlaceResponse {
     val number = latLng.latitude
     return PlaceResponse(
@@ -24,6 +26,7 @@ internal fun dummyPlaceResponseFor(latLng: LatLng): PlaceResponse {
     )
 }
 
+@IgnoreInKoverReport
 fun dummyPlaceFor(latLng: LatLng): Place {
     val number = latLng.latitude
     return Place(
