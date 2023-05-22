@@ -8,7 +8,6 @@ import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.Launche
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.PackageAction
 import kotlinx.coroutines.withContext
-import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 class PackageActionUseCase @Inject constructor(
@@ -20,12 +19,11 @@ class PackageActionUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(packageAction: PackageAction) = onPackageAction(packageAction = packageAction)
 
-    @VisibleForTesting
-    internal suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
+    private suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
         when (packageAction) {
             is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
+            is PackageAction.Updated -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
             is PackageAction.Removed -> handleAppUninstall(packageName = packageAction.packageName)
-            is PackageAction.Updated -> Unit
         }
     }
 
