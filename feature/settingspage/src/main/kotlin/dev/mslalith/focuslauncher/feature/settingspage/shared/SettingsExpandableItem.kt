@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -98,6 +99,7 @@ internal fun SettingsExpandableItem(
     }
 }
 
+@IgnoreInKoverReport
 private fun Modifier.settingsContentCurve(
     dividerColor: Color,
     dividerWidth: Float = 3f,

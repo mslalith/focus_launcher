@@ -8,6 +8,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.Launche
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.PackageAction
 import kotlinx.coroutines.withContext
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 class PackageActionUseCase @Inject constructor(
@@ -19,7 +20,8 @@ class PackageActionUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(packageAction: PackageAction) = onPackageAction(packageAction = packageAction)
 
-    private suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
+    @VisibleForTesting
+    internal suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
         when (packageAction) {
             is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
             is PackageAction.Removed -> handleAppUninstall(packageName = packageAction.packageName)
@@ -27,11 +29,11 @@ class PackageActionUseCase @Inject constructor(
         }
     }
 
-    internal suspend fun handleAppInstall(app: App) {
+    private suspend fun handleAppInstall(app: App) {
         appDrawerRepo.addApp(app = app)
     }
 
-    internal suspend fun handleAppUninstall(packageName: String) {
+    private suspend fun handleAppUninstall(packageName: String) {
         appDrawerRepo.getAppBy(packageName = packageName)?.let { app ->
             favoritesRepo.removeFromFavorites(packageName = app.packageName)
             hiddenAppsRepo.removeFromHiddenApps(packageName = app.packageName)
