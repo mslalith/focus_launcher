@@ -1,3 +1,5 @@
+@file:IgnoreInKoverReport
+
 package dev.mslalith.focuslauncher.feature.theme.data
 
 import androidx.compose.material3.Typography
@@ -6,6 +8,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.feature.theme.R
 
 private val defaultFontRegular = Font(resId = R.font.nunitosans_regular)

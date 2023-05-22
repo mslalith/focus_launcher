@@ -1,7 +1,10 @@
+@file:IgnoreInKoverReport
+
 package dev.mslalith.focuslauncher.feature.theme.data
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 
 internal val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
