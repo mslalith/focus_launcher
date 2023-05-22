@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.mslalith.focuslauncher.core.common.getOrNull
+import dev.mslalith.focuslauncher.core.common.model.getOrNull
 
 @Composable
 fun QuoteForYou(

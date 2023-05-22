@@ -5,7 +5,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.extensions.limitDecimals
-import dev.mslalith.focuslauncher.core.common.getOrNull
+import dev.mslalith.focuslauncher.core.common.model.getOrNull
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhase
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails

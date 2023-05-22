@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl
 
-import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.model.State
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
