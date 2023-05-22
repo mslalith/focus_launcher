@@ -8,6 +8,7 @@ import dev.mslalith.focuslauncher.core.data.repository.ThemeRepo
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import kotlinx.coroutines.CoroutineScope
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -40,6 +41,18 @@ internal class GetThemeUseCaseTest : CoroutineTest() {
 
     @Test
     fun `01 - initial theme must be default theme`() = runCoroutineTest {
-        assertThat(useCase().awaitItem()).isEqualTo(Theme.FOLLOW_SYSTEM)
+        assertTheme(expected = Theme.FOLLOW_SYSTEM)
+    }
+
+    @Test
+    fun `02 - when theme set to Light, it must return the same`() = runCoroutineTest {
+        assertTheme(expected = Theme.FOLLOW_SYSTEM)
+        themeRepo.changeTheme(theme = Theme.NOT_WHITE)
+        assertTheme(expected = Theme.NOT_WHITE)
+    }
+
+    context (CoroutineScope)
+    private suspend fun assertTheme(expected: Theme) {
+        assertThat(useCase().awaitItem()).isEqualTo(expected)
     }
 }
