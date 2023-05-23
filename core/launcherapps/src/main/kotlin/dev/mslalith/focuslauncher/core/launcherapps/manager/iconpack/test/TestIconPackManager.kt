@@ -8,9 +8,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
 
-class TestIconPackManager @Inject constructor() : IconPackManager {
+class TestIconPackManager : IconPackManager {
     private val _iconPacksFlow = MutableStateFlow<List<IconPack>>(value = emptyList())
     override val iconPacksFlow: Flow<List<IconPack>> = _iconPacksFlow
 

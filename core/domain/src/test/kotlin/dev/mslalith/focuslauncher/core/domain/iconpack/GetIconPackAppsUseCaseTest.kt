@@ -29,8 +29,7 @@ class GetIconPackAppsUseCaseTest : CoroutineTest() {
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
-    @Inject
-    lateinit var testIconPackManager: TestIconPackManager
+    private val testIconPackManager = TestIconPackManager()
 
     @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
