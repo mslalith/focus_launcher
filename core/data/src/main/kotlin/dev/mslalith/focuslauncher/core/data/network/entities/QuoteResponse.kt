@@ -1,8 +1,10 @@
 package dev.mslalith.focuslauncher.core.data.network.entities
 
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@IgnoreInKoverReport
 @Serializable
 internal data class QuoteResponse(
     @SerialName(value = "_id")
@@ -19,6 +21,7 @@ internal data class QuoteResponse(
     val tags: List<String>
 )
 
+@IgnoreInKoverReport
 @Serializable
 internal data class QuotesApiResponse(
     @SerialName(value = "count")

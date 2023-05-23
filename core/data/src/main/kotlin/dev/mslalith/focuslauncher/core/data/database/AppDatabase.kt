@@ -19,6 +19,7 @@ import dev.mslalith.focuslauncher.core.data.database.entities.HiddenAppRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.PlaceRoom
 import dev.mslalith.focuslauncher.core.data.database.entities.QuoteRoom
 import dev.mslalith.focuslauncher.core.data.database.typeconverter.Converters
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.model.Constants.Database.APP_DB_NAME
 
 @Database(
@@ -46,6 +47,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun placesDao(): PlacesDao
 
     companion object {
+        @IgnoreInKoverReport
         internal fun build(context: Context): AppDatabase = Room.databaseBuilder(
             context = context,
             klass = AppDatabase::class.java,
