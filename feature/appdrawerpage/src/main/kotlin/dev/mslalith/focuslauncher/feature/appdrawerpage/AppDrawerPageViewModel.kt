@@ -82,7 +82,11 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQueryStateFlow.value = query
     }
 
-    fun reloadIconPack() = reloadIconPackUseCase()
+    fun reloadIconPack() {
+        appCoroutineDispatcher.launchInIO {
+            reloadIconPackUseCase()
+        }
+    }
 
     fun updateDisplayName(app: App, displayName: String) {
         appCoroutineDispatcher.launchInIO {

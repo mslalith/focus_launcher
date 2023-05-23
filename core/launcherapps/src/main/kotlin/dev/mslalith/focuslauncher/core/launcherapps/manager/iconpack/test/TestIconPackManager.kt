@@ -24,7 +24,11 @@ class TestIconPackManager : IconPackManager {
         _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Loaded)
     }
 
-    override fun reloadIconPack() = Unit
+    override suspend fun reloadIconPack() {
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloading)
+        delay(timeMillis = 2000)
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloaded)
+    }
 
     fun setIconPackApps(iconPacks: List<IconPack>) {
         _iconPacksFlow.value = iconPacks
