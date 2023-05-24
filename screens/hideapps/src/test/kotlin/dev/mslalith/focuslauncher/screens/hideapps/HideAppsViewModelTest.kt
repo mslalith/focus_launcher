@@ -63,8 +63,8 @@ class HideAppsViewModelTest : CoroutineTest() {
 
     @Test
     fun `01 - initially hidden apps must not be selected`() = runCoroutineTest {
-        assertThat(viewModel.hiddenAppsFlow.value).isEmpty()
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(TestApps.all.toSelectedHiddenAppWith(isSelected = false))
+        assertThat(viewModel.hideAppsState.value.hiddenApps).isEmpty()
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(TestApps.all.toSelectedHiddenAppWith(isSelected = false))
     }
 
     @Test
@@ -72,7 +72,7 @@ class HideAppsViewModelTest : CoroutineTest() {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToHiddenApps(app = it) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
     }
 
     @Test
@@ -81,12 +81,12 @@ class HideAppsViewModelTest : CoroutineTest() {
         val hiddenApp = TestApps.Chrome
 
         apps.forEach { viewModel.addToHiddenApps(app = it) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
 
         viewModel.removeFromHiddenApps(app = hiddenApp)
 
         val appsWithoutHidden = apps.map { it.toSelectedHiddenAppWith(isSelected = it != hiddenApp) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(appsWithoutHidden)
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(appsWithoutHidden)
     }
 
     @Test
@@ -94,10 +94,10 @@ class HideAppsViewModelTest : CoroutineTest() {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToHiddenApps(it) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = true))
 
         viewModel.clearHiddenApps()
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = false))
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(apps.toSelectedHiddenAppWith(isSelected = false))
     }
 
     @Test
@@ -108,17 +108,17 @@ class HideAppsViewModelTest : CoroutineTest() {
         favoritesRepo.addToFavorites(app = favoriteApp)
 
         var expected = allApps.map { it.toSelectedHiddenAppWith(isSelected = false, isFavorite = it == favoriteApp) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(expected)
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(expected)
 
         hiddenAppsRepo.addToHiddenApps(app = favoriteApp)
 
         expected = allApps.map { it.toSelectedHiddenAppWith(isSelected = it == favoriteApp, isFavorite = it == favoriteApp) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(expected)
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(expected)
 
         favoritesRepo.removeFromFavorites(packageName = favoriteApp.packageName)
 
         expected = allApps.map { it.toSelectedHiddenAppWith(isSelected = it == favoriteApp, isFavorite = false) }
-        assertThat(viewModel.hiddenAppsFlow.awaitItem()).isEqualTo(expected)
+        assertThat(viewModel.hideAppsState.awaitItem().hiddenApps).isEqualTo(expected)
     }
 }
 
