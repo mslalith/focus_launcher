@@ -24,7 +24,7 @@ class ClockWidgetKtTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `when clock24 is enabled, clock24 UI must be shown`() {
+    fun `01 - when clock24 is enabled, clock24 UI must be shown`() {
         composeTestRule.setContent {
             ClockWidget(
                 clock24State = stateWith(showClock24 = true),
@@ -38,7 +38,7 @@ class ClockWidgetKtTest {
     }
 
     @Test
-    fun `when clock24 is disabled, clock24 UI must not be shown`() {
+    fun `02 - when clock24 is disabled, clock24 UI must not be shown`() {
         composeTestRule.setContent {
             ClockWidget(
                 clock24State = stateWith(showClock24 = false),
@@ -52,7 +52,7 @@ class ClockWidgetKtTest {
     }
 
     @Test
-    fun `when clock24 alignment is updated, verify it's placement`() {
+    fun `03 - when clock24 alignment is updated, verify it's placement`() {
         val clock24State = mutableStateOf(value = stateWith(showClock24 = true, clockAlignment = ClockAlignment.START))
         composeTestRule.setContent {
             ClockWidget(
