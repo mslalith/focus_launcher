@@ -1,19 +1,17 @@
 package dev.mslalith.focuslauncher.screens.hideapps
 
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
-import dev.mslalith.focuslauncher.core.data.database.usecase.room.CloseDatabaseUseCase
-import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
-import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.resources.R
@@ -22,10 +20,10 @@ import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertSelectedH
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
+import dev.mslalith.focuslauncher.screens.hideapps.model.HideAppsState
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
-import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Before
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -33,9 +31,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import javax.inject.Inject
 
-@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(
     application = HiltTestApplication::class,
@@ -47,116 +43,80 @@ class HideAppsScreenKtTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    @get:Rule(order = 0)
-    val hiltRule = HiltAndroidRule(this)
-
-    @Inject
-    lateinit var appDrawerRepo: AppDrawerRepo
-
-    @Inject
-    lateinit var favoritesRepo: FavoritesRepo
-
-    @Inject
-    lateinit var hiddenAppsRepo: HiddenAppsRepo
-
-    @Inject
-    lateinit var closeDatabaseUseCase: CloseDatabaseUseCase
-
-    @Inject
-    lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
-
-    private lateinit var viewModel: HideAppsViewModel
-
     private val favoriteApp = TestApps.Chrome
-
-    @Before
-    fun setup() {
-        hiltRule.inject()
-        viewModel = HideAppsViewModel(
-            appDrawerRepo = appDrawerRepo,
-            favoritesRepo = favoritesRepo,
-            hiddenAppsRepo = hiddenAppsRepo,
-            appCoroutineDispatcher = appCoroutineDispatcher
-        )
-        runBlocking {
-            appDrawerRepo.addApps(apps = TestApps.all)
-            favoritesRepo.addToFavorites(app = favoriteApp)
-        }
-        composeTestRule.setContent {
-            ProvideSystemUiController {
-                HideAppsScreenInternal(
-                    hideAppsViewModel = viewModel,
-                    goBack = {}
-                )
-            }
-        }
-    }
-
-    @After
-    fun teardown() {
-        runBlocking {
-            favoritesRepo.clearFavorites()
-            hiddenAppsRepo.clearHiddenApps()
-            appDrawerRepo.clearApps()
-            closeDatabaseUseCase()
-        }
-    }
 
     @Test
     fun `01 - initially hidden apps must not be selected`() = with(composeTestRule) {
-        TestApps.all.forEach { app ->
-            val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = false, isFavorite = app.packageName == favoriteApp.packageName)
+        val allApps = TestApps.all.toSelectedHiddenAppWith()
+        initializeWith(state = stateWith(apps = allApps))
+
+        allApps.forEach { selectedHiddenApp ->
             waitForApp(selectedHiddenApp = selectedHiddenApp)
-            onNodeWithTag(testTag = app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
         }
     }
 
     @Test
     fun `02 - when un-favorite apps are hidden, they must be selected`() = with(composeTestRule) {
-        val unFavoriteApps = TestApps.all - favoriteApp
+        val allApps = TestApps.all.toSelectedHiddenAppWith()
+        var state by mutableStateOf(value = stateWith(apps = allApps))
 
-        unFavoriteApps.forEach { app ->
-            val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = false, isFavorite = false)
+        initializeWith(
+            state = state,
+            onAddToHiddenApps = { app ->
+                state = state.copy(
+                    hiddenApps = state.hiddenApps.toggleAppSelected(app = app)
+                )
+            }
+        )
+
+        allApps.forEach { selectedHiddenApp ->
             waitForApp(selectedHiddenApp = selectedHiddenApp)
-            onNodeWithTag(testTag = app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
         }
 
-        unFavoriteApps.forEach { app ->
-            onNodeWithTag(testTag = app.packageName).performClick()
+        allApps.forEach { selectedHiddenApp ->
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).performClick()
         }
 
-        unFavoriteApps.forEach { app ->
-            val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = true, isFavorite = false)
+        allApps.forEach { selectedHiddenApp ->
             waitForApp(selectedHiddenApp = selectedHiddenApp)
-            onNodeWithTag(testTag = app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
         }
     }
 
     @Test
     fun `03 - when hidden apps are cleared, every item in the list must not be selected`() = with(composeTestRule) {
-        val unFavoriteApps = TestApps.all - favoriteApp
-        unFavoriteApps.forEach { app ->
-            waitForTag(testTag = app.packageName)
-            onNodeWithTag(testTag = app.packageName).performClick()
-        }
+        val allApps = TestApps.all.toSelectedHiddenAppWith(isSelected = true)
+        var state by mutableStateOf(value = stateWith(apps = allApps))
 
-        unFavoriteApps.forEach { app ->
-            val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = true, isFavorite = false)
+        initializeWith(
+            state = state,
+            onAddToHiddenApps = { app ->
+                state = state.copy(
+                    hiddenApps = state.hiddenApps.toggleAppSelected(app = app)
+                )
+            }
+        )
+
+        allApps.forEach { selectedHiddenApp ->
             waitForApp(selectedHiddenApp = selectedHiddenApp)
-            onNodeWithTag(testTag = app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
         }
 
         onNodeWithTag(testTag = TestTags.TAG_CLEAR_HIDDEN_APPS_FAB).performClick()
 
-        unFavoriteApps.forEach { app ->
-            val selectedHiddenApp = app.toSelectedHiddenAppWith(isSelected = false, isFavorite = false)
+        allApps.forEach { selectedHiddenApp ->
             waitForApp(selectedHiddenApp = selectedHiddenApp)
-            onNodeWithTag(testTag = app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
+            onNodeWithTag(testTag = selectedHiddenApp.app.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
         }
     }
 
     @Test
     fun `04 - when a favorite app is being hidden, confirmation UI must be shown`(): Unit = with(composeTestRule) {
+        val allApps = TestApps.all.toSelectedHiddenAppWith().withFavorite(app = favoriteApp)
+        initializeWith(state = stateWith(apps = allApps))
+
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
@@ -166,11 +126,15 @@ class HideAppsScreenKtTest {
 
     @Test
     fun `05 - when a favorite app is being hidden, on click of cancel in confirmation UI, it should dismiss & no action must be taken`(): Unit = with(composeTestRule) {
+        val allApps = TestApps.all.toSelectedHiddenAppWith().withFavorite(app = favoriteApp)
+        initializeWith(state = stateWith(apps = allApps))
+
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
         val message = activity.getString(R.string.hide_favorite_app_message, favoriteApp.displayName)
         onNodeWithText(text = message).assertIsDisplayed()
+
         val text = activity.getString(R.string.cancel)
         onNodeWithText(text = text).performClick()
 
@@ -181,6 +145,23 @@ class HideAppsScreenKtTest {
 
     @Test
     fun `06 - when a favorite app is being hidden, on click of hide in confirmation UI, it should be hidden`(): Unit = with(composeTestRule) {
+        val allApps = TestApps.all.toSelectedHiddenAppWith().withFavorite(app = favoriteApp)
+        var state by mutableStateOf(value = stateWith(apps = allApps))
+
+        initializeWith(
+            state = state,
+            onAddToHiddenApps = { app ->
+                state = state.copy(
+                    hiddenApps = state.hiddenApps.toggleAppSelected(app = app)
+                )
+            },
+            onRemoveFromFavorites = { app ->
+                state = state.copy(
+                    hiddenApps = state.hiddenApps.toggleAppFavorite(app = app)
+                )
+            }
+        )
+
         waitForTag(testTag = favoriteApp.packageName)
         onNodeWithTag(testTag = favoriteApp.packageName).performClick()
 
@@ -197,6 +178,40 @@ class HideAppsScreenKtTest {
     }
 }
 
+private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith(
+    state: HideAppsState,
+    onClearHiddenApps: () -> Unit = {},
+    onRemoveFromFavorites: (App) -> Unit = {},
+    onAddToHiddenApps: (App) -> Unit = {},
+    onRemoveFromHiddenApps: (App) -> Unit = {},
+    goBack: () -> Unit = {}
+) {
+    setContent {
+        ProvideSystemUiController {
+            HideAppsScreenInternal(
+                hideAppsState = state,
+                onClearHiddenApps = onClearHiddenApps,
+                onRemoveFromFavorites = onRemoveFromFavorites,
+                onAddToHiddenApps = onAddToHiddenApps,
+                onRemoveFromHiddenApps = onRemoveFromHiddenApps,
+                goBack = goBack
+            )
+        }
+    }
+}
+
+private fun stateWith(apps: List<SelectedHiddenApp>): HideAppsState = HideAppsState(hiddenApps = apps.toImmutableList())
+
+private fun List<App>.toSelectedHiddenAppWith(
+    isSelected: Boolean = false,
+    isFavorite: Boolean = false
+): List<SelectedHiddenApp> = map {
+    it.toSelectedHiddenAppWith(
+        isSelected = isSelected,
+        isFavorite = isFavorite
+    )
+}
+
 private fun App.toSelectedHiddenAppWith(
     isSelected: Boolean,
     isFavorite: Boolean
@@ -205,3 +220,17 @@ private fun App.toSelectedHiddenAppWith(
     isSelected = isSelected,
     isFavorite = isFavorite
 )
+
+private fun List<SelectedHiddenApp>.withFavorite(app: App): List<SelectedHiddenApp> = map {
+    if (it.app.packageName == app.packageName) it.copy(isFavorite = true) else it
+}
+
+private fun ImmutableList<SelectedHiddenApp>.toggleAppSelected(app: App): ImmutableList<SelectedHiddenApp> = map {
+    if (it.app.packageName == app.packageName) it.copy(isSelected = !it.isSelected)
+    else it
+}.toImmutableList()
+
+private fun ImmutableList<SelectedHiddenApp>.toggleAppFavorite(app: App): ImmutableList<SelectedHiddenApp> = map {
+    if (it.app.packageName == app.packageName) it.copy(isFavorite = !it.isFavorite)
+    else it
+}.toImmutableList()
