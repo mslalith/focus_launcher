@@ -63,8 +63,8 @@ class EditFavoritesViewModelTest : CoroutineTest() {
 
     @Test
     fun `01 - initially favorites must not be selected`() = runCoroutineTest {
-        assertThat(viewModel.favoritesStateFlow.value).isEmpty()
-        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
+        assertThat(viewModel.editFavoritesState.value.favoriteApps).isEmpty()
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(TestApps.all.toSelectedAppWith(isSelected = false))
     }
 
     @Test
@@ -72,7 +72,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToFavorites(app = it) }
-        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(apps.toSelectedAppWith(isSelected = true))
     }
 
     @Test
@@ -80,10 +80,10 @@ class EditFavoritesViewModelTest : CoroutineTest() {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToFavorites(app = it) }
-        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = true))
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(apps.toSelectedAppWith(isSelected = true))
 
         viewModel.clearFavorites()
-        assertThat(viewModel.favoritesStateFlow.awaitItem()).isEqualTo(apps.toSelectedAppWith(isSelected = false))
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
     }
 
     @Test
@@ -92,7 +92,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
         val apps = TestApps.all - hiddenApps.toSet()
 
         hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
-        val actualApps = viewModel.favoritesStateFlow.awaitItem()
+        val actualApps = viewModel.editFavoritesState.awaitItem().favoriteApps
         assertThat(actualApps.size).isEqualTo(apps.size)
         assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
     }
@@ -105,13 +105,13 @@ class EditFavoritesViewModelTest : CoroutineTest() {
 
         hiddenAppsRepo.addToHiddenApps(apps = hiddenApps)
 
-        var actualApps = viewModel.favoritesStateFlow.awaitItem()
+        var actualApps = viewModel.editFavoritesState.awaitItem().favoriteApps
         assertThat(actualApps.size).isEqualTo(apps.size)
         assertThat(actualApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
 
         viewModel.shouldShowHiddenAppsInFavorites(value = true)
 
-        actualApps = viewModel.favoritesStateFlow.awaitItem()
+        actualApps = viewModel.editFavoritesState.awaitItem().favoriteApps
         val expected = totalApps.map { it.toSelectedAppWith(isSelected = false, disabled = hiddenApps.contains(it)) }
         assertThat(actualApps.size).isEqualTo(expected.size)
         assertThat(actualApps).isEqualTo(expected)
