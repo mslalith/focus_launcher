@@ -64,7 +64,7 @@ internal class IconPackManagerImpl @Inject constructor(
         forceLoad = false
     )
 
-    override fun reloadIconPack() {
+    override suspend fun reloadIconPack() {
         val iconPackType = currentIconPackType ?: return
         loadIconPack(
             iconPackType = iconPackType,

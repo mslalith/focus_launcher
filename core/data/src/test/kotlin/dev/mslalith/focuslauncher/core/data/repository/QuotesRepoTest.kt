@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.common.getOrNull
+import dev.mslalith.focuslauncher.core.common.model.getOrNull
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor

@@ -10,12 +10,14 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import dev.mslalith.focuslauncher.screens.hideapps.model.HideAppsState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 @HiltViewModel
@@ -26,7 +28,11 @@ internal class HideAppsViewModel @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : ViewModel() {
 
-    val hiddenAppsFlow: StateFlow<ImmutableList<SelectedHiddenApp>> = appDrawerRepo.allAppsFlow
+    private val defaultHideAppsState = HideAppsState(
+        hiddenApps = persistentListOf()
+    )
+
+    private val hiddenAppsFlow: Flow<ImmutableList<SelectedHiddenApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedHiddenApp(app = app, isSelected = false, isFavorite = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { hiddenApp ->
@@ -38,7 +44,12 @@ internal class HideAppsViewModel @Inject constructor(
                 val isSelected = onlyHiddenAppsList.any { it.packageName == hiddenApp.app.packageName }
                 hiddenApp.copy(isSelected = isSelected)
             }.toImmutableList()
-        }.withinScope(initialValue = persistentListOf())
+        }
+
+    val hideAppsState = flowOf(value = defaultHideAppsState)
+        .combine(flow = hiddenAppsFlow) { state, hiddenApps ->
+            state.copy(hiddenApps = hiddenApps)
+        }.withinScope(initialValue = defaultHideAppsState)
 
     fun removeFromFavorites(app: App) {
         appCoroutineDispatcher.launchInIO { favoritesRepo.removeFromFavorites(packageName = app.packageName) }

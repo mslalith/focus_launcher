@@ -7,9 +7,11 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import java.util.Calendar
 
-object GoogleCalendarIcon {
+@IgnoreInKoverReport
+internal object GoogleCalendarIcon {
     const val GOOGLE_CALENDAR_PACKAGE_NAME = "com.google.android.calendar"
 
     fun getDrawable(context: Context, activityName: String): Drawable? {

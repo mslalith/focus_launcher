@@ -6,5 +6,5 @@ import javax.inject.Inject
 class ReloadIconPackUseCase @Inject constructor(
     private val iconPackManager: IconPackManager
 ) {
-    operator fun invoke() = iconPackManager.reloadIconPack()
+    suspend operator fun invoke() = iconPackManager.reloadIconPack()
 }

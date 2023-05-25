@@ -3,8 +3,8 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.mslalith.focuslauncher.core.common.LoadingState
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -82,7 +82,11 @@ internal class AppDrawerPageViewModel @Inject constructor(
         searchBarQueryStateFlow.value = query
     }
 
-    fun reloadIconPack() = reloadIconPackUseCase()
+    fun reloadIconPack() {
+        appCoroutineDispatcher.launchInIO {
+            reloadIconPackUseCase()
+        }
+    }
 
     fun updateDisplayName(app: App, displayName: String) {
         appCoroutineDispatcher.launchInIO {

@@ -9,7 +9,7 @@ import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.di.CommonModule
-import dev.mslalith.focuslauncher.core.common.network.ConnectivityManagerNetworkMonitor
+import dev.mslalith.focuslauncher.core.common.network.impl.ConnectivityManagerNetworkMonitorImpl
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
@@ -36,7 +36,7 @@ object TestCommonModule {
     @Singleton
     fun provideNetworkMonitor(
         @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitor(context = context)
+    ): NetworkMonitor = ConnectivityManagerNetworkMonitorImpl(context = context)
 
     @Provides
     @Singleton

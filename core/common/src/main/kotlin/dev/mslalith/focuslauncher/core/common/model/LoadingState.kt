@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.common
+package dev.mslalith.focuslauncher.core.common.model
 
 import androidx.compose.runtime.Immutable
 

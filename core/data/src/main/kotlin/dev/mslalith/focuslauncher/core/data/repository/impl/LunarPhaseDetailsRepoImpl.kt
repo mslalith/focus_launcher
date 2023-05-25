@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository.impl
 
-import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.model.State
 import dev.mslalith.focuslauncher.core.common.extensions.toKotlinxLocalDateTime
 import dev.mslalith.focuslauncher.core.data.repository.LunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.core.model.location.LatLng

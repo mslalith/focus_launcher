@@ -4,5 +4,5 @@ import dev.mslalith.focuslauncher.core.data.network.entities.PlaceResponse
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 internal interface PlacesApi {
-    suspend fun getPlace(latLng: LatLng): PlaceResponse?
+    suspend fun getPlace(latLng: LatLng): Result<PlaceResponse>
 }

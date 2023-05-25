@@ -12,7 +12,6 @@ import dev.mslalith.focuslauncher.core.data.database.dao.FavoriteAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.HiddenAppsDao
 import dev.mslalith.focuslauncher.core.data.database.dao.PlacesDao
 import dev.mslalith.focuslauncher.core.data.database.dao.QuotesDao
-import dev.mslalith.focuslauncher.core.data.database.utils.CloseDatabase
 import javax.inject.Singleton
 
 @Module
@@ -22,10 +21,6 @@ internal object RoomModule {
     @Provides
     @Singleton
     fun provideRoomDatabase(@ApplicationContext context: Context): AppDatabase = AppDatabase.build(context = context)
-
-    @Provides
-    @Singleton
-    fun provideCloseDatabase(appDatabase: AppDatabase): CloseDatabase = { appDatabase.close() }
 
     @Provides
     @Singleton

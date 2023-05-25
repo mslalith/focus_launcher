@@ -7,5 +7,5 @@ internal interface QuotesApi {
     suspend fun getQuotes(
         page: Int = 1,
         limit: Int = QUOTES_LIMIT_PER_PAGE
-    ): QuotesApiResponse
+    ): Result<QuotesApiResponse>
 }

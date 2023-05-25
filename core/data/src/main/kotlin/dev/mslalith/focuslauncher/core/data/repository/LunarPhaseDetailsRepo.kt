@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
-import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.model.State
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase

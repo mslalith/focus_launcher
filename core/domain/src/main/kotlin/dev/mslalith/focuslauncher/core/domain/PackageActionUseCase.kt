@@ -22,16 +22,16 @@ class PackageActionUseCase @Inject constructor(
     private suspend fun onPackageAction(packageAction: PackageAction) = withContext(context = appCoroutineDispatcher.io) {
         when (packageAction) {
             is PackageAction.Added -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
+            is PackageAction.Updated -> launcherAppsManager.loadApp(packageName = packageAction.packageName)?.let { handleAppInstall(app = it.app) }
             is PackageAction.Removed -> handleAppUninstall(packageName = packageAction.packageName)
-            is PackageAction.Updated -> Unit
         }
     }
 
-    internal suspend fun handleAppInstall(app: App) {
+    private suspend fun handleAppInstall(app: App) {
         appDrawerRepo.addApp(app = app)
     }
 
-    internal suspend fun handleAppUninstall(packageName: String) {
+    private suspend fun handleAppUninstall(packageName: String) {
         appDrawerRepo.getAppBy(packageName = packageName)?.let { app ->
             favoritesRepo.removeFromFavorites(packageName = app.packageName)
             hiddenAppsRepo.removeFromHiddenApps(packageName = app.packageName)

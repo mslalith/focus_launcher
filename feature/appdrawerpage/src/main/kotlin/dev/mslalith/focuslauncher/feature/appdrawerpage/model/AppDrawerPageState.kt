@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage.model
 
-import dev.mslalith.focuslauncher.core.common.LoadingState
+import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
 import kotlinx.collections.immutable.ImmutableList

@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.feature.lunarcalendar.model
 
 import androidx.compose.runtime.Immutable
-import dev.mslalith.focuslauncher.core.common.State
+import dev.mslalith.focuslauncher.core.common.model.State
 import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 

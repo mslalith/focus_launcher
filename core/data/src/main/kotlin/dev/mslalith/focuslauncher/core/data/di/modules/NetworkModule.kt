@@ -28,7 +28,7 @@ internal object NetworkModule {
                 json = Json {
                     ignoreUnknownKeys = true
                     isLenient = true
-                    encodeDefaults = false
+                    encodeDefaults = true
                 }
             )
         }

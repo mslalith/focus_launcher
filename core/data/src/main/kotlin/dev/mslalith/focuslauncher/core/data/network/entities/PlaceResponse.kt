@@ -1,8 +1,10 @@
 package dev.mslalith.focuslauncher.core.data.network.entities
 
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@IgnoreInKoverReport
 @Serializable
 internal data class PlaceResponse(
     @SerialName("place_id")
@@ -25,6 +27,7 @@ internal data class PlaceResponse(
     val boundingBox: List<String>
 )
 
+@IgnoreInKoverReport
 @Serializable
 internal data class AddressResponse(
     @SerialName("house_number")

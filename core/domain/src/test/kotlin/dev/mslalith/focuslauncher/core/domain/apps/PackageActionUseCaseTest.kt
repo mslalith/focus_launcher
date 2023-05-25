@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.apps
 
+import android.content.ComponentName
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -9,10 +10,19 @@ import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
+import dev.mslalith.focuslauncher.core.model.PackageAction
+import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
+import dev.mslalith.focuslauncher.core.testing.disableAsSystem
+import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import io.mockk.mockk
+import dev.mslalith.focuslauncher.core.testing.toPackageNamed
+import io.mockk.every
+import io.mockk.spyk
+import io.mockk.unmockkAll
+import org.junit.After
 import javax.inject.Inject
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -44,13 +54,17 @@ class PackageActionUseCaseTest : CoroutineTest() {
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
+    private val testLauncherAppsManager = spyk<TestLauncherAppsManager>()
+
     private lateinit var packageActionUseCase: PackageActionUseCase
+
+    private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
     @Before
     fun setup() {
         hiltRule.inject()
         packageActionUseCase = PackageActionUseCase(
-            launcherAppsManager = mockk(),
+            launcherAppsManager = testLauncherAppsManager,
             appDrawerRepo = appDrawerRepo,
             favoritesRepo = favoritesRepo,
             hiddenAppsRepo = hiddenAppsRepo,
@@ -58,51 +72,81 @@ class PackageActionUseCaseTest : CoroutineTest() {
         )
     }
 
+    @After
+    fun teardown() {
+        unmockkAll()
+    }
+
     @Test
     fun `01 - when an app is installed, it must be added to apps DB`() = runCoroutineTest {
-        val appToInstall = TestApps.Chrome
-        val allApps = TestApps.all
+        val appToInstall = TestApps.Chrome.toPackageNamed().disableAsSystem()
         val installedApps = allApps - setOf(appToInstall)
-        appDrawerRepo.addApps(apps = installedApps)
 
+        appDrawerRepo.addApps(apps = installedApps)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(installedApps)
-        packageActionUseCase.handleAppInstall(app = appToInstall)
+
+        packageActionUseCase(packageAction = PackageAction.Added(packageName = appToInstall.packageName))
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
     }
 
     @Test
     fun `02 - when an app is uninstalled, it must be removed from apps DB`() = runCoroutineTest {
-        val appToUninstall = TestApps.Chrome
-        val allApps = TestApps.all
+        val appToUninstall = TestApps.Chrome.toPackageNamed().disableAsSystem()
         val appsAfterUninstall = allApps - setOf(appToUninstall)
-        appDrawerRepo.addApps(apps = allApps)
 
+        appDrawerRepo.addApps(apps = allApps)
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
-        packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+
+        packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(appsAfterUninstall)
     }
 
     @Test
     fun `03 - when a favorite app is uninstalled, it must be removed from DB`() = runCoroutineTest {
-        val appToUninstall = TestApps.Chrome
-        val allApps = TestApps.all
+        val appToUninstall = TestApps.Chrome.toPackageNamed().disableAsSystem()
         appDrawerRepo.addApps(apps = allApps)
         favoritesRepo.addToFavorites(app = appToUninstall)
 
         assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
-        packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+        packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
         assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEmpty()
     }
 
     @Test
     fun `04 - when a hidden app is uninstalled, it must be removed from DB`() = runCoroutineTest {
-        val appToUninstall = TestApps.Chrome
-        val allApps = TestApps.all
+        val appToUninstall = TestApps.Chrome.toPackageNamed().disableAsSystem()
         appDrawerRepo.addApps(apps = allApps)
-        hiddenAppsRepo.addToHiddenApps(app = appToUninstall)
 
+        hiddenAppsRepo.addToHiddenApps(app = appToUninstall)
         assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
-        packageActionUseCase.handleAppUninstall(packageName = appToUninstall.packageName)
+
+        packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
         assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEmpty()
+    }
+
+    @Test
+    fun `05 - when an app is updated, it must be updated in apps DB`() = runCoroutineTest {
+        val appBeforeUpdate = TestApps.Chrome.toPackageNamed().disableAsSystem()
+        val appAfterUpdate = appBeforeUpdate.copy(name = "Updated Chrome", displayName = "Updated Chrome")
+        val installedApps = allApps
+
+        appDrawerRepo.addApps(apps = installedApps)
+        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(installedApps)
+
+        // provide updated app when updating
+        every { testLauncherAppsManager.loadApp(packageName = appAfterUpdate.packageName) } returns AppWithComponent(
+            app = appAfterUpdate,
+            componentName = ComponentName(appAfterUpdate.packageName, "")
+        )
+        packageActionUseCase(packageAction = PackageAction.Updated(packageName = appAfterUpdate.packageName))
+
+        // build expected apps list
+        val updatedExpectedApps = allApps.map { app ->
+            if (app.packageName == appBeforeUpdate.packageName) appAfterUpdate else app
+        }.sortedBy { it.packageName }
+
+        appDrawerRepo.allAppsFlow.assertFor(expected = updatedExpectedApps) { apps ->
+            apps.sortedBy { it.packageName }
+        }
     }
 }
