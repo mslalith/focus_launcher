@@ -11,9 +11,11 @@ import dev.mslalith.focuslauncher.core.launcherapps.model.SimpleDrawableInfo
 import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreCyclomaticComplexMethod
 import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreLongMethod
 import dev.mslalith.focuslauncher.core.lint.detekt.IgnoreNestedBlockDepth
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 
+@IgnoreInKoverReport
 internal class IconPackXmlParser(
     private val context: Context,
     private val iconPackPackageName: String
