@@ -21,4 +21,9 @@ dependencies {
 
     api(libs.androidx.test.runner)
     api(libs.hilt.android.testing)
+
+    api(libs.ktor.client.mock)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.serialization)
 }
