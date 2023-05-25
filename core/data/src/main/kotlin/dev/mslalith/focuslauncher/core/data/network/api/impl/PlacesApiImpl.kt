@@ -5,7 +5,6 @@ import dev.mslalith.focuslauncher.core.data.network.entities.PlaceResponse
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import io.ktor.client.HttpClient
 import io.ktor.client.call.DoubleReceiveException
-import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.get
@@ -17,19 +16,19 @@ internal class PlacesApiImpl @Inject constructor(
     private val httpClient: HttpClient
 ) : PlacesApi {
 
-    override suspend fun getPlace(latLng: LatLng): PlaceResponse? = try {
-        httpClient.get(urlString = "https://nominatim.openstreetmap.org/reverse") {
-            parameter(key = "format", value = "json")
-            parameter(key = "lat", value = latLng.latitude)
-            parameter(key = "lon", value = latLng.longitude)
-        }.body()
-    } catch (e: JsonConvertException) {
-        null
-    } catch (e: NoTransformationFoundException) {
-        null
-    } catch (e: DoubleReceiveException) {
-        null
-    } catch (e: HttpRequestTimeoutException) {
-        null
+    override suspend fun getPlace(latLng: LatLng): Result<PlaceResponse> = try {
+        Result.success(
+            value = httpClient.get(urlString = "https://nominatim.openstreetmap.org/reverse") {
+                parameter(key = "format", value = "json")
+                parameter(key = "lat", value = latLng.latitude)
+                parameter(key = "lon", value = latLng.longitude)
+            }.body()
+        )
+    } catch (ex: JsonConvertException) {
+        Result.failure(exception = ex)
+    } catch (ex: DoubleReceiveException) {
+        Result.failure(exception = ex)
+    } catch (ex: HttpRequestTimeoutException) {
+        Result.failure(exception = ex)
     }
 }

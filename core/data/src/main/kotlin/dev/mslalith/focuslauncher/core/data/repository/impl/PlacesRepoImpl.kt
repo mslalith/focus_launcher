@@ -23,7 +23,7 @@ internal class PlacesRepoImpl @Inject internal constructor(
         val localAddress = fetchPlaceLocal(latLng = latLng)
         if (localAddress != null) return localAddress
 
-        val placeResponse = placesApi.getPlace(latLng = latLng) ?: return null
+        val placeResponse = placesApi.getPlace(latLng = latLng).getOrNull() ?: return null
         placesDao.insertPlace(place = placeResponse.toPlaceRoom())
         return placeResponse.toPlace()
     }

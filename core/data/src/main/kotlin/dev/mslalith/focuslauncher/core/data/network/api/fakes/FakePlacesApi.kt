@@ -6,5 +6,7 @@ import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceResponseFor
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 internal class FakePlacesApi : PlacesApi {
-    override suspend fun getPlace(latLng: LatLng): PlaceResponse = dummyPlaceResponseFor(latLng = latLng)
+    override suspend fun getPlace(latLng: LatLng): Result<PlaceResponse> = Result.success(
+        value = dummyPlaceResponseFor(latLng = latLng)
+    )
 }
