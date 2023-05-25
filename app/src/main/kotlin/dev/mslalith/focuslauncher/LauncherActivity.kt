@@ -8,6 +8,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@IgnoreInKoverReport
 class LauncherActivity : ComponentActivity() {
 
     @Inject
