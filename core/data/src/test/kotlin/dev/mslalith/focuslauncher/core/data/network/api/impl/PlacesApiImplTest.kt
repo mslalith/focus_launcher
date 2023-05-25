@@ -17,11 +17,13 @@ internal class PlacesApiImplTest : KtorApiTest() {
 
     private val placesApi = PlacesApiImpl(httpClient = client)
 
+    private val url = "https://nominatim.openstreetmap.org/reverse"
+
     @Test
     fun `01 - when latLng is 0 & 0, then place must return Soul Buoy`() = runCoroutineTest {
         val latLng = LatLng(latitude = 0.0, longitude = 0.0)
 
-        onRequestTo(url = "https://nominatim.openstreetmap.org/reverse") {
+        onRequestTo(url = url) {
             successResponse(content = successJson(latLng = latLng, displayName = "Soul Buoy"))
         }
 
@@ -35,7 +37,7 @@ internal class PlacesApiImplTest : KtorApiTest() {
     fun `02 - when latLng is 23 & 23, then place must return India`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.14, longitude = 23.86)
 
-        onRequestTo(url = "https://nominatim.openstreetmap.org/reverse") {
+        onRequestTo(url = url) {
             successResponse(content = successJson(latLng = latLng, displayName = "India"))
         }
 
@@ -49,7 +51,7 @@ internal class PlacesApiImplTest : KtorApiTest() {
     fun `03 - verify JsonConvertException`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.14, longitude = 23.86)
 
-        onRequestTo(url = "https://nominatim.openstreetmap.org/reverse") {
+        onRequestTo(url = url) {
             throw JsonConvertException(message = "Test exception")
         }
 
@@ -60,7 +62,7 @@ internal class PlacesApiImplTest : KtorApiTest() {
     fun `04 - verify DoubleReceiveException`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.14, longitude = 23.86)
 
-        onRequestTo(url = "https://nominatim.openstreetmap.org/reverse") {
+        onRequestTo(url = url) {
             throw DoubleReceiveException(call = mockk())
         }
 
@@ -71,13 +73,12 @@ internal class PlacesApiImplTest : KtorApiTest() {
     fun `05 - verify HttpRequestTimeoutException`() = runCoroutineTest {
         val latLng = LatLng(latitude = 23.14, longitude = 23.86)
 
-        onRequestTo(url = "https://nominatim.openstreetmap.org/reverse") {
+        onRequestTo(url = url) {
             throw HttpRequestTimeoutException(url = "", timeoutMillis = null)
         }
 
         placesApi.getPlace(latLng = latLng).assertException<HttpRequestTimeoutException>()
     }
-
 }
 
 private inline fun <reified T : Exception> Result<PlaceResponse>.assertException() {
