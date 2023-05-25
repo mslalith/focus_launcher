@@ -64,7 +64,7 @@ internal open class QuotesRepoImpl @Inject constructor(
     override suspend fun quotesSize() = quotesDao.getQuotesSize()
 
     private suspend fun fetchPageQuotes(page: Int) {
-        val quotesApiResponse = quotesApi.getQuotes(page = page)
+        val quotesApiResponse = quotesApi.getQuotes(page = page).getOrNull() ?: return
         val quoteRoomList = quotesApiResponse.results.map(QuoteResponse::toQuoteRoom)
         addAllQuotes(quotes = quoteRoomList)
     }
