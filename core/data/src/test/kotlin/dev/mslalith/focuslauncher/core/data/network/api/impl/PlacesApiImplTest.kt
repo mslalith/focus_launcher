@@ -122,4 +122,4 @@ private fun successJson(
             "5.05E-5"
           ]
         }
-    """.trimIndent()
+""".trimIndent()
