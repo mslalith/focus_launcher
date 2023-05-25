@@ -28,7 +28,7 @@ open class KtorApiTest : CoroutineTest() {
     private val mockEngine = MockEngine { request ->
         val url = request.url.toString()
         val handler = mockHandlers.firstOrNull { it.url == url || url.startsWith(prefix = it.url) }
-        return@MockEngine handler?.trigger?.invoke(this, request) ?: throw IllegalStateException("No MockHandler provided for $url")
+        return@MockEngine handler?.trigger?.invoke(this, request) ?: error("No MockHandler provided for $url")
     }
 
     protected val client = HttpClient(engine = mockEngine) {
