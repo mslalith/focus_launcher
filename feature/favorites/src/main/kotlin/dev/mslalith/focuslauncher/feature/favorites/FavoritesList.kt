@@ -26,7 +26,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
-import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.BackPressHandler
@@ -90,7 +89,6 @@ internal fun FavoritesList(
 ) {
     FavoritesList(
         favoritesList = favoritesState.favoritesList,
-        currentTheme = favoritesState.currentTheme,
         addDefaultAppsToFavorites = addDefaultAppsToFavorites,
         removeFromFavorites = removeFromFavorites,
         reorderFavorite = reorderFavorite,
@@ -107,7 +105,6 @@ internal fun FavoritesList(
 @Composable
 internal fun FavoritesList(
     favoritesList: ImmutableList<AppWithColor>,
-    currentTheme: Theme,
     addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
@@ -173,7 +170,6 @@ internal fun FavoritesList(
                     ReusableContent(key = favoriteAppWithColor) {
                         FavoriteItem(
                             appWithColor = favoriteAppWithColor,
-                            currentTheme = currentTheme,
                             isInContextualMode = isInContextualMode,
                             isAppAboutToReorder = { isAppAboutToReorder(favoriteAppWithColor.app) },
                             changeFavoritesContextMode = changeFavoritesContextMode,
