@@ -10,6 +10,7 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
+import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
@@ -41,6 +42,9 @@ class FavoritesViewModelTest : CoroutineTest() {
     lateinit var getFavoriteColoredAppsUseCase: GetFavoriteColoredAppsUseCase
 
     @Inject
+    lateinit var getThemeUseCase: GetThemeUseCase
+
+    @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
     @Inject
@@ -60,6 +64,7 @@ class FavoritesViewModelTest : CoroutineTest() {
         viewModel = FavoritesViewModel(
             getDefaultFavoriteAppsUseCase = getDefaultFavoriteAppsUseCase,
             getFavoriteColoredAppsUseCase = getFavoriteColoredAppsUseCase,
+            getThemeUseCase = getThemeUseCase,
             generalSettingsRepo = generalSettingsRepo,
             favoritesRepo = favoritesRepo,
             appCoroutineDispatcher = appCoroutineDispatcher
