@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
@@ -29,6 +30,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 @Composable
 internal fun FavoriteItem(
     appWithColor: AppWithColor,
+    currentTheme: Theme,
     isInContextualMode: () -> Boolean,
     isAppAboutToReorder: () -> Boolean,
     changeFavoritesContextMode: (FavoritesContextMode) -> Unit,

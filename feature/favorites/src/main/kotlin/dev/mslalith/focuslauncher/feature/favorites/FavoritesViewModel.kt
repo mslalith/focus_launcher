@@ -7,6 +7,8 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
+import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_THEME
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
@@ -28,6 +30,7 @@ import javax.inject.Inject
 internal class FavoritesViewModel @Inject constructor(
     private val getDefaultFavoriteAppsUseCase: GetDefaultFavoriteAppsUseCase,
     getFavoriteColoredAppsUseCase: GetFavoriteColoredAppsUseCase,
+    getThemeUseCase: GetThemeUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -37,7 +40,8 @@ internal class FavoritesViewModel @Inject constructor(
 
     private val defaultFavoritesState = FavoritesState(
         favoritesContextualMode = _favoritesContextualMode.value,
-        favoritesList = persistentListOf()
+        favoritesList = persistentListOf(),
+        currentTheme = DEFAULT_THEME
     )
 
     private val allAppsWithIcons: Flow<List<AppWithColor>> = getFavoriteColoredAppsUseCase()
@@ -48,6 +52,8 @@ internal class FavoritesViewModel @Inject constructor(
             state.copy(favoritesList = favorites.toImmutableList())
         }.combine(flow = _favoritesContextualMode) { state, favoritesContextualMode ->
             state.copy(favoritesContextualMode = favoritesContextualMode)
+        }.combine(flow = getThemeUseCase()) { state, theme ->
+            state.copy(currentTheme = theme)
         }.withinScope(initialValue = defaultFavoritesState)
 
     fun addDefaultAppsIfRequired() {
