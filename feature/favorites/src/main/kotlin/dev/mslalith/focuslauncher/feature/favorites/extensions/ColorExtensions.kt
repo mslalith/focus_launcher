@@ -1,11 +1,15 @@
 package dev.mslalith.focuslauncher.feature.favorites.extensions
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.ColorUtils
 
 internal fun Color.luminate(threshold: Float, value: Float) = toHSL().apply {
     val luminance = this[2]
     this[2] = if (luminance < threshold) value else luminance
 }.toColor()
+
+fun Color.blendWith(color: Color, ratio: Float): Color = ColorUtils.blendARGB(toArgb(), color.toArgb(), ratio).let(::Color)
 
 internal fun Color.toHSL(): FloatArray {
     val hsl = FloatArray(size = 3)

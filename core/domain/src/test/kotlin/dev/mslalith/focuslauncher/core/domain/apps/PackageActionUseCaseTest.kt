@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.apps
 
 import android.content.ComponentName
-import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -17,7 +16,6 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
-import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import io.mockk.every
 import io.mockk.spyk
@@ -83,10 +81,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val installedApps = allApps - setOf(appToInstall)
 
         appDrawerRepo.addApps(apps = installedApps)
-        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(installedApps)
+        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps) { it }
 
         packageActionUseCase(packageAction = PackageAction.Added(packageName = appToInstall.packageName))
-        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
+        appDrawerRepo.allAppsFlow.assertFor(expected = allApps) { it }
     }
 
     @Test
@@ -95,10 +93,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val appsAfterUninstall = allApps - setOf(appToUninstall)
 
         appDrawerRepo.addApps(apps = allApps)
-        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(allApps)
+        appDrawerRepo.allAppsFlow.assertFor(expected = allApps) { it }
 
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(appsAfterUninstall)
+        appDrawerRepo.allAppsFlow.assertFor(expected = appsAfterUninstall) { it }
     }
 
     @Test
@@ -107,9 +105,9 @@ class PackageActionUseCaseTest : CoroutineTest() {
         appDrawerRepo.addApps(apps = allApps)
         favoritesRepo.addToFavorites(app = appToUninstall)
 
-        assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
+        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf(appToUninstall)) { it }
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        assertThat(favoritesRepo.onlyFavoritesFlow.awaitItem()).isEmpty()
+        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf()) { it }
     }
 
     @Test
@@ -118,10 +116,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         appDrawerRepo.addApps(apps = allApps)
 
         hiddenAppsRepo.addToHiddenApps(app = appToUninstall)
-        assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEqualTo(listOf(appToUninstall))
+        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf(appToUninstall)) { it }
 
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        assertThat(hiddenAppsRepo.onlyHiddenAppsFlow.awaitItem()).isEmpty()
+        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf()) { it }
     }
 
     @Test
@@ -131,7 +129,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val installedApps = allApps
 
         appDrawerRepo.addApps(apps = installedApps)
-        assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(installedApps)
+        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps) { it }
 
         // provide updated app when updating
         every { testLauncherAppsManager.loadApp(packageName = appAfterUpdate.packageName) } returns AppWithComponent(
