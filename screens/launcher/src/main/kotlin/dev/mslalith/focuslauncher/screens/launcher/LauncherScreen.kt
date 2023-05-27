@@ -1,6 +1,8 @@
 package dev.mslalith.focuslauncher.screens.launcher
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +26,7 @@ fun LauncherScreen() {
     LauncherScreenInternal()
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun LauncherScreenInternal(
     launcherViewModel: LauncherViewModel = hiltViewModel()
@@ -53,12 +55,14 @@ internal fun LauncherScreenInternal(
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface
-    ) {
+    ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
             pageCount = 3,
             beyondBoundsPageCount = 2,
-            modifier = Modifier.padding(paddingValues = it)
+            modifier = Modifier
+                .padding(paddingValues = paddingValues)
+                .consumeWindowInsets(paddingValues = paddingValues)
         ) { page ->
             when (page) {
                 0 -> SettingsPage()
