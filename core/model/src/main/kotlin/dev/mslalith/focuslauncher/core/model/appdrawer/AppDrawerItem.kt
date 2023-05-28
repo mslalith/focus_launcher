@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.compose.runtime.Immutable
 import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.model.extensions.generateHashCode
 
 @Immutable
 data class AppDrawerItem(
@@ -13,5 +14,5 @@ data class AppDrawerItem(
     val color: Color?
 ) {
     val uniqueKey: Int
-        get() = app.packageName.hashCode() + (31 * icon.hashCode())
+        get() = listOf(app.packageName, icon, color).generateHashCode()
 }
