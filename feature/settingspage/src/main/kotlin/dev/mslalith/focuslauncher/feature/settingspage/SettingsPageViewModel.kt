@@ -48,7 +48,7 @@ internal class SettingsPageViewModel @Inject constructor(
     )
 
     private val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
-        .combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { appDrawerViewType, appDrawerIconViewType ->
+        .combine(flow = appDrawerSettingsRepo.appDrawerIconViewTypeFlow) { appDrawerViewType, appDrawerIconViewType ->
             appDrawerViewType == AppDrawerViewType.GRID || appDrawerIconViewType != AppDrawerIconViewType.TEXT
         }.withinScope(initialValue = DEFAULT_SHOW_ICON_PACK)
 
@@ -66,7 +66,7 @@ internal class SettingsPageViewModel @Inject constructor(
     val settingsSheetState: StateFlow<SettingsSheetState> = flowOf(value = defaultSettingsSheetState)
         .combine(flow = appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
             state.copy(appDrawerViewType = appDrawerViewType)
-        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { state, appDrawerIconViewType ->
+        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewTypeFlow) { state, appDrawerIconViewType ->
             state.copy(appDrawerIconViewType = appDrawerIconViewType)
         }.combine(flow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
             state.copy(showAppGroupHeader = showAppGroupHeader)
@@ -118,7 +118,7 @@ internal class SettingsPageViewModel @Inject constructor(
     }
 
     private suspend fun updateAppDrawerIconViewTypeBasedOnAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
-        val appDrawerIconViewType = appDrawerSettingsRepo.appDrawerIconViewType.first()
+        val appDrawerIconViewType = appDrawerSettingsRepo.appDrawerIconViewTypeFlow.first()
         if (appDrawerViewType == AppDrawerViewType.GRID && appDrawerIconViewType == AppDrawerIconViewType.TEXT) updateAppDrawerIconViewType(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
     }
 }

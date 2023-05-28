@@ -28,7 +28,7 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
             AppDrawerViewType.values().first { it.index == index }
         }
 
-    override val appDrawerIconViewType: Flow<AppDrawerIconViewType> = settingsDataStore.data
+    override val appDrawerIconViewTypeFlow: Flow<AppDrawerIconViewType> = settingsDataStore.data
         .map { preferences ->
             val index = preferences[PREFERENCES_APP_DRAWER_ICON_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_ICON_VIEW_TYPE.index
             AppDrawerIconViewType.values().first { it.index == index }

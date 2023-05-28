@@ -52,7 +52,7 @@ internal class AppDrawerSettingsRepoTest : CoroutineTest() {
     @Test
     fun `verify app drawer icon view type change`() = runCoroutineTest {
         verifyChange(
-            flow = repo.appDrawerIconViewType,
+            flow = repo.appDrawerIconViewTypeFlow,
             initialItem = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE,
             mutate = {
                 val newItem = AppDrawerIconViewType.COLORED

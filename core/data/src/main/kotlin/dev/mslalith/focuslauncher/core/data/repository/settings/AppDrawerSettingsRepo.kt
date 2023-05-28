@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface AppDrawerSettingsRepo {
     val appDrawerViewTypeFlow: Flow<AppDrawerViewType>
     val appIconsVisibilityFlow: Flow<Boolean>
-    val appDrawerIconViewType: Flow<AppDrawerIconViewType>
+    val appDrawerIconViewTypeFlow: Flow<AppDrawerIconViewType>
     val searchBarVisibilityFlow: Flow<Boolean>
     val appGroupHeaderVisibilityFlow: Flow<Boolean>
 

@@ -66,7 +66,7 @@ internal class AppDrawerPageViewModel @Inject constructor(
     val appDrawerPageState = flowOf(value = defaultAppDrawerPageState)
         .combine(flow = appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
             state.copy(appDrawerViewType = appDrawerViewType)
-        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { state, appDrawerIconViewType ->
+        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewTypeFlow) { state, appDrawerIconViewType ->
             state.copy(appDrawerIconViewType = appDrawerIconViewType)
         }.combine(flow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
             state.copy(showAppGroupHeader = showAppGroupHeader)
