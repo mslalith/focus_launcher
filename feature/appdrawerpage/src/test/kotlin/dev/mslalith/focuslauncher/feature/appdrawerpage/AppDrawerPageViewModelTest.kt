@@ -13,7 +13,7 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSetting
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
@@ -124,4 +124,4 @@ private suspend fun AppDrawerPageViewModel.assertDrawerApps(
     appDrawerPageState.assertFor(expected = expected) { it.allAppsState.toTestApps() }
 }
 
-private fun LoadingState<ImmutableList<AppWithIconFavorite>>.toTestApps(): List<App>? = getOrNull()?.map { it.appWithIcon.app }
+private fun LoadingState<ImmutableList<AppDrawerItem>>.toTestApps(): List<App>? = getOrNull()?.map { it.app }
