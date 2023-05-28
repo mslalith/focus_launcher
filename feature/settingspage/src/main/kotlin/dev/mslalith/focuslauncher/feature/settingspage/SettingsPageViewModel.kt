@@ -7,19 +7,21 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_ICON_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
-import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_SHOW_ICON_PACK
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
@@ -38,8 +40,8 @@ internal class SettingsPageViewModel @Inject constructor(
     )
 
     private val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
-        .combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { appDrawerViewType, areAppIconsVisible ->
-            appDrawerViewType == AppDrawerViewType.GRID || areAppIconsVisible
+        .combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { appDrawerViewType, appDrawerIconViewType ->
+            appDrawerViewType == AppDrawerViewType.GRID || appDrawerIconViewType != AppDrawerIconViewType.TEXT
         }.withinScope(initialValue = DEFAULT_SHOW_ICON_PACK)
 
     val settingsState: StateFlow<SettingsState> = flowOf(value = defaultSettingsState)
@@ -72,19 +74,20 @@ internal class SettingsPageViewModel @Inject constructor(
     }
 
     val appDrawerViewTypeStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow.withinScope(initialValue = DEFAULT_APP_DRAWER_VIEW_TYPE)
-    val appIconsVisibilityStateFlow = appDrawerSettingsRepo.appIconsVisibilityFlow.withinScope(initialValue = DEFAULT_APP_ICONS)
+    val appDrawerIconViewTypeStateFlow = appDrawerSettingsRepo.appDrawerIconViewType.withinScope(initialValue = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
     val searchBarVisibilityStateFlow = appDrawerSettingsRepo.searchBarVisibilityFlow.withinScope(initialValue = DEFAULT_SEARCH_BAR)
     val appGroupHeaderVisibilityStateFlow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.withinScope(initialValue = DEFAULT_APP_GROUP_HEADER)
 
     fun updateAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
         appCoroutineDispatcher.launchInIO {
+            updateAppDrawerIconViewTypeBasedOnAppDrawerViewType(appDrawerViewType = appDrawerViewType)
             appDrawerSettingsRepo.updateAppDrawerViewType(appDrawerViewType = appDrawerViewType)
         }
     }
 
-    fun toggleAppIconsVisibility() {
+    fun updateAppDrawerIconViewType(appDrawerIconViewType: AppDrawerIconViewType) {
         appCoroutineDispatcher.launchInIO {
-            appDrawerSettingsRepo.toggleAppIconsVisibility()
+            appDrawerSettingsRepo.updateAppDrawerIconViewType(appDrawerIconViewType = appDrawerIconViewType)
         }
     }
 
@@ -98,5 +101,10 @@ internal class SettingsPageViewModel @Inject constructor(
         appCoroutineDispatcher.launchInIO {
             appDrawerSettingsRepo.toggleAppGroupHeaderVisibility()
         }
+    }
+
+    private suspend fun updateAppDrawerIconViewTypeBasedOnAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
+        val appDrawerIconViewType = appDrawerSettingsRepo.appDrawerIconViewType.first()
+        if (appDrawerViewType == AppDrawerViewType.GRID && appDrawerIconViewType == AppDrawerIconViewType.TEXT) updateAppDrawerIconViewType(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
     }
 }

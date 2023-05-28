@@ -11,8 +11,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.Te
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.test.TestIconProvider
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
@@ -73,30 +72,29 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
 
     context (CoroutineScope)
     private suspend fun assertIconPackApps(expected: List<App>) {
-        val expectedApps = expected.toPackageNamed().disableAsSystem().toAppWithIconFavorites()
+        val expectedApps = expected.toPackageNamed().disableAsSystem().toAppDrawerItems()
         val actualApps = useCase(iconPackType = IconPackType.System).awaitItem()
 
         val expectedAppsWithoutIcon = expectedApps
-            .sortedBy { it.appWithIcon.app.packageName }
-            .map { it.appWithIcon.app to it.isFavorite }
+            .sortedBy { it.app.packageName }
+            .map { it.app to it.isFavorite }
 
         val actualAppsWithoutIcon = actualApps
-            .sortedBy { it.appWithIcon.app.packageName }
-            .map { it.appWithIcon.app to it.isFavorite }
+            .sortedBy { it.app.packageName }
+            .map { it.app to it.isFavorite }
 
         assertThat(actualAppsWithoutIcon).isEqualTo(expectedAppsWithoutIcon)
     }
 
-    private fun List<App>.toAppWithIconFavorites(): List<AppWithIconFavorite> = map {
-        AppWithIconFavorite(
-            appWithIcon = AppWithIcon(
-                icon = iconProvider.iconFor(
-                    appWithComponent = testLauncherAppsManager.loadApp(packageName = it.packageName),
-                    iconPackType = IconPackType.System
-                ),
-                app = it
+    private fun List<App>.toAppDrawerItems(): List<AppDrawerItem> = map {
+        AppDrawerItem(
+            app = it,
+            isFavorite = false,
+            icon = iconProvider.iconFor(
+                appWithComponent = testLauncherAppsManager.loadApp(packageName = it.packageName),
+                iconPackType = IconPackType.System
             ),
-            isFavorite = false
+            color = null
         )
     }
 }

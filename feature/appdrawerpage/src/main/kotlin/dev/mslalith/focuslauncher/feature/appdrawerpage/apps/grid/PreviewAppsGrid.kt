@@ -15,7 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
@@ -24,7 +25,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun PreviewAppsGrid(
     modifier: Modifier = Modifier,
-    appsState: LoadingState<ImmutableList<AppWithIconFavorite>>,
+    appsState: LoadingState<ImmutableList<AppDrawerItem>>,
     topSpacing: Dp = 16.dp,
     bottomSpacing: Dp = 16.dp
 ) {
@@ -57,7 +58,7 @@ fun PreviewAppsGrid(
 @Composable
 private fun PreviewAppsContent(
     modifier: Modifier = Modifier,
-    apps: ImmutableList<AppWithIconFavorite>,
+    apps: ImmutableList<AppDrawerItem>,
     columnCount: Int = 4,
     topSpacing: Dp,
     bottomSpacing: Dp
@@ -80,10 +81,11 @@ private fun PreviewAppsContent(
 
             items(
                 items = apps,
-                key = { it.appWithIcon.uniqueKey }
+                key = { it.uniqueKey }
             ) { app ->
                 AppDrawerGridItem(
-                    appWithIconFavorite = app,
+                    appDrawerItem = app,
+                    appDrawerIconViewType = AppDrawerIconViewType.ICONS,
                     onClick = {},
                     onLongClick = {},
                     modifier = Modifier.animateItemPlacement()

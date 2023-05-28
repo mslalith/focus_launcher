@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.model
 
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 
 object Constants {
@@ -42,6 +43,7 @@ object Constants {
 
             object AppDrawer {
                 val DEFAULT_APP_DRAWER_VIEW_TYPE = AppDrawerViewType.GRID
+                val DEFAULT_APP_DRAWER_ICON_VIEW_TYPE = AppDrawerIconViewType.ICONS
                 const val DEFAULT_APP_ICONS = true
                 const val DEFAULT_SEARCH_BAR = true
                 const val DEFAULT_APP_GROUP_HEADER = true

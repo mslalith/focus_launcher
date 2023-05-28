@@ -8,10 +8,12 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import dev.mslalith.focuslauncher.core.data.di.modules.SettingsProvider
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_ICON_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -24,6 +26,12 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
         .map { preferences ->
             val index = preferences[PREFERENCES_APP_DRAWER_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_VIEW_TYPE.index
             AppDrawerViewType.values().first { it.index == index }
+        }
+
+    override val appDrawerIconViewType: Flow<AppDrawerIconViewType> = settingsDataStore.data
+        .map { preferences ->
+            val index = preferences[PREFERENCES_APP_DRAWER_ICON_VIEW_TYPE] ?: DEFAULT_APP_DRAWER_ICON_VIEW_TYPE.index
+            AppDrawerIconViewType.values().first { it.index == index }
         }
 
     override val appIconsVisibilityFlow: Flow<Boolean> = settingsDataStore.data
@@ -44,6 +52,12 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
     override suspend fun updateAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
         settingsDataStore.edit {
             it[PREFERENCES_APP_DRAWER_VIEW_TYPE] = appDrawerViewType.index
+        }
+    }
+
+    override suspend fun updateAppDrawerIconViewType(appDrawerIconViewType: AppDrawerIconViewType) {
+        settingsDataStore.edit {
+            it[PREFERENCES_APP_DRAWER_ICON_VIEW_TYPE] = appDrawerIconViewType.index
         }
     }
 
@@ -74,6 +88,7 @@ internal class AppDrawerSettingsRepoImpl @Inject constructor(
 
     companion object {
         private val PREFERENCES_APP_DRAWER_VIEW_TYPE = intPreferencesKey(name = "preferences_app_drawer_view_type")
+        private val PREFERENCES_APP_DRAWER_ICON_VIEW_TYPE = intPreferencesKey(name = "preferences_app_drawer_icon_view_type")
         private val PREFERENCES_APP_ICONS_VISIBILITY = booleanPreferencesKey(name = "preferences_app_icons_visibility")
         private val PREFERENCES_SEARCH_BAR_VISIBILITY = booleanPreferencesKey(name = "preferences_search_bar_visibility")
         private val PREFERENCES_APP_GROUP_HEADER_VISIBILITY = booleanPreferencesKey(name = "preferences_app_group_header_visibility")

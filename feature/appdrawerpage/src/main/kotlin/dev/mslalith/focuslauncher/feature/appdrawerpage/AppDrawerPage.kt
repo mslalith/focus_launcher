@@ -28,7 +28,7 @@ import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
@@ -72,20 +72,20 @@ internal fun AppDrawerPageInternal(
 
     var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
 
-    fun onAppClick(appWithIconFavorite: AppWithIconFavorite) {
+    fun onAppClick(appDrawerItem: AppDrawerItem) {
         focusManager.clearFocus()
-        context.launchApp(app = appWithIconFavorite.appWithIcon.app)
+        context.launchApp(app = appDrawerItem.app)
     }
 
-    fun showMoreOptions(appWithIconFavorite: AppWithIconFavorite) {
+    fun showMoreOptions(appDrawerItem: AppDrawerItem) {
         focusManager.clearFocus()
         viewManager.showBottomSheet {
             MoreOptionsBottomSheet(
-                appWithIconFavorite = appWithIconFavorite,
+                appDrawerItem = appDrawerItem,
                 addToFavorites = appDrawerPageViewModel::addToFavorites,
                 removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
                 addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
-                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appWithIconFavorite.appWithIcon.app },
+                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appDrawerItem.app },
                 onClose = { viewManager.hideBottomSheet() }
             )
         }
@@ -121,7 +121,7 @@ internal fun AppDrawerPageInternal(
                     when (appDrawerPageState.appDrawerViewType) {
                         AppDrawerViewType.LIST -> AppsList(
                             apps = allAppsState.value,
-                            showAppIcons = appDrawerPageState.showAppIcons,
+                            appDrawerIconViewType = appDrawerPageState.appDrawerIconViewType,
                             showAppGroupHeader = appDrawerPageState.showAppGroupHeader,
                             isSearchQueryEmpty = appDrawerPageState.searchBarQuery.isEmpty(),
                             onAppClick = ::onAppClick,
@@ -130,6 +130,7 @@ internal fun AppDrawerPageInternal(
 
                         AppDrawerViewType.GRID -> AppsGrid(
                             apps = allAppsState.value,
+                            appDrawerIconViewType = appDrawerPageState.appDrawerIconViewType,
                             onAppClick = ::onAppClick,
                             onAppLongClick = ::showMoreOptions
                         )
