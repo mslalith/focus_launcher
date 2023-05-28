@@ -47,7 +47,7 @@ internal fun AppDrawerSettingsSheetInternal(
     onUpdateAppDrawerViewType: (AppDrawerViewType) -> Unit,
     onUpdateAppDrawerIconViewType: (AppDrawerIconViewType) -> Unit,
     onToggleSearchBarVisibility: () -> Unit,
-    onToggleAppGroupHeaderVisibility: () -> Unit,
+    onToggleAppGroupHeaderVisibility: () -> Unit
 ) {
     val context = LocalContext.current
 
