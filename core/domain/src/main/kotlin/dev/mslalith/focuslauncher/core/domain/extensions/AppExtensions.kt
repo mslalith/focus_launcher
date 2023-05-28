@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.core.domain.extensions
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.toColor
 import androidx.palette.graphics.Palette
@@ -10,6 +11,12 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
+
+private fun AppWithIcon.extractIconColor(): Color? {
+    val appIconPalette = Palette.from(icon.toBitmap()).generate()
+    return appIconPalette.dominantSwatch?.rgb?.toColor()
+}
 
 context (IconProvider)
 internal fun List<AppWithComponent>.toAppWithIcons(iconPackType: IconPackType): List<AppWithIcon> = mapNotNull { appWithComponent ->
@@ -39,10 +46,15 @@ internal fun List<App>.toAppsWithNoColor(): List<AppWithColor> = map { app ->
 }
 
 internal fun List<AppWithIcon>.toAppsWithColor(): List<AppWithColor> = map { appWithIcon ->
-    val appIconPalette = Palette.from(appWithIcon.icon.toBitmap()).generate()
-    val extractedColor = appIconPalette.dominantSwatch?.rgb?.toColor()
     AppWithColor(
         app = appWithIcon.app,
-        color = extractedColor
+        color = appWithIcon.extractIconColor()
     )
 }
+
+internal fun AppWithIcon.toFavoriteItem(isFavorite: Boolean): AppDrawerItem = AppDrawerItem(
+    app = app,
+    isFavorite = isFavorite,
+    icon = icon,
+    color = extractIconColor()
+)

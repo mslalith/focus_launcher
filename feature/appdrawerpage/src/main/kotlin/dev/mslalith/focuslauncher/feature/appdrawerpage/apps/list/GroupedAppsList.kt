@@ -5,18 +5,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun GroupedAppsList(
     modifier: Modifier,
-    apps: ImmutableList<AppWithIconFavorite>,
+    apps: ImmutableList<AppDrawerItem>,
     character: Char,
-    showAppIcons: Boolean,
+    appDrawerIconViewType: AppDrawerIconViewType,
     showAppGroupHeader: Boolean,
-    onAppClick: (AppWithIconFavorite) -> Unit,
-    onAppLongClick: (AppWithIconFavorite) -> Unit
+    onAppClick: (AppDrawerItem) -> Unit,
+    onAppLongClick: (AppDrawerItem) -> Unit
 ) {
     Column(
         modifier = modifier.padding(top = 20.dp)
@@ -26,8 +27,8 @@ internal fun GroupedAppsList(
         }
         apps.forEach { app ->
             AppDrawerListItem(
-                appWithIconFavorite = app,
-                showAppIcons = showAppIcons,
+                appDrawerItem = app,
+                appDrawerIconViewType = appDrawerIconViewType,
                 onClick = onAppClick,
                 onLongClick = onAppLongClick
             )

@@ -11,12 +11,12 @@ import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_ICON_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
-import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_ICONS
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
 import dev.mslalith.focuslauncher.core.model.app.App
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
@@ -53,28 +53,28 @@ internal class AppDrawerPageViewModel @Inject constructor(
     private val defaultAppDrawerPageState = AppDrawerPageState(
         allAppsState = LoadingState.Loading,
         appDrawerViewType = DEFAULT_APP_DRAWER_VIEW_TYPE,
-        showAppIcons = DEFAULT_APP_ICONS,
+        appDrawerIconViewType = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE,
         showAppGroupHeader = DEFAULT_APP_GROUP_HEADER,
         showSearchBar = DEFAULT_SEARCH_BAR,
         searchBarQuery = searchBarQueryStateFlow.value
     )
 
-    private val allAppsWithIcons: Flow<List<AppWithIconFavorite>> = getAppDrawerIconicAppsUseCase(
+    private val allAppDrawerItems: Flow<List<AppDrawerItem>> = getAppDrawerIconicAppsUseCase(
         searchQueryFlow = searchBarQueryStateFlow
     ).flowOn(context = appCoroutineDispatcher.io)
 
     val appDrawerPageState = flowOf(value = defaultAppDrawerPageState)
         .combine(flow = appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
             state.copy(appDrawerViewType = appDrawerViewType)
-        }.combine(flow = appDrawerSettingsRepo.appIconsVisibilityFlow) { state, showAppIcons ->
-            state.copy(showAppIcons = showAppIcons)
+        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { state, appDrawerIconViewType ->
+            state.copy(appDrawerIconViewType = appDrawerIconViewType)
         }.combine(flow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
             state.copy(showAppGroupHeader = showAppGroupHeader)
         }.combine(flow = appDrawerSettingsRepo.searchBarVisibilityFlow) { state, showSearchBar ->
             state.copy(showSearchBar = showSearchBar)
         }.combine(flow = searchBarQueryStateFlow) { state, searchBarQuery ->
             state.copy(searchBarQuery = searchBarQuery)
-        }.combine(flow = allAppsWithIcons) { state, apps ->
+        }.combine(flow = allAppDrawerItems) { state, apps ->
             state.copy(allAppsState = LoadingState.Loaded(value = apps.toImmutableList()))
         }.withinScope(initialValue = defaultAppDrawerPageState)
 

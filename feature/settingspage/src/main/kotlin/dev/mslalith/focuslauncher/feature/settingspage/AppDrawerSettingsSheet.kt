@@ -29,7 +29,6 @@ internal fun AppDrawerSettingsSheet(
 
     val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsStateWithLifecycle()
     val appDrawerIconViewType by settingsPageViewModel.appDrawerIconViewTypeStateFlow.collectAsStateWithLifecycle()
-    val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsStateWithLifecycle()
     val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsStateWithLifecycle()
     val showSearchBar by settingsPageViewModel.searchBarVisibilityStateFlow.collectAsStateWithLifecycle()
 
@@ -37,19 +36,19 @@ internal fun AppDrawerSettingsSheet(
         derivedStateOf { appDrawerViewType == AppDrawerViewType.GRID }
     }
 
-    val textIconsList = remember {
+    val appViewTypeList = remember {
         listOf(
             AppDrawerViewType.LIST.uiText to R.drawable.ic_list,
             AppDrawerViewType.GRID.uiText to R.drawable.ic_grid
         ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
-    val appDrawerIconViewTypeList = remember {
-        listOf(
-            AppDrawerIconViewType.TEXT.uiText to R.drawable.ic_app_drawer_text,
-            AppDrawerIconViewType.ICONS.uiText to R.drawable.ic_app_drawer_icons,
-            AppDrawerIconViewType.COLORED.uiText to R.drawable.ic_app_drawer_colored
-        ).map { it.first.string(context = context) to it.second }.toImmutableList()
+    val appDrawerIconViewTypeList = remember(key1 = appDrawerViewType) {
+        buildList {
+            if (appDrawerViewType == AppDrawerViewType.LIST) add(element = AppDrawerIconViewType.TEXT.uiText to R.drawable.ic_app_drawer_text)
+            add(element = AppDrawerIconViewType.ICONS.uiText to R.drawable.ic_app_drawer_icons)
+            add(element = AppDrawerIconViewType.COLORED.uiText to R.drawable.ic_app_drawer_colored)
+        }.map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
     Column(
@@ -58,10 +57,10 @@ internal fun AppDrawerSettingsSheet(
         SettingsSelectableChooserItem(
             text = stringResource(id = R.string.apps_view_type),
             subText = appDrawerViewType.uiText.string(),
-            textIconsList = textIconsList,
+            textIconsList = appViewTypeList,
             selectedItem = appDrawerViewType.uiText.string(),
             onItemSelected = { index ->
-                val viewTypeName = textIconsList[index].first
+                val viewTypeName = appViewTypeList[index].first
                 val viewType = AppDrawerViewType.values().first { it.uiText.string(context = context) == viewTypeName }
                 settingsPageViewModel.updateAppDrawerViewType(appDrawerViewType = viewType)
             }

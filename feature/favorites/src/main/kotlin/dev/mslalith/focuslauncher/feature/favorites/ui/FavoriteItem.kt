@@ -11,21 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.ColorUtils
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
-import dev.mslalith.focuslauncher.feature.favorites.extensions.blendWith
-import dev.mslalith.focuslauncher.feature.favorites.extensions.luminate
+import dev.mslalith.focuslauncher.core.ui.remember.rememberAppColor
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -39,22 +32,8 @@ internal fun FavoriteItem(
 ) {
     val backgroundColor = MaterialTheme.colorScheme.surface
     val contentColor = MaterialTheme.colorScheme.onSurface
-    val primaryColor = MaterialTheme.colorScheme.primary
 
-    var appIconBasedColor by remember { mutableStateOf(value = primaryColor.copy(alpha = 0.6f)) }
-
-    LaunchedEffect(appWithColor, primaryColor, backgroundColor, contentColor) {
-        var color = appWithColor.color?.toArgb()?.let(::Color) ?: primaryColor
-        color = color.luminate(threshold = 0.36f, value = 0.6f)
-
-        val contrastThreshold = 2.5f
-        val contrast = ColorUtils.calculateContrast(color.toArgb(), backgroundColor.toArgb()).toFloat()
-
-        appIconBasedColor = if (contrast < contrastThreshold) color.blendWith(
-            color = contentColor,
-            ratio = (contrastThreshold - contrast) / contrastThreshold
-        ) else color
-    }
+    val appIconBasedColor = rememberAppColor(graphicsColor = appWithColor.color)
 
     val animatedColor by animateColorAsState(
         label = "Animated color",

@@ -14,19 +14,20 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.common.extensions.groupByImmutable
 import dev.mslalith.focuslauncher.core.common.extensions.isAlphabet
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun AppsList(
-    apps: ImmutableList<AppWithIconFavorite>,
-    showAppIcons: Boolean,
+    apps: ImmutableList<AppDrawerItem>,
+    appDrawerIconViewType: AppDrawerIconViewType,
     showAppGroupHeader: Boolean,
     isSearchQueryEmpty: Boolean,
-    onAppClick: (AppWithIconFavorite) -> Unit,
-    onAppLongClick: (AppWithIconFavorite) -> Unit
+    onAppClick: (AppDrawerItem) -> Unit,
+    onAppLongClick: (AppDrawerItem) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val topSpacing = configuration.screenHeightDp.dp * 0.2f
@@ -35,7 +36,7 @@ internal fun AppsList(
     val groupedApps by remember(key1 = apps) {
         derivedStateOf {
             apps.groupByImmutable { appModel ->
-                appModel.appWithIcon.app.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
+                appModel.app.displayName.first().let { if (it.isAlphabet()) it.uppercaseChar() else '#' }
             }
         }
     }
@@ -60,7 +61,7 @@ internal fun AppsList(
                 GroupedAppsList(
                     apps = apps,
                     character = character,
-                    showAppIcons = showAppIcons,
+                    appDrawerIconViewType = appDrawerIconViewType,
                     showAppGroupHeader = showAppGroupHeader && groupedApps.size != 1,
                     onAppClick = onAppClick,
                     onAppLongClick = onAppLongClick,

@@ -12,7 +12,7 @@ import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
-import dev.mslalith.focuslauncher.core.model.app.AppWithIconFavorite
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
@@ -43,7 +43,7 @@ internal class IconPackViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _iconPackType = MutableStateFlow<IconPackType?>(value = null)
-    private val _allAppsStateFlow = MutableStateFlow<LoadingState<ImmutableList<AppWithIconFavorite>>>(value = LoadingState.Loading)
+    private val _allAppsStateFlow = MutableStateFlow<LoadingState<ImmutableList<AppDrawerItem>>>(value = LoadingState.Loading)
 
     private val defaultIconPackState = IconPackState(
         allApps = _allAppsStateFlow.value,
