@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.settingspage
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.string
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
@@ -26,6 +28,7 @@ internal fun AppDrawerSettingsSheet(
     val context = LocalContext.current
 
     val appDrawerViewType by settingsPageViewModel.appDrawerViewTypeStateFlow.collectAsStateWithLifecycle()
+    val appDrawerIconViewType by settingsPageViewModel.appDrawerIconViewTypeStateFlow.collectAsStateWithLifecycle()
     val showAppIcons by settingsPageViewModel.appIconsVisibilityStateFlow.collectAsStateWithLifecycle()
     val showAppGroupHeader by settingsPageViewModel.appGroupHeaderVisibilityStateFlow.collectAsStateWithLifecycle()
     val showSearchBar by settingsPageViewModel.searchBarVisibilityStateFlow.collectAsStateWithLifecycle()
@@ -38,6 +41,14 @@ internal fun AppDrawerSettingsSheet(
         listOf(
             AppDrawerViewType.LIST.uiText to R.drawable.ic_list,
             AppDrawerViewType.GRID.uiText to R.drawable.ic_grid
+        ).map { it.first.string(context = context) to it.second }.toImmutableList()
+    }
+
+    val appDrawerIconViewTypeList = remember {
+        listOf(
+            AppDrawerIconViewType.TEXT.uiText to R.drawable.ic_app_drawer_text,
+            AppDrawerIconViewType.ICONS.uiText to R.drawable.ic_app_drawer_icons,
+            AppDrawerIconViewType.COLORED.uiText to R.drawable.ic_app_drawer_colored
         ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
@@ -66,11 +77,18 @@ internal fun AppDrawerSettingsSheet(
             disabled = isViewTypeGrid,
             onClick = settingsPageViewModel::toggleAppGroupHeaderVisibility
         )
-        SettingsSelectableSwitchItem(
-            text = stringResource(id = R.string.show_app_icons),
-            checked = showAppIcons,
-            disabled = isViewTypeGrid,
-            onClick = settingsPageViewModel::toggleAppIconsVisibility
+        SettingsSelectableChooserItem(
+            text = stringResource(id = R.string.app_icon_type),
+            subText = appDrawerIconViewType.uiText.string(),
+            textIconsList = appDrawerIconViewTypeList,
+            showText = false,
+            itemHorizontalArrangement = Arrangement.Center,
+            selectedItem = appDrawerIconViewType.uiText.string(),
+            onItemSelected = { index ->
+                val iconViewTypeName = appDrawerIconViewTypeList[index].first
+                val iconViewType = AppDrawerIconViewType.values().first { it.uiText.string(context = context) == iconViewTypeName }
+                settingsPageViewModel.updateAppDrawerIconViewType(appDrawerIconViewType = iconViewType)
+            }
         )
         VerticalSpacer(spacing = 12.dp)
     }

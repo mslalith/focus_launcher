@@ -30,6 +30,10 @@
     <string name="show_search_bar">Show Search Bar</string>
     <string name="group_apps_by_character">Group Apps by Character</string>
     <string name="show_app_icons">Show App Icons</string>
+    <string name="app_icon_type">App Icon Type</string>
+    <string name="text">Text</string>
+    <string name="icons">Icons</string>
+    <string name="colored">Colored</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
     <string name="confirm">Confirm</string>
