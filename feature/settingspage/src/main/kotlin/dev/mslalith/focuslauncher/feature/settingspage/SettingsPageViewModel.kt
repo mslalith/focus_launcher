@@ -18,6 +18,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.ui.extensions.launchInIO
 import dev.mslalith.focuslauncher.core.ui.extensions.withinScope
+import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsSheetState
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -39,6 +40,13 @@ internal class SettingsPageViewModel @Inject constructor(
         isDefaultLauncher = DEFAULT_IS_DEFAULT_LAUNCHER
     )
 
+    private val defaultSettingsSheetState = SettingsSheetState(
+        appDrawerViewType = DEFAULT_APP_DRAWER_VIEW_TYPE,
+        appDrawerIconViewType = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE,
+        showAppGroupHeader = DEFAULT_APP_GROUP_HEADER,
+        showSearchBar = DEFAULT_SEARCH_BAR
+    )
+
     private val canShowIconPackStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow
         .combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { appDrawerViewType, appDrawerIconViewType ->
             appDrawerViewType == AppDrawerViewType.GRID || appDrawerIconViewType != AppDrawerIconViewType.TEXT
@@ -54,6 +62,17 @@ internal class SettingsPageViewModel @Inject constructor(
         }.combine(flow = canShowIconPackStateFlow) { state, showIconPack ->
             state.copy(showIconPack = showIconPack)
         }.withinScope(initialValue = defaultSettingsState)
+
+    val settingsSheetState: StateFlow<SettingsSheetState> = flowOf(value = defaultSettingsSheetState)
+        .combine(flow = appDrawerSettingsRepo.appDrawerViewTypeFlow) { state, appDrawerViewType ->
+            state.copy(appDrawerViewType = appDrawerViewType)
+        }.combine(flow = appDrawerSettingsRepo.appDrawerIconViewType) { state, appDrawerIconViewType ->
+            state.copy(appDrawerIconViewType = appDrawerIconViewType)
+        }.combine(flow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow) { state, showAppGroupHeader ->
+            state.copy(showAppGroupHeader = showAppGroupHeader)
+        }.combine(flow = appDrawerSettingsRepo.searchBarVisibilityFlow) { state, showSearchBar ->
+            state.copy(showSearchBar = showSearchBar)
+        }.withinScope(initialValue = defaultSettingsSheetState)
 
     fun toggleStatusBarVisibility() {
         appCoroutineDispatcher.launchInIO {
@@ -72,11 +91,6 @@ internal class SettingsPageViewModel @Inject constructor(
             generalSettingsRepo.setIsDefaultLauncher(isDefault = context.isDefaultLauncher())
         }
     }
-
-    val appDrawerViewTypeStateFlow = appDrawerSettingsRepo.appDrawerViewTypeFlow.withinScope(initialValue = DEFAULT_APP_DRAWER_VIEW_TYPE)
-    val appDrawerIconViewTypeStateFlow = appDrawerSettingsRepo.appDrawerIconViewType.withinScope(initialValue = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
-    val searchBarVisibilityStateFlow = appDrawerSettingsRepo.searchBarVisibilityFlow.withinScope(initialValue = DEFAULT_SEARCH_BAR)
-    val appGroupHeaderVisibilityStateFlow = appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.withinScope(initialValue = DEFAULT_APP_GROUP_HEADER)
 
     fun updateAppDrawerViewType(appDrawerViewType: AppDrawerViewType) {
         appCoroutineDispatcher.launchInIO {
