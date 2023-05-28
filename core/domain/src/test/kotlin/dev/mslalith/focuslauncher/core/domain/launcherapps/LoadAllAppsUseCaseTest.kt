@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.data.database.usecase.room.CloseDatabaseUseCase
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
@@ -12,6 +13,7 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.toAppsWithComponents
 import io.mockk.spyk
 import io.mockk.verify
+import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -34,6 +36,9 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
     @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
+    @Inject
+    lateinit var closeDatabaseUseCase: CloseDatabaseUseCase
+
     private val launcherAppsManager = spyk<TestLauncherAppsManager>()
 
     private lateinit var useCase: LoadAllAppsUseCase
@@ -45,6 +50,11 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
             launcherAppsManager = launcherAppsManager,
             appDrawerRepo = appDrawerRepo
         )
+    }
+
+    @After
+    fun teardown() {
+        closeDatabaseUseCase()
     }
 
     @Test
