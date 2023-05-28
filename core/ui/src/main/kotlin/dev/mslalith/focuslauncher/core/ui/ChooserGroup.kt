@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -25,8 +26,8 @@ fun ChooserGroup(
     Row(
         modifier = modifier
     ) {
-        textIconsList.forEachIndexed { index, textIcon ->
-            val isSelected = selectedItem == textIcon.first
+        textIconsList.forEachIndexed { index, (text, icon) ->
+            val isSelected = selectedItem == text
             val backgroundColor by animateColorAsState(
                 label = "Background Color",
                 targetValue = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
@@ -40,8 +41,8 @@ fun ChooserGroup(
             )
 
             TextIconButton(
-                text = if (showText) textIcon.first else null,
-                icon = textIcon.second,
+                text = if (showText) text else null,
+                icon = icon,
                 backgroundColor = backgroundColor,
                 contentColor = contentColor,
                 horizontalArrangement = itemHorizontalArrangement,
@@ -49,6 +50,7 @@ fun ChooserGroup(
                     if (!isSelected) onItemSelected(index)
                 },
                 modifier = Modifier
+                    .testSemantics(tag = text)
                     .padding(horizontal = 4.dp)
                     .weight(weight = 1f)
             )

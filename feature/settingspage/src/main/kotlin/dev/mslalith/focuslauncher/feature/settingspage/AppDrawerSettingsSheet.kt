@@ -14,11 +14,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
+import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.string
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableChooserItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsSheetState
+import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -74,6 +76,8 @@ internal fun AppDrawerSettingsSheetInternal(
         modifier = modifier
     ) {
         SettingsSelectableChooserItem(
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APPS_VIEW_TYPE),
+            chooserGroupModifier = Modifier.testSemantics(tag = TestTags.SHEET_APPS_VIEW_TYPE_CHOOSER_GROUP),
             text = stringResource(id = R.string.apps_view_type),
             subText = settingsSheetState.appDrawerViewType.uiText.string(),
             textIconsList = appViewTypeList,
@@ -85,17 +89,25 @@ internal fun AppDrawerSettingsSheetInternal(
             }
         )
         SettingsSelectableSwitchItem(
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_SHOW_SEARCH_BAR) {
+                testBoolean(value = settingsSheetState.showSearchBar)
+            },
             text = stringResource(id = R.string.show_search_bar),
             checked = settingsSheetState.showSearchBar,
             onClick = onToggleSearchBarVisibility
         )
         SettingsSelectableSwitchItem(
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_SHOW_APP_GROUP_HEADER) {
+                testBoolean(value = settingsSheetState.showAppGroupHeader)
+            },
             text = stringResource(id = R.string.group_apps_by_character),
             checked = settingsSheetState.showAppGroupHeader,
             disabled = isViewTypeGrid,
             onClick = onToggleAppGroupHeaderVisibility
         )
         SettingsSelectableChooserItem(
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APP_ICON_TYPE),
+            chooserGroupModifier = Modifier.testSemantics(tag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP),
             text = stringResource(id = R.string.app_icon_type),
             subText = settingsSheetState.appDrawerIconViewType.uiText.string(),
             textIconsList = appDrawerIconViewTypeList,
