@@ -3,7 +3,6 @@ package dev.mslalith.focuslauncher.feature.settingspage
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -51,8 +50,8 @@ internal fun AppDrawerSettingsSheetInternal(
 ) {
     val context = LocalContext.current
 
-    val isViewTypeGrid by remember {
-        derivedStateOf { settingsSheetState.appDrawerViewType == AppDrawerViewType.GRID }
+    val isViewTypeGrid = remember(key1 = settingsSheetState.appDrawerViewType) {
+        settingsSheetState.appDrawerViewType == AppDrawerViewType.GRID
     }
 
     val appViewTypeList = remember {
@@ -62,14 +61,12 @@ internal fun AppDrawerSettingsSheetInternal(
         ).map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
-    val appDrawerIconViewTypeList by remember {
-        derivedStateOf {
-            buildList {
-                if (settingsSheetState.appDrawerViewType == AppDrawerViewType.LIST) add(element = AppDrawerIconViewType.TEXT.uiText to R.drawable.ic_app_drawer_text)
-                add(element = AppDrawerIconViewType.ICONS.uiText to R.drawable.ic_app_drawer_icons)
-                add(element = AppDrawerIconViewType.COLORED.uiText to R.drawable.ic_app_drawer_colored)
-            }.map { it.first.string(context = context) to it.second }.toImmutableList()
-        }
+    val appDrawerIconViewTypeList = remember(key1 = settingsSheetState.appDrawerViewType) {
+        buildList {
+            if (settingsSheetState.appDrawerViewType == AppDrawerViewType.LIST) add(element = AppDrawerIconViewType.TEXT.uiText to R.drawable.ic_app_drawer_text)
+            add(element = AppDrawerIconViewType.ICONS.uiText to R.drawable.ic_app_drawer_icons)
+            add(element = AppDrawerIconViewType.COLORED.uiText to R.drawable.ic_app_drawer_colored)
+        }.map { it.first.string(context = context) to it.second }.toImmutableList()
     }
 
     Column(

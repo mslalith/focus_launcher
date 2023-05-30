@@ -111,9 +111,10 @@ class AppDrawerSettingsSheetKtTest {
         updateAppsViewType(appsViewType = AppDrawerViewType.LIST)
 
         onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE).performClick()
-        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).onChildren().filter(
-            matcher = hasTestTag(testTag = activity.getString(R.string.text))
-        ).assertCountEquals(expectedSize = 1)
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 1
+        )
     }
 
     @Test
@@ -121,9 +122,10 @@ class AppDrawerSettingsSheetKtTest {
         updateAppsViewType(appsViewType = AppDrawerViewType.GRID)
 
         onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE).performClick()
-        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).onChildren().filter(
-            matcher = hasTestTag(testTag = activity.getString(R.string.text))
-        ).assertCountEquals(expectedSize = 1)
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 0
+        )
     }
 
     @Test
@@ -144,6 +146,66 @@ class AppDrawerSettingsSheetKtTest {
         appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.grid))
 
         appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.icons))
+    }
+
+    @Test
+    fun `10 - when app icon view type is icons, on switching apps view type to list, text option must be shown and selection must not change`(): Unit = with(composeTestRule) {
+        val appsViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APPS_VIEW_TYPE)
+        val appIconViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE)
+        val appIconViewTypeChooserGroup = onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP)
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.GRID)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.grid))
+
+        updateAppIconViewType(iconViewType = AppDrawerIconViewType.ICONS)
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.icons))
+
+        // open chooser
+        appsViewTypeNode.performClick()
+
+        appIconViewTypeChooserGroup.assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 0
+        )
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.LIST)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.list))
+
+        appIconViewTypeChooserGroup.assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 1
+        )
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.icons))
+    }
+
+    @Test
+    fun `11 - when app icon view type is colored, on switching apps view type to list, text option must be shown and selection must not change`(): Unit = with(composeTestRule) {
+        val appsViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APPS_VIEW_TYPE)
+        val appIconViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE)
+        val appIconViewTypeChooserGroup = onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP)
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.GRID)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.grid))
+
+        updateAppIconViewType(iconViewType = AppDrawerIconViewType.COLORED)
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.colored))
+
+        // open chooser
+        appsViewTypeNode.performClick()
+
+        appIconViewTypeChooserGroup.assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 0
+        )
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.LIST)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.list))
+
+        appIconViewTypeChooserGroup.assertChildCount(
+            testTag = activity.getString(R.string.text),
+            count = 1
+        )
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.colored))
     }
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
@@ -195,6 +257,15 @@ private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, Comp
             testTag = iconViewType.uiText.string(context = activity)
         )
     ).performClick()
+}
+
+private fun SemanticsNodeInteraction.assertChildCount(
+    testTag: String,
+    count: Int
+) {
+    onChildren().filter(
+        matcher = hasTestTag(testTag = testTag)
+    ).assertCountEquals(expectedSize = count)
 }
 
 private fun SemanticsNodeInteraction.assertSettingsValue(value: String) {
