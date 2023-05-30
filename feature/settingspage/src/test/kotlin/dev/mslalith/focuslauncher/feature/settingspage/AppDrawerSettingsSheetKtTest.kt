@@ -5,11 +5,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.SemanticsNodeInteraction
-import androidx.compose.ui.test.assertAny
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasAnyChild
 import androidx.compose.ui.test.hasTestTag
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isEnabled
 import androidx.compose.ui.test.isNotEnabled
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
@@ -106,11 +106,54 @@ class AppDrawerSettingsSheetKtTest {
         }
     }
 
+    @Test
+    fun `07 - when apps view type is list, app icon view type must have text option`(): Unit = with(composeTestRule) {
+        updateAppsViewType(appsViewType = AppDrawerViewType.LIST)
+
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE).performClick()
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).onChildren().filter(
+            matcher = hasTestTag(testTag = activity.getString(R.string.text))
+        ).assertCountEquals(expectedSize = 1)
+    }
+
+    @Test
+    fun `08 - when apps view type is grid, app icon view type must not have text option`(): Unit = with(composeTestRule) {
+        updateAppsViewType(appsViewType = AppDrawerViewType.GRID)
+
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE).performClick()
+        onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP).onChildren().filter(
+            matcher = hasTestTag(testTag = activity.getString(R.string.text))
+        ).assertCountEquals(expectedSize = 1)
+    }
+
+    @Test
+    fun `09 - when app icon view type is text, on switching apps view type to grid, app icon view type must be set to icons`(): Unit = with(composeTestRule) {
+        val appsViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APPS_VIEW_TYPE)
+        val appIconViewTypeNode = onNodeWithTag(testTag = TestTags.SHEET_APP_ICON_TYPE)
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.LIST)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.list))
+
+        updateAppIconViewType(iconViewType = AppDrawerIconViewType.TEXT)
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.text))
+
+        // open chooser
+        appsViewTypeNode.performClick()
+
+        updateAppsViewType(appsViewType = AppDrawerViewType.GRID)
+        appsViewTypeNode.assertSettingsValue(value = activity.getString(R.string.grid))
+
+        appIconViewTypeNode.assertSettingsValue(value = activity.getString(R.string.icons))
+    }
+
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
             AppDrawerSettingsSheetInternal(
                 settingsSheetState = state,
-                onUpdateAppDrawerViewType = { state = state.copy(appDrawerViewType = it) },
+                onUpdateAppDrawerViewType = {
+                    state = state.copy(appDrawerViewType = it)
+                    if (it == AppDrawerViewType.GRID && state.appDrawerIconViewType == AppDrawerIconViewType.TEXT) state = state.copy(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
+                },
                 onUpdateAppDrawerIconViewType = { state = state.copy(appDrawerIconViewType = it) },
                 onToggleSearchBarVisibility = { state = state.copy(showSearchBar = !state.showSearchBar) },
                 onToggleAppGroupHeaderVisibility = { state = state.copy(showAppGroupHeader = !state.showAppGroupHeader) }

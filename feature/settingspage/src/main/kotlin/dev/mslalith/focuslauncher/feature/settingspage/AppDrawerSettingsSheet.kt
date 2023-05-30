@@ -75,13 +75,18 @@ internal fun AppDrawerSettingsSheetInternal(
     Column(
         modifier = modifier
     ) {
+        val appDrawerViewTypeValue = settingsSheetState.appDrawerViewType.uiText.string()
+        val appDrawerIconViewTypeValue = settingsSheetState.appDrawerIconViewType.uiText.string()
+
         SettingsSelectableChooserItem(
-            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APPS_VIEW_TYPE),
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APPS_VIEW_TYPE) {
+                testString(value = appDrawerViewTypeValue)
+            },
             chooserGroupModifier = Modifier.testSemantics(tag = TestTags.SHEET_APPS_VIEW_TYPE_CHOOSER_GROUP),
             text = stringResource(id = R.string.apps_view_type),
-            subText = settingsSheetState.appDrawerViewType.uiText.string(),
+            subText = appDrawerViewTypeValue,
             textIconsList = appViewTypeList,
-            selectedItem = settingsSheetState.appDrawerViewType.uiText.string(),
+            selectedItem = appDrawerViewTypeValue,
             onItemSelected = { index ->
                 val viewTypeName = appViewTypeList[index].first
                 val viewType = AppDrawerViewType.values().first { it.uiText.string(context = context) == viewTypeName }
@@ -106,14 +111,16 @@ internal fun AppDrawerSettingsSheetInternal(
             onClick = onToggleAppGroupHeaderVisibility
         )
         SettingsSelectableChooserItem(
-            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APP_ICON_TYPE),
+            modifier = Modifier.testSemantics(tag = TestTags.SHEET_APP_ICON_TYPE) {
+                testString(value = appDrawerIconViewTypeValue)
+            },
             chooserGroupModifier = Modifier.testSemantics(tag = TestTags.SHEET_APP_ICON_TYPE_CHOOSER_GROUP),
             text = stringResource(id = R.string.app_icon_type),
-            subText = settingsSheetState.appDrawerIconViewType.uiText.string(),
+            subText = appDrawerIconViewTypeValue,
             textIconsList = appDrawerIconViewTypeList,
             showText = false,
             itemHorizontalArrangement = Arrangement.Center,
-            selectedItem = settingsSheetState.appDrawerIconViewType.uiText.string(),
+            selectedItem = appDrawerIconViewTypeValue,
             onItemSelected = { index ->
                 val iconViewTypeName = appDrawerIconViewTypeList[index].first
                 val iconViewType = AppDrawerIconViewType.values().first { it.uiText.string(context = context) == iconViewTypeName }
