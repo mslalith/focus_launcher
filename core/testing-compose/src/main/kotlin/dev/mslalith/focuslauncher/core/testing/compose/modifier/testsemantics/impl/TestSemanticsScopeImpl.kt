@@ -12,6 +12,12 @@ internal class TestSemanticsScopeImpl(
     private val semanticsPropertyReceiver: SemanticsPropertyReceiver
 ) : TestSemanticsScope {
 
+    override fun testString(
+        value: String
+    ) = with(semanticsPropertyReceiver) {
+        this[TestSemanticsProperties.StringType] = value
+    }
+
     override fun testBoolean(
         value: Boolean
     ) = with(semanticsPropertyReceiver) {

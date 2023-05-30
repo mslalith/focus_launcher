@@ -22,6 +22,7 @@ import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.R
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertBooleanType
+import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertStringType
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsSheetState
 import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import org.junit.Before
@@ -154,5 +155,5 @@ private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, Comp
 }
 
 private fun SemanticsNodeInteraction.assertSettingsValue(value: String) {
-    onChildren().assertAny(matcher = hasText(text = value))
+    assertStringType(value = value)
 }
