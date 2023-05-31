@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackAfterFirstLoadUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
@@ -45,6 +46,9 @@ class AppDrawerPageViewModelTest : CoroutineTest() {
     lateinit var getAppDrawerIconicAppsUseCase: GetAppDrawerIconicAppsUseCase
 
     @Inject
+    lateinit var reloadIconPackAfterFirstLoadUseCase: ReloadIconPackAfterFirstLoadUseCase
+
+    @Inject
     lateinit var appDrawerSettingsRepo: AppDrawerSettingsRepo
 
     @Inject
@@ -71,6 +75,7 @@ class AppDrawerPageViewModelTest : CoroutineTest() {
         hiltRule.inject()
         viewModel = AppDrawerPageViewModel(
             getAppDrawerIconicAppsUseCase = getAppDrawerIconicAppsUseCase,
+            reloadIconPackAfterFirstLoadUseCase = reloadIconPackAfterFirstLoadUseCase,
             appDrawerSettingsRepo = appDrawerSettingsRepo,
             reloadIconPackUseCase = reloadIconPackUseCase,
             appDrawerRepo = appDrawerRepo,
