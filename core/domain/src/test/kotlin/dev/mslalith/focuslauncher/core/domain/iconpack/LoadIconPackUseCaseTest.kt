@@ -29,12 +29,15 @@ class LoadIconPackUseCaseTest : CoroutineTest() {
 
     @Test
     fun `01 - load icon pack`() = runCoroutineTest {
+        val iconPackType = IconPackType.System
+
         backgroundScope.launch {
             testIconPackManager.iconPackLoadEventFlow.test {
-                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loading)
-                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loaded)
+                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loading(iconPackType = iconPackType))
+                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loaded(iconPackType = iconPackType))
             }
         }
-        useCase(iconPackType = IconPackType.System)
+
+        useCase(iconPackType = iconPackType)
     }
 }
