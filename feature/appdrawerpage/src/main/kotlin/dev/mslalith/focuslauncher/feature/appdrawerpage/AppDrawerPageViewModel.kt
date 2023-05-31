@@ -10,6 +10,7 @@ import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
+import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackAfterFirstLoadUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_ICON_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
@@ -33,6 +34,7 @@ import kotlinx.coroutines.flow.onEach
 @HiltViewModel
 internal class AppDrawerPageViewModel @Inject constructor(
     getAppDrawerIconicAppsUseCase: GetAppDrawerIconicAppsUseCase,
+    reloadIconPackAfterFirstLoadUseCase: ReloadIconPackAfterFirstLoadUseCase,
     appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val reloadIconPackUseCase: ReloadIconPackUseCase,
     private val appDrawerRepo: AppDrawerRepo,
@@ -48,6 +50,10 @@ internal class AppDrawerPageViewModel @Inject constructor(
             .onEach { searchAppQuery(query = "") }
             .flowOn(context = appCoroutineDispatcher.io)
             .launchIn(scope = viewModelScope)
+
+        appCoroutineDispatcher.launchInIO {
+            reloadIconPackAfterFirstLoadUseCase()
+        }
     }
 
     private val defaultAppDrawerPageState = AppDrawerPageState(
