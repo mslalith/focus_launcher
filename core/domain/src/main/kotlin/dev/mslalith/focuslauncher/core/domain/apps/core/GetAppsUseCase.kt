@@ -12,6 +12,7 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
+import dev.mslalith.focuslauncher.core.model.isTerminal
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -34,9 +35,10 @@ internal class GetAppsUseCase @Inject constructor(
         iconPackType: IconPackType
     ): Flow<List<AppWithIcon>> = appsFlow.flatMapLatest {
         appsWithComponents(appsFlow = appsFlow)
-    }.triggerOnIconPackLoadComplete(flow = iconPackManager.iconPackLoadEventFlow) { appsWithComponents, _ ->
-        iconPackManager.loadIconPack(iconPackType = iconPackType)
-        appsWithComponents.toIcons(iconPackType = iconPackType)
+    }.triggerOnIconPackLoadComplete(flow = iconPackManager.iconPackLoadEventFlow) { appsWithComponents, iconPackLoadEvent ->
+        val type = iconPackLoadEvent?.iconPackType ?: iconPackType
+        iconPackManager.loadIconPack(iconPackType = type)
+        appsWithComponents.toIcons(iconPackType = type)
     }
 
     fun appsWithComponents(
@@ -73,7 +75,7 @@ private fun <T, R> Flow<T>.triggerOnIconPackLoadComplete(
     launch {
         flow.collectLatest { value ->
             lastValue?.let {
-                send(element = transform(it, value))
+                if (value.isTerminal) send(element = transform(it, value))
             }
         }
     }

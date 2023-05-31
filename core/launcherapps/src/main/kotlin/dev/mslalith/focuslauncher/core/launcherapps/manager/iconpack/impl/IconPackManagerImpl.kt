@@ -82,39 +82,42 @@ internal class IconPackManagerImpl @Inject constructor(
     private fun loadSystemTypeIcons(forceLoad: Boolean) {
         if (!forceLoad && currentIconPackType == IconPackType.System) return
 
-        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad)
         currentIconPackType = IconPackType.System
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad, iconPackType = IconPackType.System)
         iconCacheManager.clearCache()
         currentIconPackParser = null
-        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad)
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad, iconPackType = IconPackType.System)
     }
 
     private fun loadCustomTypeIcons(iconPackType: IconPackType.Custom, forceLoad: Boolean) {
-        if (!forceLoad && currentIconPackParser?.packageName == iconPackType.packageName) return
+        if (!forceLoad && currentIconPackType == iconPackType) return
 
-        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad)
         currentIconPackType = iconPackType
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad, iconPackType = iconPackType)
         iconCacheManager.clearCache()
         currentIconPackParser = iconCacheManager.iconPackFor(packageName = iconPackType.packageName)
         currentIconPackParser?.load()
-        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad)
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad, iconPackType = iconPackType)
     }
 }
 
-private fun MutableSharedFlow<IconPackLoadEvent>.updateStartLoad(forceLoad: Boolean) {
+private fun MutableSharedFlow<IconPackLoadEvent>.updateStartLoad(
+    forceLoad: Boolean,
+    iconPackType: IconPackType
+) {
     tryEmit(
         value = when (forceLoad) {
-            true -> IconPackLoadEvent.Reloading
-            false -> IconPackLoadEvent.Loading
+            true -> IconPackLoadEvent.Reloading(iconPackType = iconPackType)
+            false -> IconPackLoadEvent.Loading(iconPackType = iconPackType)
         }
     )
 }
 
-private fun MutableSharedFlow<IconPackLoadEvent>.updateEndLoad(forceLoad: Boolean) {
+private fun MutableSharedFlow<IconPackLoadEvent>.updateEndLoad(forceLoad: Boolean, iconPackType: IconPackType) {
     tryEmit(
         value = when (forceLoad) {
-            true -> IconPackLoadEvent.Reloaded
-            false -> IconPackLoadEvent.Loaded
+            true -> IconPackLoadEvent.Reloaded(iconPackType = iconPackType)
+            false -> IconPackLoadEvent.Loaded(iconPackType = iconPackType)
         }
     )
 }

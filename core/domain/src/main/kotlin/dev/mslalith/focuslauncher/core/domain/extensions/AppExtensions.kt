@@ -13,9 +13,11 @@ import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 
-private fun AppWithIcon.extractIconColor(): Color? {
+private fun AppWithIcon.extractIconColor(): Color? = try {
     val appIconPalette = Palette.from(icon.toBitmap()).generate()
-    return appIconPalette.dominantSwatch?.rgb?.toColor()
+    appIconPalette.dominantSwatch?.rgb?.toColor()
+} catch (ex: IllegalArgumentException) {
+    null
 }
 
 context (IconProvider)
