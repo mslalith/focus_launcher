@@ -83,21 +83,21 @@ internal class IconPackManagerImpl @Inject constructor(
         if (!forceLoad && currentIconPackType == IconPackType.System) return
 
         currentIconPackType = IconPackType.System
-        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad, iconPackType = IconPackType.System)
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad = forceLoad, iconPackType = IconPackType.System)
         iconCacheManager.clearCache()
         currentIconPackParser = null
-        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad, iconPackType = IconPackType.System)
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad = forceLoad, iconPackType = IconPackType.System)
     }
 
     private fun loadCustomTypeIcons(iconPackType: IconPackType.Custom, forceLoad: Boolean) {
         if (!forceLoad && currentIconPackType == iconPackType) return
 
         currentIconPackType = iconPackType
-        _iconPackLoadEventFlow.updateStartLoad(forceLoad =  forceLoad, iconPackType = iconPackType)
+        _iconPackLoadEventFlow.updateStartLoad(forceLoad = forceLoad, iconPackType = iconPackType)
         iconCacheManager.clearCache()
         currentIconPackParser = iconCacheManager.iconPackFor(packageName = iconPackType.packageName)
         currentIconPackParser?.load()
-        _iconPackLoadEventFlow.updateEndLoad(forceLoad =  forceLoad, iconPackType = iconPackType)
+        _iconPackLoadEventFlow.updateEndLoad(forceLoad = forceLoad, iconPackType = iconPackType)
     }
 }
 

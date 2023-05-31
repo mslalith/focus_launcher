@@ -326,6 +326,10 @@ formatting:
   TrailingCommaOnDeclarationSite:
     active: true
     useTrailingCommaOnDeclarationSite: false
+  NoMultipleSpaces:
+    active: true
+  NoTrailingSpaces:
+    active: true
 
 naming:
   active: true

@@ -24,7 +24,7 @@ class CurrentTimeKtTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-    
+
     @Test
     fun `01 - verify initial time`(): Unit = with(composeTestRule) {
         setContent {
