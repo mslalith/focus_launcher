@@ -78,7 +78,7 @@ internal abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindGeneralSettingsRepo(repo: GeneralSettingsRepoImpl):  GeneralSettingsRepo
+    abstract fun bindGeneralSettingsRepo(repo: GeneralSettingsRepoImpl): GeneralSettingsRepo
 
     @Binds
     @Singleton

@@ -36,7 +36,7 @@ internal class EditFavoritesViewModel @Inject constructor(
 
     private val _showHiddenAppsInFavorites = MutableStateFlow(value = false)
 
-    val favoritesStateFlow: StateFlow<ImmutableList<SelectedApp>> = appDrawerRepo.allAppsFlow
+    private val favoritesStateFlow: StateFlow<ImmutableList<SelectedApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedApp(app = app, isSelected = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { selectedApp ->

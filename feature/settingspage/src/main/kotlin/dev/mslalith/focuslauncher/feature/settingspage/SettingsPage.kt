@@ -14,7 +14,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
+import dev.mslalith.focuslauncher.feature.clock24.settings.ClockSettingsSheet
+import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
+import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
+import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
@@ -27,6 +32,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaul
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
+import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
 
 @Composable
 fun SettingsPage() {
@@ -43,13 +49,57 @@ internal fun SettingsPageInternal(
     navigateTo: (Screen) -> Unit
 ) {
     val context = LocalContext.current
+    val viewManager = LocalLauncherViewManager.current
+
     val settingsState by settingsPageViewModel.settingsState.collectAsStateWithLifecycle()
+
+    fun onThemeClick() {
+        viewManager.showBottomSheet {
+            ThemeSelectionSheet(closeBottomSheet = viewManager::hideBottomSheet)
+        }
+    }
+
+    fun onAppDrawerClick() {
+        viewManager.showBottomSheet {
+            AppDrawerSettingsSheet()
+        }
+    }
+
+    fun onClockWidgetClick() {
+        viewManager.showBottomSheet {
+            ClockSettingsSheet()
+        }
+    }
+
+    fun onLunarPhaseWidgetClick() {
+        viewManager.showBottomSheet {
+            LunarPhaseSettingsSheet(
+                properties = LunarPhaseSettingsProperties(
+                    navigateToCurrentPlace = {
+                        viewManager.hideBottomSheet()
+                        navigateTo(Screen.CurrentPlace)
+                    }
+                )
+            )
+        }
+    }
+
+    fun onQuotesWidgetClick() {
+        viewManager.showBottomSheet {
+            QuotesSettingsSheet()
+        }
+    }
 
     SettingsPageInternal(
         settingsState = settingsState,
-        toggleStatusBarVisibility = settingsPageViewModel::toggleStatusBarVisibility,
-        toggleNotificationShade = settingsPageViewModel::toggleNotificationShade,
-        refreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) },
+        onThemeClick = ::onThemeClick,
+        onToggleStatusBarVisibility = settingsPageViewModel::toggleStatusBarVisibility,
+        onToggleNotificationShade = settingsPageViewModel::toggleNotificationShade,
+        onAppDrawerClick = ::onAppDrawerClick,
+        onClockWidgetClick = ::onClockWidgetClick,
+        onLunarPhaseWidgetClick = ::onLunarPhaseWidgetClick,
+        onQuotesWidgetClick = ::onQuotesWidgetClick,
+        onRefreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) },
         navigateTo = navigateTo
     )
 }
@@ -57,9 +107,14 @@ internal fun SettingsPageInternal(
 @Composable
 internal fun SettingsPageInternal(
     settingsState: SettingsState,
-    toggleStatusBarVisibility: () -> Unit,
-    toggleNotificationShade: () -> Unit,
-    refreshIsDefaultLauncher: () -> Unit,
+    onThemeClick: () -> Unit,
+    onToggleStatusBarVisibility: () -> Unit,
+    onToggleNotificationShade: () -> Unit,
+    onAppDrawerClick: () -> Unit,
+    onClockWidgetClick: () -> Unit,
+    onLunarPhaseWidgetClick: () -> Unit,
+    onQuotesWidgetClick: () -> Unit,
+    onRefreshIsDefaultLauncher: () -> Unit,
     navigateTo: (Screen) -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -73,18 +128,18 @@ internal fun SettingsPageInternal(
         SettingsHeader()
         VerticalSpacer(spacing = 12.dp)
 
-        ChangeTheme()
+        ChangeTheme(onClick = onThemeClick)
 
         EditFavorites { navigateTo(Screen.EditFavorites) }
         HideApps { navigateTo(Screen.HideApps) }
 
         ToggleStatusBar(
             showStatusBar = settingsState.showStatusBar,
-            onClick = toggleStatusBarVisibility
+            onClick = onToggleStatusBarVisibility
         )
         PullDownNotifications(
             enableNotificationShade = settingsState.canDrawNotificationShade,
-            onClick = toggleNotificationShade
+            onClick = onToggleNotificationShade
         )
 
         IconPack(
@@ -92,15 +147,17 @@ internal fun SettingsPageInternal(
             onClick = { navigateTo(Screen.IconPack) }
         )
 
-        AppDrawer()
+        AppDrawer(onClick = onAppDrawerClick)
 
         Widgets(
-            navigateToCurrentPlace = { navigateTo(Screen.CurrentPlace) }
+            onClockWidgetClick = onClockWidgetClick,
+            onLunarPhaseWidgetClick = onLunarPhaseWidgetClick,
+            onQuotesWidgetClick = onQuotesWidgetClick
         )
 
         SetAsDefaultLauncher(
             isDefaultLauncher = settingsState.isDefaultLauncher,
-            refreshIsDefaultLauncher = refreshIsDefaultLauncher
+            refreshIsDefaultLauncher = onRefreshIsDefaultLauncher
         )
 
         About { navigateTo(Screen.About) }

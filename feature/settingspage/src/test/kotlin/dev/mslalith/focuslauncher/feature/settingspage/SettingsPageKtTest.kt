@@ -24,7 +24,6 @@ import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import org.junit.Before
 import org.junit.FixMethodOrder
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,25 +36,34 @@ import org.robolectric.annotation.Config
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class SettingsPageKtTest {
 
+    companion object {
+        const val THEME_SELECTION_SHEET = "Theme Selection Sheet"
+        const val APP_DRAWER_SHEET = "App Drawer Sheet"
+        const val CLOCK_WIDGET_SHEET = "Clock Widget Sheet"
+        const val LUNAR_PHASE_WIDGET_SHEET = "Lunar Phase Widget Sheet"
+        const val QUOTES_WIDGET_SHEET = "Quotes Widget Sheet"
+    }
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     private var currentScreen: Screen? by mutableStateOf(value = null)
+    private var bottomSheetName: String? by mutableStateOf(value = null)
     private var state: SettingsState by mutableStateOf(value = stateWith())
 
     @Before
     fun setup() {
         currentScreen = null
+        bottomSheetName = null
         state = stateWith()
         composeTestRule.initializeWith()
     }
 
     @Test
-    @Ignore("TODO")
     fun `01 - when change theme is clicked, theme selection bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        onNodeWithTag(testTag = TestTags.THEME_SELECTION_SHEET).assertDoesNotExist()
+        assertThat(bottomSheetName).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_CHANGE_THEME).performScrollToAndClick()
-        onNodeWithTag(testTag = TestTags.THEME_SELECTION_SHEET).assertIsDisplayed()
+        assertThat(bottomSheetName).isEqualTo(THEME_SELECTION_SHEET)
     }
 
     @Test
@@ -100,11 +108,10 @@ class SettingsPageKtTest {
     }
 
     @Test
-    @Ignore("TODO")
     fun `07 - when app drawer is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        onNodeWithTag(testTag = TestTags.APP_DRAWER_SETTINGS_SHEET).assertDoesNotExist()
+        assertThat(bottomSheetName).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_APP_DRAWER).performScrollToAndClick()
-        waitForTagAndAssertIsDisplayed(testTag = TestTags.APP_DRAWER_SETTINGS_SHEET)
+        assertThat(bottomSheetName).isEqualTo(APP_DRAWER_SHEET)
     }
 
     @Test
@@ -120,19 +127,19 @@ class SettingsPageKtTest {
     }
 
     @Test
-    @Ignore("TODO")
     fun `09 - on click of clock widget, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        onNodeWithTag(testTag = TestTags.CLOCK_SETTINGS_SHEET).assertDoesNotExist()
+        assertThat(bottomSheetName).isNull()
+        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollToAndClick()
         onNode(matcher = hasWidgetType(widgetType = WidgetType.CLOCK)).performScrollToAndClick()
-        waitForTagAndAssertIsDisplayed(testTag = TestTags.CLOCK_SETTINGS_SHEET)
+        assertThat(bottomSheetName).isEqualTo(CLOCK_WIDGET_SHEET)
     }
 
     @Test
-    @Ignore("TODO")
     fun `10 - when lunar phase widget is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        onNodeWithTag(testTag = TestTags.LUNAR_PHASE_SETTINGS_SHEET).assertDoesNotExist()
+        assertThat(bottomSheetName).isNull()
+        onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollToAndClick()
         onNode(matcher = hasWidgetType(widgetType = WidgetType.LUNAR_PHASE)).performScrollToAndClick()
-        waitForTagAndAssertIsDisplayed(testTag = TestTags.LUNAR_PHASE_SETTINGS_SHEET)
+        assertThat(bottomSheetName).isEqualTo(LUNAR_PHASE_WIDGET_SHEET)
     }
 
     @Test
@@ -172,9 +179,14 @@ class SettingsPageKtTest {
                 ProvideSystemUiController {
                     SettingsPageInternal(
                         settingsState = state,
-                        toggleStatusBarVisibility = { state = state.copy(showStatusBar = !state.showStatusBar) },
-                        toggleNotificationShade = { state = state.copy(canDrawNotificationShade = !state.canDrawNotificationShade) },
-                        refreshIsDefaultLauncher = { },
+                        onThemeClick = { bottomSheetName = THEME_SELECTION_SHEET },
+                        onToggleStatusBarVisibility = { state = state.copy(showStatusBar = !state.showStatusBar) },
+                        onToggleNotificationShade = { state = state.copy(canDrawNotificationShade = !state.canDrawNotificationShade) },
+                        onAppDrawerClick = { bottomSheetName = APP_DRAWER_SHEET },
+                        onClockWidgetClick = { bottomSheetName = CLOCK_WIDGET_SHEET },
+                        onLunarPhaseWidgetClick = { bottomSheetName = LUNAR_PHASE_WIDGET_SHEET },
+                        onQuotesWidgetClick = { bottomSheetName = QUOTES_WIDGET_SHEET },
+                        onRefreshIsDefaultLauncher = { },
                         navigateTo = { currentScreen = it }
                     )
                 }

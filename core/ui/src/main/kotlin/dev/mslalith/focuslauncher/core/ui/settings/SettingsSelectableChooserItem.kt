@@ -12,6 +12,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun SettingsSelectableChooserItem(
     modifier: Modifier = Modifier,
+    chooserGroupModifier: Modifier = Modifier,
     text: String,
     subText: String,
     textIconsList: ImmutableList<Pair<String, Int>>,
@@ -35,7 +36,7 @@ fun SettingsSelectableChooserItem(
             selectedItem = selectedItem,
             showText = showText,
             itemHorizontalArrangement = itemHorizontalArrangement,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = chooserGroupModifier.padding(vertical = 8.dp)
         )
     }
 }

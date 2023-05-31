@@ -16,9 +16,11 @@ object TestTags {
     const val ITEM_ABOUT = "settings_item_about"
 
     const val WIDGETS_ITEM = "widgets_item"
-    const val THEME_SELECTION_SHEET = "theme_selection_sheet"
-    const val APP_DRAWER_SETTINGS_SHEET = "app_drawer_settings_sheet"
-    const val CLOCK_SETTINGS_SHEET = "clock_settings_sheet"
-    const val LUNAR_PHASE_SETTINGS_SHEET = "lunar_phase_settings_sheet"
-    const val QUOTE_SETTINGS_SHEET = "quote_settings_sheet"
+
+    const val SHEET_APPS_VIEW_TYPE = "sheet_apps_view_type"
+    const val SHEET_APPS_VIEW_TYPE_CHOOSER_GROUP = "sheet_apps_view_type_chooser_group"
+    const val SHEET_SHOW_SEARCH_BAR = "sheet_show_search_bar"
+    const val SHEET_SHOW_APP_GROUP_HEADER = "sheet_show_app_group_header"
+    const val SHEET_APP_ICON_TYPE = "sheet_app_icon_type"
+    const val SHEET_APP_ICON_TYPE_CHOOSER_GROUP = "sheet_app_icon_type_chooser_group"
 }

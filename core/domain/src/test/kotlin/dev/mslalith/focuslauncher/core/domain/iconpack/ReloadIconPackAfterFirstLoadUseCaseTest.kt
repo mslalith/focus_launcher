@@ -16,28 +16,36 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-class LoadIconPackUseCaseTest : CoroutineTest() {
+class ReloadIconPackAfterFirstLoadUseCaseTest : CoroutineTest() {
+
+    private lateinit var useCase: ReloadIconPackAfterFirstLoadUseCase
+    private lateinit var loadIconPackUseCase: LoadIconPackUseCase
 
     private val testIconPackManager = TestIconPackManager()
 
-    private lateinit var useCase: LoadIconPackUseCase
-
     @Before
     fun setup() {
-        useCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
+        useCase = ReloadIconPackAfterFirstLoadUseCase(
+            iconPackManager = testIconPackManager,
+            reloadIconPackUseCase = ReloadIconPackUseCase(iconPackManager = testIconPackManager)
+        )
+        loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
     }
 
     @Test
-    fun `01 - load icon pack`() = runCoroutineTest {
+    fun `01 - wait until icon pack is loaded and run the use case`() = runCoroutineTest {
         val iconPackType = IconPackType.System
 
         backgroundScope.launch {
             testIconPackManager.iconPackLoadEventFlow.test {
                 assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loading(iconPackType = iconPackType))
                 assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Loaded(iconPackType = iconPackType))
+                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Reloading(iconPackType = iconPackType))
+                assertThat(awaitItem()).isEqualTo(IconPackLoadEvent.Reloaded(iconPackType = iconPackType))
             }
         }
 
-        useCase(iconPackType = iconPackType)
+        loadIconPackUseCase(iconPackType = iconPackType)
+        useCase()
     }
 }

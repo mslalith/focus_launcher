@@ -7,6 +7,9 @@ import dev.mslalith.focuslauncher.core.model.app.SelectedApp
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 
 object TestSemanticsProperties {
+    val StringType = SemanticsPropertyKey<String>(name = "StringType")
+    val BooleanType = SemanticsPropertyKey<Boolean>(name = "BooleanType")
+
     val BiasAlignmentHorizontal = SemanticsPropertyKey<BiasAlignment.Horizontal>(name = "BiasAlignmentHorizontal")
     val BiasAlignmentVertical = SemanticsPropertyKey<BiasAlignment.Vertical>(name = "BiasAlignmentVertical")
 

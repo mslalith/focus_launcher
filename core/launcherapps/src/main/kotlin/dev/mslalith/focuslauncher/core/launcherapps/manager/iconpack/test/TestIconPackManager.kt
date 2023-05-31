@@ -19,15 +19,15 @@ class TestIconPackManager : IconPackManager {
     override fun fetchInstalledIconPacks() = Unit
 
     override suspend fun loadIconPack(iconPackType: IconPackType) {
-        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Loading)
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Loading(iconPackType = iconPackType))
         delay(timeMillis = 2000)
-        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Loaded)
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Loaded(iconPackType = iconPackType))
     }
 
     override suspend fun reloadIconPack() {
-        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloading)
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloading(iconPackType = IconPackType.System))
         delay(timeMillis = 2000)
-        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloaded)
+        _iconPackLoadEventFlow.tryEmit(value = IconPackLoadEvent.Reloaded(iconPackType = IconPackType.System))
     }
 
     fun setIconPackApps(iconPacks: List<IconPack>) {

@@ -1,6 +1,7 @@
 plugins {
     id("focuslauncher.android.library")
     id("focuslauncher.android.library.compose")
+    id("focuslauncher.android.library.compose.testing")
 }
 
 android {

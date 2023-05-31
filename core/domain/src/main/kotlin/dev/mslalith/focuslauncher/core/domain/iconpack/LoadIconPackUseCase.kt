@@ -7,7 +7,7 @@ import javax.inject.Inject
 class LoadIconPackUseCase @Inject constructor(
     private val iconPackManager: IconPackManager
 ) {
-    suspend  operator fun invoke(iconPackType: IconPackType) = iconPackManager.loadIconPack(
+    suspend operator fun invoke(iconPackType: IconPackType) = iconPackManager.loadIconPack(
         iconPackType = iconPackType
     )
 }
