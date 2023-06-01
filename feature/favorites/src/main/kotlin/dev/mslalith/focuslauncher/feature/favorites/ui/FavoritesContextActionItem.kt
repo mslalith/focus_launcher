@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
 
 @Composable
 internal fun FavoritesContextActionItem(
-    contextModes: ImmutableList<KClass<FavoritesContextMode>>,
+    contextModes: ImmutableList<KClass<out FavoritesContextMode>>,
     currentContextMode: FavoritesContextMode,
     @DrawableRes iconRes: Int,
     onClick: () -> Unit
