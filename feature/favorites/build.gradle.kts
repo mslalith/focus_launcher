@@ -9,6 +9,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.palette.ktx)
-    implementation(libs.accompanist.flowlayout)
     implementation(libs.kotlinx.collections.immutable)
 }
