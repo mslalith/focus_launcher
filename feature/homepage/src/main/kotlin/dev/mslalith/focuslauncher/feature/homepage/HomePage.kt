@@ -1,5 +1,7 @@
 package dev.mslalith.focuslauncher.feature.homepage
 
+import android.content.Intent
+import android.provider.AlarmClock
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,6 +64,11 @@ internal fun HomePage(
 ) {
     val context = LocalContext.current
 
+    fun openClockApp() {
+        val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+        context.startActivity(intent)
+    }
+
     CompositionLocalProvider(LocalHomePadding provides HomePadding()) {
         val contentPaddingValues = LocalHomePadding.current.contentPaddingValues
         val horizontalPadding = contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
@@ -77,7 +84,10 @@ internal fun HomePage(
                 verticalArrangement = Arrangement.Bottom
             ) {
                 VerticalSpacer(spacing = topPadding)
-                ClockWidget(horizontalPadding = horizontalPadding)
+                ClockWidget(
+                    horizontalPadding = horizontalPadding,
+                    onClick = ::openClockApp
+                )
                 SpacedMoonCalendar(
                     onMoonCalendarClick = onMoonCalendarClick
                 )

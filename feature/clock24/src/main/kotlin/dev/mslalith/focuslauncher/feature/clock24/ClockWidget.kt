@@ -25,6 +25,8 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.core.ui.effects.SystemBroadcastReceiver
+import dev.mslalith.focuslauncher.core.ui.extensions.clickableNoRipple
+import dev.mslalith.focuslauncher.core.ui.extensions.modifyIf
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 
@@ -33,12 +35,14 @@ fun ClockWidget(
     modifier: Modifier = Modifier,
     horizontalPadding: Dp,
     verticalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null,
     contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     ClockWidgetInternal(
         modifier = modifier,
         horizontalPadding = horizontalPadding,
         verticalPadding = verticalPadding,
+        onClick = onClick,
         contentColor = contentColor
     )
 }
@@ -49,6 +53,7 @@ internal fun ClockWidgetInternal(
     clock24ViewModel: Clock24ViewModel = hiltViewModel(),
     horizontalPadding: Dp,
     verticalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null,
     contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     val clock24State by clock24ViewModel.clock24State.collectAsStateWithLifecycle()
@@ -59,6 +64,7 @@ internal fun ClockWidgetInternal(
         refreshTime = clock24ViewModel::refreshTime,
         horizontalPadding = horizontalPadding,
         verticalPadding = verticalPadding,
+        onClick = onClick,
         contentColor = contentColor
     )
 }
@@ -70,6 +76,7 @@ internal fun ClockWidget(
     refreshTime: () -> Unit,
     horizontalPadding: Dp,
     verticalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null,
     contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     val updatedRefreshTime by rememberUpdatedState(newValue = refreshTime)
@@ -95,6 +102,10 @@ internal fun ClockWidget(
         if (event == Lifecycle.Event.ON_RESUME) updatedRefreshTime()
     }
 
+    val clickModifier = Modifier.modifyIf(predicate = { onClick != null }) {
+        clickableNoRipple { onClick?.invoke() }
+    }
+
     Crossfade(
         label = "Show Clock 24 CrossFade",
         targetState = clock24State.showClock24,
@@ -112,6 +123,7 @@ internal fun ClockWidget(
         ) {
             if (showClock24) {
                 Clock24(
+                    modifier = clickModifier,
                     currentTime = clock24State.currentTime,
                     handleColor = contentColor,
                     offsetAnimationSpec = tween(durationMillis = clock24State.clock24AnimationDuration),
@@ -121,7 +133,9 @@ internal fun ClockWidget(
                 CurrentTime(
                     currentTime = clock24State.currentTime,
                     contentColor = contentColor,
-                    modifier = Modifier.padding(vertical = verticalPadding)
+                    modifier = Modifier
+                        .then(other = clickModifier)
+                        .padding(vertical = verticalPadding)
                 )
             }
         }
