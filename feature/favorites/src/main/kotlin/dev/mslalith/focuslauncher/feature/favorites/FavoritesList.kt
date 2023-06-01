@@ -6,8 +6,11 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +27,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.flowlayout.FlowRow
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
@@ -92,7 +94,7 @@ internal fun FavoritesList(
         addDefaultAppsToFavorites = addDefaultAppsToFavorites,
         removeFromFavorites = removeFromFavorites,
         reorderFavorite = reorderFavorite,
-        currentContextMode = favoritesState.favoritesContextualMode,
+        contextMode = favoritesState.favoritesContextualMode,
         isInContextualMode = isInContextualMode,
         isReordering = isReordering,
         hideContextualMode = hideContextualMode,
@@ -102,13 +104,14 @@ internal fun FavoritesList(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun FavoritesList(
     favoritesList: ImmutableList<AppWithColor>,
     addDefaultAppsToFavorites: () -> Unit,
     removeFromFavorites: (App) -> Unit,
     reorderFavorite: (App, App, () -> Unit) -> Unit,
-    currentContextMode: FavoritesContextMode,
+    contextMode: FavoritesContextMode,
     isInContextualMode: () -> Boolean,
     isReordering: () -> Boolean,
     hideContextualMode: () -> Unit,
@@ -117,7 +120,7 @@ internal fun FavoritesList(
     contentPadding: Dp
 ) {
     val context = LocalContext.current
-    val currentContextMode by rememberUpdatedState(newValue = currentContextMode)
+    val currentContextMode by rememberUpdatedState(newValue = contextMode)
 
     LaunchedEffect(key1 = favoritesList.isEmpty()) {
         if (favoritesList.isNotEmpty() || isReordering()) return@LaunchedEffect
@@ -163,12 +166,12 @@ internal fun FavoritesList(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = contentPadding),
-                mainAxisSpacing = 16.dp,
-                crossAxisSpacing = 12.dp
+                horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
             ) {
                 favoritesList.forEach { favoriteAppWithColor ->
                     ReusableContent(key = favoriteAppWithColor) {
                         FavoriteItem(
+                            modifier = Modifier.padding(vertical = 6.dp),
                             appWithColor = favoriteAppWithColor,
                             isInContextualMode = isInContextualMode,
                             isAppAboutToReorder = { isAppAboutToReorder(favoriteAppWithColor.app) },

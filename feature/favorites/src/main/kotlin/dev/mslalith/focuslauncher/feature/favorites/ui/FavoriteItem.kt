@@ -24,6 +24,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun FavoriteItem(
+    modifier: Modifier = Modifier,
     appWithColor: AppWithColor,
     isInContextualMode: () -> Boolean,
     isAppAboutToReorder: () -> Boolean,
@@ -46,7 +47,7 @@ internal fun FavoriteItem(
     fun textColor(): Color = if (isAppAboutToReorder()) backgroundColor else animatedColor
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor())
             .border(
