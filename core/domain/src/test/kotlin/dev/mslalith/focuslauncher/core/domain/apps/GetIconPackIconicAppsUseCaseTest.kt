@@ -10,7 +10,6 @@ import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsIconPackAwareUseC
 import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.GetIconPackAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.utils.toIconPack
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.test.TestIconProvider
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -20,6 +19,7 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.coroutines.CoroutineScope
 import org.junit.Before
