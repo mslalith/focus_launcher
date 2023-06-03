@@ -76,7 +76,18 @@ class EditFavoritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `03 - when favorites are cleared, every item in the list must not be selected`() = runCoroutineTest {
+    fun `03 - when all apps are removed from favorites, every item in the list must not be selected`() = runCoroutineTest {
+        val apps = TestApps.all
+
+        apps.forEach { viewModel.addToFavorites(app = it) }
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(apps.toSelectedAppWith(isSelected = true))
+
+        apps.forEach { viewModel.removeFromFavorites(app = it) }
+        assertThat(viewModel.editFavoritesState.awaitItem().favoriteApps).isEqualTo(apps.toSelectedAppWith(isSelected = false))
+    }
+
+    @Test
+    fun `04 - when favorites are cleared, every item in the list must not be selected`() = runCoroutineTest {
         val apps = TestApps.all
 
         apps.forEach { viewModel.addToFavorites(app = it) }
@@ -87,7 +98,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `04 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = runCoroutineTest {
+    fun `05 - when hidden apps are not shown & an app is hidden, it should not be listed in favorites`() = runCoroutineTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val apps = TestApps.all - hiddenApps.toSet()
 
@@ -98,7 +109,7 @@ class EditFavoritesViewModelTest : CoroutineTest() {
     }
 
     @Test
-    fun `05 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = runCoroutineTest {
+    fun `06 - when hidden apps are shown & an app is hidden, it should be listed in favorites as disabled`() = runCoroutineTest {
         val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
         val totalApps = TestApps.all
         val apps = totalApps - hiddenApps.toSet()
