@@ -22,6 +22,19 @@ detekt {
     buildUponDefaultConfig = true
 }
 
+setupTestLogging()
+
+fun Project.setupTestLogging() {
+    for (sub in subprojects) {
+        sub.tasks.withType<Test> {
+            testLogging {
+                events("standardOut")
+                showStandardStreams = true
+            }
+        }
+    }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
