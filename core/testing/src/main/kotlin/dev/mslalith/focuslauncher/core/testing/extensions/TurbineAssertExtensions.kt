@@ -6,6 +6,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 context (CoroutineScope)
+suspend fun <T> Flow<T>.assertFor(
+    expected: T
+) {
+    assertFor(
+        expected = expected,
+        valueFor = { it }
+    )
+}
+
+context (CoroutineScope)
 suspend fun <T, R> Flow<T>.assertFor(
     expected: R,
     valueFor: (T) -> R
