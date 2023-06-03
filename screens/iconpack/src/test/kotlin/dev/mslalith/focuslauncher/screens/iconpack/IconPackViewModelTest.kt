@@ -65,6 +65,7 @@ class IconPackViewModelTest : CoroutineTest() {
 
     private lateinit var viewModel: IconPackViewModel
 
+    private val testIconProvider = TestIconProvider()
     private val testIconPackManager = TestIconPackManager()
     private val fetchIconPacksUseCase = FetchIconPacksUseCase(iconPackManager = testIconPackManager)
     private val loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
@@ -121,14 +122,18 @@ class IconPackViewModelTest : CoroutineTest() {
 
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = selectedIconPackType)
     }
+
+    context (CoroutineScope)
+    private suspend fun StateFlow<IconPackState>.assertAllAppsWith(
+        apps: List<App>,
+        iconPackType: IconPackType
+    ) = with(testIconProvider) { assertAllAppsWith(expected = apps.toAppDrawerItems(iconPackType = iconPackType)) }
 }
 
 context (CoroutineScope)
 private suspend fun StateFlow<IconPackState>.assertAllAppsWith(
-    apps: List<App>,
-    iconPackType: IconPackType
+    expected: List<AppDrawerItem>
 ) {
-    val expected = apps.toAppDrawerItems(iconPackType = iconPackType)
     assertFor(
         expected = expected,
         valueFor = { it.allApps.getOrNull() },
@@ -137,11 +142,12 @@ private suspend fun StateFlow<IconPackState>.assertAllAppsWith(
     )
 }
 
+context (TestIconProvider)
 private fun List<App>.toAppDrawerItems(iconPackType: IconPackType): List<AppDrawerItem> = map { app ->
     AppDrawerItem(
         app = app,
         isFavorite = false,
-        icon = TestIconProvider().iconFor(
+        icon = iconFor(
             appWithComponent = AppWithComponent(
                 app = app,
                 componentName = ComponentName(app.packageName, app.packageName)
