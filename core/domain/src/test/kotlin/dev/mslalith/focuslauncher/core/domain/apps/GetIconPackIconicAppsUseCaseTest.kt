@@ -54,7 +54,7 @@ internal class GetIconPackIconicAppsUseCaseTest : CoroutineTest() {
 
     private val testLauncherAppsManager = TestLauncherAppsManager()
     private val testIconPackManager = TestIconPackManager()
-    private val testIconProvider = TestIconProvider()
+    private val testIconProvider = TestIconProvider
 
     @Before
     fun setup() {

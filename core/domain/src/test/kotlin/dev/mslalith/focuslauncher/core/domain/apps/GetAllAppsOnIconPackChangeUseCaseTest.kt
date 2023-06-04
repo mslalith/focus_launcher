@@ -50,7 +50,7 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
     private lateinit var useCase: GetAllAppsOnIconPackChangeUseCase
 
     private val testLauncherAppsManager by lazy { TestLauncherAppsManager() }
-    private val iconProvider by lazy { TestIconProvider() }
+    private val iconProvider by lazy { TestIconProvider }
 
     private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
