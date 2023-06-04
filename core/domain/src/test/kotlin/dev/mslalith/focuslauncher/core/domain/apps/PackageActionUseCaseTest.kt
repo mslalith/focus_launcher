@@ -81,10 +81,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val installedApps = allApps - setOf(appToInstall)
 
         appDrawerRepo.addApps(apps = installedApps)
-        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps) { it }
+        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps)
 
         packageActionUseCase(packageAction = PackageAction.Added(packageName = appToInstall.packageName))
-        appDrawerRepo.allAppsFlow.assertFor(expected = allApps) { it }
+        appDrawerRepo.allAppsFlow.assertFor(expected = allApps)
     }
 
     @Test
@@ -93,10 +93,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val appsAfterUninstall = allApps - setOf(appToUninstall)
 
         appDrawerRepo.addApps(apps = allApps)
-        appDrawerRepo.allAppsFlow.assertFor(expected = allApps) { it }
+        appDrawerRepo.allAppsFlow.assertFor(expected = allApps)
 
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        appDrawerRepo.allAppsFlow.assertFor(expected = appsAfterUninstall) { it }
+        appDrawerRepo.allAppsFlow.assertFor(expected = appsAfterUninstall)
     }
 
     @Test
@@ -105,9 +105,9 @@ class PackageActionUseCaseTest : CoroutineTest() {
         appDrawerRepo.addApps(apps = allApps)
         favoritesRepo.addToFavorites(app = appToUninstall)
 
-        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf(appToUninstall)) { it }
+        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf(appToUninstall))
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf()) { it }
+        favoritesRepo.onlyFavoritesFlow.assertFor(expected = listOf())
     }
 
     @Test
@@ -116,10 +116,10 @@ class PackageActionUseCaseTest : CoroutineTest() {
         appDrawerRepo.addApps(apps = allApps)
 
         hiddenAppsRepo.addToHiddenApps(app = appToUninstall)
-        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf(appToUninstall)) { it }
+        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf(appToUninstall))
 
         packageActionUseCase(packageAction = PackageAction.Removed(packageName = appToUninstall.packageName))
-        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf()) { it }
+        hiddenAppsRepo.onlyHiddenAppsFlow.assertFor(expected = listOf())
     }
 
     @Test
@@ -129,7 +129,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
         val installedApps = allApps
 
         appDrawerRepo.addApps(apps = installedApps)
-        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps) { it }
+        appDrawerRepo.allAppsFlow.assertFor(expected = installedApps)
 
         // provide updated app when updating
         every { testLauncherAppsManager.loadApp(packageName = appAfterUpdate.packageName) } returns AppWithComponent(

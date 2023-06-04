@@ -6,10 +6,10 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.domain.utils.toIconPacks
-import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
+import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule

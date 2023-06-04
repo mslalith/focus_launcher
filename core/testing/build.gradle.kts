@@ -8,6 +8,7 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+    api(project(":core:launcherapps"))
 
     api(libs.junit4)
     implementation(libs.androidx.test.junit)

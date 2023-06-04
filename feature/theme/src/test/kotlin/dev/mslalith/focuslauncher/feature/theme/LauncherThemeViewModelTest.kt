@@ -71,5 +71,5 @@ internal class LauncherThemeViewModelTest : CoroutineTest() {
 
 context (CoroutineScope)
 private suspend fun LauncherThemeViewModel.assertTheme(expected: Theme) {
-    currentTheme.assertFor(expected = expected) { it }
+    currentTheme.assertFor(expected = expected)
 }

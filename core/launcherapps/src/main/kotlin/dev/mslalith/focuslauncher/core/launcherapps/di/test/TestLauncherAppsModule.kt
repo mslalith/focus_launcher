@@ -42,5 +42,5 @@ internal object TestLauncherAppsModule {
 
     @Provides
     @Singleton
-    fun provideIconProvider(): IconProvider = TestIconProvider()
+    fun provideIconProvider(): IconProvider = TestIconProvider
 }

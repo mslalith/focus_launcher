@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +25,7 @@ import dev.mslalith.focuslauncher.feature.favorites.R
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlin.reflect.KClass
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -65,22 +67,50 @@ internal fun FavoritesContextHeader(
             )
         }
         FillSpacer()
-        FavoritesContextActionItem(
-            contextModes = persistentListOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class) as ImmutableList<KClass<FavoritesContextMode>>,
-            currentContextMode = currentContextMode,
-            iconRes = R.drawable.ic_drag_indicator,
+        FavoritesContextMoveActionItem(
+            contextMode = currentContextMode,
             onClick = {
                 handleReClickFor(contextMode = FavoritesContextMode.Reorder) { onReorderClick() }
             }
         )
         HorizontalSpacer(spacing = 4.dp)
-        FavoritesContextActionItem(
-            contextModes = persistentListOf(FavoritesContextMode.Remove::class) as ImmutableList<KClass<FavoritesContextMode>>,
-            currentContextMode = currentContextMode,
-            iconRes = R.drawable.ic_delete,
+        FavoritesContextDeleteActionItem(
+            contextMode = currentContextMode,
             onClick = {
                 handleReClickFor(contextMode = FavoritesContextMode.Remove) { onRemoveClick() }
             }
         )
     }
+}
+
+@Composable
+private fun FavoritesContextMoveActionItem(
+    contextMode: FavoritesContextMode,
+    onClick: () -> Unit
+) {
+    val contextModes: ImmutableList<KClass<out FavoritesContextMode>> = remember {
+        persistentListOf(FavoritesContextMode.Reorder::class, FavoritesContextMode.ReorderPickPosition::class).toImmutableList()
+    }
+    FavoritesContextActionItem(
+        contextModes = contextModes,
+        currentContextMode = contextMode,
+        iconRes = R.drawable.ic_drag_indicator,
+        onClick = onClick
+    )
+}
+
+@Composable
+private fun FavoritesContextDeleteActionItem(
+    contextMode: FavoritesContextMode,
+    onClick: () -> Unit
+) {
+    val contextModes: ImmutableList<KClass<out FavoritesContextMode>> = remember {
+        persistentListOf(FavoritesContextMode.Remove::class).toImmutableList()
+    }
+    FavoritesContextActionItem(
+        contextModes = contextModes,
+        currentContextMode = contextMode,
+        iconRes = R.drawable.ic_delete,
+        onClick = onClick
+    )
 }
