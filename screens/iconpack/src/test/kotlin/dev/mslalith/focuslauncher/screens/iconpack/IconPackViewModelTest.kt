@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.screens.iconpack
 
 import android.content.ComponentName
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -65,7 +66,7 @@ class IconPackViewModelTest : CoroutineTest() {
 
     private lateinit var viewModel: IconPackViewModel
 
-    private val testIconProvider = TestIconProvider()
+    private val testIconProvider = TestIconProvider
     private val testIconPackManager = TestIconPackManager()
     private val fetchIconPacksUseCase = FetchIconPacksUseCase(iconPackManager = testIconPackManager)
     private val loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
@@ -116,9 +117,11 @@ class IconPackViewModelTest : CoroutineTest() {
     fun `03 - when icon pack is changed, all apps with icons should have selected icon pack icons`() = runCoroutineTest {
         val selectedIconPackType = IconPackType.Custom(packageName = "com.test")
 
+        testIconProvider.setIconColor(color = Color.CYAN)
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = IconPackType.System)
 
         viewModel.updateSelectedIconPackApp(iconPackType = selectedIconPackType)
+        testIconProvider.setIconColor(color = Color.BLUE)
 
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = selectedIconPackType)
     }
@@ -175,10 +178,7 @@ private infix fun AppDrawerItem.compareWith(appDrawerItem: AppDrawerItem): Boole
     val thatIcon = appDrawerItem.icon
 
     val iconEquality = when {
-        thisIcon is ColorDrawable && thatIcon is ColorDrawable -> {
-            println("app: ${app.packageName} == ${appDrawerItem.app.packageName}\ncolor: ${thisIcon.color} == ${thatIcon.color}")
-            thisIcon.color == thatIcon.color
-        }
+        thisIcon is ColorDrawable && thatIcon is ColorDrawable -> thisIcon.color == thatIcon.color
         else -> false
     }
 
