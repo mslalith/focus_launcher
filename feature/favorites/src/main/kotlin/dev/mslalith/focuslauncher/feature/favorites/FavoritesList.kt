@@ -36,6 +36,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
+import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesFlowRow
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.collectLatest
 
@@ -162,16 +163,16 @@ internal fun FavoritesList(
                     onRemoveClick = { changeFavoritesContextMode(FavoritesContextMode.Remove) }
                 )
             }
-            FlowRow(
+            FavoritesFlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = contentPadding),
-                horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
+                mainAxisSpacing = 16.dp,
+                crossAxisSpacing = 12.dp
             ) {
                 favoritesList.forEach { favoriteAppWithColor ->
                     ReusableContent(key = favoriteAppWithColor) {
                         FavoriteItem(
-                            modifier = Modifier.padding(vertical = 6.dp),
                             appWithColor = favoriteAppWithColor,
                             isInContextualMode = isInContextualMode,
                             isAppAboutToReorder = { isAppAboutToReorder(favoriteAppWithColor.app) },
