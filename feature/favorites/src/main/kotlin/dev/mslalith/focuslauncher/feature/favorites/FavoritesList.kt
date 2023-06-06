@@ -6,11 +6,9 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +34,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
+import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesFlowRow
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.collectLatest
 
@@ -162,16 +161,16 @@ internal fun FavoritesList(
                     onRemoveClick = { changeFavoritesContextMode(FavoritesContextMode.Remove) }
                 )
             }
-            FlowRow(
+            FavoritesFlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = contentPadding),
-                horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
+                mainAxisSpacing = 16.dp,
+                crossAxisSpacing = 12.dp
             ) {
                 favoritesList.forEach { favoriteAppWithColor ->
                     ReusableContent(key = favoriteAppWithColor) {
                         FavoriteItem(
-                            modifier = Modifier.padding(vertical = 6.dp),
                             appWithColor = favoriteAppWithColor,
                             isInContextualMode = isInContextualMode,
                             isAppAboutToReorder = { isAppAboutToReorder(favoriteAppWithColor.app) },
