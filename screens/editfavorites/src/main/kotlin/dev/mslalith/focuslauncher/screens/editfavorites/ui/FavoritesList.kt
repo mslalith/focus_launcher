@@ -34,7 +34,7 @@ internal fun FavoritesList(
                 onAddToFavorites(selectedApp.app)
             }
         } else {
-            showSnackbar(context.getString(R.string.app_hidden_message, selectedApp.app.name))
+            showSnackbar(context.getString(R.string.app_hidden_message, selectedApp.app.displayName))
         }
     }
 

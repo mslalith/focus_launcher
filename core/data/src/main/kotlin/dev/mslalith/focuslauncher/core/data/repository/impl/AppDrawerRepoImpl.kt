@@ -16,7 +16,7 @@ internal class AppDrawerRepoImpl @Inject constructor(
 
     override val allAppsFlow: Flow<List<App>> = appsDao.getAllAppsFlow()
         .map { apps ->
-            apps.map(AppRoom::toApp).sortedBy { it.name.lowercase() }
+            apps.map(AppRoom::toApp).sortedBy { it.displayName.lowercase() }
         }
 
     override suspend fun getAppBy(packageName: String): App? {

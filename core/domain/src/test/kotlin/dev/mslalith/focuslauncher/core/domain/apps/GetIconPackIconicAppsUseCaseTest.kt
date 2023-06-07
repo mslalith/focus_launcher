@@ -107,7 +107,7 @@ internal class GetIconPackIconicAppsUseCaseTest : CoroutineTest() {
         assertThat(actualAppsWithoutIcon).isEqualTo(expectedAppsWithoutIcon)
     }
 
-    private fun List<App>.toAppWithIconFavorites(): List<AppWithIcon> = map {
+    private suspend fun List<App>.toAppWithIconFavorites(): List<AppWithIcon> = map {
         AppWithIcon(
             icon = testIconProvider.iconFor(
                 appWithComponent = testLauncherAppsManager.loadApp(packageName = it.packageName),

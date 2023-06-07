@@ -17,7 +17,7 @@ internal fun HiddenAppListItem(
     isFavorite: Boolean,
     onAppClick: () -> Unit
 ) {
-    val appName = selectedHiddenApp.app.name
+    val appName = selectedHiddenApp.app.displayName
     val confirmToHideMessage = stringResource(id = R.string.hide_favorite_app_message, appName)
 
     if (isFavorite) {

@@ -9,9 +9,9 @@ class TestLauncherAppsManager : LauncherAppsManager {
 
     private var allApps = emptyList<AppWithComponent>()
 
-    override fun loadAllApps(): List<AppWithComponent> = allApps
+    override suspend fun loadAllApps(): List<AppWithComponent> = allApps
 
-    override fun loadApp(packageName: String): AppWithComponent = AppWithComponent(
+    override suspend fun loadApp(packageName: String): AppWithComponent = AppWithComponent(
         app = App(
             name = packageName,
             packageName = packageName,
@@ -20,7 +20,7 @@ class TestLauncherAppsManager : LauncherAppsManager {
         componentName = ComponentName(packageName, "")
     )
 
-    override fun defaultFavoriteApps(): List<AppWithComponent> = emptyList()
+    override suspend fun defaultFavoriteApps(): List<AppWithComponent> = emptyList()
 
     fun setAllApps(apps: List<AppWithComponent>) {
         allApps = apps

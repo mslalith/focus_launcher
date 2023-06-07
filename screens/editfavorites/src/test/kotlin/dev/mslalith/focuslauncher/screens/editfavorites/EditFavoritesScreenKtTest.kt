@@ -128,7 +128,7 @@ class EditFavoritesScreenKtTest {
             performClick()
         }
 
-        val message = activity.getString(R.string.app_hidden_message, hiddenApp.name)
+        val message = activity.getString(R.string.app_hidden_message, hiddenApp.displayName)
         waitForTextAndAssertIsDisplayed(text = message)
     }
 

@@ -13,7 +13,7 @@ internal fun FavoriteListItem(
 ) {
     SelectableCheckboxItem(
         modifier = modifier,
-        text = selectedApp.app.name,
+        text = selectedApp.app.displayName,
         checked = selectedApp.isSelected,
         disabled = selectedApp.disabled,
         onClick = onAppClick
