@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun FavoritesFlowRow(
+internal fun StaggeredFlowRow(
     modifier: Modifier = Modifier,
     mainAxisSpacing: Dp = 0.dp,
     crossAxisSpacing: Dp = 0.dp,

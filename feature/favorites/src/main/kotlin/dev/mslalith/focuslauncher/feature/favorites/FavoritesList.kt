@@ -34,7 +34,7 @@ import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesState
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
-import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesFlowRow
+import dev.mslalith.focuslauncher.feature.favorites.ui.StaggeredFlowRow
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.collectLatest
 
@@ -161,7 +161,7 @@ internal fun FavoritesList(
                     onRemoveClick = { changeFavoritesContextMode(FavoritesContextMode.Remove) }
                 )
             }
-            FavoritesFlowRow(
+            StaggeredFlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = contentPadding),
