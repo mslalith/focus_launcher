@@ -17,7 +17,7 @@ class GetAppDrawerAppsUseCase @Inject constructor(
         }.combine(flow = searchQueryFlow) { filteredApps, query ->
             when {
                 query.isNotEmpty() -> filteredApps.filter {
-                    it.name.startsWith(
+                    it.displayName.startsWith(
                         prefix = query,
                         ignoreCase = true
                     )
