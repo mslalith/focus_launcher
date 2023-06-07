@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetDefaultFavoriteAppsUseCase @Inject constructor(
     private val launcherAppsManager: LauncherAppsManager
 ) {
-    operator fun invoke(): List<App> = launcherAppsManager.defaultFavoriteApps().map { it.app }
+    suspend operator fun invoke(): List<App> = launcherAppsManager.defaultFavoriteApps().map { it.app }
 }

@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManagerImpl
 import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
@@ -22,7 +23,10 @@ internal object LauncherAppsModule {
 
     @Provides
     @Singleton
-    fun provideLauncherAppsManager(@ApplicationContext context: Context): LauncherAppsManager = LauncherAppsManagerImpl(context = context)
+    fun provideLauncherAppsManager(
+        @ApplicationContext context: Context,
+        appDrawerRepo: AppDrawerRepo
+    ): LauncherAppsManager = LauncherAppsManagerImpl(context = context, appDrawerRepo = appDrawerRepo)
 
     @Provides
     @Singleton
