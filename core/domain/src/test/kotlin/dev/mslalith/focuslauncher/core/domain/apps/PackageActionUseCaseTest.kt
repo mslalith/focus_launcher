@@ -17,11 +17,10 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.spyk
 import io.mockk.unmockkAll
 import org.junit.After
-import javax.inject.Inject
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -30,6 +29,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
@@ -132,7 +132,7 @@ class PackageActionUseCaseTest : CoroutineTest() {
         appDrawerRepo.allAppsFlow.assertFor(expected = installedApps)
 
         // provide updated app when updating
-        every { testLauncherAppsManager.loadApp(packageName = appAfterUpdate.packageName) } returns AppWithComponent(
+        coEvery { testLauncherAppsManager.loadApp(packageName = appAfterUpdate.packageName) } returns AppWithComponent(
             app = appAfterUpdate,
             componentName = ComponentName(appAfterUpdate.packageName, "")
         )

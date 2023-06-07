@@ -86,7 +86,7 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
         assertThat(actualAppsWithoutIcon).isEqualTo(expectedAppsWithoutIcon)
     }
 
-    private fun List<App>.toAppDrawerItems(): List<AppDrawerItem> = map {
+    private suspend fun List<App>.toAppDrawerItems(): List<AppDrawerItem> = map {
         AppDrawerItem(
             app = it,
             isFavorite = false,

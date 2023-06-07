@@ -11,8 +11,8 @@ import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.toAppsWithComponents
+import io.mockk.coVerify
 import io.mockk.spyk
-import io.mockk.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -91,7 +91,7 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         useCase()
-        verify(exactly = 1) { launcherAppsManager.loadAllApps() }
+        coVerify(exactly = 1) { launcherAppsManager.loadAllApps() }
     }
 
     @Test
@@ -102,6 +102,6 @@ class LoadAllAppsUseCaseTest : CoroutineTest() {
         assertThat(appDrawerRepo.allAppsFlow.awaitItem()).isEqualTo(TestApps.all)
 
         useCase(forceLoad = true)
-        verify(exactly = 2) { launcherAppsManager.loadAllApps() }
+        coVerify(exactly = 2) { launcherAppsManager.loadAllApps() }
     }
 }
