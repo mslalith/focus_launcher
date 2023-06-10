@@ -20,7 +20,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -35,7 +34,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class IconPackViewModel @Inject constructor(
     private val getAllAppsOnIconPackChangeUseCase: GetAllAppsOnIconPackChangeUseCase,
-    getIconPackIconicAppsUseCase: GetIconPackIconicAppsUseCase,
+    private val getIconPackIconicAppsUseCase: GetIconPackIconicAppsUseCase,
     fetchIconPacksUseCase: FetchIconPacksUseCase,
     private val loadIconPackUseCase: LoadIconPackUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
@@ -44,6 +43,7 @@ internal class IconPackViewModel @Inject constructor(
 
     private val _iconPackType = MutableStateFlow<IconPackType?>(value = null)
     private val _allAppsStateFlow = MutableStateFlow<LoadingState<ImmutableList<AppDrawerItem>>>(value = LoadingState.Loading)
+    private val _iconPackAppsStateFlow = MutableStateFlow<ImmutableList<AppWithIcon>>(value = persistentListOf())
 
     private val defaultIconPackState = IconPackState(
         allApps = _allAppsStateFlow.value,
@@ -54,6 +54,8 @@ internal class IconPackViewModel @Inject constructor(
 
     init {
         fetchIconPacksUseCase()
+        updateIconPackApps()
+
         generalSettingsRepo.iconPackTypeFlow
             .onEach { _iconPackType.value = it }
             .launchIn(scope = viewModelScope)
@@ -64,20 +66,23 @@ internal class IconPackViewModel @Inject constructor(
             .launchIn(scope = viewModelScope)
     }
 
-    private val iconPackAppsWithIcons: Flow<List<AppWithIcon>> = getIconPackIconicAppsUseCase()
-        .flowOn(context = appCoroutineDispatcher.io)
-
     val iconPackState = flowOf(value = defaultIconPackState)
         .combine(flow = _allAppsStateFlow) { state, allAppsState ->
             state.copy(
                 allApps = allAppsState,
                 canSave = allAppsState is LoadingState.Loaded
             )
-        }.combine(flow = iconPackAppsWithIcons) { state, iconPackApps ->
+        }.combine(flow = _iconPackAppsStateFlow) { state, iconPackApps ->
             state.copy(iconPacks = iconPackApps.toImmutableList())
         }.combine(flow = _iconPackType) { state, iconPackType ->
             state.copy(iconPackType = iconPackType)
         }.withinScope(initialValue = defaultIconPackState)
+
+    private fun updateIconPackApps() {
+        appCoroutineDispatcher.launchInIO {
+            _iconPackAppsStateFlow.value = getIconPackIconicAppsUseCase().first().toImmutableList()
+        }
+    }
 
     private suspend fun updateAllAppsWithNewIcons(iconPackType: IconPackType?) {
         iconPackType ?: return

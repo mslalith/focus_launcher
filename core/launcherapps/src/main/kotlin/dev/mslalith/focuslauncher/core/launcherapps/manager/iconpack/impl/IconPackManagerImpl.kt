@@ -84,8 +84,10 @@ internal class IconPackManagerImpl @Inject constructor(
 
         currentIconPackType = IconPackType.System
         _iconPackLoadEventFlow.updateStartLoad(forceLoad = forceLoad, iconPackType = IconPackType.System)
+
         iconCacheManager.clearCache()
         currentIconPackParser = null
+
         _iconPackLoadEventFlow.updateEndLoad(forceLoad = forceLoad, iconPackType = IconPackType.System)
     }
 
@@ -94,9 +96,11 @@ internal class IconPackManagerImpl @Inject constructor(
 
         currentIconPackType = iconPackType
         _iconPackLoadEventFlow.updateStartLoad(forceLoad = forceLoad, iconPackType = iconPackType)
+
         iconCacheManager.clearCache()
         currentIconPackParser = iconCacheManager.iconPackFor(packageName = iconPackType.packageName)
         currentIconPackParser?.load()
+
         _iconPackLoadEventFlow.updateEndLoad(forceLoad = forceLoad, iconPackType = iconPackType)
     }
 }
