@@ -41,7 +41,7 @@ internal fun FavoriteItem(
     val animatedColor by animateColorAsState(
         label = "Animated color",
         targetValue = if (isAppAboutToReorder()) contentColor else appIconBasedColor,
-        animationSpec = tween(durationMillis = 600)
+        animationSpec = tween(durationMillis = 2300)
     )
 
     fun backgroundColor(): Color = animatedColor.copy(alpha = if (isAppAboutToReorder()) 0.8f else 0.23f)
@@ -53,8 +53,8 @@ internal fun FavoriteItem(
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = backgroundColor())
             .border(
-                width = 0.25.dp,
-                color = animatedColor,
+                width = 0.4.dp,
+                color = animatedColor.copy(alpha = 0.6f),
                 shape = MaterialTheme.shapes.small
             )
             .combinedClickable(

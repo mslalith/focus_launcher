@@ -169,7 +169,7 @@ internal fun FavoritesList(
                 crossAxisSpacing = 12.dp
             ) {
                 favoritesList.forEach { favoriteAppWithColor ->
-                    ReusableContent(key = favoriteAppWithColor) {
+                    ReusableContent(key = favoriteAppWithColor.app) {
                         FavoriteItem(
                             appWithColor = favoriteAppWithColor,
                             isInContextualMode = isInContextualMode,
