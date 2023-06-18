@@ -14,12 +14,20 @@ A minimalist Android Launcher built with Jetpack Compose
 ![GitHub Preview](/images/what_is.png)
 
 ## Features
-- Dark mode
+- Dark Mode
 - Icon Packs
-- Lunar Phase info
-- Fancy animated Clock
-- Favorite apps
-- Hide apps
+- Lunar Phase Info
+- Fancy Animated Clock
+- Favorite Apps
+- Hide Apps
+
+|  Dark Mode  |  Icon Packs  |  Animated Clock  |
+|---|---|---|
+| <video src="https://github.com/mslalith/focus_launcher/assets/15076234/23ce35fe-bd62-44e1-b501-fc11a9183a4f"> | <video src="https://github.com/mslalith/focus_launcher/assets/15076234/722466c6-e099-4900-b51d-add2f76c0e79"> | <video src="https://github.com/mslalith/focus_launcher/assets/15076234/b3a75104-c192-4718-9742-ef623f5b0e5f"> |
+
+|  Favorite Apps  |  Hide Apps  |  Lunar Phase  |
+|---|---|---|
+| <video src="https://github.com/mslalith/focus_launcher/assets/15076234/cbb261da-1f12-4899-a6ef-fa9e6c631962"> | <video src="https://github.com/mslalith/focus_launcher/assets/15076234/af5c753b-c71f-4e0c-83c8-daf4424be21b"> | <video src="https://github.com/mslalith/focus_launcher/assets/15076234/7a698c2d-3b1f-4de3-a895-fc599bbd6fd6"> |
 
 
 ## Built With
