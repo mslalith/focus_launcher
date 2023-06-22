@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.iconpack
 import android.content.ComponentName
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -27,7 +28,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import dev.mslalith.focuslauncher.screens.iconpack.model.IconPackState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -120,20 +120,20 @@ class IconPackViewModelTest : CoroutineTest() {
         testIconProvider.setIconColor(color = Color.CYAN)
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = IconPackType.System)
 
-        viewModel.updateSelectedIconPackApp(iconPackType = selectedIconPackType)
         testIconProvider.setIconColor(color = Color.BLUE)
+        viewModel.updateSelectedIconPackApp(iconPackType = selectedIconPackType)
 
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = selectedIconPackType)
     }
 
-    context (CoroutineScope)
+    context (TurbineContext)
     private suspend fun StateFlow<IconPackState>.assertAllAppsWith(
         apps: List<App>,
         iconPackType: IconPackType
     ) = with(testIconProvider) { assertAllAppsWith(expected = apps.toAppDrawerItems(iconPackType = iconPackType)) }
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun StateFlow<IconPackState>.assertAllAppsWith(
     expected: List<AppDrawerItem>
 ) {

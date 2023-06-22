@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.theme
 
+import app.cash.turbine.TurbineContext
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -10,7 +11,6 @@ import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -69,7 +69,7 @@ internal class LauncherThemeViewModelTest : CoroutineTest() {
     }
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun LauncherThemeViewModel.assertTheme(expected: Theme) {
     currentTheme.assertFor(expected = expected)
 }

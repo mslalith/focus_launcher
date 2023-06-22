@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.apps
 
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,7 +18,6 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -70,7 +70,7 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
         assertIconPackApps(expected = allApps)
     }
 
-    context (CoroutineScope)
+    context (TurbineContext)
     private suspend fun assertIconPackApps(expected: List<App>) {
         val expectedApps = expected.toPackageNamed().disableAsSystem().toAppDrawerItems()
         val actualApps = useCase(iconPackType = IconPackType.System).awaitItem()

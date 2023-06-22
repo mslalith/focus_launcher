@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
+import app.cash.turbine.TurbineContext
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
@@ -21,7 +22,6 @@ import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -122,7 +122,7 @@ class AppDrawerPageViewModelTest : CoroutineTest() {
     }
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun AppDrawerPageViewModel.assertDrawerApps(
     expected: List<App>
 ) {

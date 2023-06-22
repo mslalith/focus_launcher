@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.domain.theme
 
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -9,7 +10,6 @@ import dev.mslalith.focuslauncher.core.data.repository.ThemeRepo
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -57,7 +57,7 @@ internal class GetThemeUseCaseTest : CoroutineTest() {
         assertTheme(expected = Theme.NOT_WHITE)
     }
 
-    context (CoroutineScope)
+    context (TurbineContext)
     private suspend fun assertTheme(expected: Theme) {
         assertThat(useCase().awaitItem()).isEqualTo(expected)
     }
