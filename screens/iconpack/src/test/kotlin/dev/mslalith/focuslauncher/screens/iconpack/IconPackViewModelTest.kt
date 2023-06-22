@@ -120,8 +120,8 @@ class IconPackViewModelTest : CoroutineTest() {
         testIconProvider.setIconColor(color = Color.CYAN)
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = IconPackType.System)
 
-        viewModel.updateSelectedIconPackApp(iconPackType = selectedIconPackType)
         testIconProvider.setIconColor(color = Color.BLUE)
+        viewModel.updateSelectedIconPackApp(iconPackType = selectedIconPackType)
 
         viewModel.iconPackState.assertAllAppsWith(apps = allApps, iconPackType = selectedIconPackType)
     }
