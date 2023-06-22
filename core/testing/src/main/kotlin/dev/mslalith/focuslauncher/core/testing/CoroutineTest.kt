@@ -1,6 +1,8 @@
 package dev.mslalith.focuslauncher.core.testing
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.TurbineContext
+import app.cash.turbine.turbineScope
 import dev.mslalith.focuslauncher.core.testing.rules.TestCoroutineRule
 import dev.mslalith.focuslauncher.core.testing.rules.newCoroutineScope
 import kotlinx.coroutines.test.TestScope
@@ -18,6 +20,10 @@ open class CoroutineTest {
     protected val testDispatcher = coroutineTestRule.newCoroutineScope()
 
     protected fun runCoroutineTest(
-        testBody: suspend TestScope.() -> Unit
-    ) = testDispatcher.runTest(testBody = testBody)
+        testBody: suspend context(TurbineContext, TestScope) () -> Unit
+    ) = testDispatcher.runTest(
+        testBody = {
+            turbineScope { testBody(this, this@runTest) }
+        }
+    )
 }

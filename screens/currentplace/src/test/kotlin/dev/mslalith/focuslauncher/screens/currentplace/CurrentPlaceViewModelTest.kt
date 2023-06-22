@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.screens.currentplace
 
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,7 +18,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItemChangeUntil
 import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -124,7 +124,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
         viewModel.currentPlaceState.assertFor(expected = true) { it.canSave }
     }
 
-    context (CoroutineScope)
+    context (TurbineContext)
     private suspend fun CurrentPlaceViewModel.updateCurrentLatLngAndAwait(latLng: LatLng) {
         updateCurrentLatLng(latLng = latLng)
         savePlace()
@@ -132,7 +132,7 @@ class CurrentPlaceViewModelTest : CoroutineTest() {
     }
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun CurrentPlaceViewModel.assertCurrentPlaceState(
     latLng: LatLng,
     initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)

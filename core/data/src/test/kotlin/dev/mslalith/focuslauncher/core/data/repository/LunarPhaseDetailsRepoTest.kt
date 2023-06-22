@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.data.repository
 
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,7 +18,6 @@ import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
 import dev.mslalith.focuslauncher.core.testing.extensions.withUtcTimeZone
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.LocalDateTime
 import org.junit.Before
 import org.junit.Rule
@@ -185,7 +185,7 @@ internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
     }
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun LunarPhaseDetailsRepo.assertLunarPhaseDetailsWith(expected: LunarPhaseDetails) {
     val lunarPhaseDetails = lunarPhaseDetailsStateFlow.awaitItem().getOrNull()
     assertThat(lunarPhaseDetails?.lunarPhase).isEqualTo(expected.lunarPhase)
@@ -199,7 +199,7 @@ private suspend fun LunarPhaseDetailsRepo.assertLunarPhaseDetailsWith(expected: 
     assertLocalDateTime(lunarPhaseDetails?.sunRiseAndSetDetails?.setDateTime, expected.sunRiseAndSetDetails.setDateTime)
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 private suspend fun LunarPhaseDetailsRepo.assertUpcomingLunarPhaseWith(expected: UpcomingLunarPhase) {
     val upcomingLunarPhase = upcomingLunarPhaseStateFlow.awaitItem().getOrNull()
     assertThat(upcomingLunarPhase?.lunarPhase).isEqualTo(expected.lunarPhase)

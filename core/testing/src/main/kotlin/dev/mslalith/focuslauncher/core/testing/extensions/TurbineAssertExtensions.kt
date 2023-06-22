@@ -1,11 +1,10 @@
 package dev.mslalith.focuslauncher.core.testing.extensions
 
-import app.cash.turbine.testIn
+import app.cash.turbine.TurbineContext
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
-context (CoroutineScope)
+context (TurbineContext)
 suspend fun <T> Flow<T>.assertFor(
     expected: T
 ) {
@@ -15,7 +14,7 @@ suspend fun <T> Flow<T>.assertFor(
     )
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 suspend fun <T, R> Flow<T>.assertFor(
     expected: R,
     valueFor: (T) -> R
@@ -28,14 +27,14 @@ suspend fun <T, R> Flow<T>.assertFor(
     )
 }
 
-context (CoroutineScope)
+context (TurbineContext)
 suspend fun <T, R> Flow<T>.assertFor(
     expected: R,
     valueFor: (T) -> R,
     compare: (R, R) -> Boolean,
     assertion: (R) -> Unit
 ) {
-    val turbine = testIn(scope = this@CoroutineScope)
+    val turbine = testIn(scope = this@TurbineContext)
     var changedItem = valueFor(turbine.expectMostRecentItem())
     try {
         if (compare(changedItem, expected)) {
