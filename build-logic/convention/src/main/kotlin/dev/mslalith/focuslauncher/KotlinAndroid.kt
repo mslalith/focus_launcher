@@ -3,16 +3,20 @@ package dev.mslalith.focuslauncher
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *>,
 ) = with(commonExtension) {
-    compileSdk = 33
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+    compileSdk = libs.findVersion("androidTargetSdk").get().requiredVersion.toInt()
 
     defaultConfig {
-        minSdk = 26
+        minSdk = libs.findVersion("androidMinSdk").get().requiredVersion.toInt()
     }
 
     compileOptions {
