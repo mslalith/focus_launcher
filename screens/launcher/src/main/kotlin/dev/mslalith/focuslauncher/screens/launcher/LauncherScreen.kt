@@ -58,7 +58,6 @@ internal fun LauncherScreenInternal(
     ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
-            pageCount = 3,
             beyondBoundsPageCount = 2,
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
