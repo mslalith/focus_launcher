@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsR
 import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
@@ -22,12 +23,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class FavoritesViewModelTest : CoroutineTest() {

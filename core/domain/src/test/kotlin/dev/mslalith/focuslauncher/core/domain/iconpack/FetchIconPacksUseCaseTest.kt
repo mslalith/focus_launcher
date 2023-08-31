@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.iconpack
 
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.domain.utils.toIconPacks
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -11,9 +12,8 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class FetchIconPacksUseCaseTest : CoroutineTest() {
 

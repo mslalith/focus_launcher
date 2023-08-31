@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.model.IconPackLoadEvent
 import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import kotlinx.coroutines.launch
@@ -12,9 +13,8 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class ReloadIconPackUseCaseTest : CoroutineTest() {
 

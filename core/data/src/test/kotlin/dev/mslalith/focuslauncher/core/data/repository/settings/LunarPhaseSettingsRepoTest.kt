@@ -10,17 +10,17 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPh
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 internal class LunarPhaseSettingsRepoTest : CoroutineTest() {
 

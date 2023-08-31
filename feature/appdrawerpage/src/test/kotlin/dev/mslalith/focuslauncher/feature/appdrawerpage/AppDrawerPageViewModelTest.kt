@@ -16,6 +16,7 @@ import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackAfterFirstL
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
@@ -29,12 +30,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class AppDrawerPageViewModelTest : CoroutineTest() {

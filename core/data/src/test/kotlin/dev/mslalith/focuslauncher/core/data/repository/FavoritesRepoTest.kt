@@ -7,6 +7,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.data.database.AppDatabase
 import dev.mslalith.focuslauncher.core.data.dto.toAppRoom
 import dev.mslalith.focuslauncher.core.model.app.App
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
@@ -17,11 +18,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 internal class FavoritesRepoTest : CoroutineTest() {
 

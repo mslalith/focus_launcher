@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertBiasAlignment
 import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
@@ -17,10 +18,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(instrumentedPackages = ["androidx.loader.content"])
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class ClockWidgetKtTest {

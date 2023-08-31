@@ -14,6 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTagAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.extensions.performScrollToAndClick
@@ -28,10 +29,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(instrumentedPackages = ["androidx.loader.content"])
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class SettingsPageKtTest {

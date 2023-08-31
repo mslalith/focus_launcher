@@ -10,17 +10,17 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.core.model.IconPackType
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 internal class GeneralSettingsRepoTest : CoroutineTest() {
 
