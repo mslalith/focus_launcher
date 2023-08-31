@@ -7,6 +7,7 @@ import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheM
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import io.mockk.every
 import io.mockk.mockk
@@ -14,9 +15,8 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 internal class IconProviderImplTest {
 

@@ -9,6 +9,7 @@ import dev.mslalith.focuslauncher.core.data.database.usecase.datastore.ClearThem
 import dev.mslalith.focuslauncher.core.domain.theme.ChangeThemeUseCase
 import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
 import dev.mslalith.focuslauncher.core.model.Theme
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.assertFor
 import kotlinx.coroutines.runBlocking
@@ -18,12 +19,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import javax.inject.Inject
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 internal class LauncherThemeViewModelTest : CoroutineTest() {

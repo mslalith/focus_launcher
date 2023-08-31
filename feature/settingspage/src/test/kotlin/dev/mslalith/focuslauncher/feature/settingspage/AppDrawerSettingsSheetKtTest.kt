@@ -21,6 +21,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.R
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertBooleanType
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertStringType
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsSheetState
@@ -31,10 +32,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(instrumentedPackages = ["androidx.loader.content"])
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class AppDrawerSettingsSheetKtTest {

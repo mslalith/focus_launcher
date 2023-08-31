@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = "dev.mslalith.focuslauncher.benchmark"
-    compileSdk = 33
+    compileSdk = libs.versions.androidTargetSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

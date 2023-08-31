@@ -13,6 +13,7 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.LunarPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.NextPhaseDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.RiseAndSetDetails
 import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
+import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
 import dev.mslalith.focuslauncher.core.testing.extensions.instantOf
@@ -23,11 +24,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @HiltAndroidTest
-@RunWith(RobolectricTestRunner::class)
+@RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)
 internal class LunarPhaseDetailsRepoTest : CoroutineTest() {
 

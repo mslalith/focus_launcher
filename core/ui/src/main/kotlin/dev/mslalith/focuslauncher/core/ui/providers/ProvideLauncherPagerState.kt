@@ -17,7 +17,10 @@ val LocalLauncherPagerState = compositionLocalOf<PagerState> {
 fun ProvideLauncherPagerState(
     content: @Composable () -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(
+        initialPage = 1,
+        pageCount = { 3 }
+    )
     CompositionLocalProvider(LocalLauncherPagerState provides pagerState) {
         content()
     }
