@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.32.0"
-androidGradlePlugin = "8.1.1"
+androidGradlePlugin = "8.1.2"
 androidMinSdk = "26"
 androidTargetSdk = "34"
 androidTest = "8.1.2"
