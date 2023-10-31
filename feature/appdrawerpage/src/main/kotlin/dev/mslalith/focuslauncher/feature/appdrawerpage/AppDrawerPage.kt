@@ -75,6 +75,7 @@ internal fun AppDrawerPageInternal(
     fun onAppClick(appDrawerItem: AppDrawerItem) {
         focusManager.clearFocus()
         context.launchApp(app = appDrawerItem.app)
+        appDrawerPageViewModel.searchAppQuery("")
     }
 
     fun showMoreOptions(appDrawerItem: AppDrawerItem) {
