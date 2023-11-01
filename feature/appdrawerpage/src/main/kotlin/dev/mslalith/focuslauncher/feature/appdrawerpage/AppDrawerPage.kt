@@ -82,7 +82,7 @@ internal fun AppDrawerPageInternal(
     addToHiddenApps: (App) -> Unit,
     searchAppQuery: (String) -> Unit,
     updateDisplayName: (App, String) -> Unit,
-    reloadIconPack: () -> Unit,
+    reloadIconPack: () -> Unit
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -155,6 +155,7 @@ internal fun AppDrawerPageInternal(
                         )
                     }
                 }
+
                 LoadingState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
