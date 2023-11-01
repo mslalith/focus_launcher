@@ -37,6 +37,7 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
+import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
 import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
 import kotlinx.coroutines.flow.collectLatest
 
@@ -47,35 +48,52 @@ fun AppDrawerPage() {
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-internal fun AppDrawerPageKeyboardAware() {
+internal fun AppDrawerPageKeyboardAware(
+    appDrawerPageViewModel: AppDrawerPageViewModel = hiltViewModel()
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val pagerState = LocalLauncherPagerState.current
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-            if (page != 2) keyboardController?.hide()
+            if (page != 2) {
+                appDrawerPageViewModel.searchAppQuery(query = "")
+                keyboardController?.hide()
+            }
         }
     }
 
-    AppDrawerPageInternal()
+    AppDrawerPageInternal(
+        appDrawerPageState = appDrawerPageViewModel.appDrawerPageState.collectAsStateWithLifecycle().value,
+        addToFavorites = appDrawerPageViewModel::addToFavorites,
+        removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
+        addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
+        searchAppQuery = appDrawerPageViewModel::searchAppQuery,
+        updateDisplayName = appDrawerPageViewModel::updateDisplayName,
+        reloadIconPack = appDrawerPageViewModel::reloadIconPack
+    )
 }
 
 @Composable
 internal fun AppDrawerPageInternal(
-    appDrawerPageViewModel: AppDrawerPageViewModel = hiltViewModel()
+    appDrawerPageState: AppDrawerPageState,
+    addToFavorites: (App) -> Unit,
+    removeFromFavorites: (App) -> Unit,
+    addToHiddenApps: (App) -> Unit,
+    searchAppQuery: (String) -> Unit,
+    updateDisplayName: (App, String) -> Unit,
+    reloadIconPack: () -> Unit
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val viewManager = LocalLauncherViewManager.current
-
-    val appDrawerPageState by appDrawerPageViewModel.appDrawerPageState.collectAsStateWithLifecycle()
 
     var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
 
     fun onAppClick(appDrawerItem: AppDrawerItem) {
         focusManager.clearFocus()
         context.launchApp(app = appDrawerItem.app)
-        appDrawerPageViewModel.searchAppQuery("")
+        searchAppQuery("")
     }
 
     fun showMoreOptions(appDrawerItem: AppDrawerItem) {
@@ -83,9 +101,9 @@ internal fun AppDrawerPageInternal(
         viewManager.showBottomSheet {
             MoreOptionsBottomSheet(
                 appDrawerItem = appDrawerItem,
-                addToFavorites = appDrawerPageViewModel::addToFavorites,
-                removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
-                addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
+                addToFavorites = addToFavorites,
+                removeFromFavorites = removeFromFavorites,
+                addToHiddenApps = addToHiddenApps,
                 onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appDrawerItem.app },
                 onClose = { viewManager.hideBottomSheet() }
             )
@@ -95,13 +113,13 @@ internal fun AppDrawerPageInternal(
     updateAppDisplayAppDialog?.let { updatedApp ->
         UpdateAppDisplayNameDialog(
             app = updatedApp,
-            onUpdateDisplayName = { appDrawerPageViewModel.updateDisplayName(app = updatedApp, displayName = it) },
+            onUpdateDisplayName = { updateDisplayName(updatedApp, it) },
             onClose = { updateAppDisplayAppDialog = null }
         )
     }
 
     OnDayChangeListener {
-        appDrawerPageViewModel.reloadIconPack()
+        reloadIconPack()
     }
 
     Column(
@@ -137,6 +155,7 @@ internal fun AppDrawerPageInternal(
                         )
                     }
                 }
+
                 LoadingState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -152,7 +171,7 @@ internal fun AppDrawerPageInternal(
             SearchField(
                 placeholder = stringResource(id = R.string.search_app_hint),
                 query = appDrawerPageState.searchBarQuery,
-                onQueryChange = appDrawerPageViewModel::searchAppQuery
+                onQueryChange = searchAppQuery
             )
         }
     }
