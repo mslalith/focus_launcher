@@ -7,7 +7,7 @@ class AppRobolectricTestRunner(testClass: Class<*>?) : RobolectricTestRunner(tes
 
     override fun buildGlobalConfig(): Config {
         return Config.Builder()
-            .setSdk(33)
+//            .setSdk(33)
             .build()
     }
 }
