@@ -56,7 +56,10 @@ internal fun AppDrawerPageKeyboardAware(
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-            if (page != 2) keyboardController?.hide()
+            if (page != 2) {
+                appDrawerPageViewModel.searchAppQuery(query = "")
+                keyboardController?.hide()
+            }
         }
     }
 
