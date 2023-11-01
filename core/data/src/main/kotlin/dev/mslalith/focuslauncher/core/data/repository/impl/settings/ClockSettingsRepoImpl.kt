@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_USE_24_HOUR
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,6 +23,11 @@ internal class ClockSettingsRepoImpl @Inject constructor(
     override val showClock24Flow: Flow<Boolean> = settingsDataStore.data
         .map {
             it[PREFERENCES_SHOW_CLOCK_24] ?: DEFAULT_SHOW_CLOCK_24
+        }
+
+    override val use24HourFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
+            it[PREFERENCES_USE_24_HOUR] ?: DEFAULT_USE_24_HOUR
         }
 
     override val clockAlignmentFlow: Flow<ClockAlignment> = settingsDataStore.data
@@ -42,6 +48,13 @@ internal class ClockSettingsRepoImpl @Inject constructor(
         }
     }
 
+    override suspend fun toggleUse24Hour() {
+        settingsDataStore.edit {
+            val current = it[PREFERENCES_USE_24_HOUR] ?: DEFAULT_USE_24_HOUR
+            it[PREFERENCES_USE_24_HOUR] = !current
+        }
+    }
+
     override suspend fun updateClockAlignment(clockAlignment: ClockAlignment) {
         settingsDataStore.edit {
             it[PREFERENCES_CLOCK_ALIGNMENT] = clockAlignment.index
@@ -56,6 +69,7 @@ internal class ClockSettingsRepoImpl @Inject constructor(
 
     companion object {
         private val PREFERENCES_SHOW_CLOCK_24 = booleanPreferencesKey(name = "preferences_show_clock_24")
+        private val PREFERENCES_USE_24_HOUR = booleanPreferencesKey(name = "preferences_use_24_hour")
         private val PREFERENCES_CLOCK_ALIGNMENT = intPreferencesKey(name = "preferences_clock_alignment")
         private val PREFERENCES_CLOCK_24_ANIMATION_DURATION = intPreferencesKey(name = "preferences_clock_24_animation_duration")
     }

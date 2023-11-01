@@ -51,6 +51,7 @@ object Constants {
 
             object Clock {
                 const val DEFAULT_SHOW_CLOCK_24 = true
+                const val DEFAULT_USE_24_HOUR = true
                 val DEFAULT_CLOCK_ALIGNMENT = ClockAlignment.START
                 val DEFAULT_CLOCK_24_ANIMATION_DURATION_RANGE = 300f..2400f
                 const val DEFAULT_CLOCK_24_ANIMATION_DURATION = 2100

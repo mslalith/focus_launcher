@@ -23,6 +23,7 @@
     <string name="end">End</string>
     <string name="clock_position">Clock Position</string>
     <string name="enable_clock_24">Enable Clock 24</string>
+    <string name="use_24_hour">Use 24 Hour</string>
     <string name="animation_duration">Animation Duration</string>
     <string name="list">List</string>
     <string name="grid">Grid</string>

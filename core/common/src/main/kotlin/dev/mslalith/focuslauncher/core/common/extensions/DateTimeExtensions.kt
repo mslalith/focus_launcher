@@ -48,9 +48,13 @@ fun ZonedDateTime.toKotlinxLocalDateTime(): LocalDateTime? = try {
     null
 }
 
-fun Instant.formatToTime(): String {
+fun Instant.formatToTime(use24Hour: Boolean): String {
     return toLocalDateTime(TimeZone.currentSystemDefault()).run {
-        listOf(hour, minute)
+        val h = if (use24Hour) hour else when {
+            hour >= 12 -> hour - 12
+            else -> hour
+        }
+        listOf(h, minute)
             .map { it.to2Digit() }
             .joinToString(separator = ":")
     }
