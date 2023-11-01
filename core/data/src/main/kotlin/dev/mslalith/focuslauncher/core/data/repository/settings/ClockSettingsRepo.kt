@@ -5,10 +5,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface ClockSettingsRepo {
     val showClock24Flow: Flow<Boolean>
+    val use24HourFlow: Flow<Boolean>
     val clockAlignmentFlow: Flow<ClockAlignment>
     val clock24AnimationDurationFlow: Flow<Int>
 
     suspend fun toggleClock24()
+    suspend fun toggleUse24Hour()
     suspend fun updateClockAlignment(clockAlignment: ClockAlignment)
     suspend fun updateClock24AnimationDuration(duration: Int)
 }

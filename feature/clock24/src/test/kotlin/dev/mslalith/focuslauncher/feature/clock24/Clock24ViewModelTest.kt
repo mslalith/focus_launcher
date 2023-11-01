@@ -105,4 +105,19 @@ internal class Clock24ViewModelTest : CoroutineTest() {
             viewModel.clock24State.assertFor(expected = "09:54") { it.currentTime }
         }
     }
+
+    @Test
+    fun `05 - on update use 24 hour, verify state change`() = runCoroutineTest {
+        withUtcTimeZone {
+            clockProvider.setInstant(instantOf(hour = 23, minute = 4))
+            viewModel.refreshTime()
+            viewModel.clock24State.assertFor(expected = "23:04") { it.currentTime }
+
+            viewModel.toggleUse24Hour()
+            viewModel.clock24State.assertFor(expected = "11:04") { it.currentTime }
+
+            viewModel.toggleUse24Hour()
+            viewModel.clock24State.assertFor(expected = "23:04") { it.currentTime }
+        }
+    }
 }

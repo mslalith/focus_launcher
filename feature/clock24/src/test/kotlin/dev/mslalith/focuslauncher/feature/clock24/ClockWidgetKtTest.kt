@@ -80,11 +80,13 @@ class ClockWidgetKtTest {
 private fun stateWith(
     currentTime: String = "00:00",
     showClock24: Boolean = true,
+    use24Hour: Boolean = true,
     clockAlignment: ClockAlignment = ClockAlignment.START,
     clock24AnimationDuration: Int = 1200
 ) = Clock24State(
     currentTime = currentTime,
     showClock24 = showClock24,
+    use24Hour = use24Hour,
     clockAlignment = clockAlignment,
     clock24AnimationDuration = clock24AnimationDuration
 )

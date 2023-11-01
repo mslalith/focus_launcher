@@ -69,6 +69,11 @@ internal fun ClockSettingsSheetInternal(
             checked = clock24State.showClock24,
             onClick = clock24ViewModel::toggleClock24
         )
+        SettingsSelectableSwitchItem(
+            text = stringResource(id = R.string.use_24_hour),
+            checked = clock24State.use24Hour,
+            onClick = clock24ViewModel::toggleUse24Hour
+        )
         SettingsSelectableSliderItem(
             text = stringResource(id = R.string.animation_duration),
             subText = "${clock24State.clock24AnimationDuration}ms",
