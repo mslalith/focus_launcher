@@ -76,7 +76,6 @@ class IconPackViewModelTest : CoroutineTest() {
     @Before
     fun setup() {
         hiltRule.inject()
-        testIconPackManager.hashCode()
         viewModel = IconPackViewModel(
             getAllAppsOnIconPackChangeUseCase = getAllAppsOnIconPackChangeUseCase,
             getIconPackIconicAppsUseCase = getIconPackIconicAppsUseCase,

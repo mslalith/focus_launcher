@@ -1,7 +1,8 @@
 package dev.mslalith.focuslauncher.core.launcherapps.providers.icons.impl
 
 import android.content.ComponentName
-import android.graphics.drawable.Drawable
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconcache.IconCacheManager
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -23,13 +24,8 @@ internal class IconProviderImplTest {
     private val iconCacheManager = mockk<IconCacheManager>()
     private val iconProvider = IconProviderImpl(iconCacheManager = iconCacheManager)
 
-    private val drawableChrome by lazy {
-        Drawable.createFromPath("M11,2l2,0l0,5l8,0l0,3l-8,0l0,4l5,0l0,3l-5,0l0,5l-2,0l0,-5l-5,0l0,-3l5,0l0,-4l-8,0l0,-3l8,0z")!!
-    }
-
-    private val drawablePhone by lazy {
-        Drawable.createFromPath("M11,2l2,0l0,5l8,0l0,3l-8,0l0,4l5,0z")!!
-    }
+    private val drawableChrome by lazy { ColorDrawable(Color.GRAY) }
+    private val drawablePhone by lazy { ColorDrawable(Color.CYAN) }
 
     @Test
     fun `01 - when retrieving icon for same app, icons should be same`() {
