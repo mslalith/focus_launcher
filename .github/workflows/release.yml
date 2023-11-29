@@ -25,7 +25,7 @@ jobs:
           echo "major=${major}" >> $GITHUB_OUTPUT
 
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 17
