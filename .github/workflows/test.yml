@@ -49,7 +49,7 @@ jobs:
           cp "$file" "$to_path"
 
       - name: Upload Release APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Release APK
           path: ${{ steps.rename_apk.outputs.to_path }}
@@ -79,7 +79,7 @@ jobs:
           cp "$file" "$to_path"
 
       - name: Upload Release AAB
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Release AAB
           path: ${{ steps.rename_aab.outputs.to_path }}
