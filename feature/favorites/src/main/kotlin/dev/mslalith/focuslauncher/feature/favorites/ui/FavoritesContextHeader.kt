@@ -7,7 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -58,7 +58,7 @@ internal fun FavoritesContextHeader(
             label = "Animated Header",
             targetState = headerText(),
             transitionSpec = {
-                slideInVertically { it } + fadeIn() with slideOutVertically { -it } + fadeOut() using SizeTransform(clip = false)
+                slideInVertically { it } + fadeIn() togetherWith slideOutVertically { -it } + fadeOut() using SizeTransform(clip = false)
             }
         ) { header ->
             Text(
