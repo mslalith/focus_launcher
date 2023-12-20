@@ -39,7 +39,7 @@ osmdroid = "6.1.17"
 robolectric = "4.11.1"
 room = "2.6.1"
 suncalc = "3.7"
-truth = "1.1.5"
+truth = "1.2.0"
 turbine = "1.0.0"
 uiautomator = "2.2.0"
 
