@@ -61,11 +61,13 @@ internal fun CurrentPlaceScreen(
     currentPlaceState: CurrentPlaceState,
     goBack: () -> Unit,
     onDoneClick: () -> Unit,
-    onLocationChange: (LatLng) -> Unit
+    onLocationChange: (LatLng) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     StatusBarColor()
 
     Scaffold(
+        modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(

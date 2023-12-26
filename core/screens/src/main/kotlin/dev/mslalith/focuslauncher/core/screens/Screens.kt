@@ -16,4 +16,7 @@ data object EditFavoritesScreen : Screen
 data object HideAppsScreen: Screen
 
 @Parcelize
+data object CurrentPlaceScreen : Screen
+
+@Parcelize
 data object AboutScreen : Screen
