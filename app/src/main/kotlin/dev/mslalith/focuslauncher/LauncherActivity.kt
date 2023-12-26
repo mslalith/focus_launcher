@@ -6,9 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
+import dev.mslalith.focuslauncher.core.screens.LauncherScreen
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
@@ -23,6 +29,9 @@ class LauncherActivity : ComponentActivity() {
     @Inject
     lateinit var packageActionUseCase: PackageActionUseCase
 
+    @Inject
+    lateinit var circuit: Circuit
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -32,11 +41,19 @@ class LauncherActivity : ComponentActivity() {
                 lifecycleScope.launch { packageActionUseCase(packageAction = packageAction) }
             }
 
+            val backstack = rememberSaveableBackStack { push(LauncherScreen) }
+            val navigator = rememberCircuitNavigator(backstack = backstack)
+
             ProvideSystemUiController {
                 ProvideNavController {
                     LauncherTheme {
                         Surface {
-                            AppNavigator()
+                            CircuitCompositionLocals(circuit = circuit) {
+                                NavigableCircuitContent(
+                                    navigator = navigator,
+                                    backstack = backstack
+                                )
+                            }
                         }
                     }
                 }

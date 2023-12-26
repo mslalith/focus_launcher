@@ -73,6 +73,7 @@ koverReport {
 }
 
 dependencies {
+    implementation(project(":core:screens"))
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
@@ -87,6 +88,9 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.profile.installer)
+
+    implementation(libs.circuit.foundation)
+    implementation(libs.circuit.runtime)
 }
 
 dependencies {

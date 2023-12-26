@@ -30,6 +30,7 @@ include(
     ":benchmark",
     ":core:common",
     ":core:model",
+    ":core:screens",
     ":core:domain",
     ":core:data",
     ":core:ui",

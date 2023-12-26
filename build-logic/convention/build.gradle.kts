@@ -63,5 +63,9 @@ gradlePlugin {
             id = "focuslauncher.lint"
             implementationClass = "LintConventionPlugin"
         }
+        register("newScreen") {
+            id = "focuslauncher.screen.new"
+            implementationClass = "NewScreenConventionPlugin"
+        }
     }
 }
