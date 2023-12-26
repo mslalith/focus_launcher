@@ -19,4 +19,7 @@ data object HideAppsScreen: Screen
 data object CurrentPlaceScreen : Screen
 
 @Parcelize
+data object IconPackScreen : Screen
+
+@Parcelize
 data object AboutScreen : Screen

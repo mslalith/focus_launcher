@@ -75,7 +75,8 @@ internal fun IconPackScreen(
     iconPackState: IconPackState,
     onIconPackClick: (IconPackType) -> Unit,
     onDoneClick: () -> Unit,
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val density = LocalDensity.current
     var bottomSheetTopOffset by remember { mutableStateOf(value = 0.dp) }
@@ -98,6 +99,7 @@ internal fun IconPackScreen(
         val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }
 
         BottomSheetScaffold(
+            modifier = modifier,
             scaffoldState = bottomSheetScaffoldState,
             containerColor = MaterialTheme.colorScheme.surface,
             sheetSwipeEnabled = false,
