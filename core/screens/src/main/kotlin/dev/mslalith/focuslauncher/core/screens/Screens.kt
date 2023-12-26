@@ -8,3 +8,6 @@ data object LauncherScreen : Screen
 
 @Parcelize
 data object HomePageScreen : Screen
+
+@Parcelize
+data object AboutScreen : Screen
