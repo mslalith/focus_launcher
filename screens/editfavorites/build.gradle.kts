@@ -1,6 +1,6 @@
 plugins {
     id("focuslauncher.android.feature")
-    id("focuslauncher.android.library.compose")
+    id("focuslauncher.screen.new")
     id("focuslauncher.android.library.compose.testing")
 }
 

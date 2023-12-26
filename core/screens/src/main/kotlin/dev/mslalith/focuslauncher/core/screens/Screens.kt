@@ -10,4 +10,7 @@ data object LauncherScreen : Screen
 data object HomePageScreen : Screen
 
 @Parcelize
+data object EditFavoritesScreen : Screen
+
+@Parcelize
 data object AboutScreen : Screen

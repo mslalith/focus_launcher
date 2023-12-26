@@ -58,7 +58,8 @@ internal fun EditFavoritesScreenInternal(
     onClearFavorites: () -> Unit,
     onAddToFavorites: (App) -> Unit,
     onRemoveFromFavorites: (App) -> Unit,
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -66,6 +67,7 @@ internal fun EditFavoritesScreenInternal(
     StatusBarColor()
 
     Scaffold(
+        modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
