@@ -5,3 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data object LauncherScreen : Screen
+
+@Parcelize
+data object HomePageScreen : Screen
