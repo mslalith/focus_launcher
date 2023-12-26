@@ -52,11 +52,13 @@ internal fun HideAppsScreenInternal(
     onRemoveFromFavorites: (App) -> Unit,
     onAddToHiddenApps: (App) -> Unit,
     onRemoveFromHiddenApps: (App) -> Unit,
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     StatusBarColor()
 
     Scaffold(
+        modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             AppBarWithBackIcon(

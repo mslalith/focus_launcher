@@ -13,4 +13,7 @@ data object HomePageScreen : Screen
 data object EditFavoritesScreen : Screen
 
 @Parcelize
+data object HideAppsScreen: Screen
+
+@Parcelize
 data object AboutScreen : Screen

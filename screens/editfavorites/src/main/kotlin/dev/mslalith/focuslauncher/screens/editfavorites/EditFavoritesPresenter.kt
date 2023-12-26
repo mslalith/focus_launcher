@@ -15,6 +15,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -39,7 +40,8 @@ class EditFavoritesPresenter @AssistedInject constructor(
     @Assisted private val navigator: Navigator,
     appDrawerRepo: AppDrawerRepo,
     private val favoritesRepo: FavoritesRepo,
-    hiddenAppsRepo: HiddenAppsRepo
+    hiddenAppsRepo: HiddenAppsRepo,
+    private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : Presenter<EditFavoritesState> {
 
     @CircuitInject(EditFavoritesScreen::class, SingletonComponent::class)
@@ -50,7 +52,7 @@ class EditFavoritesPresenter @AssistedInject constructor(
 
     private var showHiddenApps by mutableStateOf(value = false)
 
-    private val favoritesStateFlow: Flow<ImmutableList<SelectedApp>> = appDrawerRepo.allAppsFlow
+    private val allFavoritesFlow: Flow<ImmutableList<SelectedApp>> = appDrawerRepo.allAppsFlow
         .map { it.map { app -> SelectedApp(app = app, isSelected = false) } }
         .combine(flow = favoritesRepo.onlyFavoritesFlow) { appsList, onlyFavoritesList ->
             appsList.map { selectedApp ->
@@ -69,7 +71,7 @@ class EditFavoritesPresenter @AssistedInject constructor(
     override fun present(): EditFavoritesState {
         val scope = rememberCoroutineScope()
 
-        val allFavorites by favoritesStateFlow.collectAsState(initial = persistentListOf())
+        val allFavorites by allFavoritesFlow.collectAsState(initial = persistentListOf())
         val favoriteApps by remember {
             derivedStateOf {
                 when (showHiddenApps) {
@@ -94,14 +96,14 @@ class EditFavoritesPresenter @AssistedInject constructor(
     }
 
     private fun CoroutineScope.addToFavorites(app: App) {
-        launch { favoritesRepo.addToFavorites(app = app) }
+        launch(appCoroutineDispatcher.io) { favoritesRepo.addToFavorites(app = app) }
     }
 
     private fun CoroutineScope.removeFromFavorites(app: App) {
-        launch { favoritesRepo.removeFromFavorites(packageName = app.packageName) }
+        launch(appCoroutineDispatcher.io) { favoritesRepo.removeFromFavorites(packageName = app.packageName) }
     }
 
     private fun CoroutineScope.clearFavorites() {
-        launch { favoritesRepo.clearFavorites() }
+        launch(appCoroutineDispatcher.io) { favoritesRepo.clearFavorites() }
     }
 }
