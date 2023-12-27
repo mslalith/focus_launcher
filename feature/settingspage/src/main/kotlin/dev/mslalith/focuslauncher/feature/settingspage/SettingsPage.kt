@@ -20,6 +20,7 @@ import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -27,7 +28,6 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
-import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
@@ -74,7 +74,7 @@ fun SettingsPage(
         onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
         onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
         onLunarPhaseWidgetClick = {},
-        onQuotesWidgetClick = {},
+        onQuotesWidgetClick = { showBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
         onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
         navigateTo = {}
     )
@@ -131,9 +131,9 @@ internal fun SettingsPageInternal(
     }
 
     fun onQuotesWidgetClick() {
-        viewManager.showBottomSheet {
-            QuotesSettingsSheet()
-        }
+//        viewManager.showBottomSheet {
+//            QuotesSettingsSheet()
+//        }
     }
 
     SettingsPageInternal(

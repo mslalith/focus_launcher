@@ -11,3 +11,6 @@ data object AppDrawerSettingsBottomSheetScreen : Screen
 
 @Parcelize
 data object ClockWidgetSettingsBottomSheetScreen : Screen
+
+@Parcelize
+data object QuoteWidgetSettingsBottomSheetScreen : Screen
