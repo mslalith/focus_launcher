@@ -14,3 +14,6 @@ data object ClockWidgetSettingsBottomSheetScreen : Screen
 
 @Parcelize
 data object QuoteWidgetSettingsBottomSheetScreen : Screen
+
+@Parcelize
+data object LunarPhaseWidgetSettingsBottomSheetScreen : Screen

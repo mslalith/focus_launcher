@@ -8,7 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
@@ -19,6 +23,8 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.GoTo
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.RefreshIsDefaultLauncher
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleAppGroupHeaderVisibility
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleNotificationShade
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleSearchBarVisibility
@@ -29,14 +35,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@CircuitInject(SettingsPageScreen::class, SingletonComponent::class)
-class SettingsPagePresenter @Inject constructor(
+class SettingsPagePresenter @AssistedInject constructor(
+    @Assisted private val navigator: Navigator,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : Presenter<SettingsPageState> {
+
+    @CircuitInject(SettingsPageScreen::class, SingletonComponent::class)
+    @AssistedFactory
+    fun interface Factory {
+        fun create(navigator: Navigator): SettingsPagePresenter
+    }
 
     @Composable
     override fun present(): SettingsPageState {
@@ -68,7 +79,8 @@ class SettingsPagePresenter @Inject constructor(
                 ToggleStatusBarVisibility -> scope.toggleStatusBarVisibility()
                 is UpdateAppDrawerIconViewType -> scope.updateAppDrawerIconViewType(viewType = it.viewType)
                 is UpdateAppDrawerViewType -> scope.updateAppDrawerViewType(viewType = it.viewType)
-                is SettingsPageUiEvent.RefreshIsDefaultLauncher -> scope.refreshIsDefaultLauncher(context = it.context)
+                is RefreshIsDefaultLauncher -> scope.refreshIsDefaultLauncher(context = it.context)
+                is GoTo -> navigator.goTo(screen = it.screen)
             }
         }
     }

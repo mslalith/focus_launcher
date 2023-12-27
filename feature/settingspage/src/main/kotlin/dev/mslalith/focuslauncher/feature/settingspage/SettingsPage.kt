@@ -15,19 +15,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
-import dev.mslalith.focuslauncher.core.model.Screen
+import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
+import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
+import dev.mslalith.focuslauncher.core.screens.IconPackScreen
+import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
-import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
-import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
@@ -73,10 +76,10 @@ fun SettingsPage(
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
         onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
         onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
-        onLunarPhaseWidgetClick = {},
+        onLunarPhaseWidgetClick = { showBottomSheet(screen = LunarPhaseWidgetSettingsBottomSheetScreen) },
         onQuotesWidgetClick = { showBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
         onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
-        navigateTo = {}
+        navigateTo = { eventSink(SettingsPageUiEvent.GoTo(screen = it)) }
     )
 }
 
@@ -85,7 +88,7 @@ fun SettingsPage() {
     val navController = LocalNavController.current
 
     SettingsPageInternal(
-        navigateTo = { navController.navigate(it.id) }
+        navigateTo = { /*navController.navigate(it.id)*/ }
     )
 }
 
@@ -118,16 +121,16 @@ internal fun SettingsPageInternal(
     }
 
     fun onLunarPhaseWidgetClick() {
-        viewManager.showBottomSheet {
-            LunarPhaseSettingsSheet(
-                properties = LunarPhaseSettingsProperties(
-                    navigateToCurrentPlace = {
-                        viewManager.hideBottomSheet()
-                        navigateTo(Screen.CurrentPlace)
-                    }
-                )
-            )
-        }
+//        viewManager.showBottomSheet {
+//            LunarPhaseSettingsSheet(
+//                properties = LunarPhaseSettingsProperties(
+//                    navigateToCurrentPlace = {
+//                        viewManager.hideBottomSheet()
+//                        navigateTo(Screen.CurrentPlace)
+//                    }
+//                )
+//            )
+//        }
     }
 
     fun onQuotesWidgetClick() {
@@ -177,8 +180,8 @@ internal fun SettingsPageInternal(
 
         ChangeTheme(onClick = onThemeClick)
 
-        EditFavorites { navigateTo(Screen.EditFavorites) }
-        HideApps { navigateTo(Screen.HideApps) }
+        EditFavorites { navigateTo(EditFavoritesScreen) }
+        HideApps { navigateTo(HideAppsScreen) }
 
         ToggleStatusBar(
             showStatusBar = settingsState.showStatusBar,
@@ -191,7 +194,7 @@ internal fun SettingsPageInternal(
 
         IconPack(
             shouldShow = settingsState.showIconPack,
-            onClick = { navigateTo(Screen.IconPack) }
+            onClick = { navigateTo(IconPackScreen) }
         )
 
         AppDrawer(onClick = onAppDrawerClick)
@@ -207,7 +210,7 @@ internal fun SettingsPageInternal(
             refreshIsDefaultLauncher = onRefreshIsDefaultLauncher
         )
 
-        About { navigateTo(Screen.About) }
+        About { navigateTo(AboutScreen) }
 
         VerticalSpacer(spacing = 12.dp)
     }
