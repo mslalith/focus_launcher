@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
@@ -94,6 +95,7 @@ internal fun HomePage(
                 )
                 Box(modifier = Modifier.weight(weight = 1f)) {
                     DecoratedQuote(
+                        state = state.quoteForYouUiComponentState,
                         modifier = Modifier.align(alignment = Alignment.Center)
                     )
                 }

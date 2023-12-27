@@ -3,8 +3,6 @@ package dev.mslalith.focuslauncher.feature.homepage
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
@@ -13,16 +11,16 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentPresenter
 import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentPresenter
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentPresenter
 import javax.inject.Inject
 
 @CircuitInject(HomePageScreen::class, SingletonComponent::class)
 class HomePagePresenter @Inject constructor(
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val clockWidgetUiComponentPresenter: ClockWidgetUiComponentPresenter,
-    private val lunarCalendarUiComponentPresenter: LunarCalendarUiComponentPresenter
+    private val lunarCalendarUiComponentPresenter: LunarCalendarUiComponentPresenter,
+    private val quoteForYouUiComponentPresenter: QuoteForYouUiComponentPresenter
 ) : Presenter<HomePageState> {
-
-    private var showMoonCalendarDetailsDialog by mutableStateOf(value = false)
 
     @Composable
     override fun present(): HomePageState {
@@ -30,15 +28,16 @@ class HomePagePresenter @Inject constructor(
 
         val clockWidgetUiComponentState = clockWidgetUiComponentPresenter.present()
         val lunarCalendarUiComponentState = lunarCalendarUiComponentPresenter.present()
+        val quoteForYouUiComponentState = quoteForYouUiComponentPresenter.present()
 
         return HomePageState(
             isPullDownNotificationShadeEnabled = isPullDownNotificationShadeEnabled,
-            showMoonCalendarDetailsDialog = showMoonCalendarDetailsDialog,
             clockWidgetUiComponentState = clockWidgetUiComponentState,
-            lunarCalendarUiComponentState = lunarCalendarUiComponentState
+            lunarCalendarUiComponentState = lunarCalendarUiComponentState,
+            quoteForYouUiComponentState = quoteForYouUiComponentState
         ) {
             when (it) {
-                HomePageUiEvent.ShowMoonCalendar -> Unit
+                else -> Unit
             }
         }
     }

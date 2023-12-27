@@ -21,7 +21,7 @@ internal fun Widgets(
     onQuotesWidgetClick: () -> Unit
 ) {
     val widgetValues = remember {
-        WidgetType.values().filter { it != WidgetType.QUOTES }.toImmutableList()
+        WidgetType.entries.filter { it != WidgetType.QUOTES }.toImmutableList()
     }
 
     fun onWidgetClick(widgetType: WidgetType) {

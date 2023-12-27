@@ -8,3 +8,6 @@ data object ClockWidgetUiComponentScreen : Screen
 
 @Parcelize
 data object LunarCalendarUiComponentScreen : Screen
+
+@Parcelize
+data object QuoteForYouUiComponentScreen : Screen
