@@ -8,3 +8,6 @@ data object ThemeSelectionBottomSheetScreen : Screen
 
 @Parcelize
 data object AppDrawerSettingsBottomSheetScreen : Screen
+
+@Parcelize
+data object ClockWidgetSettingsBottomSheetScreen : Screen

@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class BottomSheetOverlay<S : Any, R : Any>(
     private val state: S,
     private val onDismiss: () -> R,
-    private val content: @Composable (S, OverlayNavigator<R>) -> Unit,
+    private val content: @Composable (S, OverlayNavigator<R>) -> Unit
 ) : Overlay<R> {
     @Composable
     override fun Content(navigator: OverlayNavigator<R>) {
@@ -52,7 +52,7 @@ class BottomSheetOverlay<S : Any, R : Any>(
                 }
             },
             sheetState = sheetState,
-            onDismissRequest = { navigator.finish(onDismiss()) },
+            onDismissRequest = { navigator.finish(onDismiss()) }
         )
 
         LaunchedEffect(Unit) { sheetState.show() }
@@ -73,7 +73,7 @@ suspend fun OverlayHost.showBottomSheet(
                     NavEvent.Pop -> navigator.finish(Unit)
                     else -> Unit
                 }
-            },
+            }
         )
     }
 )

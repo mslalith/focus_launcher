@@ -19,12 +19,12 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
-import dev.mslalith.focuslauncher.feature.clock24.settings.ClockSettingsSheet
 import dev.mslalith.focuslauncher.feature.lunarcalendar.model.LunarPhaseSettingsProperties
 import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.LunarPhaseSettingsSheet
 import dev.mslalith.focuslauncher.feature.quoteforyou.settings.QuotesSettingsSheet
@@ -72,7 +72,7 @@ fun SettingsPage(
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
         onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
-        onClockWidgetClick = {},
+        onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
         onLunarPhaseWidgetClick = {},
         onQuotesWidgetClick = {},
         onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
@@ -112,9 +112,9 @@ internal fun SettingsPageInternal(
     }
 
     fun onClockWidgetClick() {
-        viewManager.showBottomSheet {
-            ClockSettingsSheet()
-        }
+//        viewManager.showBottomSheet {
+//            ClockSettingsSheet()
+//        }
     }
 
     fun onLunarPhaseWidgetClick() {

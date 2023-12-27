@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
@@ -21,8 +20,6 @@ import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.onSwipeDown
-import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
-import dev.mslalith.focuslauncher.feature.favorites.FavoritesList
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePageState
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
