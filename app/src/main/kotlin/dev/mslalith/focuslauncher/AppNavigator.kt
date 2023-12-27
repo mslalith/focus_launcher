@@ -13,7 +13,6 @@ import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceScreen
 import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
 import dev.mslalith.focuslauncher.screens.hideapps.HideAppsScreen
 import dev.mslalith.focuslauncher.screens.iconpack.IconPackScreen
-import dev.mslalith.focuslauncher.screens.launcher.LauncherScreen
 
 @Composable
 fun AppNavigator() {
@@ -36,7 +35,7 @@ private fun NavGraphBuilder.launcherScreen() {
     composable(route = Screen.Launcher.id) {
         ProvideBottomSheetManager {
             ProvideLauncherPagerState {
-                LauncherScreen()
+//                LauncherScreen()
             }
         }
     }
