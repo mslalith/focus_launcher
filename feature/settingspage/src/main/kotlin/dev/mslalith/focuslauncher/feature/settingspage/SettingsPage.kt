@@ -12,7 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.slack.circuit.codegen.annotations.CircuitInject
+import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.model.Screen
+import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
@@ -33,6 +36,38 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHea
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
 import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
+
+@CircuitInject(SettingsPageScreen::class, SingletonComponent::class)
+@Composable
+fun SettingsPage(
+    state: SettingsPageState,
+    modifier: Modifier = Modifier
+) {
+    // Need to extract the eventSink out to a local val, so that the Compose Compiler
+    // treats it as stable. See: https://issuetracker.google.com/issues/256100927
+    val eventSink = state.eventSink
+
+    val context = LocalContext.current
+
+    SettingsPageInternal(
+        modifier = modifier,
+        settingsState = SettingsState(
+            state.showStatusBar,
+            state.canDrawNotificationShade,
+            state.showIconPack,
+            state.isDefaultLauncher
+        ),
+        onThemeClick = {},
+        onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
+        onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
+        onAppDrawerClick = {},
+        onClockWidgetClick = {},
+        onLunarPhaseWidgetClick = {},
+        onQuotesWidgetClick = {},
+        onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
+        navigateTo = {}
+    )
+}
 
 @Composable
 fun SettingsPage() {
@@ -115,12 +150,13 @@ internal fun SettingsPageInternal(
     onLunarPhaseWidgetClick: () -> Unit,
     onQuotesWidgetClick: () -> Unit,
     onRefreshIsDefaultLauncher: () -> Unit,
-    navigateTo: (Screen) -> Unit
+    navigateTo: (Screen) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.Center

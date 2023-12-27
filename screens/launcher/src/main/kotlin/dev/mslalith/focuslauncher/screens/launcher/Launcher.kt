@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -20,6 +19,9 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
+import dev.mslalith.focuslauncher.feature.homepage.HomePage
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPage
 import kotlinx.coroutines.launch
 
 @CircuitInject(LauncherScreen::class, SingletonComponent::class)
@@ -74,10 +76,9 @@ private fun LauncherInternal(
                 .consumeWindowInsets(paddingValues = paddingValues)
         ) { page ->
             when (page) {
-                else -> Text(text = "Hello")
-//                0 -> SettingsPage()
-//                1 -> HomePage()
-//                2 -> AppDrawerPage()
+                0 -> SettingsPage(state = state.settingsPageState)
+                1 -> HomePage(state = state.homePageState)
+                2 -> AppDrawerPage(state = state.appDrawerPageState)
             }
         }
     }

@@ -24,11 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.slack.circuit.codegen.annotations.CircuitInject
+import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
+import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
@@ -40,6 +43,35 @@ import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
 import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
 import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
 import kotlinx.coroutines.flow.collectLatest
+
+@CircuitInject(AppDrawerPageScreen::class, SingletonComponent::class)
+@Composable
+fun AppDrawerPage(
+    state: dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageState,
+    modifier: Modifier = Modifier
+) {
+    // Need to extract the eventSink out to a local val, so that the Compose Compiler
+    // treats it as stable. See: https://issuetracker.google.com/issues/256100927
+    val eventSink = state.eventSink
+
+    AppDrawerPageInternal(
+        modifier = modifier,
+        appDrawerPageState = AppDrawerPageState(
+            state.allAppsState,
+            state.appDrawerViewType,
+            state.appDrawerIconViewType,
+            state.showAppGroupHeader,
+            state.showSearchBar,
+            state.searchBarQuery
+        ),
+        addToFavorites = { eventSink(AppDrawerPageUiEvent.AddToFavorites(app = it)) },
+        removeFromFavorites = { eventSink(AppDrawerPageUiEvent.RemoveFromFavorites(app = it)) },
+        addToHiddenApps = { eventSink(AppDrawerPageUiEvent.AddToHiddenApps(app = it)) },
+        searchAppQuery = { eventSink(AppDrawerPageUiEvent.UpdateSearchAppQuery(query = it)) },
+        updateDisplayName = { app, name -> eventSink(AppDrawerPageUiEvent.UpdateDisplayName(app = app, displayName = name)) },
+        reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) }
+    )
+}
 
 @Composable
 fun AppDrawerPage() {
@@ -82,7 +114,8 @@ internal fun AppDrawerPageInternal(
     addToHiddenApps: (App) -> Unit,
     searchAppQuery: (String) -> Unit,
     updateDisplayName: (App, String) -> Unit,
-    reloadIconPack: () -> Unit
+    reloadIconPack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -123,7 +156,7 @@ internal fun AppDrawerPageInternal(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .imePadding()
     ) {

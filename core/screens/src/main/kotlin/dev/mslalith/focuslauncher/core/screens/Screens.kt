@@ -10,6 +10,12 @@ data object LauncherScreen : Screen
 data object HomePageScreen : Screen
 
 @Parcelize
+data object SettingsPageScreen : Screen
+
+@Parcelize
+data object AppDrawerPageScreen : Screen
+
+@Parcelize
 data object EditFavoritesScreen : Screen
 
 @Parcelize
