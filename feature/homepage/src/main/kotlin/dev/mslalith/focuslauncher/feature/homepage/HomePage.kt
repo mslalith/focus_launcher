@@ -20,12 +20,12 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
+import dev.mslalith.focuslauncher.core.screens.LunarPhaseDetailsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponent
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
-import dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
 import kotlinx.coroutines.launch
 
 @CircuitInject(HomePageScreen::class, SingletonComponent::class)
@@ -54,21 +54,9 @@ fun HomePage(
     HomePage(
         state = state,
         onClockWidgetClick = ::openClockApp,
-        onLunarCalendarWidgetClick = {},
+        onLunarCalendarWidgetClick = { showBottomSheet(screen = LunarPhaseDetailsBottomSheetScreen) },
         modifier = modifier
     )
-}
-
-@Composable
-internal fun MoonCalendarDetailsDialog(
-    showMoonCalendarDetailsDialogProvider: Boolean,
-    onHideMoonCalendarDetailsDialog: () -> Unit
-) {
-    if (showMoonCalendarDetailsDialogProvider) {
-        LunarPhaseDetailsDialog(
-            onClose = onHideMoonCalendarDetailsDialog
-        )
-    }
 }
 
 @Composable

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog
+package dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasedetails.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -9,24 +9,24 @@ import dev.mslalith.focuslauncher.feature.lunarcalendar.R
 import kotlinx.datetime.LocalDateTime
 
 @Composable
-internal fun RiseTimeDetails(
-    moonRiseDateTime: LocalDateTime?,
-    sunRiseDateTime: LocalDateTime?,
+internal fun SetTimeDetails(
+    moonSetDateTime: LocalDateTime?,
+    sunSetDateTime: LocalDateTime?,
     contentColor: Color
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         RiseAndSetTime(
-            localDateTime = moonRiseDateTime,
+            localDateTime = moonSetDateTime,
             contentColor = contentColor
         )
         RiseAndSetIndicator(
-            text = stringResource(id = R.string.rise),
+            text = stringResource(id = R.string.set),
             contentColor = contentColor
         )
         RiseAndSetTime(
-            localDateTime = sunRiseDateTime,
+            localDateTime = sunSetDateTime,
             contentColor = contentColor
         )
     }

@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog
+package dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasedetails.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
