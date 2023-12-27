@@ -7,12 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
-import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponent
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentState
 
 @Composable
-internal fun SpacedMoonCalendar(
+internal fun DecoratedLunarCalendar(
+    state: LunarCalendarUiComponentState,
     modifier: Modifier = Modifier,
-    onMoonCalendarClick: () -> Unit
+    onClick: () -> Unit
 ) {
     val homePadding = LocalHomePadding.current
     val startPadding = homePadding.contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
@@ -21,10 +23,11 @@ internal fun SpacedMoonCalendar(
     val iconSize = homePadding.lunarPhaseIconSize + extraLunarPhaseIconSize
 
     Box(modifier = modifier) {
-        LunarCalendar(
+        LunarCalendarUiComponent(
+            state = state,
             iconSize = iconSize,
             horizontalPadding = startOffsetPadding,
-            onClick = onMoonCalendarClick
+            onClick = onClick
         )
     }
 }

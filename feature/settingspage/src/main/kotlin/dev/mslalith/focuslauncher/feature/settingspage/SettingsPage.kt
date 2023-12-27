@@ -59,7 +59,7 @@ fun SettingsPage(
     val overlayHost = LocalOverlayHost.current
     val scope = rememberCoroutineScope()
 
-    fun showBottomSheet(screen: com.slack.circuit.runtime.screen.Screen) {
+    fun showBottomSheet(screen: Screen) {
         scope.launch { overlayHost.showBottomSheet(screen) }
     }
 

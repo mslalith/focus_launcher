@@ -5,3 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data object ClockWidgetUiComponentScreen : Screen
+
+@Parcelize
+data object LunarCalendarUiComponentScreen : Screen

@@ -12,12 +12,14 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsR
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentPresenter
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentPresenter
 import javax.inject.Inject
 
 @CircuitInject(HomePageScreen::class, SingletonComponent::class)
 class HomePagePresenter @Inject constructor(
     private val generalSettingsRepo: GeneralSettingsRepo,
-    private val clockWidgetUiComponentPresenter: ClockWidgetUiComponentPresenter
+    private val clockWidgetUiComponentPresenter: ClockWidgetUiComponentPresenter,
+    private val lunarCalendarUiComponentPresenter: LunarCalendarUiComponentPresenter
 ) : Presenter<HomePageState> {
 
     private var showMoonCalendarDetailsDialog by mutableStateOf(value = false)
@@ -27,11 +29,13 @@ class HomePagePresenter @Inject constructor(
         val isPullDownNotificationShadeEnabled by generalSettingsRepo.notificationShadeFlow.collectAsState(initial = DEFAULT_NOTIFICATION_SHADE)
 
         val clockWidgetUiComponentState = clockWidgetUiComponentPresenter.present()
+        val lunarCalendarUiComponentState = lunarCalendarUiComponentPresenter.present()
 
         return HomePageState(
             isPullDownNotificationShadeEnabled = isPullDownNotificationShadeEnabled,
             showMoonCalendarDetailsDialog = showMoonCalendarDetailsDialog,
-            clockWidgetUiComponentState = clockWidgetUiComponentState
+            clockWidgetUiComponentState = clockWidgetUiComponentState,
+            lunarCalendarUiComponentState = lunarCalendarUiComponentState
         ) {
             when (it) {
                 HomePageUiEvent.ShowMoonCalendar -> Unit

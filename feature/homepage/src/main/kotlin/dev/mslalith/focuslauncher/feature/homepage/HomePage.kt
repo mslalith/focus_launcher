@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -22,6 +26,7 @@ import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponent
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
 import dev.mslalith.focuslauncher.feature.lunarcalendar.detailsdialog.LunarPhaseDetailsDialog
+import kotlinx.coroutines.launch
 
 @CircuitInject(HomePageScreen::class, SingletonComponent::class)
 @Composable
@@ -29,9 +34,27 @@ fun HomePage(
     state: HomePageState,
     modifier: Modifier = Modifier
 ) {
+    // Need to extract the eventSink out to a local val, so that the Compose Compiler
+    // treats it as stable. See: https://issuetracker.google.com/issues/256100927
+    val eventSink = state.eventSink
+
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val overlayHost = LocalOverlayHost.current
+
+    fun showBottomSheet(screen: Screen) {
+        scope.launch { overlayHost.showBottomSheet(screen) }
+    }
+
+    fun openClockApp() {
+        val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+        context.startActivity(intent)
+    }
+
     HomePage(
         state = state,
-        onMoonCalendarClick = {},
+        onClockWidgetClick = ::openClockApp,
+        onLunarCalendarWidgetClick = {},
         modifier = modifier
     )
 }
@@ -51,15 +74,11 @@ internal fun MoonCalendarDetailsDialog(
 @Composable
 internal fun HomePage(
     state: HomePageState,
-    onMoonCalendarClick: () -> Unit,
+    onClockWidgetClick: () -> Unit,
+    onLunarCalendarWidgetClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-
-    fun openClockApp() {
-        val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
-        context.startActivity(intent)
-    }
 
     CompositionLocalProvider(LocalHomePadding provides HomePadding()) {
         val contentPaddingValues = LocalHomePadding.current.contentPaddingValues
@@ -79,10 +98,11 @@ internal fun HomePage(
                 ClockWidgetUiComponent(
                     state = state.clockWidgetUiComponentState,
                     horizontalPadding = horizontalPadding,
-                    onClick = ::openClockApp
+                    onClick = onClockWidgetClick
                 )
-                SpacedMoonCalendar(
-                    onMoonCalendarClick = onMoonCalendarClick
+                DecoratedLunarCalendar(
+                    state = state.lunarCalendarUiComponentState,
+                    onClick = onLunarCalendarWidgetClick
                 )
                 Box(modifier = Modifier.weight(weight = 1f)) {
                     DecoratedQuote(
