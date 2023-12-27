@@ -11,6 +11,7 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.overlay.ContentWithOverlays
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
@@ -49,10 +50,12 @@ class LauncherActivity : ComponentActivity() {
                     LauncherTheme {
                         Surface {
                             CircuitCompositionLocals(circuit = circuit) {
-                                NavigableCircuitContent(
-                                    navigator = navigator,
-                                    backstack = backstack
-                                )
+                                ContentWithOverlays {
+                                    NavigableCircuitContent(
+                                        navigator = navigator,
+                                        backstack = backstack
+                                    )
+                                }
                             }
                         }
                     }

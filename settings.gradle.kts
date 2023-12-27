@@ -31,6 +31,7 @@ include(
     ":core:common",
     ":core:model",
     ":core:screens",
+    ":core:circuitoverlay",
     ":core:domain",
     ":core:data",
     ":core:ui",

@@ -91,6 +91,7 @@ dependencies {
 
     implementation(libs.circuit.foundation)
     implementation(libs.circuit.runtime)
+    implementation(libs.circuit.overlay)
 }
 
 dependencies {

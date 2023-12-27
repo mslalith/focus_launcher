@@ -7,15 +7,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.overlay.LocalOverlayHost
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.model.Screen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
+import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
@@ -35,7 +39,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaul
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
-import dev.mslalith.focuslauncher.feature.theme.ThemeSelectionSheet
+import kotlinx.coroutines.launch
 
 @CircuitInject(SettingsPageScreen::class, SingletonComponent::class)
 @Composable
@@ -48,6 +52,12 @@ fun SettingsPage(
     val eventSink = state.eventSink
 
     val context = LocalContext.current
+    val overlayHost = LocalOverlayHost.current
+    val scope = rememberCoroutineScope()
+
+    fun showBottomSheet(screen: com.slack.circuit.runtime.screen.Screen) {
+        scope.launch { overlayHost.showBottomSheet(screen) }
+    }
 
     SettingsPageInternal(
         modifier = modifier,
@@ -57,7 +67,7 @@ fun SettingsPage(
             state.showIconPack,
             state.isDefaultLauncher
         ),
-        onThemeClick = {},
+        onThemeClick = { showBottomSheet(screen = ThemeSelectionBottomSheetScreen) },
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
         onAppDrawerClick = {},
@@ -89,9 +99,9 @@ internal fun SettingsPageInternal(
     val settingsState by settingsPageViewModel.settingsState.collectAsStateWithLifecycle()
 
     fun onThemeClick() {
-        viewManager.showBottomSheet {
-            ThemeSelectionSheet(closeBottomSheet = viewManager::hideBottomSheet)
-        }
+//        viewManager.showBottomSheet {
+//            ThemeSelectionSheet(closeBottomSheet = viewManager::hideBottomSheet)
+//        }
     }
 
     fun onAppDrawerClick() {

@@ -29,6 +29,9 @@ class NewScreenConventionPlugin : Plugin<Project> {
                 add(configurationName = "implementation", libs.findLibrary("circuit-runtime").get())
                 add(configurationName = "api", libs.findLibrary("circuit-codegenAnnotations").get())
                 add(configurationName = "ksp", libs.findLibrary("circuit-codegen").get())
+
+                add(configurationName = "implementation", libs.findLibrary("circuit-overlay").get())
+                add(configurationName = "implementation", project(":core:circuitoverlay"))
             }
         }
     }
