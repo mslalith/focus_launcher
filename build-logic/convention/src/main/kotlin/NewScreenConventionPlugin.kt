@@ -32,6 +32,8 @@ class NewScreenConventionPlugin : Plugin<Project> {
 
                 add(configurationName = "implementation", libs.findLibrary("circuit-overlay").get())
                 add(configurationName = "implementation", project(":core:circuitoverlay"))
+
+                add(configurationName = "testImplementation", project(":core:testing-circuit"))
             }
         }
     }

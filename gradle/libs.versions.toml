@@ -75,6 +75,7 @@ circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = 
 circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
 circuit-codegenAnnotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuit" }
 circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuit" }
+circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuit" }
 
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }

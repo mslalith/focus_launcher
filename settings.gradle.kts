@@ -40,6 +40,7 @@ include(
     ":core:lint",
     ":core:testing",
     ":core:testing-compose",
+    ":core:testing-circuit",
     ":screens:launcher",
     ":screens:editfavorites",
     ":screens:hideapps",
