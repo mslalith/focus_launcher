@@ -11,5 +11,6 @@ data class HomePageState(
     val clockWidgetUiComponentState: ClockWidgetUiComponentState,
     val lunarCalendarUiComponentState: LunarCalendarUiComponentState,
     val quoteForYouUiComponentState: QuoteForYouUiComponentState,
-    val favoritesListUiComponentState: FavoritesListUiComponentState
+    val favoritesListUiComponentState: FavoritesListUiComponentState,
+    val eventSink: (HomePageUiEvent) -> Unit
 ) : CircuitUiState

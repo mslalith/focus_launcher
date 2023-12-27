@@ -8,12 +8,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
@@ -24,6 +27,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.GoTo
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.OpenBottomSheet
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.RefreshIsDefaultLauncher
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleAppGroupHeaderVisibility
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleNotificationShade
@@ -52,6 +56,7 @@ class SettingsPagePresenter @AssistedInject constructor(
     @Composable
     override fun present(): SettingsPageState {
         val scope = rememberCoroutineScope()
+        val overlayHost = LocalOverlayHost.current
 
         val showStatusBar by generalSettingsRepo.statusBarVisibilityFlow.collectAsState(initial = DEFAULT_STATUS_BAR)
         val canDrawNotificationShade by generalSettingsRepo.notificationShadeFlow.collectAsState(initial = DEFAULT_NOTIFICATION_SHADE)
@@ -64,6 +69,10 @@ class SettingsPagePresenter @AssistedInject constructor(
             derivedStateOf {
                 appDrawerViewType == AppDrawerViewType.GRID || appDrawerIconViewType != AppDrawerIconViewType.TEXT
             }
+        }
+
+        fun showBottomSheet(screen: Screen) {
+            scope.launch { overlayHost.showBottomSheet(screen) }
         }
 
         return SettingsPageState(
@@ -81,6 +90,7 @@ class SettingsPagePresenter @AssistedInject constructor(
                 is UpdateAppDrawerViewType -> scope.updateAppDrawerViewType(viewType = it.viewType)
                 is RefreshIsDefaultLauncher -> scope.refreshIsDefaultLauncher(context = it.context)
                 is GoTo -> navigator.goTo(screen = it.screen)
+                is OpenBottomSheet -> showBottomSheet(screen = it.screen)
             }
         }
     }

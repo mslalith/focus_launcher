@@ -7,17 +7,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slack.circuit.codegen.annotations.CircuitInject
-import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
@@ -43,7 +40,6 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaul
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ToggleStatusBar
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Widgets
-import kotlinx.coroutines.launch
 
 @CircuitInject(SettingsPageScreen::class, SingletonComponent::class)
 @Composable
@@ -56,12 +52,8 @@ fun SettingsPage(
     val eventSink = state.eventSink
 
     val context = LocalContext.current
-    val overlayHost = LocalOverlayHost.current
-    val scope = rememberCoroutineScope()
 
-    fun showBottomSheet(screen: Screen) {
-        scope.launch { overlayHost.showBottomSheet(screen) }
-    }
+    fun openBottomSheet(screen: Screen) = eventSink(SettingsPageUiEvent.OpenBottomSheet(screen = screen))
 
     SettingsPageInternal(
         modifier = modifier,
@@ -71,13 +63,13 @@ fun SettingsPage(
             state.showIconPack,
             state.isDefaultLauncher
         ),
-        onThemeClick = { showBottomSheet(screen = ThemeSelectionBottomSheetScreen) },
+        onThemeClick = { openBottomSheet(screen = ThemeSelectionBottomSheetScreen) },
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
-        onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
-        onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
-        onLunarPhaseWidgetClick = { showBottomSheet(screen = LunarPhaseWidgetSettingsBottomSheetScreen) },
-        onQuotesWidgetClick = { showBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
+        onAppDrawerClick = { openBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
+        onClockWidgetClick = { openBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
+        onLunarPhaseWidgetClick = { openBottomSheet(screen = LunarPhaseWidgetSettingsBottomSheetScreen) },
+        onQuotesWidgetClick = { openBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
         onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
         navigateTo = { eventSink(SettingsPageUiEvent.GoTo(screen = it)) }
     )

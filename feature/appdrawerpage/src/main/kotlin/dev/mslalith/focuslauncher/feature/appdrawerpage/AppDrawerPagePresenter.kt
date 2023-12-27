@@ -9,8 +9,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
@@ -26,6 +29,12 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDraw
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.AddToFavorites
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.AddToHiddenApps
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.OpenBottomSheet
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.ReloadIconPack
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.RemoveFromFavorites
+import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.UpdateSearchQuery
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -58,6 +67,7 @@ class AppDrawerPagePresenter @Inject constructor(
     @Composable
     override fun present(): AppDrawerPageState {
         val scope = rememberCoroutineScope()
+        val overlayHost = LocalOverlayHost.current
 
         val appDrawerViewType by appDrawerSettingsRepo.appDrawerViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_VIEW_TYPE)
         val appDrawerIconViewType by appDrawerSettingsRepo.appDrawerIconViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
@@ -79,6 +89,10 @@ class AppDrawerPagePresenter @Inject constructor(
                 .collect()
         }
 
+        fun showBottomSheet(screen: Screen) {
+            scope.launch { overlayHost.showBottomSheet(screen) }
+        }
+
         return AppDrawerPageState(
             allAppsState = allAppsState,
             appDrawerViewType = appDrawerViewType,
@@ -88,11 +102,12 @@ class AppDrawerPagePresenter @Inject constructor(
             searchBarQuery = searchBarQuery
         ) {
             when (it) {
-                is AppDrawerPageUiEvent.UpdateSearchQuery -> searchBarQuery = it.query
-                AppDrawerPageUiEvent.ReloadIconPack -> scope.reloadIconPack()
-                is AppDrawerPageUiEvent.AddToFavorites -> scope.addToFavorites(app = it.app)
-                is AppDrawerPageUiEvent.AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
-                is AppDrawerPageUiEvent.RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
+                is UpdateSearchQuery -> searchBarQuery = it.query
+                ReloadIconPack -> scope.reloadIconPack()
+                is AddToFavorites -> scope.addToFavorites(app = it.app)
+                is AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
+                is RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
+                is OpenBottomSheet -> showBottomSheet(screen = it.screen)
             }
         }
     }

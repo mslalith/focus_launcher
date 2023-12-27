@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -20,9 +19,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.codegen.annotations.CircuitInject
-import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
@@ -38,7 +36,6 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @CircuitInject(AppDrawerPageScreen::class, SingletonComponent::class)
 @Composable
@@ -50,6 +47,8 @@ fun AppDrawerPage(
     // treats it as stable. See: https://issuetracker.google.com/issues/256100927
     val eventSink = state.eventSink
 
+    fun openBottomSheet(screen: Screen) = eventSink(AppDrawerPageUiEvent.OpenBottomSheet(screen = screen))
+
     AppDrawerPageKeyboardAware(
         modifier = modifier,
         state = state,
@@ -57,7 +56,8 @@ fun AppDrawerPage(
         addToFavorites = { eventSink(AppDrawerPageUiEvent.AddToFavorites(app = it)) },
         removeFromFavorites = { eventSink(AppDrawerPageUiEvent.RemoveFromFavorites(app = it)) },
         addToHiddenApps = { eventSink(AppDrawerPageUiEvent.AddToHiddenApps(app = it)) },
-        reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) }
+        reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) },
+        showAppMoreOptions = { openBottomSheet(screen = AppMoreOptionsBottomSheetScreen(appDrawerItem = it)) }
     )
 }
 
@@ -70,14 +70,13 @@ private fun AppDrawerPageKeyboardAware(
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App) -> Unit,
     reloadIconPack: () -> Unit,
+    showAppMoreOptions: (AppDrawerItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val pagerState = LocalLauncherPagerState.current
     val focusManager = LocalFocusManager.current
-    val overlayHost = LocalOverlayHost.current
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
@@ -96,7 +95,7 @@ private fun AppDrawerPageKeyboardAware(
 
     fun onAppLongClick(appDrawerItem: AppDrawerItem) {
         focusManager.clearFocus()
-        scope.launch { overlayHost.showBottomSheet(AppMoreOptionsBottomSheetScreen(appDrawerItem = appDrawerItem)) }
+        showAppMoreOptions(appDrawerItem)
     }
 
     AppDrawerPageInternal(

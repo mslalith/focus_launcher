@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
 import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.model.app.App
 
 sealed interface AppDrawerPageUiEvent : CircuitUiEvent {
@@ -9,4 +10,5 @@ sealed interface AppDrawerPageUiEvent : CircuitUiEvent {
     data class RemoveFromFavorites(val app: App) : AppDrawerPageUiEvent
     data class AddToHiddenApps(val app: App) : AppDrawerPageUiEvent
     data object ReloadIconPack : AppDrawerPageUiEvent
+    data class OpenBottomSheet(val screen: Screen) : AppDrawerPageUiEvent
 }

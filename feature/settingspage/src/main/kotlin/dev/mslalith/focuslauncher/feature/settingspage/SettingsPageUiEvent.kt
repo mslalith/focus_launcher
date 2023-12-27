@@ -15,4 +15,5 @@ sealed interface SettingsPageUiEvent : CircuitUiEvent {
     data class UpdateAppDrawerViewType(val viewType: AppDrawerViewType) : SettingsPageUiEvent
     data class UpdateAppDrawerIconViewType(val viewType: AppDrawerIconViewType) : SettingsPageUiEvent
     data class GoTo(val screen: Screen) : SettingsPageUiEvent
+    data class OpenBottomSheet(val screen: Screen) : SettingsPageUiEvent
 }
