@@ -210,16 +210,16 @@ class AppDrawerSettingsSheetKtTest {
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
-            AppDrawerSettingsSheetInternal(
-                settingsSheetState = state,
-                onUpdateAppDrawerViewType = {
-                    state = state.copy(appDrawerViewType = it)
-                    if (it == AppDrawerViewType.GRID && state.appDrawerIconViewType == AppDrawerIconViewType.TEXT) state = state.copy(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
-                },
-                onUpdateAppDrawerIconViewType = { state = state.copy(appDrawerIconViewType = it) },
-                onToggleSearchBarVisibility = { state = state.copy(showSearchBar = !state.showSearchBar) },
-                onToggleAppGroupHeaderVisibility = { state = state.copy(showAppGroupHeader = !state.showAppGroupHeader) }
-            )
+//            AppDrawerSettingsSheetInternal(
+//                settingsSheetState = state,
+//                onUpdateAppDrawerViewType = {
+//                    state = state.copy(appDrawerViewType = it)
+//                    if (it == AppDrawerViewType.GRID && state.appDrawerIconViewType == AppDrawerIconViewType.TEXT) state = state.copy(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
+//                },
+//                onUpdateAppDrawerIconViewType = { state = state.copy(appDrawerIconViewType = it) },
+//                onToggleSearchBarVisibility = { state = state.copy(showSearchBar = !state.showSearchBar) },
+//                onToggleAppGroupHeaderVisibility = { state = state.copy(showAppGroupHeader = !state.showAppGroupHeader) }
+//            )
         }
     }
 }

@@ -5,3 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data object ThemeSelectionBottomSheetScreen : Screen
+
+@Parcelize
+data object AppDrawerSettingsBottomSheetScreen : Screen

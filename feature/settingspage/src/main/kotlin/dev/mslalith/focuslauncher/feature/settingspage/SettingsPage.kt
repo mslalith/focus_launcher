@@ -18,6 +18,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.model.Screen
+import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -70,7 +71,7 @@ fun SettingsPage(
         onThemeClick = { showBottomSheet(screen = ThemeSelectionBottomSheetScreen) },
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
-        onAppDrawerClick = {},
+        onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
         onClockWidgetClick = {},
         onLunarPhaseWidgetClick = {},
         onQuotesWidgetClick = {},
@@ -105,9 +106,9 @@ internal fun SettingsPageInternal(
     }
 
     fun onAppDrawerClick() {
-        viewManager.showBottomSheet {
-            AppDrawerSettingsSheet()
-        }
+//        viewManager.showBottomSheet {
+//            AppDrawerSettingsSheet()
+//        }
     }
 
     fun onClockWidgetClick() {
