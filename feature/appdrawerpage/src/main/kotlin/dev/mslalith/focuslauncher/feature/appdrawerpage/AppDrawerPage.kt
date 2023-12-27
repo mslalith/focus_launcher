@@ -24,7 +24,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
-import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
 import dev.mslalith.focuslauncher.core.screens.AppMoreOptionsBottomSheetScreen
@@ -53,9 +52,6 @@ fun AppDrawerPage(
         modifier = modifier,
         state = state,
         onSearchQueryChange = { eventSink(AppDrawerPageUiEvent.UpdateSearchQuery(query = it)) },
-        addToFavorites = { eventSink(AppDrawerPageUiEvent.AddToFavorites(app = it)) },
-        removeFromFavorites = { eventSink(AppDrawerPageUiEvent.RemoveFromFavorites(app = it)) },
-        addToHiddenApps = { eventSink(AppDrawerPageUiEvent.AddToHiddenApps(app = it)) },
         reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) },
         showAppMoreOptions = { openBottomSheet(screen = AppMoreOptionsBottomSheetScreen(appDrawerItem = it)) }
     )
@@ -66,9 +62,6 @@ fun AppDrawerPage(
 private fun AppDrawerPageKeyboardAware(
     state: AppDrawerPageState,
     onSearchQueryChange: (String) -> Unit,
-    addToFavorites: (App) -> Unit,
-    removeFromFavorites: (App) -> Unit,
-    addToHiddenApps: (App) -> Unit,
     reloadIconPack: () -> Unit,
     showAppMoreOptions: (AppDrawerItem) -> Unit,
     modifier: Modifier = Modifier
@@ -99,13 +92,11 @@ private fun AppDrawerPageKeyboardAware(
     }
 
     AppDrawerPageInternal(
+        modifier = modifier,
         appDrawerPageState = state,
         onSearchQueryChange = onSearchQueryChange,
         onAppClick = ::onAppClick,
         onAppLongClick = ::onAppLongClick,
-        addToFavorites = addToFavorites,
-        removeFromFavorites = removeFromFavorites,
-        addToHiddenApps = addToHiddenApps,
         reloadIconPack = reloadIconPack
     )
 }
@@ -116,9 +107,6 @@ internal fun AppDrawerPageInternal(
     onSearchQueryChange: (String) -> Unit,
     onAppClick: (AppDrawerItem) -> Unit,
     onAppLongClick: (AppDrawerItem) -> Unit,
-    addToFavorites: (App) -> Unit,
-    removeFromFavorites: (App) -> Unit,
-    addToHiddenApps: (App) -> Unit,
     reloadIconPack: () -> Unit,
     modifier: Modifier = Modifier
 ) {

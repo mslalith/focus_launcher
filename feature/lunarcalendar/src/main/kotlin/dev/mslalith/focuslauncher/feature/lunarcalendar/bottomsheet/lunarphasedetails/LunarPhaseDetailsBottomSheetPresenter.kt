@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @CircuitInject(LunarPhaseDetailsBottomSheetScreen::class, SingletonComponent::class)
 class LunarPhaseDetailsBottomSheetPresenter @Inject constructor(
-    private val lunarPhaseDetailsRepo: LunarPhaseDetailsRepo,
+    private val lunarPhaseDetailsRepo: LunarPhaseDetailsRepo
 ) : Presenter<LunarPhaseDetailsBottomSheetState> {
 
     @Composable

@@ -38,11 +38,12 @@ fun AppMoreOptionsBottomSheet(
     val eventSink = state.eventSink
 
     AppMoreOptionsBottomSheet(
+        modifier = modifier,
         appDrawerItem = state.appDrawerItem,
         addToFavorites = { eventSink(AppMoreOptionsBottomSheetUiEvent.AddToFavorites(app = it)) },
         removeFromFavorites = { eventSink(AppMoreOptionsBottomSheetUiEvent.RemoveFromFavorites(app = it)) },
         addToHiddenApps = { app, removeFromFavorites -> eventSink(AppMoreOptionsBottomSheetUiEvent.AddToHiddenApps(app = app, removeFromFavorites = removeFromFavorites)) },
-        onUpdateDisplayNameClick = {}, // TODO: @ms
+        onUpdateDisplayNameClick = { TODO() },
         onClose = { eventSink(AppMoreOptionsBottomSheetUiEvent.GoBack) }
     )
 }
@@ -55,7 +56,8 @@ private fun AppMoreOptionsBottomSheet(
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App, Boolean) -> Unit,
     onUpdateDisplayNameClick: () -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val contentColor = MaterialTheme.colorScheme.onSurface
@@ -67,7 +69,10 @@ private fun AppMoreOptionsBottomSheet(
         onClose()
     }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = appDrawerItem.app.displayName,
             color = contentColor,
@@ -111,12 +116,14 @@ private fun AppMoreOptionsBottomSheet(
                 onClick = { addToHiddenApps(appDrawerItem.app, false) }
             )
         }
-//        SelectableIconItem(
-//            text = stringResource(id = R.string.update_display_name),
-//            iconRes = R.drawable.ic_edit,
-//            contentColor = contentColor,
-//            onClick = onUpdateDisplayNameClick
-//        )
+        if (false) {
+            SelectableIconItem(
+                text = stringResource(id = R.string.update_display_name),
+                iconRes = R.drawable.ic_edit,
+                contentColor = contentColor,
+                onClick = onUpdateDisplayNameClick
+            )
+        }
         SelectableIconItem(
             text = stringResource(id = R.string.app_info),
             iconRes = R.drawable.ic_info,

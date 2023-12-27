@@ -26,8 +26,6 @@ import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScr
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
-import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
@@ -77,7 +75,7 @@ fun SettingsPage(
 
 @Composable
 fun SettingsPage() {
-    val navController = LocalNavController.current
+//    val navController = LocalNavController.current
 
     SettingsPageInternal(
         navigateTo = { /*navController.navigate(it.id)*/ }
@@ -90,7 +88,7 @@ internal fun SettingsPageInternal(
     navigateTo: (Screen) -> Unit
 ) {
     val context = LocalContext.current
-    val viewManager = LocalLauncherViewManager.current
+//    val viewManager = LocalLauncherViewManager.current
 
     val settingsState by settingsPageViewModel.settingsState.collectAsStateWithLifecycle()
 

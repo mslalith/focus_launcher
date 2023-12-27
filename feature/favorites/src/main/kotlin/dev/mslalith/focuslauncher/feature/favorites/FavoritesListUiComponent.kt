@@ -41,6 +41,7 @@ fun FavoritesListUiComponent(
     val eventSink = state.eventSink
 
     FavoritesListUiComponent(
+        modifier = modifier,
         favoritesList = state.favoritesList,
         addDefaultAppsToFavorites = { eventSink(FavoritesListUiComponentUiEvent.AddDefaultAppsIfRequired) },
         removeFromFavorites = { eventSink(FavoritesListUiComponentUiEvent.RemoveFromFavorites(app = it)) },
@@ -78,7 +79,8 @@ private fun FavoritesListUiComponent(
     hideContextualMode: () -> Unit,
     changeFavoritesContextMode: (FavoritesContextMode) -> Unit,
     isAppAboutToReorder: (App) -> Boolean,
-    contentPadding: Dp
+    contentPadding: Dp,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val currentContextMode by rememberUpdatedState(newValue = contextMode)
@@ -98,7 +100,7 @@ private fun FavoritesListUiComponent(
     val borderOpacity by transition.animateFloat(label = "Border Opacity") { if (it.isInContextualMode()) 0.8f else 0f }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = outerPadding)
             .border(

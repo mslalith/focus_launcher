@@ -16,8 +16,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
-import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
-import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackAfterFirstLoadUseCase
@@ -26,14 +24,10 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDraw
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_DRAWER_VIEW_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_APP_GROUP_HEADER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.AppDrawer.DEFAULT_SEARCH_BAR
-import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
-import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.AddToFavorites
-import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.AddToHiddenApps
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.OpenBottomSheet
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.ReloadIconPack
-import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.RemoveFromFavorites
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageUiEvent.UpdateSearchQuery
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -52,8 +46,6 @@ class AppDrawerPagePresenter @Inject constructor(
     private val reloadIconPackAfterFirstLoadUseCase: ReloadIconPackAfterFirstLoadUseCase,
     private val appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val reloadIconPackUseCase: ReloadIconPackUseCase,
-    private val hiddenAppsRepo: HiddenAppsRepo,
-    private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : Presenter<AppDrawerPageState> {
 
@@ -104,9 +96,6 @@ class AppDrawerPagePresenter @Inject constructor(
             when (it) {
                 is UpdateSearchQuery -> searchBarQuery = it.query
                 ReloadIconPack -> scope.reloadIconPack()
-                is AddToFavorites -> scope.addToFavorites(app = it.app)
-                is AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
-                is RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
                 is OpenBottomSheet -> showBottomSheet(screen = it.screen)
             }
         }
@@ -115,24 +104,6 @@ class AppDrawerPagePresenter @Inject constructor(
     private fun CoroutineScope.reloadIconPack() {
         launch(appCoroutineDispatcher.io) {
             reloadIconPackUseCase()
-        }
-    }
-
-    private fun CoroutineScope.addToFavorites(app: App) {
-        launch(appCoroutineDispatcher.io) {
-            favoritesRepo.addToFavorites(app = app)
-        }
-    }
-
-    private fun CoroutineScope.removeFromFavorites(app: App) {
-        launch(appCoroutineDispatcher.io) {
-            favoritesRepo.removeFromFavorites(packageName = app.packageName)
-        }
-    }
-
-    private fun CoroutineScope.addToHiddenApps(app: App) {
-        launch(appCoroutineDispatcher.io) {
-            hiddenAppsRepo.addToHiddenApps(app = app)
         }
     }
 }
