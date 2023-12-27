@@ -11,3 +11,6 @@ data object LunarCalendarUiComponentScreen : Screen
 
 @Parcelize
 data object QuoteForYouUiComponentScreen : Screen
+
+@Parcelize
+data object FavoritesListUiComponentScreen : Screen

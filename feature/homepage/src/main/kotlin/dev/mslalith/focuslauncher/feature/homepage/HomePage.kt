@@ -25,6 +25,7 @@ import dev.mslalith.focuslauncher.core.screens.LunarPhaseDetailsBottomSheetScree
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.onSwipeDown
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponent
+import dev.mslalith.focuslauncher.feature.favorites.FavoritesListUiComponent
 import dev.mslalith.focuslauncher.feature.homepage.model.HomePadding
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
 import kotlinx.coroutines.launch
@@ -99,7 +100,10 @@ internal fun HomePage(
                         modifier = Modifier.align(alignment = Alignment.Center)
                     )
                 }
-                FavoritesList(contentPadding = horizontalPadding)
+                FavoritesListUiComponent(
+                    state = state.favoritesListUiComponentState,
+                    contentPadding = bottomPadding
+                )
                 VerticalSpacer(spacing = bottomPadding)
             }
         }

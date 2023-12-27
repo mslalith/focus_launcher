@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.feature.homepage
 
 import com.slack.circuit.runtime.CircuitUiState
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentState
+import dev.mslalith.focuslauncher.feature.favorites.FavoritesListUiComponentState
 import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentState
 import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentState
 
@@ -10,5 +11,5 @@ data class HomePageState(
     val clockWidgetUiComponentState: ClockWidgetUiComponentState,
     val lunarCalendarUiComponentState: LunarCalendarUiComponentState,
     val quoteForYouUiComponentState: QuoteForYouUiComponentState,
-    val eventSink: (HomePageUiEvent) -> Unit
+    val favoritesListUiComponentState: FavoritesListUiComponentState
 ) : CircuitUiState
