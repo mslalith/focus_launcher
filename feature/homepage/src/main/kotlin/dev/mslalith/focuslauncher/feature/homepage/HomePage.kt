@@ -36,10 +36,6 @@ fun HomePage(
     state: HomePageState,
     modifier: Modifier = Modifier
 ) {
-    // Need to extract the eventSink out to a local val, so that the Compose Compiler
-    // treats it as stable. See: https://issuetracker.google.com/issues/256100927
-    val eventSink = state.eventSink
-
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val overlayHost = LocalOverlayHost.current

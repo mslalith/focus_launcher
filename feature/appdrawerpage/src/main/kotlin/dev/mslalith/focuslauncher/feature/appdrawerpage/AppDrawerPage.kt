@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -22,126 +23,115 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.overlay.LocalOverlayHost
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
+import dev.mslalith.focuslauncher.core.screens.AppMoreOptionsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
 import dev.mslalith.focuslauncher.core.ui.modifiers.verticalFadeOutEdge
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
-import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.AppsGrid
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.list.AppsList
-import dev.mslalith.focuslauncher.feature.appdrawerpage.model.AppDrawerPageState
-import dev.mslalith.focuslauncher.feature.appdrawerpage.moreoptions.MoreOptionsBottomSheet
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @CircuitInject(AppDrawerPageScreen::class, SingletonComponent::class)
 @Composable
 fun AppDrawerPage(
-    state: dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPageState,
+    state: AppDrawerPageState,
     modifier: Modifier = Modifier
 ) {
     // Need to extract the eventSink out to a local val, so that the Compose Compiler
     // treats it as stable. See: https://issuetracker.google.com/issues/256100927
     val eventSink = state.eventSink
 
-    AppDrawerPageInternal(
+    AppDrawerPageKeyboardAware(
         modifier = modifier,
-        appDrawerPageState = AppDrawerPageState(
-            state.allAppsState,
-            state.appDrawerViewType,
-            state.appDrawerIconViewType,
-            state.showAppGroupHeader,
-            state.showSearchBar,
-            state.searchBarQuery
-        ),
+        state = state,
+        onSearchQueryChange = { eventSink(AppDrawerPageUiEvent.UpdateSearchQuery(query = it)) },
         addToFavorites = { eventSink(AppDrawerPageUiEvent.AddToFavorites(app = it)) },
         removeFromFavorites = { eventSink(AppDrawerPageUiEvent.RemoveFromFavorites(app = it)) },
         addToHiddenApps = { eventSink(AppDrawerPageUiEvent.AddToHiddenApps(app = it)) },
-        searchAppQuery = { eventSink(AppDrawerPageUiEvent.UpdateSearchAppQuery(query = it)) },
         updateDisplayName = { app, name -> eventSink(AppDrawerPageUiEvent.UpdateDisplayName(app = app, displayName = name)) },
         reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) }
     )
 }
 
-@Composable
-fun AppDrawerPage() {
-    AppDrawerPageKeyboardAware()
-}
-
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-internal fun AppDrawerPageKeyboardAware(
-    appDrawerPageViewModel: AppDrawerPageViewModel = hiltViewModel()
+private fun AppDrawerPageKeyboardAware(
+    state: AppDrawerPageState,
+    onSearchQueryChange: (String) -> Unit,
+    addToFavorites: (App) -> Unit,
+    removeFromFavorites: (App) -> Unit,
+    addToHiddenApps: (App) -> Unit,
+    updateDisplayName: (App, String) -> Unit,
+    reloadIconPack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val pagerState = LocalLauncherPagerState.current
+    val focusManager = LocalFocusManager.current
+    val overlayHost = LocalOverlayHost.current
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
             if (page != 2) {
-                appDrawerPageViewModel.searchAppQuery(query = "")
+                onSearchQueryChange("")
                 keyboardController?.hide()
             }
         }
     }
 
+    fun onAppClick(appDrawerItem: AppDrawerItem) {
+        focusManager.clearFocus()
+        context.launchApp(app = appDrawerItem.app)
+        onSearchQueryChange("")
+    }
+
+    fun onAppLongClick(appDrawerItem: AppDrawerItem) {
+        focusManager.clearFocus()
+        scope.launch { overlayHost.showBottomSheet(AppMoreOptionsBottomSheetScreen(appDrawerItem = appDrawerItem)) }
+    }
+
     AppDrawerPageInternal(
-        appDrawerPageState = appDrawerPageViewModel.appDrawerPageState.collectAsStateWithLifecycle().value,
-        addToFavorites = appDrawerPageViewModel::addToFavorites,
-        removeFromFavorites = appDrawerPageViewModel::removeFromFavorites,
-        addToHiddenApps = appDrawerPageViewModel::addToHiddenApps,
-        searchAppQuery = appDrawerPageViewModel::searchAppQuery,
-        updateDisplayName = appDrawerPageViewModel::updateDisplayName,
-        reloadIconPack = appDrawerPageViewModel::reloadIconPack
+        appDrawerPageState = state,
+        onSearchQueryChange = onSearchQueryChange,
+        onAppClick = ::onAppClick,
+        onAppLongClick = ::onAppLongClick,
+        addToFavorites = addToFavorites,
+        removeFromFavorites = removeFromFavorites,
+        addToHiddenApps = addToHiddenApps,
+        updateDisplayName = updateDisplayName,
+        reloadIconPack = reloadIconPack
     )
 }
 
 @Composable
 internal fun AppDrawerPageInternal(
     appDrawerPageState: AppDrawerPageState,
+    onSearchQueryChange: (String) -> Unit,
+    onAppClick: (AppDrawerItem) -> Unit,
+    onAppLongClick: (AppDrawerItem) -> Unit,
     addToFavorites: (App) -> Unit,
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App) -> Unit,
-    searchAppQuery: (String) -> Unit,
     updateDisplayName: (App, String) -> Unit,
     reloadIconPack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
-    val viewManager = LocalLauncherViewManager.current
-
     var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
-
-    fun onAppClick(appDrawerItem: AppDrawerItem) {
-        focusManager.clearFocus()
-        context.launchApp(app = appDrawerItem.app)
-        searchAppQuery("")
-    }
-
-    fun showMoreOptions(appDrawerItem: AppDrawerItem) {
-        focusManager.clearFocus()
-        viewManager.showBottomSheet {
-            MoreOptionsBottomSheet(
-                appDrawerItem = appDrawerItem,
-                addToFavorites = addToFavorites,
-                removeFromFavorites = removeFromFavorites,
-                addToHiddenApps = addToHiddenApps,
-                onUpdateDisplayNameClick = { updateAppDisplayAppDialog = appDrawerItem.app },
-                onClose = { viewManager.hideBottomSheet() }
-            )
-        }
-    }
 
     updateAppDisplayAppDialog?.let { updatedApp ->
         UpdateAppDisplayNameDialog(
@@ -176,15 +166,15 @@ internal fun AppDrawerPageInternal(
                             appDrawerIconViewType = appDrawerPageState.appDrawerIconViewType,
                             showAppGroupHeader = appDrawerPageState.showAppGroupHeader,
                             isSearchQueryEmpty = appDrawerPageState.searchBarQuery.isEmpty(),
-                            onAppClick = ::onAppClick,
-                            onAppLongClick = ::showMoreOptions
+                            onAppClick = onAppClick,
+                            onAppLongClick = onAppLongClick
                         )
 
                         AppDrawerViewType.GRID -> AppsGrid(
                             apps = allAppsState.value,
                             appDrawerIconViewType = appDrawerPageState.appDrawerIconViewType,
-                            onAppClick = ::onAppClick,
-                            onAppLongClick = ::showMoreOptions
+                            onAppClick = onAppClick,
+                            onAppLongClick = onAppLongClick
                         )
                     }
                 }
@@ -204,7 +194,7 @@ internal fun AppDrawerPageInternal(
             SearchField(
                 placeholder = stringResource(id = R.string.search_app_hint),
                 query = appDrawerPageState.searchBarQuery,
-                onQueryChange = searchAppQuery
+                onQueryChange = onSearchQueryChange
             )
         }
     }

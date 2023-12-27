@@ -90,7 +90,7 @@ class AppDrawerPagePresenter @Inject constructor(
             searchBarQuery = searchBarQuery
         ) {
             when (it) {
-                is AppDrawerPageUiEvent.UpdateSearchAppQuery -> searchBarQuery = it.query
+                is AppDrawerPageUiEvent.UpdateSearchQuery -> searchBarQuery = it.query
                 AppDrawerPageUiEvent.ReloadIconPack -> scope.reloadIconPack()
                 is AppDrawerPageUiEvent.AddToFavorites -> scope.addToFavorites(app = it.app)
                 is AppDrawerPageUiEvent.AddToHiddenApps -> scope.addToHiddenApps(app = it.app)

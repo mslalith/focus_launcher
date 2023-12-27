@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(libs.circuit.runtime)
+    implementation(project(":core:model"))
 }
