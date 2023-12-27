@@ -20,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.slack.circuit.foundation.internal.BackHandler
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
-import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoriteItem
 import dev.mslalith.focuslauncher.feature.favorites.ui.FavoritesContextHeader
@@ -92,7 +92,7 @@ private fun FavoritesListUiComponent(
         addDefaultAppsToFavorites()
     }
 
-    BackPressHandler(enabled = isInContextualMode()) { hideContextualMode() }
+    BackHandler(enabled = isInContextualMode()) { hideContextualMode() }
 
     val transition = updateTransition(targetState = currentContextMode, label = "Favorites Transition")
     val outerPadding by transition.animateDp(label = "Outer Padding") { if (it.isInContextualMode()) 16.dp else 0.dp }

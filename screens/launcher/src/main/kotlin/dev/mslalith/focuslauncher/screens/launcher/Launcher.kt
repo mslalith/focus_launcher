@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.foundation.internal.BackHandler
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
-import dev.mslalith.focuslauncher.core.ui.BackPressHandler
 import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
@@ -53,7 +53,7 @@ private fun LauncherInternal(
 
     StatusBarColor()
 
-    BackPressHandler(enabled = true) {
+    BackHandler {
         viewManager.apply {
             when {
                 isBottomSheetVisible -> hideBottomSheet()
