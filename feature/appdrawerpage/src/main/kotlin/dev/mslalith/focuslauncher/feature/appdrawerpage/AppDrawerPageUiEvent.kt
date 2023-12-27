@@ -8,6 +8,5 @@ sealed interface AppDrawerPageUiEvent : CircuitUiEvent {
     data class AddToFavorites(val app: App) : AppDrawerPageUiEvent
     data class RemoveFromFavorites(val app: App) : AppDrawerPageUiEvent
     data class AddToHiddenApps(val app: App) : AppDrawerPageUiEvent
-    data class UpdateDisplayName(val app: App, val displayName: String) : AppDrawerPageUiEvent
     data object ReloadIconPack : AppDrawerPageUiEvent
 }

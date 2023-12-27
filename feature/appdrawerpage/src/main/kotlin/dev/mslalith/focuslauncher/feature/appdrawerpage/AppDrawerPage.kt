@@ -9,11 +9,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -61,7 +57,6 @@ fun AppDrawerPage(
         addToFavorites = { eventSink(AppDrawerPageUiEvent.AddToFavorites(app = it)) },
         removeFromFavorites = { eventSink(AppDrawerPageUiEvent.RemoveFromFavorites(app = it)) },
         addToHiddenApps = { eventSink(AppDrawerPageUiEvent.AddToHiddenApps(app = it)) },
-        updateDisplayName = { app, name -> eventSink(AppDrawerPageUiEvent.UpdateDisplayName(app = app, displayName = name)) },
         reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) }
     )
 }
@@ -74,7 +69,6 @@ private fun AppDrawerPageKeyboardAware(
     addToFavorites: (App) -> Unit,
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App) -> Unit,
-    updateDisplayName: (App, String) -> Unit,
     reloadIconPack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -113,7 +107,6 @@ private fun AppDrawerPageKeyboardAware(
         addToFavorites = addToFavorites,
         removeFromFavorites = removeFromFavorites,
         addToHiddenApps = addToHiddenApps,
-        updateDisplayName = updateDisplayName,
         reloadIconPack = reloadIconPack
     )
 }
@@ -127,20 +120,9 @@ internal fun AppDrawerPageInternal(
     addToFavorites: (App) -> Unit,
     removeFromFavorites: (App) -> Unit,
     addToHiddenApps: (App) -> Unit,
-    updateDisplayName: (App, String) -> Unit,
     reloadIconPack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var updateAppDisplayAppDialog by remember { mutableStateOf<App?>(value = null) }
-
-    updateAppDisplayAppDialog?.let { updatedApp ->
-        UpdateAppDisplayNameDialog(
-            app = updatedApp,
-            onUpdateDisplayName = { updateDisplayName(updatedApp, it) },
-            onClose = { updateAppDisplayAppDialog = null }
-        )
-    }
-
     OnDayChangeListener {
         reloadIconPack()
     }

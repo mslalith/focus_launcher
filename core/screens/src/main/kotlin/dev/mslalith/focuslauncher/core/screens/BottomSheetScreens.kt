@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.core.screens
 
 import com.slack.circuit.runtime.screen.Screen
+import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -25,3 +26,6 @@ data object LunarPhaseDetailsBottomSheetScreen : Screen
 
 @Parcelize
 data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawerItem) : Screen
+
+@Parcelize
+data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : Screen

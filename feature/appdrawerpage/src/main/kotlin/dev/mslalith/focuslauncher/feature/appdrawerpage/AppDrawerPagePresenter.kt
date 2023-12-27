@@ -13,7 +13,6 @@ import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
-import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
@@ -44,7 +43,6 @@ class AppDrawerPagePresenter @Inject constructor(
     private val reloadIconPackAfterFirstLoadUseCase: ReloadIconPackAfterFirstLoadUseCase,
     private val appDrawerSettingsRepo: AppDrawerSettingsRepo,
     private val reloadIconPackUseCase: ReloadIconPackUseCase,
-    private val appDrawerRepo: AppDrawerRepo,
     private val hiddenAppsRepo: HiddenAppsRepo,
     private val favoritesRepo: FavoritesRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -95,7 +93,6 @@ class AppDrawerPagePresenter @Inject constructor(
                 is AppDrawerPageUiEvent.AddToFavorites -> scope.addToFavorites(app = it.app)
                 is AppDrawerPageUiEvent.AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
                 is AppDrawerPageUiEvent.RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
-                is AppDrawerPageUiEvent.UpdateDisplayName -> scope.updateDisplayName(app = it.app, displayName = it.displayName)
             }
         }
     }
@@ -103,12 +100,6 @@ class AppDrawerPagePresenter @Inject constructor(
     private fun CoroutineScope.reloadIconPack() {
         launch(appCoroutineDispatcher.io) {
             reloadIconPackUseCase()
-        }
-    }
-
-    private fun CoroutineScope.updateDisplayName(app: App, displayName: String) {
-        launch(appCoroutineDispatcher.io) {
-            appDrawerRepo.updateDisplayName(app = app, displayName = displayName)
         }
     }
 
