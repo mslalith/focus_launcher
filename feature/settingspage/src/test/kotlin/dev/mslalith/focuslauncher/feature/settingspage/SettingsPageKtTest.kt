@@ -12,8 +12,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.core.model.Screen
+import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
+import dev.mslalith.focuslauncher.core.screens.AboutScreen
+import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
+import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
+import dev.mslalith.focuslauncher.core.screens.IconPackScreen
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTagAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndAssertIsDisplayed
@@ -70,14 +74,14 @@ class SettingsPageKtTest {
     fun `02 - when edit favorites is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_EDIT_FAVORITES).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.EditFavorites)
+        assertThat(currentScreen).isEqualTo(EditFavoritesScreen)
     }
 
     @Test
     fun `03 - when hide apps is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_HIDE_APPS).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.HideApps)
+        assertThat(currentScreen).isEqualTo(HideAppsScreen)
     }
 
     @Test
@@ -104,7 +108,7 @@ class SettingsPageKtTest {
     fun `06 - when icon packs is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_ICON_PACK).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.IconPack)
+        assertThat(currentScreen).isEqualTo(IconPackScreen)
     }
 
     @Test
@@ -170,7 +174,7 @@ class SettingsPageKtTest {
     fun `13 - when about is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_ABOUT).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.About)
+        assertThat(currentScreen).isEqualTo(AboutScreen)
     }
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
