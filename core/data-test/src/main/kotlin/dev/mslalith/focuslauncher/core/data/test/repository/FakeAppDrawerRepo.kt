@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 
 class FakeAppDrawerRepo : AppDrawerRepo {
+
     private val allAppsStateFlow = MutableStateFlow(value = emptyList<App>())
     override val allAppsFlow: Flow<List<App>> = allAppsStateFlow
 
