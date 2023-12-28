@@ -6,12 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
@@ -26,7 +23,6 @@ import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScr
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
-import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ChangeTheme
@@ -53,14 +49,9 @@ fun SettingsPage(
 
     fun openBottomSheet(screen: Screen) = eventSink(SettingsPageUiEvent.OpenBottomSheet(screen = screen))
 
-    SettingsPageInternal(
+    SettingsPage(
         modifier = modifier,
-        settingsState = SettingsState(
-            state.showStatusBar,
-            state.canDrawNotificationShade,
-            state.showIconPack,
-            state.isDefaultLauncher
-        ),
+        state = state,
         onThemeClick = { openBottomSheet(screen = ThemeSelectionBottomSheetScreen) },
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
@@ -74,78 +65,8 @@ fun SettingsPage(
 }
 
 @Composable
-fun SettingsPage() {
-//    val navController = LocalNavController.current
-
-    SettingsPageInternal(
-        navigateTo = { /*navController.navigate(it.id)*/ }
-    )
-}
-
-@Composable
-internal fun SettingsPageInternal(
-    settingsPageViewModel: SettingsPageViewModel = hiltViewModel(),
-    navigateTo: (Screen) -> Unit
-) {
-    val context = LocalContext.current
-//    val viewManager = LocalLauncherViewManager.current
-
-    val settingsState by settingsPageViewModel.settingsState.collectAsStateWithLifecycle()
-
-    fun onThemeClick() {
-//        viewManager.showBottomSheet {
-//            ThemeSelectionSheet(closeBottomSheet = viewManager::hideBottomSheet)
-//        }
-    }
-
-    fun onAppDrawerClick() {
-//        viewManager.showBottomSheet {
-//            AppDrawerSettingsSheet()
-//        }
-    }
-
-    fun onClockWidgetClick() {
-//        viewManager.showBottomSheet {
-//            ClockSettingsSheet()
-//        }
-    }
-
-    fun onLunarPhaseWidgetClick() {
-//        viewManager.showBottomSheet {
-//            LunarPhaseSettingsSheet(
-//                properties = LunarPhaseSettingsProperties(
-//                    navigateToCurrentPlace = {
-//                        viewManager.hideBottomSheet()
-//                        navigateTo(Screen.CurrentPlace)
-//                    }
-//                )
-//            )
-//        }
-    }
-
-    fun onQuotesWidgetClick() {
-//        viewManager.showBottomSheet {
-//            QuotesSettingsSheet()
-//        }
-    }
-
-    SettingsPageInternal(
-        settingsState = settingsState,
-        onThemeClick = ::onThemeClick,
-        onToggleStatusBarVisibility = settingsPageViewModel::toggleStatusBarVisibility,
-        onToggleNotificationShade = settingsPageViewModel::toggleNotificationShade,
-        onAppDrawerClick = ::onAppDrawerClick,
-        onClockWidgetClick = ::onClockWidgetClick,
-        onLunarPhaseWidgetClick = ::onLunarPhaseWidgetClick,
-        onQuotesWidgetClick = ::onQuotesWidgetClick,
-        onRefreshIsDefaultLauncher = { settingsPageViewModel.refreshIsDefaultLauncher(context = context) },
-        navigateTo = navigateTo
-    )
-}
-
-@Composable
-internal fun SettingsPageInternal(
-    settingsState: SettingsState,
+private fun SettingsPage(
+    state: SettingsPageState,
     onThemeClick: () -> Unit,
     onToggleStatusBarVisibility: () -> Unit,
     onToggleNotificationShade: () -> Unit,
@@ -174,16 +95,16 @@ internal fun SettingsPageInternal(
         HideApps { navigateTo(HideAppsScreen) }
 
         ToggleStatusBar(
-            showStatusBar = settingsState.showStatusBar,
+            showStatusBar = state.showStatusBar,
             onClick = onToggleStatusBarVisibility
         )
         PullDownNotifications(
-            enableNotificationShade = settingsState.canDrawNotificationShade,
+            enableNotificationShade = state.canDrawNotificationShade,
             onClick = onToggleNotificationShade
         )
 
         IconPack(
-            shouldShow = settingsState.showIconPack,
+            shouldShow = state.showIconPack,
             onClick = { navigateTo(IconPackScreen) }
         )
 
@@ -196,7 +117,7 @@ internal fun SettingsPageInternal(
         )
 
         SetAsDefaultLauncher(
-            isDefaultLauncher = settingsState.isDefaultLauncher,
+            isDefaultLauncher = state.isDefaultLauncher,
             refreshIsDefaultLauncher = onRefreshIsDefaultLauncher
         )
 

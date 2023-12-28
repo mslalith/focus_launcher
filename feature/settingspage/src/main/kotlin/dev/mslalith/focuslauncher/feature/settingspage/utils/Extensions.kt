@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.settingspage
+package dev.mslalith.focuslauncher.feature.settingspage.utils
 
 import android.app.role.RoleManager
 import android.content.Context

@@ -29,15 +29,10 @@ import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.GoTo
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.OpenBottomSheet
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.RefreshIsDefaultLauncher
-import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleAppGroupHeaderVisibility
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleNotificationShade
-import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleSearchBarVisibility
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleStatusBarVisibility
-import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.UpdateAppDrawerIconViewType
-import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.UpdateAppDrawerViewType
+import dev.mslalith.focuslauncher.feature.settingspage.utils.isDefaultLauncher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SettingsPagePresenter @AssistedInject constructor(
@@ -82,12 +77,8 @@ class SettingsPagePresenter @AssistedInject constructor(
             isDefaultLauncher = isDefaultLauncher
         ) {
             when (it) {
-                ToggleAppGroupHeaderVisibility -> scope.toggleAppGroupHeaderVisibility()
                 ToggleNotificationShade -> scope.toggleNotificationShade()
-                ToggleSearchBarVisibility -> scope.toggleSearchBarVisibility()
                 ToggleStatusBarVisibility -> scope.toggleStatusBarVisibility()
-                is UpdateAppDrawerIconViewType -> scope.updateAppDrawerIconViewType(viewType = it.viewType)
-                is UpdateAppDrawerViewType -> scope.updateAppDrawerViewType(viewType = it.viewType)
                 is RefreshIsDefaultLauncher -> scope.refreshIsDefaultLauncher(context = it.context)
                 is GoTo -> navigator.goTo(screen = it.screen)
                 is OpenBottomSheet -> showBottomSheet(screen = it.screen)
@@ -107,39 +98,9 @@ class SettingsPagePresenter @AssistedInject constructor(
         }
     }
 
-    private fun CoroutineScope.toggleSearchBarVisibility() {
-        launch(appCoroutineDispatcher.io) {
-            appDrawerSettingsRepo.toggleSearchBarVisibility()
-        }
-    }
-
-    private fun CoroutineScope.toggleAppGroupHeaderVisibility() {
-        launch(appCoroutineDispatcher.io) {
-            appDrawerSettingsRepo.toggleAppGroupHeaderVisibility()
-        }
-    }
-
     private fun CoroutineScope.refreshIsDefaultLauncher(context: Context) {
         launch(appCoroutineDispatcher.io) {
             generalSettingsRepo.setIsDefaultLauncher(isDefault = context.isDefaultLauncher())
         }
-    }
-
-    private fun CoroutineScope.updateAppDrawerViewType(viewType: AppDrawerViewType) {
-        launch(appCoroutineDispatcher.io) {
-            updateAppDrawerIconViewTypeBasedOnAppDrawerViewType(appDrawerViewType = viewType)
-            appDrawerSettingsRepo.updateAppDrawerViewType(appDrawerViewType = viewType)
-        }
-    }
-
-    private fun CoroutineScope.updateAppDrawerIconViewType(viewType: AppDrawerIconViewType) {
-        launch(appCoroutineDispatcher.io) {
-            appDrawerSettingsRepo.updateAppDrawerIconViewType(appDrawerIconViewType = viewType)
-        }
-    }
-
-    private suspend fun updateAppDrawerIconViewTypeBasedOnAppDrawerViewType(appDrawerViewType: AppDrawerViewType) = coroutineScope {
-        val appDrawerIconViewType = appDrawerSettingsRepo.appDrawerIconViewTypeFlow.first()
-        if (appDrawerViewType == AppDrawerViewType.GRID && appDrawerIconViewType == AppDrawerIconViewType.TEXT) updateAppDrawerIconViewType(viewType = AppDrawerIconViewType.ICONS)
     }
 }
