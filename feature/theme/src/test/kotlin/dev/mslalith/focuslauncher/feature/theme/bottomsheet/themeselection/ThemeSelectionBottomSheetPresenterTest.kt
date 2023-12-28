@@ -1,6 +1,6 @@
 package dev.mslalith.focuslauncher.feature.theme.bottomsheet.themeselection
 
-import com.google.common.truth.Truth.*
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
