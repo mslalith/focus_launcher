@@ -22,6 +22,9 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettin
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.screens.CurrentPlaceScreen
+import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceUiEvent.GoBack
+import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceUiEvent.SavePlace
+import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceUiEvent.UpdateCurrentLatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
@@ -72,9 +75,9 @@ class CurrentPlacePresenter @AssistedInject constructor(
             canSave = addressState is LoadingState.Loaded
         ) {
             when (it) {
-                CurrentPlaceUiEvent.GoBack -> navigator.pop()
-                CurrentPlaceUiEvent.SavePlace -> scope.savePlace()
-                is CurrentPlaceUiEvent.UpdateCurrentLatLng -> latLng = it.latLng
+                GoBack -> navigator.pop()
+                SavePlace -> scope.savePlace()
+                is UpdateCurrentLatLng -> latLng = it.latLng
             }
         }
     }

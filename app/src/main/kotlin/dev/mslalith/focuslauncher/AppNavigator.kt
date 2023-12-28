@@ -9,7 +9,6 @@ import dev.mslalith.focuslauncher.core.ui.providers.LocalNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
 import dev.mslalith.focuslauncher.screens.about.AboutScreen
-import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceScreen
 
 @Composable
 fun AppNavigator() {
@@ -58,10 +57,10 @@ private fun NavGraphBuilder.hideAppsScreen() {
 
 private fun NavGraphBuilder.currentPlaceScreen() {
     composable(route = Screen.CurrentPlace.id) {
-        val navController = LocalNavController.current
-        CurrentPlaceScreen(
-            goBack = navController::popBackStack
-        )
+//        val navController = LocalNavController.current
+//        CurrentPlaceScreen(
+//            goBack = navController::popBackStack
+//        )
     }
 }
 

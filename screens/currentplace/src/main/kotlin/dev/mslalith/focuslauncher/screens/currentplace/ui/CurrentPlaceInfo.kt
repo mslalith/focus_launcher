@@ -25,8 +25,8 @@ import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceState
 import dev.mslalith.focuslauncher.screens.currentplace.R
-import dev.mslalith.focuslauncher.screens.currentplace.model.CurrentPlaceState
 
 @Composable
 internal fun CurrentPlaceInfo(
