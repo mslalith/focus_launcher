@@ -8,10 +8,10 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
-import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.getOrNull
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeGeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAllAppsOnIconPackChangeUseCase
 import dev.mslalith.focuslauncher.core.domain.apps.GetIconPackIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
@@ -58,11 +58,8 @@ class IconPackViewModelTest : CoroutineTest() {
     @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
-    @Inject
-    lateinit var generalSettingsRepo: GeneralSettingsRepo
-
-    @Inject
-    lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
+    private val generalSettingsRepo = FakeGeneralSettingsRepo()
+    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
     private lateinit var viewModel: IconPackViewModel
 
