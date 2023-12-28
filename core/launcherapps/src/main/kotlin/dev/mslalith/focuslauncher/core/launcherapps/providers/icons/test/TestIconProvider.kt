@@ -9,11 +9,11 @@ import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 
 object TestIconProvider : IconProvider {
 
-    private var iconColor = Color.WHITE
+    private var drawable = ColorDrawable(Color.WHITE)
 
     fun setIconColor(color: Int) {
-        iconColor = color
+        drawable = ColorDrawable(color)
     }
 
-    override fun iconFor(appWithComponent: AppWithComponent, iconPackType: IconPackType): Drawable = ColorDrawable(iconColor)
+    override fun iconFor(appWithComponent: AppWithComponent, iconPackType: IconPackType): Drawable = drawable
 }
