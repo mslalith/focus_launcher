@@ -31,6 +31,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add(configurationName = "implementation", project(":core:domain"))
                 add(configurationName = "implementation", project(":core:resources"))
 
+                add(configurationName = "testImplementation", project(":core:data-test"))
                 add(configurationName = "testImplementation", project(":core:testing"))
 
                 add(configurationName = "implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())

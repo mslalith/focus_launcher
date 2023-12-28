@@ -34,6 +34,7 @@ include(
     ":core:circuitoverlay",
     ":core:domain",
     ":core:data",
+    ":core:data-test",
     ":core:ui",
     ":core:resources",
     ":core:launcherapps",
