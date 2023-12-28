@@ -18,6 +18,11 @@ import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.SelectedHiddenApp
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.AddToHiddenApps
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.ClearHiddenApps
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.GoBack
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.RemoveFromFavorites
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.RemoveFromHiddenApps
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -65,11 +70,11 @@ class HideAppsPresenter @AssistedInject constructor(
             hiddenApps = hiddenApps
         ) {
             when (it) {
-                is HideAppsUiEvent.AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
-                is HideAppsUiEvent.RemoveFromHiddenApps -> scope.removeFromHiddenApps(app = it.app)
-                HideAppsUiEvent.ClearHiddenApps -> scope.clearHiddenApps()
-                is HideAppsUiEvent.RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
-                HideAppsUiEvent.GoBack -> navigator.pop()
+                GoBack -> navigator.pop()
+                ClearHiddenApps -> scope.clearHiddenApps()
+                is AddToHiddenApps -> scope.addToHiddenApps(app = it.app)
+                is RemoveFromHiddenApps -> scope.removeFromHiddenApps(app = it.app)
+                is RemoveFromFavorites -> scope.removeFromFavorites(app = it.app)
             }
         }
     }

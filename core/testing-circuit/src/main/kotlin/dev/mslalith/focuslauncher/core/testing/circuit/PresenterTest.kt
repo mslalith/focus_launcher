@@ -51,6 +51,17 @@ abstract class PresenterTest<P : Presenter<S>, S : CircuitUiState> : CoroutineTe
             }
         )
     }
+
+    context (ReceiveTurbine<S>)
+    protected suspend fun <E> assertFor(
+        expected: E,
+        block: suspend (S) -> E
+    ) {
+        var state = awaitItem()
+        while (block(state) != expected) {
+            state = awaitItem()
+        }
+    }
 }
 
 private object NoOpOverlayHost : OverlayHost {
