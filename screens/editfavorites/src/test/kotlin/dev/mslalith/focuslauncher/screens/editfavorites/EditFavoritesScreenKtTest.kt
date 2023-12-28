@@ -18,7 +18,11 @@ import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndA
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
-import dev.mslalith.focuslauncher.screens.editfavorites.model.EditFavoritesState
+import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesUiEvent.AddToFavorites
+import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesUiEvent.ClearFavorites
+import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesUiEvent.GoBack
+import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesUiEvent.RemoveFromFavorites
+import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesUiEvent.ToggleShowingHiddenApps
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -40,7 +44,7 @@ class EditFavoritesScreenKtTest {
 
     private val hiddenApps = listOf(TestApps.Phone, TestApps.Chrome)
     private val allApps = TestApps.all.toSelectedApps()
-    private var state: EditFavoritesState by mutableStateOf(value = stateWith(apps = allApps))
+    private var state by mutableStateOf(value = stateWith(apps = allApps))
 
     @Before
     fun setup() {
@@ -132,34 +136,32 @@ class EditFavoritesScreenKtTest {
         waitForTextAndAssertIsDisplayed(text = message)
     }
 
-    private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith(
-        goBack: () -> Unit = {}
-    ) {
+    private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
             ProvideSystemUiController {
-                EditFavoritesScreenInternal(
-                    editFavoritesState = state,
-                    onToggleHiddenApps = { state = state.copy(showHiddenApps = it) },
-                    onClearFavorites = {
-                        state = state.copy(
-                            favoriteApps = state.favoriteApps.map {
-                                it.copy(isSelected = false)
-                            }.toImmutableList()
-                        )
-                    },
-                    onAddToFavorites = { state = state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it, isSelected = true)) },
-                    onRemoveFromFavorites = { state = state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it, isSelected = false)) },
-                    goBack = goBack
-                )
+                EditFavorites(state = state)
             }
         }
     }
-}
 
-private fun stateWith(apps: List<SelectedApp>): EditFavoritesState = EditFavoritesState(
-    favoriteApps = apps.toImmutableList(),
-    showHiddenApps = false
-)
+    private fun stateWith(apps: List<SelectedApp>): EditFavoritesState = EditFavoritesState(
+        favoriteApps = apps.toImmutableList(),
+        showHiddenApps = false,
+        eventSink = {
+            state = when (it) {
+                GoBack -> state
+                ToggleShowingHiddenApps -> state.copy(showHiddenApps = !state.showHiddenApps)
+                ClearFavorites -> state.copy(
+                    favoriteApps = state.favoriteApps.map {
+                        it.copy(isSelected = false)
+                    }.toImmutableList()
+                )
+                is AddToFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it.app, isSelected = true))
+                is RemoveFromFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it.app, isSelected = false))
+            }
+        }
+    )
+}
 
 private fun List<App>.toSelectedApps(
     isSelected: Boolean = false,

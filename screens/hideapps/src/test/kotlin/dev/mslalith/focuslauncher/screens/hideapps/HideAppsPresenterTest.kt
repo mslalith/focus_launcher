@@ -52,7 +52,6 @@ class HideAppsPresenterTest : PresenterTest<HideAppsPresenter, HideAppsState>() 
         assertThat(state.hiddenApps).isEmpty()
 
         apps.forEach { state.eventSink(HideAppsUiEvent.AddToHiddenApps(app = it)) }
-
         assertFor(expected = apps.toSelectedHiddenAppWith(isSelected = true)) { it.hiddenApps }
     }
 

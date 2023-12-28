@@ -10,7 +10,6 @@ import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
 import dev.mslalith.focuslauncher.screens.about.AboutScreen
 import dev.mslalith.focuslauncher.screens.currentplace.CurrentPlaceScreen
-import dev.mslalith.focuslauncher.screens.editfavorites.EditFavoritesScreen
 
 @Composable
 fun AppNavigator() {
@@ -41,10 +40,10 @@ private fun NavGraphBuilder.launcherScreen() {
 
 private fun NavGraphBuilder.editFavoritesScreen() {
     composable(route = Screen.EditFavorites.id) {
-        val navController = LocalNavController.current
-        EditFavoritesScreen(
-            goBack = navController::popBackStack
-        )
+//        val navController = LocalNavController.current
+//        EditFavoritesScreen(
+//            goBack = navController::popBackStack
+//        )
     }
 }
 
