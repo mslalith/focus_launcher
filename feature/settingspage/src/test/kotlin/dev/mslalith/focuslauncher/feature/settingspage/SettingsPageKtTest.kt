@@ -30,7 +30,6 @@ import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTagAndAs
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.extensions.performScrollToAndClick
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasWidgetType
-import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
 import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import org.junit.Before
@@ -177,11 +176,9 @@ class SettingsPageKtTest {
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
-            ProvideBottomSheetManager {
-                ProvideSystemUiController {
-                    CompositionLocalProvider(LocalOverlayHost provides rememberOverlayHost()) {
-                        SettingsPage(state = state)
-                    }
+            ProvideSystemUiController {
+                CompositionLocalProvider(LocalOverlayHost provides rememberOverlayHost()) {
+                    SettingsPage(state = state)
                 }
             }
         }

@@ -17,7 +17,6 @@ import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
-import dev.mslalith.focuslauncher.core.ui.providers.ProvideNavController
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
 import dev.mslalith.focuslauncher.feature.theme.LauncherTheme
 import dev.mslalith.focuslauncher.feature.theme.LauncherThemePresenter
@@ -50,18 +49,16 @@ class LauncherActivity : ComponentActivity() {
             val navigator = rememberCircuitNavigator(backstack = backstack)
 
             ProvideSystemUiController {
-                ProvideNavController {
-                    LauncherTheme(
-                        currentTheme = launcherThemePresenter.present().theme
-                    ) {
-                        Surface {
-                            CircuitCompositionLocals(circuit = circuit) {
-                                ContentWithOverlays {
-                                    NavigableCircuitContent(
-                                        navigator = navigator,
-                                        backstack = backstack
-                                    )
-                                }
+                LauncherTheme(
+                    currentTheme = launcherThemePresenter.present().theme
+                ) {
+                    Surface {
+                        CircuitCompositionLocals(circuit = circuit) {
+                            ContentWithOverlays {
+                                NavigableCircuitContent(
+                                    navigator = navigator,
+                                    backstack = backstack
+                                )
                             }
                         }
                     }

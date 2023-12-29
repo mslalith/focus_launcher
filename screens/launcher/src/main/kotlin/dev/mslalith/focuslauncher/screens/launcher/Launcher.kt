@@ -16,8 +16,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
 import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
-import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherViewManager
-import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
 import dev.mslalith.focuslauncher.feature.homepage.HomePage
@@ -30,13 +28,11 @@ fun Launcher(
     state: LauncherState,
     modifier: Modifier = Modifier
 ) {
-    ProvideBottomSheetManager {
-        ProvideLauncherPagerState {
-            LauncherInternal(
-                state = state,
-                modifier = modifier
-            )
-        }
+    ProvideLauncherPagerState {
+        LauncherInternal(
+            state = state,
+            modifier = modifier
+        )
     }
 }
 
@@ -46,20 +42,15 @@ private fun LauncherInternal(
     state: LauncherState,
     modifier: Modifier = Modifier
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     val pagerState = LocalLauncherPagerState.current
-    val viewManager = LocalLauncherViewManager.current
+    val coroutineScope = rememberCoroutineScope()
 
     StatusBarColor()
 
     BackHandler {
-        viewManager.apply {
-            when {
-                isBottomSheetVisible -> hideBottomSheet()
-                pagerState.currentPage != 1 -> coroutineScope.launch {
-                    pagerState.animateScrollToPage(page = 1)
-                }
+        when {
+            pagerState.currentPage != 1 -> coroutineScope.launch {
+                pagerState.animateScrollToPage(page = 1)
             }
         }
     }
