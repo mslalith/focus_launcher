@@ -54,6 +54,7 @@ fun SettingsPage(
     val overlayHost = LocalOverlayHost.current
 
     fun showBottomSheet(screen: Screen) {
+        eventSink(SettingsPageUiEvent.OnBottomSheetOpened(screen = screen))
         scope.launch { overlayHost.showBottomSheet(screen) }
     }
 

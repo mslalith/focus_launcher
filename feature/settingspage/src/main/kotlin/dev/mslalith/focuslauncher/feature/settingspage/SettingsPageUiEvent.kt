@@ -9,4 +9,5 @@ sealed interface SettingsPageUiEvent : CircuitUiEvent {
     data object ToggleNotificationShade : SettingsPageUiEvent
     data class RefreshIsDefaultLauncher(val context: Context) : SettingsPageUiEvent
     data class GoTo(val screen: Screen) : SettingsPageUiEvent
+    data class OnBottomSheetOpened(val screen: Screen) : SettingsPageUiEvent
 }

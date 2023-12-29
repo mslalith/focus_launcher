@@ -24,6 +24,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.GoTo
+import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.OnBottomSheetOpened
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.RefreshIsDefaultLauncher
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleNotificationShade
 import dev.mslalith.focuslauncher.feature.settingspage.SettingsPageUiEvent.ToggleStatusBarVisibility
@@ -72,6 +73,7 @@ class SettingsPagePresenter @AssistedInject constructor(
                 ToggleStatusBarVisibility -> scope.toggleStatusBarVisibility()
                 is RefreshIsDefaultLauncher -> scope.refreshIsDefaultLauncher(context = it.context)
                 is GoTo -> navigator.goTo(screen = it.screen)
+                is OnBottomSheetOpened -> Unit
             }
         }
     }

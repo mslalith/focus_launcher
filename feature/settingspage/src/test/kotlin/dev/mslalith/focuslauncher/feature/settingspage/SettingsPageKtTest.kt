@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.feature.settingspage
 
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +13,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.overlay.rememberOverlayHost
 import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
 import dev.mslalith.focuslauncher.core.screens.AboutScreen
@@ -176,7 +179,9 @@ class SettingsPageKtTest {
         setContent {
             ProvideBottomSheetManager {
                 ProvideSystemUiController {
-                    SettingsPage(state = state)
+                    CompositionLocalProvider(LocalOverlayHost provides rememberOverlayHost()) {
+                        SettingsPage(state = state)
+                    }
                 }
             }
         }
@@ -190,7 +195,7 @@ class SettingsPageKtTest {
         eventSink = { event ->
             state = when (event) {
                 is SettingsPageUiEvent.GoTo -> state.also { currentScreen = event.screen }
-                is SettingsPageUiEvent.OpenBottomSheet -> state.also { bottomSheetScreen = event.screen }
+                is SettingsPageUiEvent.OnBottomSheetOpened -> state.also { bottomSheetScreen = event.screen }
                 is SettingsPageUiEvent.RefreshIsDefaultLauncher -> state
                 SettingsPageUiEvent.ToggleNotificationShade -> state.copy(canDrawNotificationShade = !state.canDrawNotificationShade)
                 SettingsPageUiEvent.ToggleStatusBarVisibility -> state.copy(showStatusBar = !state.showStatusBar)
