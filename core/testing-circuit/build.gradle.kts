@@ -1,6 +1,5 @@
 plugins {
     id("focuslauncher.android.library")
-    id("focuslauncher.android.library.compose")
 }
 
 android {
@@ -11,6 +10,5 @@ dependencies {
     api(project(":core:testing"))
 
     implementation(libs.circuit.foundation)
-    implementation(libs.circuit.overlay)
     api(libs.circuit.test)
 }
