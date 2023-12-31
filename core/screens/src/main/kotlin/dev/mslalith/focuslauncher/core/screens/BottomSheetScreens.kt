@@ -6,26 +6,36 @@ import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
-@Parcelize
-data object ThemeSelectionBottomSheetScreen : Screen
+abstract class BottomSheetScreen<T> : Screen
 
 @Parcelize
-data object AppDrawerSettingsBottomSheetScreen : Screen
+data object ThemeSelectionBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data object ClockWidgetSettingsBottomSheetScreen : Screen
+data object AppDrawerSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data object QuoteWidgetSettingsBottomSheetScreen : Screen
+data object ClockWidgetSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data object LunarPhaseWidgetSettingsBottomSheetScreen : Screen
+data object QuoteWidgetSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data object LunarPhaseDetailsBottomSheetScreen : Screen
+data object LunarPhaseWidgetSettingsBottomSheetScreen : BottomSheetScreen<LunarPhaseWidgetSettingsBottomSheetScreen.Result>() {
+    sealed interface Result {
+        data class PopAndGoto(val screen: Screen) : Result
+    }
+}
 
 @Parcelize
-data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawerItem) : Screen
+data object LunarPhaseDetailsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : Screen
+data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawerItem) : BottomSheetScreen<AppMoreOptionsBottomSheetScreen.Result>() {
+    sealed interface Result {
+        data object ShowUpdateAppDisplayBottomSheet : Result
+    }
+}
+
+@Parcelize
+data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : BottomSheetScreen<Unit>()

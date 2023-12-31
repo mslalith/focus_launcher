@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.circuitoverlay
+package dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -8,13 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.slack.circuit.foundation.CircuitContent
-import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.internal.BackHandler
 import com.slack.circuit.overlay.Overlay
-import com.slack.circuit.overlay.OverlayHost
 import com.slack.circuit.overlay.OverlayNavigator
-import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,22 +54,3 @@ class BottomSheetOverlay<S : Any, R : Any>(
         LaunchedEffect(Unit) { sheetState.show() }
     }
 }
-
-suspend fun OverlayHost.showBottomSheet(
-    screen: Screen
-): Unit = show(
-    BottomSheetOverlay(
-        state = Unit,
-        onDismiss = {}
-    ) { _, navigator ->
-        CircuitContent(
-            screen = screen,
-            onNavEvent = { event ->
-                when (event) {
-                    NavEvent.Pop -> navigator.finish(Unit)
-                    else -> Unit
-                }
-            }
-        )
-    }
-)

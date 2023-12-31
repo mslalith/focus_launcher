@@ -21,15 +21,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
-import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheetWithResult
 import dev.mslalith.focuslauncher.core.common.extensions.launchApp
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
 import dev.mslalith.focuslauncher.core.screens.AppMoreOptionsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.UpdateAppDisplayNameBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
@@ -53,8 +55,17 @@ fun AppDrawerPage(
     val scope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
 
-    fun showBottomSheet(screen: Screen) {
+    fun showBottomSheet(screen: BottomSheetScreen<Unit>) {
         scope.launch { overlayHost.showBottomSheet(screen) }
+    }
+
+    fun showAppMoreOptionsBottomSheetScreen(appDrawerItem: AppDrawerItem) {
+        scope.launch {
+            when (overlayHost.showBottomSheetWithResult(AppMoreOptionsBottomSheetScreen(appDrawerItem = appDrawerItem))) {
+                is AppMoreOptionsBottomSheetScreen.Result.ShowUpdateAppDisplayBottomSheet -> showBottomSheet(screen = UpdateAppDisplayNameBottomSheetScreen(app = appDrawerItem.app))
+                null -> Unit
+            }
+        }
     }
 
     AppDrawerPageKeyboardAware(
@@ -62,7 +73,7 @@ fun AppDrawerPage(
         state = state,
         onSearchQueryChange = { eventSink(AppDrawerPageUiEvent.UpdateSearchQuery(query = it)) },
         reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) },
-        showAppMoreOptions = { showBottomSheet(screen = AppMoreOptionsBottomSheetScreen(appDrawerItem = it)) }
+        showAppMoreOptions = ::showAppMoreOptionsBottomSheetScreen
     )
 }
 

@@ -9,6 +9,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.overlayHostResult
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.data.repository.HiddenAppsRepo
@@ -16,6 +17,7 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.screens.AppMoreOptionsBottomSheetScreen
 import dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions.AppMoreOptionsBottomSheetUiEvent.AddToFavorites
 import dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions.AppMoreOptionsBottomSheetUiEvent.AddToHiddenApps
+import dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions.AppMoreOptionsBottomSheetUiEvent.ClickUpdateDisplayName
 import dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions.AppMoreOptionsBottomSheetUiEvent.GoBack
 import dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions.AppMoreOptionsBottomSheetUiEvent.RemoveFromFavorites
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +50,7 @@ class AppMoreOptionsBottomSheetPresenter @AssistedInject constructor(
         ) {
             when (it) {
                 GoBack -> navigator.pop()
+                is ClickUpdateDisplayName -> navigator.overlayHostResult(result = AppMoreOptionsBottomSheetScreen.Result.ShowUpdateAppDisplayBottomSheet)
                 is AddToFavorites -> scope.addToFavoritesAndClose(app = it.app)
                 is AddToHiddenApps -> scope.addToHiddenAppsAndClose(app = it.app, removeFromFavorites = it.removeFromFavorites)
                 is RemoveFromFavorites -> scope.removeFromFavoritesAndClose(app = it.app)

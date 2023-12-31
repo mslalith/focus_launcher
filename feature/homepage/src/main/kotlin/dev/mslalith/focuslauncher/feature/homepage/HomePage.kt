@@ -16,10 +16,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.LayoutDirection
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
-import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheet
 import dev.mslalith.focuslauncher.core.common.extensions.openNotificationShade
+import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.HomePageScreen
 import dev.mslalith.focuslauncher.core.screens.LunarPhaseDetailsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
@@ -40,7 +40,7 @@ fun HomePage(
     val scope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
 
-    fun showBottomSheet(screen: Screen) {
+    fun showBottomSheet(screen: BottomSheetScreen<Unit>) {
         scope.launch { overlayHost.showBottomSheet(screen) }
     }
 

@@ -14,9 +14,11 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
-import dev.mslalith.focuslauncher.core.circuitoverlay.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheetWithResult
 import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
@@ -53,9 +55,19 @@ fun SettingsPage(
     val scope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
 
-    fun showBottomSheet(screen: Screen) {
+    fun showBottomSheet(screen: BottomSheetScreen<Unit>) {
         eventSink(SettingsPageUiEvent.OnBottomSheetOpened(screen = screen))
         scope.launch { overlayHost.showBottomSheet(screen) }
+    }
+
+    fun showLunarPhaseWidgetSettingsBottomSheetScreen() {
+        eventSink(SettingsPageUiEvent.OnBottomSheetOpened(screen = LunarPhaseWidgetSettingsBottomSheetScreen))
+        scope.launch {
+            when (val result = overlayHost.showBottomSheetWithResult(LunarPhaseWidgetSettingsBottomSheetScreen)) {
+                is LunarPhaseWidgetSettingsBottomSheetScreen.Result.PopAndGoto -> eventSink(SettingsPageUiEvent.GoTo(screen = result.screen))
+                null -> Unit
+            }
+        }
     }
 
     SettingsPage(
@@ -66,7 +78,7 @@ fun SettingsPage(
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
         onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
         onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
-        onLunarPhaseWidgetClick = { showBottomSheet(screen = LunarPhaseWidgetSettingsBottomSheetScreen) },
+        onLunarPhaseWidgetClick = ::showLunarPhaseWidgetSettingsBottomSheetScreen,
         onQuotesWidgetClick = { showBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
         onRefreshIsDefaultLauncher = { eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context)) },
         navigateTo = { eventSink(SettingsPageUiEvent.GoTo(screen = it)) }

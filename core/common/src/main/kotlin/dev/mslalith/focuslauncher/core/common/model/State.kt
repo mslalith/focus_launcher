@@ -5,7 +5,7 @@ import dev.mslalith.focuslauncher.core.model.UiText
 
 @Immutable
 sealed class State<out T> {
-    object Initial : State<Nothing>()
+    data object Initial : State<Nothing>()
     data class Success<out R>(val value: R) : State<R>()
     data class Error(val uiText: UiText) : State<Nothing>()
 }
