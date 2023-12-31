@@ -13,7 +13,7 @@ fun <T> Navigator.overlayHostResult(result: T) {
 }
 
 suspend fun OverlayHost.showBottomSheet(
-    screen: Screen
+    screen: BottomSheetScreen<Unit>
 ): Unit = show(
     BottomSheetOverlay(
         state = Unit,
@@ -31,7 +31,7 @@ suspend fun OverlayHost.showBottomSheet(
     }
 )
 
-suspend fun <T : Any> OverlayHost.showBottomSheet(
+suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
     screen: BottomSheetScreen<T>
 ): T? = show(
     BottomSheetOverlay<Unit, OverlayResultScreen<T>>(

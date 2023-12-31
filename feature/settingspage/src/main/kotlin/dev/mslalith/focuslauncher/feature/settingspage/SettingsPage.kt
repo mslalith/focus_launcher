@@ -15,8 +15,10 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.runtime.screen.Screen
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheet
+import dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet.showBottomSheetWithResult
 import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
@@ -53,7 +55,7 @@ fun SettingsPage(
     val scope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
 
-    fun showBottomSheet(screen: Screen) {
+    fun showBottomSheet(screen: BottomSheetScreen<Unit>) {
         eventSink(SettingsPageUiEvent.OnBottomSheetOpened(screen = screen))
         scope.launch { overlayHost.showBottomSheet(screen) }
     }
@@ -61,7 +63,7 @@ fun SettingsPage(
     fun showLunarPhaseWidgetSettingsBottomSheetScreen() {
         eventSink(SettingsPageUiEvent.OnBottomSheetOpened(screen = LunarPhaseWidgetSettingsBottomSheetScreen))
         scope.launch {
-            when (val result = overlayHost.showBottomSheet(LunarPhaseWidgetSettingsBottomSheetScreen)) {
+            when (val result = overlayHost.showBottomSheetWithResult(LunarPhaseWidgetSettingsBottomSheetScreen)) {
                 is LunarPhaseWidgetSettingsBottomSheetScreen.Result.PopAndGoto -> eventSink(SettingsPageUiEvent.GoTo(screen = result.screen))
                 null -> Unit
             }
