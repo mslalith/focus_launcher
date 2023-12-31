@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -50,8 +52,15 @@ private fun UpdateAppDisplayNameBottomSheet(
     onUpdateClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var displayName by remember { mutableStateOf(value = app.displayName) }
     val focusRequester = remember { FocusRequester() }
+    var displayName by remember {
+        mutableStateOf(
+            value = TextFieldValue(
+                text = app.displayName,
+                selection = TextRange(index = app.displayName.length)
+            )
+        )
+    }
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
@@ -82,9 +91,12 @@ private fun UpdateAppDisplayNameBottomSheet(
         VerticalSpacer(spacing = 16.dp)
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onUpdateClick(displayName) }
+            onClick = { onUpdateClick(displayName.text) }
         ) {
-            Text(text = stringResource(id = R.string.update))
+            Text(
+                text = stringResource(id = R.string.update),
+                modifier = Modifier.padding(vertical = 4.dp)
+            )
         }
         VerticalSpacer(spacing = 16.dp)
     }
