@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
+package dev.mslalith.focuslauncher.feature.lunarcalendar.widget.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height

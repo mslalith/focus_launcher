@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
+package dev.mslalith.focuslauncher.feature.lunarcalendar.widget.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.material3.Text

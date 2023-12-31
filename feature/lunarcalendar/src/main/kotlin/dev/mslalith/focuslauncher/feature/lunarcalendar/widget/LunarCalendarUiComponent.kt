@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.ui.LunarCalendarContent
 
 @Composable
 fun LunarCalendarUiComponent(
@@ -16,6 +17,8 @@ fun LunarCalendarUiComponent(
     modifier: Modifier = Modifier,
     iconSize: Dp = 40.dp,
     horizontalPadding: Dp = 0.dp,
+    backgroundColor: Color = Color.Transparent,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: (() -> Unit)? = null
 ) {
     LunarCalendarUiComponentInternal(
@@ -23,6 +26,8 @@ fun LunarCalendarUiComponent(
         state = state,
         iconSize = iconSize,
         horizontalPadding = horizontalPadding,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor,
         onClick = onClick
     )
 }

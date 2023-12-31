@@ -18,11 +18,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.lunarcalendar.R
-import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendar
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponent
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentState
 
 @Composable
 internal fun PreviewLunarCalendar(
-    showLunarPhase: Boolean,
+    state: LunarCalendarUiComponentState,
     horizontalPadding: Dp = 24.dp,
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -31,7 +32,7 @@ internal fun PreviewLunarCalendar(
 
     Crossfade(
         label = "Cross Fade Preview Lunar Calendar",
-        targetState = showLunarPhase,
+        targetState = state.showLunarPhase,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = horizontalPadding)
@@ -39,8 +40,8 @@ internal fun PreviewLunarCalendar(
             .clip(shape = MaterialTheme.shapes.small)
     ) {
         if (it) {
-            LunarCalendar(
-                height = height,
+            LunarCalendarUiComponent(
+                state = state,
                 backgroundColor = backgroundColor,
                 contentColor = contentColor
             )

@@ -14,6 +14,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.lunarcalendar.R
 import dev.mslalith.focuslauncher.feature.lunarcalendar.settings.PreviewLunarCalendar
+import dev.mslalith.focuslauncher.feature.lunarcalendar.widget.LunarCalendarUiComponentState
 
 @CircuitInject(LunarPhaseWidgetSettingsBottomSheetScreen::class, SingletonComponent::class)
 @Composable
@@ -47,7 +48,15 @@ private fun LunarPhaseWidgetSettingsBottomSheet(
     Column(
         modifier = modifier
     ) {
-        PreviewLunarCalendar(showLunarPhase = state.showLunarPhase)
+        PreviewLunarCalendar(
+            state = LunarCalendarUiComponentState(
+                showLunarPhase = state.showLunarPhase,
+                showIlluminationPercent = state.showIlluminationPercent,
+                showUpcomingPhaseDetails = state.showUpcomingPhaseDetails,
+                lunarPhaseDetails = state.lunarPhaseDetails,
+                upcomingLunarPhase = state.upcomingLunarPhase
+            )
+        )
         SettingsSelectableSwitchItem(
             text = stringResource(id = R.string.enable_lunar_phase),
             checked = state.showLunarPhase,
