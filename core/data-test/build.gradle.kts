@@ -4,6 +4,10 @@ plugins {
 
 android {
     namespace = "dev.mslalith.focuslauncher.core.data.test"
+
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
