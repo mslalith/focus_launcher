@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.quoteforyou
+package dev.mslalith.focuslauncher.feature.quoteforyou.widget.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.Quote
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
+import dev.mslalith.focuslauncher.feature.quoteforyou.R
 
 @Composable
 internal fun QuoteForYouContent(

@@ -13,6 +13,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsLoadableItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.quoteforyou.R
 import dev.mslalith.focuslauncher.feature.quoteforyou.settings.PreviewQuotes
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentState
 
 @CircuitInject(QuoteWidgetSettingsBottomSheetScreen::class, SingletonComponent::class)
 @Composable
@@ -42,7 +43,13 @@ private fun QuoteWidgetSettingsBottomSheet(
     Column(
         modifier = modifier
     ) {
-        PreviewQuotes(showQuotes = state.showQuotes)
+        PreviewQuotes(
+            state = QuoteForYouUiComponentState(
+                showQuotes = state.showQuotes,
+                currentQuote = state.currentQuote,
+                eventSink = {}
+            )
+        )
         SettingsSelectableSwitchItem(
             text = stringResource(id = R.string.enable_quotes),
             checked = state.showQuotes,

@@ -28,7 +28,9 @@ import dev.mslalith.focuslauncher.feature.quoteforyou.R
 @Composable
 fun QuoteForYouUiComponent(
     state: QuoteForYouUiComponentState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
     // Need to extract the eventSink out to a local val, so that the Compose Compiler
     // treats it as stable. See: https://issuetracker.google.com/issues/256100927
@@ -37,7 +39,9 @@ fun QuoteForYouUiComponent(
     QuoteForYouUiComponent(
         modifier = modifier,
         state = state,
-        onQuoteClick = { eventSink(QuoteForYouUiComponentUiEvent.FetchNextQuote) }
+        onQuoteClick = { eventSink(QuoteForYouUiComponentUiEvent.FetchNextQuote) },
+        backgroundColor = backgroundColor,
+        contentColor = contentColor
     )
 }
 
