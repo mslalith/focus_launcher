@@ -8,16 +8,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.feature.homepage.model.LocalHomePadding
-import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponent
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentState
 
 @Composable
 internal fun DecoratedQuote(
+    state: QuoteForYouUiComponentState,
     modifier: Modifier = Modifier
 ) {
     val homePadding = LocalHomePadding.current
     val startPadding = homePadding.contentPaddingValues.calculateStartPadding(layoutDirection = LayoutDirection.Ltr)
 
-    QuoteForYou(
+    QuoteForYouUiComponent(
+        state = state,
         modifier = modifier
             .fillMaxWidth()
             .padding(

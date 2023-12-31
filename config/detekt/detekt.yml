@@ -141,7 +141,8 @@ complexity:
     ignoreDataClasses: true
     ignoreAnnotated:
       - 'Composable'
-      - 'HiltViewModel'
+      - 'Inject'
+      - 'AssistedInject'
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
     active: false

@@ -16,12 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.feature.quoteforyou.QuoteForYou
 import dev.mslalith.focuslauncher.feature.quoteforyou.R
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponent
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentState
 
 @Composable
 internal fun PreviewQuotes(
-    showQuotes: Boolean,
+    state: QuoteForYouUiComponentState,
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
@@ -30,7 +31,7 @@ internal fun PreviewQuotes(
 
     Crossfade(
         label = "Cross Fade Preview Quotes",
-        targetState = showQuotes,
+        targetState = state.showQuotes,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = horizontalPadding)
@@ -39,7 +40,8 @@ internal fun PreviewQuotes(
             .background(color = backgroundColor)
     ) {
         if (it) {
-            QuoteForYou(
+            QuoteForYouUiComponent(
+                state = state,
                 backgroundColor = backgroundColor,
                 contentColor = contentColor
             )

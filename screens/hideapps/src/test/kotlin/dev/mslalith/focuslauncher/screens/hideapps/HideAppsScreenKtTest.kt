@@ -22,7 +22,11 @@ import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndA
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForApp
 import dev.mslalith.focuslauncher.core.testing.compose.waiter.waitForTag
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
-import dev.mslalith.focuslauncher.screens.hideapps.model.HideAppsState
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.AddToHiddenApps
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.ClearHiddenApps
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.GoBack
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.RemoveFromFavorites
+import dev.mslalith.focuslauncher.screens.hideapps.HideAppsUiEvent.RemoveFromHiddenApps
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -45,7 +49,7 @@ class HideAppsScreenKtTest {
 
     private val favoriteApp = TestApps.Chrome
     private val allApps = TestApps.all.toSelectedHiddenAppWith()
-    private var state: HideAppsState by mutableStateOf(value = stateWith(apps = allApps))
+    private var state by mutableStateOf(value = stateWith(apps = allApps))
 
     @Before
     fun setup() {
@@ -140,25 +144,27 @@ class HideAppsScreenKtTest {
         onNodeWithTag(testTag = favoriteApp.packageName).assertSelectedHiddenApp(selectedHiddenApp = selectedHiddenApp)
     }
 
-    private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith(
-        goBack: () -> Unit = {}
-    ) {
+    private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
             ProvideSystemUiController {
-                HideAppsScreenInternal(
-                    hideAppsState = state,
-                    onClearHiddenApps = { state = state.copy(hiddenApps = persistentListOf()) },
-                    onRemoveFromFavorites = { state = state.copy(hiddenApps = state.hiddenApps.toggleAppFavorite(app = it, isFavorite = false)) },
-                    onAddToHiddenApps = { state = state.copy(hiddenApps = state.hiddenApps.toggleAppSelected(app = it, isSelected = true)) },
-                    onRemoveFromHiddenApps = { state = state.copy(hiddenApps = state.hiddenApps.toggleAppSelected(app = it, isSelected = false)) },
-                    goBack = goBack
-                )
+                HideApps(state = state)
             }
         }
     }
-}
 
-private fun stateWith(apps: List<SelectedHiddenApp>): HideAppsState = HideAppsState(hiddenApps = apps.toImmutableList())
+    private fun stateWith(apps: List<SelectedHiddenApp>): HideAppsState = HideAppsState(
+        hiddenApps = apps.toImmutableList(),
+        eventSink = {
+            state = when (it) {
+                GoBack -> state
+                ClearHiddenApps -> state.copy(hiddenApps = persistentListOf())
+                is AddToHiddenApps -> state.copy(hiddenApps = state.hiddenApps.toggleAppSelected(app = it.app, isSelected = true))
+                is RemoveFromFavorites -> state.copy(hiddenApps = state.hiddenApps.toggleAppFavorite(app = it.app, isFavorite = false))
+                is RemoveFromHiddenApps -> state.copy(hiddenApps = state.hiddenApps.toggleAppSelected(app = it.app, isSelected = false))
+            }
+        }
+    )
+}
 
 private fun List<App>.toSelectedHiddenAppWith(
     isSelected: Boolean = false,
@@ -179,7 +185,7 @@ private fun App.toSelectedHiddenAppWith(
     isFavorite = isFavorite
 )
 
-private fun HideAppsState.withFavorite(app: App): HideAppsState = HideAppsState(
+private fun HideAppsState.withFavorite(app: App): HideAppsState = copy(
     hiddenApps = hiddenApps.toggleAppFavorite(app = app, isFavorite = true)
 )
 

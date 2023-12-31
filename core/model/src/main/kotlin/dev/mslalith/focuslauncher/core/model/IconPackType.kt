@@ -1,7 +1,7 @@
 package dev.mslalith.focuslauncher.core.model
 
 sealed interface IconPackType {
-    object System : IconPackType
+    data object System : IconPackType
     data class Custom(val packageName: String) : IconPackType
 
     val value: String

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 sealed interface LoadingState<out T> {
-    object Loading : LoadingState<Nothing>
+    data object Loading : LoadingState<Nothing>
     data class Loaded<out R>(val value: R) : LoadingState<R>
 }
 

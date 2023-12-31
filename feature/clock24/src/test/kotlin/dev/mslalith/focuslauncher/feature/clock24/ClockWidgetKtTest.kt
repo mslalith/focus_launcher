@@ -11,8 +11,9 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertBiasAlignment
-import dev.mslalith.focuslauncher.feature.clock24.model.Clock24State
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
+import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponent
+import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentState
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
@@ -31,9 +32,8 @@ class ClockWidgetKtTest {
     @Test
     fun `01 - when clock24 is enabled, clock24 UI must be shown`(): Unit = with(composeTestRule) {
         setContent {
-            ClockWidget(
-                clock24State = stateWith(showClock24 = true),
-                refreshTime = {},
+            ClockWidgetUiComponent(
+                state = stateWith(showClock24 = true),
                 horizontalPadding = 2.dp
             )
         }
@@ -45,9 +45,8 @@ class ClockWidgetKtTest {
     @Test
     fun `02 - when clock24 is disabled, clock24 UI must not be shown`(): Unit = with(composeTestRule) {
         setContent {
-            ClockWidget(
-                clock24State = stateWith(showClock24 = false),
-                refreshTime = {},
+            ClockWidgetUiComponent(
+                state = stateWith(showClock24 = false),
                 horizontalPadding = 2.dp
             )
         }
@@ -60,9 +59,8 @@ class ClockWidgetKtTest {
     fun `03 - when clock24 alignment is updated, verify it's placement`(): Unit = with(composeTestRule) {
         var clock24State by mutableStateOf(value = stateWith(showClock24 = true, clockAlignment = ClockAlignment.START))
         setContent {
-            ClockWidget(
-                clock24State = clock24State,
-                refreshTime = {},
+            ClockWidgetUiComponent(
+                state = clock24State,
                 horizontalPadding = 2.dp
             )
         }
@@ -83,10 +81,11 @@ private fun stateWith(
     use24Hour: Boolean = true,
     clockAlignment: ClockAlignment = ClockAlignment.START,
     clock24AnimationDuration: Int = 1200
-) = Clock24State(
+) = ClockWidgetUiComponentState(
     currentTime = currentTime,
     showClock24 = showClock24,
     use24Hour = use24Hour,
     clockAlignment = clockAlignment,
-    clock24AnimationDuration = clock24AnimationDuration
+    clock24AnimationDuration = clock24AnimationDuration,
+    eventSink = {}
 )

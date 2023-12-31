@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.feature.settingspage
 
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,16 +13,24 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
-import dev.mslalith.focuslauncher.core.model.Screen
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.overlay.rememberOverlayHost
+import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.model.WidgetType
+import dev.mslalith.focuslauncher.core.screens.AboutScreen
+import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
+import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
+import dev.mslalith.focuslauncher.core.screens.IconPackScreen
+import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTagAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.waitForTextAndAssertIsDisplayed
 import dev.mslalith.focuslauncher.core.testing.compose.extensions.performScrollToAndClick
 import dev.mslalith.focuslauncher.core.testing.compose.matcher.hasWidgetType
-import dev.mslalith.focuslauncher.core.ui.providers.ProvideBottomSheetManager
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
-import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsState
 import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -36,48 +45,40 @@ import org.robolectric.annotation.Config
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class SettingsPageKtTest {
 
-    companion object {
-        const val THEME_SELECTION_SHEET = "Theme Selection Sheet"
-        const val APP_DRAWER_SHEET = "App Drawer Sheet"
-        const val CLOCK_WIDGET_SHEET = "Clock Widget Sheet"
-        const val LUNAR_PHASE_WIDGET_SHEET = "Lunar Phase Widget Sheet"
-        const val QUOTES_WIDGET_SHEET = "Quotes Widget Sheet"
-    }
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     private var currentScreen: Screen? by mutableStateOf(value = null)
-    private var bottomSheetName: String? by mutableStateOf(value = null)
-    private var state: SettingsState by mutableStateOf(value = stateWith())
+    private var bottomSheetScreen: Screen? by mutableStateOf(value = null)
+    private var state by mutableStateOf(value = stateWith())
 
     @Before
     fun setup() {
         currentScreen = null
-        bottomSheetName = null
+        bottomSheetScreen = null
         state = stateWith()
         composeTestRule.initializeWith()
     }
 
     @Test
     fun `01 - when change theme is clicked, theme selection bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        assertThat(bottomSheetName).isNull()
+        assertThat(bottomSheetScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_CHANGE_THEME).performScrollToAndClick()
-        assertThat(bottomSheetName).isEqualTo(THEME_SELECTION_SHEET)
+        assertThat(bottomSheetScreen).isEqualTo(ThemeSelectionBottomSheetScreen)
     }
 
     @Test
     fun `02 - when edit favorites is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_EDIT_FAVORITES).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.EditFavorites)
+        assertThat(currentScreen).isEqualTo(EditFavoritesScreen)
     }
 
     @Test
     fun `03 - when hide apps is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_HIDE_APPS).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.HideApps)
+        assertThat(currentScreen).isEqualTo(HideAppsScreen)
     }
 
     @Test
@@ -104,14 +105,14 @@ class SettingsPageKtTest {
     fun `06 - when icon packs is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_ICON_PACK).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.IconPack)
+        assertThat(currentScreen).isEqualTo(IconPackScreen)
     }
 
     @Test
     fun `07 - when app drawer is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        assertThat(bottomSheetName).isNull()
+        assertThat(bottomSheetScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_APP_DRAWER).performScrollToAndClick()
-        assertThat(bottomSheetName).isEqualTo(APP_DRAWER_SHEET)
+        assertThat(bottomSheetScreen).isEqualTo(AppDrawerSettingsBottomSheetScreen)
     }
 
     @Test
@@ -128,18 +129,18 @@ class SettingsPageKtTest {
 
     @Test
     fun `09 - on click of clock widget, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        assertThat(bottomSheetName).isNull()
+        assertThat(bottomSheetScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollToAndClick()
         onNode(matcher = hasWidgetType(widgetType = WidgetType.CLOCK)).performScrollToAndClick()
-        assertThat(bottomSheetName).isEqualTo(CLOCK_WIDGET_SHEET)
+        assertThat(bottomSheetScreen).isEqualTo(ClockWidgetSettingsBottomSheetScreen)
     }
 
     @Test
     fun `10 - when lunar phase widget is clicked, it's bottom sheet must be shown`(): Unit = with(composeTestRule) {
-        assertThat(bottomSheetName).isNull()
+        assertThat(bottomSheetScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_WIDGETS).performScrollToAndClick()
         onNode(matcher = hasWidgetType(widgetType = WidgetType.LUNAR_PHASE)).performScrollToAndClick()
-        assertThat(bottomSheetName).isEqualTo(LUNAR_PHASE_WIDGET_SHEET)
+        assertThat(bottomSheetScreen).isEqualTo(LunarPhaseWidgetSettingsBottomSheetScreen)
     }
 
     @Test
@@ -170,34 +171,32 @@ class SettingsPageKtTest {
     fun `13 - when about is clicked, user must be navigated to it's screen`(): Unit = with(composeTestRule) {
         assertThat(currentScreen).isNull()
         onNodeWithTag(testTag = TestTags.ITEM_ABOUT).performScrollToAndClick()
-        assertThat(currentScreen).isEqualTo(Screen.About)
+        assertThat(currentScreen).isEqualTo(AboutScreen)
     }
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
-            ProvideBottomSheetManager {
-                ProvideSystemUiController {
-                    SettingsPageInternal(
-                        settingsState = state,
-                        onThemeClick = { bottomSheetName = THEME_SELECTION_SHEET },
-                        onToggleStatusBarVisibility = { state = state.copy(showStatusBar = !state.showStatusBar) },
-                        onToggleNotificationShade = { state = state.copy(canDrawNotificationShade = !state.canDrawNotificationShade) },
-                        onAppDrawerClick = { bottomSheetName = APP_DRAWER_SHEET },
-                        onClockWidgetClick = { bottomSheetName = CLOCK_WIDGET_SHEET },
-                        onLunarPhaseWidgetClick = { bottomSheetName = LUNAR_PHASE_WIDGET_SHEET },
-                        onQuotesWidgetClick = { bottomSheetName = QUOTES_WIDGET_SHEET },
-                        onRefreshIsDefaultLauncher = { },
-                        navigateTo = { currentScreen = it }
-                    )
+            ProvideSystemUiController {
+                CompositionLocalProvider(LocalOverlayHost provides rememberOverlayHost()) {
+                    SettingsPage(state = state)
                 }
             }
         }
     }
-}
 
-private fun stateWith(): SettingsState = SettingsState(
-    showStatusBar = false,
-    canDrawNotificationShade = true,
-    showIconPack = true,
-    isDefaultLauncher = false
-)
+    private fun stateWith(): SettingsPageState = SettingsPageState(
+        showStatusBar = false,
+        canDrawNotificationShade = true,
+        showIconPack = true,
+        isDefaultLauncher = false,
+        eventSink = { event ->
+            state = when (event) {
+                is SettingsPageUiEvent.GoTo -> state.also { currentScreen = event.screen }
+                is SettingsPageUiEvent.OnBottomSheetOpened -> state.also { bottomSheetScreen = event.screen }
+                is SettingsPageUiEvent.RefreshIsDefaultLauncher -> state
+                SettingsPageUiEvent.ToggleNotificationShade -> state.copy(canDrawNotificationShade = !state.canDrawNotificationShade)
+                SettingsPageUiEvent.ToggleStatusBarVisibility -> state.copy(showStatusBar = !state.showStatusBar)
+            }
+        }
+    )
+}

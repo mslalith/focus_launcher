@@ -24,7 +24,12 @@ import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerIconViewType
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertBooleanType
 import dev.mslalith.focuslauncher.core.testing.compose.assertion.assertStringType
-import dev.mslalith.focuslauncher.feature.settingspage.model.SettingsSheetState
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheet
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheetState
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheetUiEvent.ToggleAppGroupHeaderVisibility
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheetUiEvent.ToggleSearchBarVisibility
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheetUiEvent.UpdateAppDrawerIconViewType
+import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings.AppDrawerSettingsBottomSheetUiEvent.UpdateAppDrawerViewType
 import dev.mslalith.focuslauncher.feature.settingspage.utils.TestTags
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -42,7 +47,7 @@ class AppDrawerSettingsSheetKtTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private var state: SettingsSheetState by mutableStateOf(value = stateWith())
+    private var state by mutableStateOf(value = stateWith())
 
     @Before
     fun setup() {
@@ -210,26 +215,30 @@ class AppDrawerSettingsSheetKtTest {
 
     private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.initializeWith() {
         setContent {
-            AppDrawerSettingsSheetInternal(
-                settingsSheetState = state,
-                onUpdateAppDrawerViewType = {
-                    state = state.copy(appDrawerViewType = it)
-                    if (it == AppDrawerViewType.GRID && state.appDrawerIconViewType == AppDrawerIconViewType.TEXT) state = state.copy(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
-                },
-                onUpdateAppDrawerIconViewType = { state = state.copy(appDrawerIconViewType = it) },
-                onToggleSearchBarVisibility = { state = state.copy(showSearchBar = !state.showSearchBar) },
-                onToggleAppGroupHeaderVisibility = { state = state.copy(showAppGroupHeader = !state.showAppGroupHeader) }
-            )
+            AppDrawerSettingsBottomSheet(state = state)
         }
     }
-}
 
-private fun stateWith(): SettingsSheetState = SettingsSheetState(
-    appDrawerViewType = AppDrawerViewType.LIST,
-    appDrawerIconViewType = AppDrawerIconViewType.ICONS,
-    showAppGroupHeader = true,
-    showSearchBar = true
-)
+    private fun stateWith(): AppDrawerSettingsBottomSheetState = AppDrawerSettingsBottomSheetState(
+        appDrawerViewType = AppDrawerViewType.LIST,
+        appDrawerIconViewType = AppDrawerIconViewType.ICONS,
+        showAppGroupHeader = true,
+        showSearchBar = true,
+        eventSink = {
+            state = when (it) {
+                ToggleAppGroupHeaderVisibility -> state.copy(showAppGroupHeader = !state.showAppGroupHeader)
+                ToggleSearchBarVisibility -> state.copy(showSearchBar = !state.showSearchBar)
+                is UpdateAppDrawerIconViewType -> state.copy(appDrawerIconViewType = it.viewType)
+                is UpdateAppDrawerViewType -> {
+                    state.copy(appDrawerViewType = it.viewType).run {
+                        if (it.viewType == AppDrawerViewType.GRID && appDrawerIconViewType == AppDrawerIconViewType.TEXT) copy(appDrawerIconViewType = AppDrawerIconViewType.ICONS)
+                        else this
+                    }
+                }
+            }
+        }
+    )
+}
 
 private fun AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>.updateAppsViewType(
     appsViewType: AppDrawerViewType
