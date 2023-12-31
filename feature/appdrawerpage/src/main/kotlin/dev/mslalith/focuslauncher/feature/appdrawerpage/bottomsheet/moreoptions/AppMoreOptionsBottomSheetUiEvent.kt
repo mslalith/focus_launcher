@@ -8,4 +8,5 @@ sealed interface AppMoreOptionsBottomSheetUiEvent : CircuitUiEvent {
     data class AddToFavorites(val app: App) : AppMoreOptionsBottomSheetUiEvent
     data class RemoveFromFavorites(val app: App) : AppMoreOptionsBottomSheetUiEvent
     data class AddToHiddenApps(val app: App, val removeFromFavorites: Boolean) : AppMoreOptionsBottomSheetUiEvent
+    data class ClickUpdateDisplayName(val app: App) : AppMoreOptionsBottomSheetUiEvent
 }

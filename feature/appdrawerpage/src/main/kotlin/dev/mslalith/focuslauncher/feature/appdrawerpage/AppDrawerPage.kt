@@ -30,6 +30,7 @@ import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.screens.AppDrawerPageScreen
 import dev.mslalith.focuslauncher.core.screens.AppMoreOptionsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.UpdateAppDisplayNameBottomSheetScreen
 import dev.mslalith.focuslauncher.core.ui.DotWaveLoader
 import dev.mslalith.focuslauncher.core.ui.SearchField
 import dev.mslalith.focuslauncher.core.ui.effects.OnDayChangeListener
@@ -57,12 +58,21 @@ fun AppDrawerPage(
         scope.launch { overlayHost.showBottomSheet(screen) }
     }
 
+    fun showAppMoreOptionsBottomSheetScreen(appDrawerItem: AppDrawerItem) {
+        scope.launch {
+            when (overlayHost.showBottomSheet(AppMoreOptionsBottomSheetScreen(appDrawerItem = appDrawerItem))) {
+                is AppMoreOptionsBottomSheetScreen.Result.ShowUpdateAppDisplayBottomSheet -> showBottomSheet(screen = UpdateAppDisplayNameBottomSheetScreen(app = appDrawerItem.app))
+                null -> Unit
+            }
+        }
+    }
+
     AppDrawerPageKeyboardAware(
         modifier = modifier,
         state = state,
         onSearchQueryChange = { eventSink(AppDrawerPageUiEvent.UpdateSearchQuery(query = it)) },
         reloadIconPack = { eventSink(AppDrawerPageUiEvent.ReloadIconPack) },
-        showAppMoreOptions = { showBottomSheet(screen = AppMoreOptionsBottomSheetScreen(appDrawerItem = it)) }
+        showAppMoreOptions = ::showAppMoreOptionsBottomSheetScreen
     )
 }
 

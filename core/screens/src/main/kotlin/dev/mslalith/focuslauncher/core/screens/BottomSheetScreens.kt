@@ -31,7 +31,11 @@ data object LunarPhaseWidgetSettingsBottomSheetScreen : BottomSheetScreen<LunarP
 data object LunarPhaseDetailsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
-data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawerItem) : BottomSheetScreen<Unit>()
+data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawerItem) : BottomSheetScreen<AppMoreOptionsBottomSheetScreen.Result>() {
+    sealed interface Result {
+        data object ShowUpdateAppDisplayBottomSheet : Result
+    }
+}
 
 @Parcelize
 data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : BottomSheetScreen<Unit>()

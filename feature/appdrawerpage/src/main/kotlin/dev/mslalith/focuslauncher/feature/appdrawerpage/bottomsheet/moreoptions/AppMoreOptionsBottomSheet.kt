@@ -43,7 +43,7 @@ fun AppMoreOptionsBottomSheet(
         addToFavorites = { eventSink(AppMoreOptionsBottomSheetUiEvent.AddToFavorites(app = it)) },
         removeFromFavorites = { eventSink(AppMoreOptionsBottomSheetUiEvent.RemoveFromFavorites(app = it)) },
         addToHiddenApps = { app, removeFromFavorites -> eventSink(AppMoreOptionsBottomSheetUiEvent.AddToHiddenApps(app = app, removeFromFavorites = removeFromFavorites)) },
-        onUpdateDisplayNameClick = { TODO() },
+        onUpdateDisplayNameClick = { eventSink(AppMoreOptionsBottomSheetUiEvent.ClickUpdateDisplayName(app = state.appDrawerItem.app)) },
         onClose = { eventSink(AppMoreOptionsBottomSheetUiEvent.GoBack) }
     )
 }
@@ -116,14 +116,12 @@ private fun AppMoreOptionsBottomSheet(
                 onClick = { addToHiddenApps(appDrawerItem.app, false) }
             )
         }
-        if (false) {
-            SelectableIconItem(
-                text = stringResource(id = R.string.update_display_name),
-                iconRes = R.drawable.ic_edit,
-                contentColor = contentColor,
-                onClick = onUpdateDisplayNameClick
-            )
-        }
+        SelectableIconItem(
+            text = stringResource(id = R.string.update_display_name),
+            iconRes = R.drawable.ic_edit,
+            contentColor = contentColor,
+            onClick = onUpdateDisplayNameClick
+        )
         SelectableIconItem(
             text = stringResource(id = R.string.app_info),
             iconRes = R.drawable.ic_info,
