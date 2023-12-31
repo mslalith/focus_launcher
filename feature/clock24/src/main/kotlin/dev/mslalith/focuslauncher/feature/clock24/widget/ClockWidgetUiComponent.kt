@@ -25,8 +25,8 @@ import dev.mslalith.focuslauncher.core.ui.effects.OnLifecycleEventChange
 import dev.mslalith.focuslauncher.core.ui.effects.SystemBroadcastReceiver
 import dev.mslalith.focuslauncher.core.ui.extensions.clickableNoRipple
 import dev.mslalith.focuslauncher.core.ui.extensions.modifyIf
-import dev.mslalith.focuslauncher.feature.clock24.Clock24
-import dev.mslalith.focuslauncher.feature.clock24.CurrentTime
+import dev.mslalith.focuslauncher.feature.clock24.widget.ui.Clock24
+import dev.mslalith.focuslauncher.feature.clock24.widget.ui.CurrentTime
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 
 @Composable
@@ -34,7 +34,9 @@ fun ClockWidgetUiComponent(
     state: ClockWidgetUiComponentState,
     horizontalPadding: Dp,
     modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null
+    verticalPadding: Dp = 0.dp,
+    onClick: (() -> Unit)? = null,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     // Need to extract the eventSink out to a local val, so that the Compose Compiler
     // treats it as stable. See: https://issuetracker.google.com/issues/256100927
@@ -45,7 +47,9 @@ fun ClockWidgetUiComponent(
         state = state,
         refreshTime = { eventSink(ClockWidgetUiComponentUiEvent.RefreshTime) },
         horizontalPadding = horizontalPadding,
-        onClick = onClick
+        verticalPadding = verticalPadding,
+        onClick = onClick,
+        contentColor = contentColor
     )
 }
 

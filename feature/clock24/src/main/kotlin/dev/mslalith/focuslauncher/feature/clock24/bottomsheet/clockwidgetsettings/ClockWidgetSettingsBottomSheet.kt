@@ -20,6 +20,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSliderItem
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.clock24.R
 import dev.mslalith.focuslauncher.feature.clock24.settings.PreviewClock
+import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentState
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.roundToInt
 
@@ -65,7 +66,16 @@ private fun ClockWidgetSettingsBottomSheet(
     Column(
         modifier = modifier
     ) {
-        PreviewClock()
+        PreviewClock(
+            state = ClockWidgetUiComponentState(
+                currentTime = state.currentTime,
+                showClock24 = state.showClock24,
+                use24Hour = state.use24Hour,
+                clockAlignment = state.clockAlignment,
+                clock24AnimationDuration = state.clock24AnimationDuration,
+                eventSink = {}
+            )
+        )
         SettingsSelectableChooserItem(
             text = stringResource(id = R.string.clock_position),
             subText = state.clockAlignment.uiText.string(),
@@ -75,7 +85,7 @@ private fun ClockWidgetSettingsBottomSheet(
             itemHorizontalArrangement = Arrangement.Center,
             onItemSelected = { index ->
                 val alignmentName = textIconsList[index].first
-                val alignment = ClockAlignment.values().first { it.uiText.string(context = context) == alignmentName }
+                val alignment = ClockAlignment.entries.first { it.uiText.string(context = context) == alignmentName }
                 onUpdateClockAlignment(alignment)
             }
         )

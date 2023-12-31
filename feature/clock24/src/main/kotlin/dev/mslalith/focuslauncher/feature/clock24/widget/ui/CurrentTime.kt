@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.feature.clock24
+package dev.mslalith.focuslauncher.feature.clock24.widget.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box

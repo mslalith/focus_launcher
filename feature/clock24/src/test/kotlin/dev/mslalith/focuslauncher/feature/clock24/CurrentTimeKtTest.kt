@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
+import dev.mslalith.focuslauncher.feature.clock24.widget.ui.CurrentTime
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test

@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.mslalith.focuslauncher.feature.clock24.ClockWidget
+import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponent
+import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentState
 
 @Composable
 internal fun PreviewClock(
+    state: ClockWidgetUiComponentState,
     backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer
 ) {
@@ -27,7 +29,8 @@ internal fun PreviewClock(
             .background(color = backgroundColor)
             .animateContentSize()
     ) {
-        ClockWidget(
+        ClockWidgetUiComponent(
+            state = state,
             horizontalPadding = 22.dp,
             verticalPadding = 4.dp,
             contentColor = contentColor
