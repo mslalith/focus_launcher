@@ -25,10 +25,11 @@ abstract class PresenterTest<P : Presenter<S>, S : CircuitUiState> : CoroutineTe
     protected suspend fun <E> assertFor(
         expected: E,
         block: suspend (S) -> E
-    ) {
+    ): S {
         var state = awaitItem()
         while (block(state) != expected) {
             state = awaitItem()
         }
+        return state
     }
 }

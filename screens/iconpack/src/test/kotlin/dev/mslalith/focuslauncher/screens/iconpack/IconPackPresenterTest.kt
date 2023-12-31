@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.iconpack
 import android.content.ComponentName
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import app.cash.turbine.ReceiveTurbine
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -26,7 +27,6 @@ import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
 import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -118,26 +118,29 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
         val selectedIconPackType = IconPackType.Custom(packageName = "com.test")
         testIconProvider.setIconColor(color = Color.CYAN)
 
-        assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
+        val state = awaitItem()
+        assertThat(state.allApps).isEqualTo(LoadingState.Loading)
         assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
 
-        val state = awaitItem()
-        state.allApps.assertWith(expected = allApps, iconPackType = IconPackType.System)
+        assertAllApps(expected = allApps, iconPackType = IconPackType.System)
 
         testIconProvider.setIconColor(color = Color.BLUE)
         state.eventSink(IconPackUiEvent.UpdateSelectedIconPackApp(iconPackType = selectedIconPackType))
 
         assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
         assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
-        awaitItem().allApps.assertWith(expected = allApps, iconPackType = selectedIconPackType)
+        assertAllApps(expected = allApps, iconPackType = selectedIconPackType)
     }
 
-    private fun LoadingState<ImmutableList<AppDrawerItem>>.assertWith(expected: List<App>, iconPackType: IconPackType) {
-        check(this is LoadingState.Loaded)
-        assertThat(value.size).isEqualTo(expected.size)
+    context (ReceiveTurbine<IconPackState>)
+    private suspend fun assertAllApps(expected: List<App>, iconPackType: IconPackType) {
+        val state = assertFor(expected = true) { it.allApps is LoadingState.Loaded }
+        val allAppsState = state.allApps
+        check(allAppsState is LoadingState.Loaded)
+        assertThat(allAppsState.value.size).isEqualTo(expected.size)
 
         val expectedWithIcon = with(testIconProvider) { expected.toAppDrawerItems(iconPackType = iconPackType) }
-        value.zip(expectedWithIcon) { a, b ->
+        allAppsState.value.zip(expectedWithIcon) { a, b ->
             assertThat(a compareWith b).isTrue()
         }
     }
