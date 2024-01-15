@@ -19,6 +19,7 @@ import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.StatusBarColor
+import dev.mslalith.focuslauncher.core.ui.extensions.showDismissibleSnackbar
 import dev.mslalith.focuslauncher.screens.editfavorites.ui.FavoritesList
 import dev.mslalith.focuslauncher.screens.editfavorites.ui.HiddenAppActionText
 import dev.mslalith.focuslauncher.screens.editfavorites.utils.TestTags
@@ -95,7 +96,7 @@ private fun EditFavoritesScreen(
             favorites = state.favoriteApps,
             showSnackbar = {
                 coroutineScope.launch {
-                    snackbarHostState.showSnackbar(message = it)
+                    snackbarHostState.showDismissibleSnackbar(message = it)
                 }
             },
             onAddToFavorites = onAddToFavorites,

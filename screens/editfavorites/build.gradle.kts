@@ -9,5 +9,6 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
     implementation(libs.kotlinx.collections.immutable)
 }

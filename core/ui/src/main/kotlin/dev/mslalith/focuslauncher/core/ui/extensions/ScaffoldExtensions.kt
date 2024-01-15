@@ -9,7 +9,7 @@ import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 suspend fun SnackbarHostState.showDismissibleSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
-    dismissVisibleSnackbar: Boolean = false,
+    dismissVisibleSnackbar: Boolean = true,
     discardIfShowing: Boolean = false,
     actionLabel: String? = null,
     onAction: ((SnackbarResult) -> Unit)? = null
