@@ -11,7 +11,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
-import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
+import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeGeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.GetAllAppsOnIconPackChangeUseCase
 import dev.mslalith.focuslauncher.core.domain.apps.GetIconPackIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
@@ -53,9 +53,6 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
     lateinit var getIconPackIconicAppsUseCase: GetIconPackIconicAppsUseCase
 
     @Inject
-    lateinit var generalSettingsRepo: GeneralSettingsRepo
-
-    @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
     private val testIconProvider = TestIconProvider
@@ -63,6 +60,7 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
     private val fetchIconPacksUseCase = FetchIconPacksUseCase(iconPackManager = testIconPackManager)
     private val loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
 
+    private val generalSettingsRepo = FakeGeneralSettingsRepo()
     private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
     private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
@@ -111,6 +109,9 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
         state.eventSink(IconPackUiEvent.SaveIconPack)
 
         assertThat(awaitItem().iconPackType).isEqualTo(selectedIconPackType)
+
+        navigator.awaitPop()
+        cancelAndIgnoreRemainingEvents()
     }
 
     @Test

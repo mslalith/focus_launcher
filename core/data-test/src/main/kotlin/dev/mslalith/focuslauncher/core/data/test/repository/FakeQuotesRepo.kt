@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.data.test.repository
 
 import dev.mslalith.focuslauncher.core.common.model.State
 import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
+import dev.mslalith.focuslauncher.core.data.utils.dummyQuoteFor
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.QUOTES_LIMIT
 import dev.mslalith.focuslauncher.core.model.Quote
 import kotlinx.coroutines.delay
@@ -54,10 +55,4 @@ class FakeQuotesRepo : QuotesRepo {
     private fun addInitialQuotes() {
         (1..9).forEach { allQuotes.add(dummyQuoteFor(index = it)) }
     }
-
-    private fun dummyQuoteFor(index: Int) = Quote(
-        id = "#$index",
-        quote = "Quote #$index",
-        author = "Author #$index"
-    )
 }
