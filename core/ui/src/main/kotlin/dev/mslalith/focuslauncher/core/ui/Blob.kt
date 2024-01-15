@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.atan
@@ -35,6 +36,7 @@ import kotlin.math.sin
 import kotlin.math.tan
 import kotlin.random.Random
 
+@IgnoreInKoverReport
 private val offsetToVector = TwoWayConverter<Offset, AnimationVector2D>(
     convertToVector = { AnimationVector2D(v1 = it.x, v2 = it.y) },
     convertFromVector = { Offset(x = it.v1, y = it.v2) }
@@ -111,6 +113,7 @@ fun Blob(
     )
 }
 
+@IgnoreInKoverReport
 private fun ContentDrawScope.getPath(
     numberOfPoints: Int,
     animatables: List<Animatable<Offset, AnimationVector2D>>

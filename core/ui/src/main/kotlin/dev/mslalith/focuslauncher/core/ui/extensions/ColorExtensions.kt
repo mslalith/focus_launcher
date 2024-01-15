@@ -3,14 +3,18 @@ package dev.mslalith.focuslauncher.core.ui.extensions
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 
+@IgnoreInKoverReport
 internal fun Color.luminate(threshold: Float, value: Float) = toHSL().apply {
     val luminance = this[2]
     this[2] = if (luminance < threshold) value else luminance
 }.toColor()
 
+@IgnoreInKoverReport
 internal fun Color.blendWith(color: Color, ratio: Float): Color = ColorUtils.blendARGB(toArgb(), color.toArgb(), ratio).let(::Color)
 
+@IgnoreInKoverReport
 internal fun Color.toHSL(): FloatArray {
     val hsl = FloatArray(size = 3)
     val min = minOf(red, green, blue)
@@ -33,6 +37,7 @@ internal fun Color.toHSL(): FloatArray {
     return hsl
 }
 
+@IgnoreInKoverReport
 internal fun FloatArray.toColor(): Color {
     val r: Float
     val g: Float
@@ -57,6 +62,7 @@ internal fun FloatArray.toColor(): Color {
     return Color((r * 255).toInt(), (g * 255).toInt(), (b * 255).toInt())
 }
 
+@IgnoreInKoverReport
 private fun hue2rgb(p: Float, q: Float, t: Float): Float {
     var valueT = t
     if (valueT < 0) valueT += 1f
