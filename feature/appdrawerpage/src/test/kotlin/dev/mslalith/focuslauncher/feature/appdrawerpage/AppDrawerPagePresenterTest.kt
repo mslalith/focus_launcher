@@ -13,6 +13,8 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSetting
 import dev.mslalith.focuslauncher.core.domain.apps.GetAppDrawerIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackAfterFirstLoadUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.ReloadIconPackUseCase
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.appdrawer.AppDrawerItem
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
@@ -56,6 +58,9 @@ class AppDrawerPagePresenterTest : PresenterTest<AppDrawerPagePresenter, AppDraw
     lateinit var appDrawerRepo: AppDrawerRepo
 
     @Inject
+    lateinit var launcherAppsManager: LauncherAppsManager
+
+    @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
     private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
@@ -63,6 +68,7 @@ class AppDrawerPagePresenterTest : PresenterTest<AppDrawerPagePresenter, AppDraw
     @Before
     fun setUp() {
         hiltRule.inject()
+        assertThat(launcherAppsManager).isInstanceOf(TestLauncherAppsManager::class.java)
         runBlocking {
             appDrawerRepo.addApps(apps = allApps)
         }
@@ -127,10 +133,63 @@ class AppDrawerPagePresenterTest : PresenterTest<AppDrawerPagePresenter, AppDraw
         cancelAndIgnoreRemainingEvents()
     }
 
+    @Test
+    fun `04 - when app is updated and name has changed with no display name set, new name should be used`() = runPresenterTest {
+        // Twitter -> X
+        val chromeApp = allApps.first { it.packageName.contains("chrome") }
+
+        assertFor(expected = allApps) { it.allAppsState.toTestApps() }
+
+        val newChromeApp = chromeApp.copy(name = "New Chrome")
+        launcherAppsManager.test.loadAppForPackage(packageName = chromeApp.packageName) {
+            it.copy(app = it.app.copy(name = newChromeApp.name))
+        }
+
+        // update Chrome app
+        appDrawerRepo.removeApp(chromeApp)
+        appDrawerRepo.addApp(newChromeApp)
+
+        val newAllApps = allApps.map { if (it.packageName == newChromeApp.packageName) newChromeApp else it }
+        assertFor(expected = newAllApps) { it.allAppsState.toTestApps() }
+    }
+
+    @Test
+    fun `04 - when app is updated and name has changed with display name set, display name should be used`() = runPresenterTest {
+        // Twitter -> X
+        val chromeApp = allApps.first { it.packageName.contains("chrome") }
+        val chromeAppWithDisplayName = chromeApp.copy(displayName = "Chrome display name")
+
+        launcherAppsManager.test.loadAppForPackage(packageName = chromeApp.packageName) {
+            it.copy(app = it.app.copy(displayName = chromeAppWithDisplayName.displayName))
+        }
+
+        appDrawerRepo.removeApp(chromeApp)
+        appDrawerRepo.addApp(chromeAppWithDisplayName)
+
+        // verify existing app
+        var newAllApps = allApps.map { if (it.packageName == chromeAppWithDisplayName.packageName) chromeAppWithDisplayName else it }
+        assertFor(expected = newAllApps) { it.allAppsState.toTestApps() }
+
+        val newChromeApp = chromeAppWithDisplayName.copy(name = "New Chrome")
+        launcherAppsManager.test.loadAppForPackage(packageName = chromeApp.packageName) {
+            // here we update name and keep previous displayName as user updated
+            it.copy(app = it.app.copy(name = newChromeApp.name, displayName = newChromeApp.displayName))
+        }
+
+        // update Chrome app
+        appDrawerRepo.removeApp(chromeApp)
+        appDrawerRepo.addApp(newChromeApp)
+
+        // verify updated app
+        newAllApps = allApps.map { if (it.packageName == newChromeApp.packageName) newChromeApp else it }
+        assertFor(expected = newAllApps) { it.allAppsState.toTestApps() }
+    }
+
     context (ReceiveTurbine<AppDrawerPageState>)
     private suspend fun assertDrawerApps(
         expected: List<App>
     ) = assertFor(expected = expected) { it.allAppsState.toTestApps() }
 }
 
+private val LauncherAppsManager.test: TestLauncherAppsManager get() = this as TestLauncherAppsManager
 private fun LoadingState<ImmutableList<AppDrawerItem>>.toTestApps(): List<App>? = getOrNull()?.map { it.app }
