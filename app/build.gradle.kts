@@ -19,8 +19,12 @@ android {
     }
 
     buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
         getByName("debug") {
-            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isShrinkResources = false
             enableUnitTestCoverage = true
@@ -32,10 +36,17 @@ android {
             matchingFallbacks += listOf("release")
             isDebuggable = false
         }
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+
+    flavorDimensionList += "version"
+    productFlavors {
+        create("dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix ="-dev"
+        }
+        create("store") {
+            dimension = "version"
         }
     }
 
@@ -45,7 +56,7 @@ android {
 }
 
 koverReport {
-    androidReports("debug") {
+    androidReports("devDebug") {
         html {
             setReportDir(layout.buildDirectory.dir("kover-report/html-report"))
         }
