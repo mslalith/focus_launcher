@@ -32,4 +32,14 @@ abstract class PresenterTest<P : Presenter<S>, S : CircuitUiState> : CoroutineTe
         }
         return state
     }
+
+    context (ReceiveTurbine<S>)
+    protected suspend fun <E> assertForTrue(
+        block: suspend (S) -> E
+    ): S = assertFor(expected = true, block = block)
+
+    context (ReceiveTurbine<S>)
+    protected suspend fun <E> assertForFalse(
+        block: suspend (S) -> E
+    ): S = assertFor(expected = false, block = block)
 }

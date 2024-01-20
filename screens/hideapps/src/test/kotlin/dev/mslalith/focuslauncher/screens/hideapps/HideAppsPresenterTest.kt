@@ -109,6 +109,20 @@ class HideAppsPresenterTest : PresenterTest<HideAppsPresenter, HideAppsState>() 
         expected = allApps.map { it.toSelectedHiddenAppWith(isSelected = it == favoriteApp, isFavorite = false) }
         assertThat(awaitItem().hiddenApps).isEqualTo(expected)
     }
+
+    @Test
+    fun `06 - when all apps are removed from favorites, every item in the list must not be selected`() = runPresenterTest {
+        val apps = TestApps.all
+
+        val state = awaitItem()
+        assertThat(state.hiddenApps).isEmpty()
+
+        favoritesRepo.addToFavorites(apps = apps)
+        assertFor(expected = apps.toSelectedHiddenAppWith(isFavorite = true)) { it.hiddenApps }
+
+        apps.forEach { state.eventSink(HideAppsUiEvent.RemoveFromFavorites(app = it)) }
+        assertFor(expected = apps.toSelectedHiddenAppWith(isFavorite = false)) { it.hiddenApps }
+    }
 }
 
 private fun App.toSelectedHiddenAppWith(

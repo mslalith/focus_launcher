@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import dev.mslalith.focuslauncher.core.common.extensions.limitDecimals
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.screens.currentplace.R
 import org.osmdroid.config.Configuration
@@ -72,6 +73,7 @@ internal fun AndroidMapView(
     )
 }
 
+@IgnoreInKoverReport
 private fun MapView.addOnTapListener(block: (GeoPoint) -> Unit) {
     val overlay = MapEventsOverlay(object : MapEventsReceiver {
         override fun singleTapConfirmedHelper(geoPoint: GeoPoint?): Boolean {
@@ -86,6 +88,7 @@ private fun MapView.addOnTapListener(block: (GeoPoint) -> Unit) {
     overlays.add(overlay)
 }
 
+@IgnoreInKoverReport
 private fun GeoPoint.toLatLng(limitDecimals: Int): LatLng = LatLng(
     latitude = latitude.limitDecimals(precision = limitDecimals).toDouble(),
     longitude = longitude.limitDecimals(precision = limitDecimals).toDouble()

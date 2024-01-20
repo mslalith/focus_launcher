@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.resources.R
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 
@@ -53,8 +54,10 @@ internal fun AppInfo(
     }
 }
 
+@IgnoreInKoverReport
 private fun Context.appIcon(): ImageBitmap = packageManager.getApplicationIcon(packageName).toBitmap().asImageBitmap()
 
+@IgnoreInKoverReport
 private fun Context.versionName(): String {
     val versionName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName

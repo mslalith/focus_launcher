@@ -3,11 +3,13 @@ package dev.mslalith.focuslauncher.core.ui.extensions
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 
-internal suspend fun SnackbarHostState.showDismissibleSnackbar(
+@IgnoreInKoverReport
+suspend fun SnackbarHostState.showDismissibleSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
-    dismissVisibleSnackbar: Boolean = false,
+    dismissVisibleSnackbar: Boolean = true,
     discardIfShowing: Boolean = false,
     actionLabel: String? = null,
     onAction: ((SnackbarResult) -> Unit)? = null

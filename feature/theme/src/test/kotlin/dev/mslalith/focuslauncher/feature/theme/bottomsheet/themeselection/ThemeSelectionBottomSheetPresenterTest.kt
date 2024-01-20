@@ -56,5 +56,8 @@ class ThemeSelectionBottomSheetPresenterTest : PresenterTest<ThemeSelectionBotto
 
         state.eventSink(ThemeSelectionBottomSheetUiEvent.SelectedTheme(theme = Theme.SAID_DARK))
         assertThat(awaitItem().currentTheme).isEqualTo(Theme.SAID_DARK)
+
+        navigator.awaitPop()
+        cancelAndIgnoreRemainingEvents()
     }
 }

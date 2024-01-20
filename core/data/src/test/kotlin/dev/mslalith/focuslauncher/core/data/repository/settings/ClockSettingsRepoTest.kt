@@ -8,6 +8,7 @@ import dev.mslalith.focuslauncher.core.model.ClockAlignment
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_24_ANIMATION_DURATION
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_CLOCK_ALIGNMENT
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_SHOW_CLOCK_24
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Clock.DEFAULT_USE_24_HOUR
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import javax.inject.Inject
@@ -40,6 +41,18 @@ internal class ClockSettingsRepoTest : CoroutineTest() {
             initialItem = DEFAULT_SHOW_CLOCK_24,
             mutate = {
                 repo.toggleClock24()
+                false
+            }
+        )
+    }
+
+    @Test
+    fun `verify use 24 hour change`() = runCoroutineTest {
+        verifyChange(
+            flow = repo.use24HourFlow,
+            initialItem = DEFAULT_USE_24_HOUR,
+            mutate = {
+                repo.toggleUse24Hour()
                 false
             }
         )

@@ -15,7 +15,7 @@ internal fun dummyQuoteResponseFor(index: Int) = QuoteResponse(
 )
 
 @IgnoreInKoverReport
-internal fun dummyQuoteFor(index: Int) = Quote(
+fun dummyQuoteFor(index: Int) = Quote(
     id = "ID #$index",
     quote = "Quote #$index",
     author = "Author #$index"

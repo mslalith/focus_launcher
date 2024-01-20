@@ -58,8 +58,6 @@ import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
 import dev.mslalith.focuslauncher.feature.appdrawerpage.apps.grid.PreviewAppsGrid
 import kotlinx.coroutines.flow.collectLatest
 
-private val APP_ICON_SIZE = 28.dp
-
 @CircuitInject(IconPackScreen::class, SingletonComponent::class)
 @Composable
 fun IconPack(
@@ -238,9 +236,10 @@ private fun IconPackItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var appName by remember { mutableStateOf(value = appWithIcon.app.displayName) }
+        val appIconSize = 28.dp
 
         Box(
-            modifier = Modifier.width(width = APP_ICON_SIZE * 1.5f)
+            modifier = Modifier.width(width = appIconSize * 1.5f)
         ) {
             Image(
                 bitmap = iconBitmap,

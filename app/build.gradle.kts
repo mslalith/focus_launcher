@@ -60,11 +60,15 @@ koverReport {
                     "dev.mslalith.**.*_MembersInjector",
                     "dev.mslalith.**.BuildConfig",
                     "dev.mslalith.focuslauncher.**.di.**",
-                    "dev.mslalith.focuslauncher.**.model.**"
+                    "dev.mslalith.focuslauncher.**.model.**",
+                    // Circuit
+                    "dev.mslalith.focuslauncher.**.*Factory",
+                    "dev.mslalith.focuslauncher.**.*FactoryModule"
                 )
                 annotatedBy(
                     "androidx.compose.runtime.Composable",
                     "androidx.compose.ui.tooling.preview.Preview",
+                    "dagger.Module",
                     "*IgnoreInKoverReport"
                 )
             }
