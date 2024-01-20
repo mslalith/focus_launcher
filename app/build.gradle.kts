@@ -19,8 +19,12 @@ android {
     }
 
     buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
         getByName("debug") {
-            applicationIdSuffix = ".debug"
             isMinifyEnabled = false
             isShrinkResources = false
             enableUnitTestCoverage = true
@@ -32,10 +36,18 @@ android {
             matchingFallbacks += listOf("release")
             isDebuggable = false
         }
-        getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+
+    flavorDimensionList += "version"
+    productFlavors {
+        create("dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix ="-dev"
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        create("store") {
+            dimension = "version"
         }
     }
 
@@ -45,7 +57,7 @@ android {
 }
 
 koverReport {
-    androidReports("debug") {
+    androidReports("devDebug") {
         html {
             setReportDir(layout.buildDirectory.dir("kover-report/html-report"))
         }
@@ -77,17 +89,17 @@ koverReport {
 }
 
 dependencies {
-    implementation(project(":core:screens"))
-    implementation(project(":core:ui"))
-    implementation(project(":core:model"))
-    implementation(project(":core:domain"))
-    implementation(project(":feature:theme"))
-    implementation(project(":screens:launcher"))
-    implementation(project(":screens:editfavorites"))
-    implementation(project(":screens:hideapps"))
-    implementation(project(":screens:currentplace"))
-    implementation(project(":screens:iconpack"))
-    implementation(project(":screens:about"))
+    implementation(projects.core.screens)
+    implementation(projects.core.ui)
+    implementation(projects.core.model)
+    implementation(projects.core.domain)
+    implementation(projects.feature.theme)
+    implementation(projects.screens.launcher)
+    implementation(projects.screens.editfavorites)
+    implementation(projects.screens.hideapps)
+    implementation(projects.screens.currentplace)
+    implementation(projects.screens.iconpack)
+    implementation(projects.screens.about)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
@@ -99,24 +111,24 @@ dependencies {
 }
 
 dependencies {
-    kover(project(":core:common"))
-    kover(project(":core:domain"))
-    kover(project(":core:data"))
-    kover(project(":core:ui"))
-    kover(project(":core:resources"))
-    kover(project(":core:launcherapps"))
-    kover(project(":screens:launcher"))
-    kover(project(":screens:editfavorites"))
-    kover(project(":screens:hideapps"))
-    kover(project(":screens:currentplace"))
-    kover(project(":screens:iconpack"))
-    kover(project(":screens:about"))
-    kover(project(":feature:homepage"))
-    kover(project(":feature:settingspage"))
-    kover(project(":feature:appdrawerpage"))
-    kover(project(":feature:clock24"))
-    kover(project(":feature:lunarcalendar"))
-    kover(project(":feature:quoteforyou"))
-    kover(project(":feature:favorites"))
-    kover(project(":feature:theme"))
+    kover(projects.core.common)
+    kover(projects.core.domain)
+    kover(projects.core.data)
+    kover(projects.core.ui)
+    kover(projects.core.resources)
+    kover(projects.core.launcherapps)
+    kover(projects.screens.launcher)
+    kover(projects.screens.editfavorites)
+    kover(projects.screens.hideapps)
+    kover(projects.screens.currentplace)
+    kover(projects.screens.iconpack)
+    kover(projects.screens.about)
+    kover(projects.feature.homepage)
+    kover(projects.feature.settingspage)
+    kover(projects.feature.appdrawerpage)
+    kover(projects.feature.clock24)
+    kover(projects.feature.lunarcalendar)
+    kover(projects.feature.quoteforyou)
+    kover(projects.feature.favorites)
+    kover(projects.feature.theme)
 }

@@ -8,12 +8,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:model"))
-    implementation(project(":core:launcherapps"))
+    implementation(projects.core.common)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.launcherapps)
 
     implementation(libs.androidx.palette.ktx)
 
-    testImplementation(project(":core:testing"))
+    testImplementation(projects.core.testing)
 }
