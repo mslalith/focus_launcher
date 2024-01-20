@@ -58,10 +58,12 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
     @Inject
     lateinit var appCoroutineDispatcher: AppCoroutineDispatcher
 
+    private val allApps by lazy { TestApps.all.toPackageNamed() }
+
     @Before
     fun setUp() {
         hiltRule.inject()
-        runBlocking { appDrawerRepo.addApps(apps = TestApps.all) }
+        runBlocking { appDrawerRepo.addApps(apps = allApps) }
     }
 
     override fun presenterUnderTest() = FavoritesListUiComponentPresenter(
@@ -75,7 +77,6 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
 
     @Test
     fun `01 - when apps are loaded and favorites are added, we should get the default favorites back`() = runPresenterTest {
-        val allApps = TestApps.all.toPackageNamed()
         val defaultApps = listOf(TestApps.Youtube).toPackageNamed()
         assertThat(awaitItem().favoritesList).isEmpty()
 
@@ -87,7 +88,6 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
 
     @Test
     fun `02 - when apps are not loaded and favorites are added, we should get the default favorites back`() = runPresenterTest {
-        val allApps = TestApps.all.toPackageNamed()
         val defaultApps = listOf(TestApps.Youtube).toPackageNamed()
         favoritesRepo.addToFavorites(apps = defaultApps)
 
@@ -101,7 +101,7 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
 
     @Test
     fun `03 - when favorites apps are changed, state should be updated`() = runPresenterTest {
-        val app = TestApps.Chrome
+        val app = TestApps.Chrome.toPackageNamed()
         val state = awaitItem()
         assertThat(state.favoritesList).isEmpty()
 
