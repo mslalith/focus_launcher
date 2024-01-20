@@ -33,7 +33,7 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: true
-          arguments: testDebug --stacktrace --build-cache
+          arguments: testDevDebug --stacktrace --build-cache
 
 #  build:
 #    if: ${{ false }} # Disable Build
@@ -55,7 +55,7 @@ jobs:
 #
 #      - uses: gradle/gradle-build-action@v2
 #        with:
-#          arguments: assembleDebug --stacktrace --no-daemon --build-cache
+#          arguments: assembleDevDebug --stacktrace --no-daemon --build-cache
 #
 #  unit_tests:
 #    needs: [ static_analysis ]
@@ -78,7 +78,7 @@ jobs:
 #      - uses: gradle/gradle-build-action@v2
 #        with:
 #          cache-read-only: true
-#          arguments: testDebug --stacktrace --build-cache
+#          arguments: testDevDebug --stacktrace --build-cache
 #
 #  android_tests:
 #    if: ${{ false }} # Disable Instrumentation tests
