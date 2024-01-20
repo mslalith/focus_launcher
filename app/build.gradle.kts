@@ -44,6 +44,7 @@ android {
             dimension = "version"
             applicationIdSuffix = ".dev"
             versionNameSuffix ="-dev"
+            signingConfig = signingConfigs.getByName("debug")
         }
         create("store") {
             dimension = "version"
