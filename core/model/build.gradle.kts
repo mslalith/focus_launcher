@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:resources"))
+    implementation(projects.core.resources)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.runtime)
