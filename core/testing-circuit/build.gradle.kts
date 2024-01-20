@@ -11,7 +11,7 @@ android {
 }
 
 dependencies {
-    api(project(":core:testing"))
+    api(projects.core.testing)
 
     implementation(libs.circuit.foundation)
     api(libs.circuit.test)

@@ -8,8 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:clock24"))
-    implementation(project(":feature:lunarcalendar"))
-    implementation(project(":feature:quoteforyou"))
-    implementation(project(":feature:favorites"))
+    implementation(projects.feature.clock24)
+    implementation(projects.feature.lunarcalendar)
+    implementation(projects.feature.quoteforyou)
+    implementation(projects.feature.favorites)
 }

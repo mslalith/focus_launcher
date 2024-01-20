@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:appdrawerpage"))
+    implementation(projects.feature.appdrawerpage)
 
     implementation(libs.kotlinx.collections.immutable)
 }

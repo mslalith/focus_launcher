@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -24,7 +26,7 @@ buildCache {
     }
 }
 
-rootProject.name = "Focus Launcher"
+rootProject.name = "FocusLauncher"
 include(
     ":app",
     ":benchmark",

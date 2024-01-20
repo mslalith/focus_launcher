@@ -8,8 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:data"))
+    implementation(projects.core.model)
+    implementation(projects.core.data)
 
-    testImplementation(project(":core:testing"))
+    testImplementation(projects.core.testing)
 }

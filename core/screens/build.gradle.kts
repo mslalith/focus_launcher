@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.model)
+
     implementation(libs.circuit.runtime)
-    implementation(project(":core:model"))
 }

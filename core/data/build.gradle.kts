@@ -21,8 +21,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:common"))
+    implementation(projects.core.model)
+    implementation(projects.core.common)
 
     implementation(libs.androidx.core.ktx)
 
@@ -37,6 +37,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.suncalc)
 
-    testImplementation(project(":core:testing"))
+    testImplementation(projects.core.testing)
     testImplementation(libs.room.testing)
 }

@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:homepage"))
-    implementation(project(":feature:settingspage"))
-    implementation(project(":feature:appdrawerpage"))
+    implementation(projects.feature.homepage)
+    implementation(projects.feature.settingspage)
+    implementation(projects.feature.appdrawerpage)
 }

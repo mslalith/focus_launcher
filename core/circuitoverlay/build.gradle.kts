@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:screens"))
+    implementation(projects.core.screens)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3)

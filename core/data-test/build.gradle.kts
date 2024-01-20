@@ -11,10 +11,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:data"))
-    implementation(project(":core:common"))
-    implementation(project(":core:testing"))
+    implementation(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.common)
+    implementation(projects.core.testing)
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
