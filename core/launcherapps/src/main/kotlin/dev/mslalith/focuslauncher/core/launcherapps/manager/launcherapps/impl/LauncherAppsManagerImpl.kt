@@ -51,16 +51,31 @@ internal class LauncherAppsManagerImpl @Inject constructor(
     override suspend fun loadApp(packageName: String): AppWithComponent? {
         val localApp = appDrawerRepo.getAppBy(packageName = packageName)
         val launcherActivityInfo = launcherApps.getActivityList(packageName, Process.myUserHandle()).firstOrNull() ?: return null
+        val appName = launcherActivityInfo.label.toString()
+
         if (localApp != null) {
+            val displayName = if (localApp.name == localApp.displayName) {
+                // custom display name was not set
+                // update to new app name
+                appName
+            } else {
+                // custom display name is set
+                // use the existing one
+                localApp.displayName
+            }
+
             return AppWithComponent(
-                app = localApp,
+                app = localApp.copy(
+                    name = appName,
+                    displayName = displayName
+                ),
                 componentName = launcherActivityInfo.componentName
             )
         }
 
         return AppWithComponent(
             app = App(
-                name = launcherActivityInfo.label.toString(),
+                name = appName,
                 packageName = packageName,
                 isSystem = launcherActivityInfo.applicationInfo.isSystemApp()
             ),
