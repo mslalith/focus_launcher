@@ -31,10 +31,10 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
 
       - name: Build release APK
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: assembleRelease --stacktrace --no-daemon --build-cache
 
@@ -73,7 +73,7 @@ jobs:
         run: gh release upload "v${{ steps.version.outputs.version }}" "${{ steps.rename_apk.outputs.to_path }}"
 
       - name: Build release AAB
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: bundleRelease --stacktrace --no-daemon --build-cache
 
