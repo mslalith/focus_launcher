@@ -14,6 +14,5 @@ dependencies {
     implementation(projects.feature.lunarcalendar)
     implementation(projects.feature.quoteforyou)
 
-    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.kotlinx.collections.immutable)
 }

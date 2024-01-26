@@ -1,5 +1,4 @@
 [versions]
-accompanist = "0.34.0"
 androidGradlePlugin = "8.2.2"
 androidMinSdk = "26"
 androidTargetSdk = "34"
@@ -43,7 +42,6 @@ turbine = "1.0.0"
 uiautomator = "2.2.0"
 
 [libraries]
-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidxAnnotation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }

@@ -16,7 +16,6 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 import dev.mslalith.focuslauncher.core.screens.CurrentPlaceScreen
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
-import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.currentplace.ui.CurrentPlaceInfo
 import dev.mslalith.focuslauncher.screens.currentplace.ui.MapView
@@ -48,8 +47,6 @@ private fun CurrentPlaceScreen(
     onLocationChange: (LatLng) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    StatusBarColor()
-
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,

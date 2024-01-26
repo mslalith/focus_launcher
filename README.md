@@ -43,7 +43,6 @@ A minimalist Android Launcher built with Jetpack Compose
 - [Dependency Injection](https://developer.android.com/training/dependency-injection)
   - [Hilt-Dagger](https://dagger.dev/hilt/) - Standard library to incorporate Dagger dependency injection into an Android application.
 - [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose) - Modern UI development toolkit.
-- [Accompanist](https://chrisbanes.github.io/accompanist/) - A collection of extension libraries for Jetpack Compose.
 - [Ktor](https://ktor.io/) - Lightweight & simple asynchronous HTTP Client
 
 

@@ -15,6 +15,7 @@ android {
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        missingDimensionStrategy("version", "store")
     }
 
     compileOptions {

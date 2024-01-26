@@ -51,7 +51,6 @@ import dev.mslalith.focuslauncher.core.model.app.AppWithIcon
 import dev.mslalith.focuslauncher.core.screens.IconPackScreen
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.RoundIcon
-import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.extensions.clickableNoRipple
 import dev.mslalith.focuslauncher.core.ui.modifiers.horizontalFadeOutEdge
@@ -101,8 +100,6 @@ private fun IconPackScreen(
             density.run { bottomSheetTopOffset = it.toDp() }
         }
     }
-
-    StatusBarColor()
 
     BoxWithConstraints {
         val sheetHeight = density.run { constraints.maxHeight.toDp() - bottomSheetTopOffset }
