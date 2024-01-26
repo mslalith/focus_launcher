@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import dev.mslalith.focuslauncher.core.ui.controller.SystemUiController
 import dev.mslalith.focuslauncher.core.ui.controller.SystemUiControllerImpl
@@ -25,9 +24,7 @@ fun ProvideSystemUiController(
 }
 
 @Composable
-private fun rememberSystemUiController(
-    modifier: Modifier = Modifier
-): SystemUiController {
+private fun rememberSystemUiController(): SystemUiController {
     val view = LocalView.current
     val window = (view.context as Activity).window
 
