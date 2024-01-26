@@ -14,7 +14,6 @@ import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
-import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.screens.hideapps.ui.HiddenAppsList
 import dev.mslalith.focuslauncher.screens.hideapps.utils.TestTags
 
@@ -49,8 +48,6 @@ private fun HideAppsScreen(
     goBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    StatusBarColor()
-
     Scaffold(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surface,

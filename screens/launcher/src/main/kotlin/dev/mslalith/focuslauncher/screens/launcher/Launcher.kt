@@ -14,7 +14,6 @@ import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.foundation.internal.BackHandler
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
-import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideLauncherPagerState
 import dev.mslalith.focuslauncher.feature.appdrawerpage.AppDrawerPage
@@ -44,8 +43,6 @@ private fun LauncherInternal(
 ) {
     val pagerState = LocalLauncherPagerState.current
     val coroutineScope = rememberCoroutineScope()
-
-    StatusBarColor()
 
     BackHandler {
         when {
