@@ -33,7 +33,7 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: true
-          arguments: testDevDebug --stacktrace --build-cache
+          arguments: testDebugUniTest --stacktrace --build-cache
 
 #  build:
 #    if: ${{ false }} # Disable Build
