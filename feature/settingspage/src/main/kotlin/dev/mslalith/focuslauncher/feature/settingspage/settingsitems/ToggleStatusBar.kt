@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.testSemantics
+import dev.mslalith.focuslauncher.core.ui.controller.toggleStatusBars
 import dev.mslalith.focuslauncher.core.ui.providers.LocalSystemUiController
 import dev.mslalith.focuslauncher.feature.settingspage.R
 import dev.mslalith.focuslauncher.feature.settingspage.shared.SettingsItem
@@ -18,7 +19,7 @@ internal fun ToggleStatusBar(
     val systemUiController = LocalSystemUiController.current
 
     LaunchedEffect(key1 = showStatusBar) {
-        systemUiController.isStatusBarVisible = showStatusBar
+        systemUiController.toggleStatusBars(show = showStatusBar)
     }
 
     val stringRes = when (showStatusBar) {
