@@ -15,7 +15,6 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.ui.AppBarWithBackIcon
 import dev.mslalith.focuslauncher.core.ui.FillSpacer
-import dev.mslalith.focuslauncher.core.ui.StatusBarColor
 import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.screens.about.ui.AppInfo
 import dev.mslalith.focuslauncher.screens.about.ui.Credits
@@ -30,8 +29,6 @@ fun About(
     // Need to extract the eventSink out to a local val, so that the Compose Compiler
     // treats it as stable. See: https://issuetracker.google.com/issues/256100927
     val eventSink = state.eventSink
-
-    StatusBarColor()
 
     Scaffold(
         modifier = modifier,
