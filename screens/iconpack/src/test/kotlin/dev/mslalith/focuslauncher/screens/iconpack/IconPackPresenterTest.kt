@@ -16,6 +16,7 @@ import dev.mslalith.focuslauncher.core.domain.apps.GetAllAppsOnIconPackChangeUse
 import dev.mslalith.focuslauncher.core.domain.apps.GetIconPackIconicAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.FetchIconPacksUseCase
 import dev.mslalith.focuslauncher.core.domain.iconpack.LoadIconPackUseCase
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.providers.icons.test.TestIconProvider
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.model.app.App
@@ -25,7 +26,6 @@ import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import dev.mslalith.focuslauncher.core.testing.disableAsSystem
-import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
