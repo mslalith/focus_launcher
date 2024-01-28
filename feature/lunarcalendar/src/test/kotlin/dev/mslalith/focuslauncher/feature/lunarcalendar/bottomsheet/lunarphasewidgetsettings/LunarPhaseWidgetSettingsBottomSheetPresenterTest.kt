@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.core.data.test.repository.FakeClockRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.FakeLunarPhaseDetailsRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeLunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.screens.CurrentPlaceScreen
-import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen.Result.PopAndGoto
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import org.junit.FixMethodOrder
@@ -65,7 +65,7 @@ class LunarPhaseWidgetSettingsBottomSheetPresenterTest : PresenterTest<LunarPhas
         state.eventSink(LunarPhaseWidgetSettingsBottomSheetUiEvent.Goto(CurrentPlaceScreen))
 
         @Suppress("UNCHECKED_CAST")
-        val nextScreen = navigator.awaitNextScreen() as OverlayResultScreen<LunarPhaseWidgetSettingsBottomSheetScreen.Result.PopAndGoto>
+        val nextScreen = navigator.awaitNextScreen() as OverlayResultScreen<PopAndGoto>
         assertThat(nextScreen.result?.screen).isEqualTo(CurrentPlaceScreen)
     }
 }
