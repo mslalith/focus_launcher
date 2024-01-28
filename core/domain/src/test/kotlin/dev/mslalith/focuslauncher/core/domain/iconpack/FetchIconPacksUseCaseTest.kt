@@ -2,11 +2,11 @@ package dev.mslalith.focuslauncher.core.domain.iconpack
 
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.domain.utils.toIconPacks
+import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.CoroutineTest
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.extensions.awaitItem
-import dev.mslalith.focuslauncher.core.testing.launcherapps.TestIconPackManager
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Test

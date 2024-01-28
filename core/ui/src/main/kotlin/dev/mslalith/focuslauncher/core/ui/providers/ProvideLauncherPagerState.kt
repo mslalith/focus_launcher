@@ -6,8 +6,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 
 @OptIn(ExperimentalFoundationApi::class)
+@IgnoreInKoverReport
 val LocalLauncherPagerState = compositionLocalOf<PagerState> {
     error("No PagerState provided")
 }

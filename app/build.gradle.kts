@@ -112,23 +112,22 @@ dependencies {
 
 dependencies {
     kover(projects.core.common)
-    kover(projects.core.domain)
     kover(projects.core.data)
-    kover(projects.core.ui)
-    kover(projects.core.resources)
+    kover(projects.core.domain)
     kover(projects.core.launcherapps)
-    kover(projects.screens.launcher)
+
+    kover(projects.screens.about)
+    kover(projects.screens.currentplace)
     kover(projects.screens.editfavorites)
     kover(projects.screens.hideapps)
-    kover(projects.screens.currentplace)
     kover(projects.screens.iconpack)
-    kover(projects.screens.about)
-    kover(projects.feature.homepage)
-    kover(projects.feature.settingspage)
+    kover(projects.screens.launcher)
+
     kover(projects.feature.appdrawerpage)
     kover(projects.feature.clock24)
+    kover(projects.feature.favorites)
     kover(projects.feature.lunarcalendar)
     kover(projects.feature.quoteforyou)
-    kover(projects.feature.favorites)
+    kover(projects.feature.settingspage)
     kover(projects.feature.theme)
 }

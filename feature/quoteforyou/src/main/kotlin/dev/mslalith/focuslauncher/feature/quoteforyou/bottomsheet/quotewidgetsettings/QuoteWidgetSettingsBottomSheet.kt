@@ -14,6 +14,7 @@ import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.quoteforyou.R
 import dev.mslalith.focuslauncher.feature.quoteforyou.settings.PreviewQuotes
 import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentState
+import dev.mslalith.focuslauncher.feature.quoteforyou.widget.QuoteForYouUiComponentUiEvent
 
 @CircuitInject(QuoteWidgetSettingsBottomSheetScreen::class, SingletonComponent::class)
 @Composable
@@ -29,7 +30,8 @@ fun QuoteWidgetSettingsBottomSheet(
         modifier = modifier,
         state = state,
         onToggleShowQuotes = { eventSink(QuoteWidgetSettingsBottomSheetUiEvent.ToggleShowQuoteWidget) },
-        onFetchQuotesClick = { eventSink(QuoteWidgetSettingsBottomSheetUiEvent.FetchQuoteWidget) }
+        onFetchQuotesClick = { eventSink(QuoteWidgetSettingsBottomSheetUiEvent.FetchQuoteWidget) },
+        onQuoteClick = { eventSink(QuoteWidgetSettingsBottomSheetUiEvent.FetchNextQuote) }
     )
 }
 
@@ -38,6 +40,7 @@ private fun QuoteWidgetSettingsBottomSheet(
     state: QuoteWidgetSettingsBottomSheetState,
     onToggleShowQuotes: () -> Unit,
     onFetchQuotesClick: () -> Unit,
+    onQuoteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -47,7 +50,11 @@ private fun QuoteWidgetSettingsBottomSheet(
             state = QuoteForYouUiComponentState(
                 showQuotes = state.showQuotes,
                 currentQuote = state.currentQuote,
-                eventSink = {}
+                eventSink = {
+                    when (it) {
+                        QuoteForYouUiComponentUiEvent.FetchNextQuote -> onQuoteClick()
+                    }
+                }
             )
         )
         SettingsSelectableSwitchItem(

@@ -14,6 +14,9 @@ import dev.mslalith.focuslauncher.core.data.repository.QuotesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.QuotesSettingsRepo
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.Quotes.DEFAULT_SHOW_QUOTES
 import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.feature.quoteforyou.bottomsheet.quotewidgetsettings.QuoteWidgetSettingsBottomSheetUiEvent.FetchNextQuote
+import dev.mslalith.focuslauncher.feature.quoteforyou.bottomsheet.quotewidgetsettings.QuoteWidgetSettingsBottomSheetUiEvent.FetchQuoteWidget
+import dev.mslalith.focuslauncher.feature.quoteforyou.bottomsheet.quotewidgetsettings.QuoteWidgetSettingsBottomSheetUiEvent.ToggleShowQuoteWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,19 +48,20 @@ class QuoteWidgetSettingsBottomSheetPresenter @Inject constructor(
             currentQuote = currentQuote
         ) {
             when (it) {
-                QuoteWidgetSettingsBottomSheetUiEvent.ToggleShowQuoteWidget -> scope.toggleShowQuotes()
-                QuoteWidgetSettingsBottomSheetUiEvent.FetchQuoteWidget -> scope.fetchQuotesIfRequired()
+                ToggleShowQuoteWidget -> scope.toggleShowQuotes()
+                FetchQuoteWidget -> scope.fetchQuotesIfRequired()
+                FetchNextQuote -> scope.nextRandomQuote()
             }
         }
     }
 
-    fun CoroutineScope.toggleShowQuotes() {
+    private fun CoroutineScope.toggleShowQuotes() {
         launch(appCoroutineDispatcher.io) {
             quotesSettingsRepo.toggleShowQuotes()
         }
     }
 
-    fun CoroutineScope.fetchQuotesIfRequired() {
+    private fun CoroutineScope.fetchQuotesIfRequired() {
         if (!networkMonitor.isCurrentlyConnected()) return
 
         launch(appCoroutineDispatcher.io) {
@@ -65,6 +69,12 @@ class QuoteWidgetSettingsBottomSheetPresenter @Inject constructor(
             if (quotesRepo.isFetchingQuotesStateFlow.value) return@launch
 
             quotesRepo.fetchQuotes(maxPages = 2)
+        }
+    }
+
+    private fun CoroutineScope.nextRandomQuote() {
+        launch(appCoroutineDispatcher.io) {
+            quotesRepo.nextRandomQuote()
         }
     }
 }

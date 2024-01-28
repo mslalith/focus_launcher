@@ -1,17 +1,18 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Kover Html Debug Report" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="Run all tests" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--no-build-cache" />
+      <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
         <list>
-          <option value="clean" />
-          <option value="koverHtmlReportDevDebug" />
+          <option value="testDebugUnitTest" />
+          <option value="--tests" />
+          <option value="&quot;dev.mslalith*&quot;" />
         </list>
       </option>
       <option name="vmOptions" />

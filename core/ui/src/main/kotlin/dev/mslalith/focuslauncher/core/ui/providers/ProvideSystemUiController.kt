@@ -6,9 +6,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 import dev.mslalith.focuslauncher.core.ui.controller.SystemUiController
 import dev.mslalith.focuslauncher.core.ui.controller.SystemUiControllerImpl
 
+@IgnoreInKoverReport
 val LocalSystemUiController = compositionLocalOf<SystemUiController> {
     error("No SystemUiController provided")
 }

@@ -58,12 +58,12 @@ fun DotWaveLoader(
                     repeatMode = RepeatMode.Restart,
                     animation = keyframes {
                         durationMillis = 800
-                        0f at 0 with LinearEasing
-                        0.5f at 150 with LinearEasing
-                        1f at 300 with LinearEasing
-                        0.5f at 450 with LinearEasing
-                        0f at 600 with LinearEasing
-                        0f at 800 with LinearEasing
+                        0f at 0 using LinearEasing
+                        0.5f at 150 using LinearEasing
+                        1f at 300 using LinearEasing
+                        0.5f at 450 using LinearEasing
+                        0f at 600 using LinearEasing
+                        0f at 800 using LinearEasing
                     }
                 )
             )

@@ -6,7 +6,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.unit.Dp
+import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
 
+@IgnoreInKoverReport
 fun Modifier.verticalFadeOutEdge(
     height: Dp,
     color: Color
@@ -17,6 +19,7 @@ fun Modifier.verticalFadeOutEdge(
     )
 )
 
+@IgnoreInKoverReport
 private class VerticalFadeOutEdge(
     private val height: Dp,
     private val color: Color

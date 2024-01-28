@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.favorites
 
+import android.content.ComponentName
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -11,12 +12,16 @@ import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsR
 import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.launcherapps.GetDefaultFavoriteAppsUseCase
 import dev.mslalith.focuslauncher.core.domain.theme.GetThemeUseCase
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.LauncherAppsManager
+import dev.mslalith.focuslauncher.core.launcherapps.manager.launcherapps.test.TestLauncherAppsManager
 import dev.mslalith.focuslauncher.core.model.app.App
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
+import dev.mslalith.focuslauncher.core.model.app.AppWithComponent
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
+import dev.mslalith.focuslauncher.feature.favorites.model.FavoritesContextMode
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -47,6 +52,9 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
     lateinit var getThemeUseCase: GetThemeUseCase
 
     @Inject
+    lateinit var launcherAppsManager: LauncherAppsManager
+
+    @Inject
     lateinit var generalSettingsRepo: GeneralSettingsRepo
 
     @Inject
@@ -63,6 +71,7 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
     @Before
     fun setUp() {
         hiltRule.inject()
+        assertThat(launcherAppsManager).isInstanceOf(TestLauncherAppsManager::class.java)
         runBlocking { appDrawerRepo.addApps(apps = allApps) }
     }
 
@@ -111,6 +120,63 @@ class FavoritesListUiComponentPresenterTest : PresenterTest<FavoritesListUiCompo
         state.eventSink(FavoritesListUiComponentUiEvent.RemoveFromFavorites(app = app))
         assertFor(expected = persistentListOf()) { it.favoritesList }
     }
+
+    @Test
+    fun `04 - when favorites apps are empty, default apps should be added`() = runPresenterTest {
+        val app = TestApps.Chrome.toPackageNamed()
+        val state = awaitItem()
+        assertThat(state.favoritesList).isEmpty()
+
+        launcherAppsManager.test.setFavoritesApps(apps = listOf(app.toAppWithComponent()))
+        state.eventSink(FavoritesListUiComponentUiEvent.AddDefaultAppsIfRequired)
+        assertFor(expected = persistentListOf(app)) { it.favoritesList.toApps() }
+    }
+
+    @Test
+    fun `05 - when favorites apps reordered, state should be updated`() = runPresenterTest {
+        val chrome = TestApps.Chrome.toPackageNamed()
+        val youtube = TestApps.Youtube.toPackageNamed()
+
+        val state = awaitItem()
+        assertThat(state.favoritesList).isEmpty()
+
+        favoritesRepo.addToFavorites(listOf(chrome, youtube))
+        assertFor(expected = persistentListOf(chrome, youtube)) { it.favoritesList.toApps() }
+
+        state.eventSink(FavoritesListUiComponentUiEvent.ReorderFavorite(app = chrome, withApp = youtube, onReordered = {}))
+        assertFor(expected = persistentListOf(youtube, chrome)) { it.favoritesList.toApps() }
+    }
+
+    @Test
+    fun `06 - when same favorite app is being reordered, state should not change`() = runPresenterTest {
+        val chrome = TestApps.Chrome.toPackageNamed()
+        val youtube = TestApps.Youtube.toPackageNamed()
+
+        val state = awaitItem()
+        assertThat(state.favoritesList).isEmpty()
+
+        favoritesRepo.addToFavorites(listOf(chrome, youtube))
+        assertFor(expected = persistentListOf(chrome, youtube)) { it.favoritesList.toApps() }
+
+        state.eventSink(FavoritesListUiComponentUiEvent.ReorderFavorite(app = chrome, withApp = chrome, onReordered = {}))
+        expectNoEvents()
+    }
+
+    @Test
+    fun `07 - when favorites context mode is changed, state should be updated`() = runPresenterTest {
+        val state = awaitItem()
+        assertThat(state.favoritesContextualMode).isEqualTo(FavoritesContextMode.Closed)
+
+        val expected = FavoritesContextMode.Open
+        state.eventSink(FavoritesListUiComponentUiEvent.UpdateFavoritesContextMode(mode = expected))
+        assertThat(awaitItem().favoritesContextualMode).isEqualTo(expected)
+    }
 }
 
+private val LauncherAppsManager.test get() = this as TestLauncherAppsManager
 private fun List<AppWithColor>.toApps(): List<App> = map { it.app }
+
+private fun App.toAppWithComponent() = AppWithComponent(
+    app = this,
+    componentName = ComponentName("", "")
+)

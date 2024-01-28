@@ -1,4 +1,4 @@
-package dev.mslalith.focuslauncher.core.testing.launcherapps
+package dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test
 
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.IconPackManager
 import dev.mslalith.focuslauncher.core.launcherapps.model.IconPack

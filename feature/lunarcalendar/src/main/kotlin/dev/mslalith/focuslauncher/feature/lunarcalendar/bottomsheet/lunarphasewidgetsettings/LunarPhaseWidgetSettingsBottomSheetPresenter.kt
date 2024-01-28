@@ -23,6 +23,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPh
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS
 import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen.Result.PopAndGoto
+import dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasewidgetsettings.LunarPhaseWidgetSettingsBottomSheetUiEvent.Goto
 import dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasewidgetsettings.LunarPhaseWidgetSettingsBottomSheetUiEvent.ToggleShowIlluminationPercent
 import dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasewidgetsettings.LunarPhaseWidgetSettingsBottomSheetUiEvent.ToggleShowLunarPhase
 import dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasewidgetsettings.LunarPhaseWidgetSettingsBottomSheetUiEvent.ToggleShowUpcomingPhaseDetails
@@ -74,7 +75,7 @@ class LunarPhaseWidgetSettingsBottomSheetPresenter @AssistedInject constructor(
             currentPlace = currentPlace
         ) {
             when (it) {
-                is LunarPhaseWidgetSettingsBottomSheetUiEvent.Goto -> navigator.overlayHostResult(result = PopAndGoto(screen = it.screen))
+                is Goto -> navigator.overlayHostResult(result = PopAndGoto(screen = it.screen))
                 ToggleShowLunarPhase -> scope.toggleShowLunarPhase()
                 ToggleShowIlluminationPercent -> scope.toggleShowIlluminationPercent()
                 ToggleShowUpcomingPhaseDetails -> scope.toggleShowUpcomingPhaseDetails()

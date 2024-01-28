@@ -10,6 +10,7 @@ typealias LoadAppBehaviour = (AppWithComponent) -> AppWithComponent
 class TestLauncherAppsManager : LauncherAppsManager {
 
     private var allApps = emptyList<AppWithComponent>()
+    private var favoritesApps = emptyList<AppWithComponent>()
 
     private val loadAppForPackageBehaviours = mutableMapOf<String, LoadAppBehaviour>()
 
@@ -20,10 +21,14 @@ class TestLauncherAppsManager : LauncherAppsManager {
         return loadAppForPackageBehaviours[packageName]?.invoke(defaultAppWithComponent) ?: defaultAppWithComponent
     }
 
-    override suspend fun defaultFavoriteApps(): List<AppWithComponent> = emptyList()
+    override suspend fun defaultFavoriteApps(): List<AppWithComponent> = favoritesApps
 
     fun setAllApps(apps: List<AppWithComponent>) {
         allApps = apps
+    }
+
+    fun setFavoritesApps(apps: List<AppWithComponent>) {
+        favoritesApps = apps
     }
 
     fun loadAppForPackage(packageName: String, behaviour: LoadAppBehaviour) {
