@@ -1,23 +1,21 @@
 package dev.mslalith.focuslauncher.core.common.di.test
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.di.CommonModule
-import dev.mslalith.focuslauncher.core.common.network.impl.ConnectivityManagerNetworkMonitorImpl
 import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
+import dev.mslalith.focuslauncher.core.common.network.test.FakeNetworkMonitor
 import dev.mslalith.focuslauncher.core.common.providers.clock.ClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.clock.test.TestClockProvider
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.RandomNumberProvider
 import dev.mslalith.focuslauncher.core.common.providers.randomnumber.test.TestRandomNumberProvider
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.Dispatchers
 
 @Module
 @TestInstallIn(
@@ -34,9 +32,7 @@ object TestCommonModule {
 
     @Provides
     @Singleton
-    fun provideNetworkMonitor(
-        @ApplicationContext context: Context
-    ): NetworkMonitor = ConnectivityManagerNetworkMonitorImpl(context = context)
+    fun provideNetworkMonitor(): NetworkMonitor = FakeNetworkMonitor()
 
     @Provides
     @Singleton
