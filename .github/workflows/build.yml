@@ -33,7 +33,7 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: true
-          arguments: testDebugUnitTest --tests "dev.mslalith*" --stacktrace --build-cache
+          arguments: testDebugUnitTest --stacktrace --build-cache
 
 #  build:
 #    if: ${{ false }} # Disable Build
@@ -78,7 +78,7 @@ jobs:
 #      - uses: gradle/gradle-build-action@v2
 #        with:
 #          cache-read-only: true
-#          arguments: testDebugUnitTest --tests "dev.mslalith*" --stacktrace --build-cache
+#          arguments: testDebugUnitTest --stacktrace --build-cache
 #
 #  android_tests:
 #    if: ${{ false }} # Disable Instrumentation tests
