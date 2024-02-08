@@ -3,7 +3,7 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage.bottomsheet.moreoptions
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -79,9 +79,9 @@ private fun AppMoreOptionsBottomSheet(
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 12.dp)
         )
-        Divider(
-            color = contentColor,
-            modifier = Modifier.fillMaxWidth(fraction = 0.4f)
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(fraction = 0.4f),
+            color = contentColor
         )
         VerticalSpacer(spacing = 16.dp)
 

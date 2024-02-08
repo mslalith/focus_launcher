@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.feature.favorites.ui
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -28,7 +27,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.reflect.KClass
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun FavoritesContextHeader(
     currentContextMode: FavoritesContextMode,

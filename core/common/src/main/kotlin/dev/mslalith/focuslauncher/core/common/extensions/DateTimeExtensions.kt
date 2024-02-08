@@ -10,7 +10,7 @@ import java.util.Locale
 
 fun ZonedDateTime.inShortReadableFormat(): String {
     val (_, month, day) = this.toString().substringBefore(delimiter = "T").split("-")
-    val monthReadable = Month.values()[month.toInt() - 1].toString()
+    val monthReadable = Month.entries[month.toInt() - 1].toString()
         .lowercase(locale = Locale.getDefault())
         .replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale = Locale.getDefault()) else it.toString() }
 

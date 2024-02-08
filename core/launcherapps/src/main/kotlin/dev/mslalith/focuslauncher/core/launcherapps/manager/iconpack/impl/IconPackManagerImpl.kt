@@ -35,7 +35,6 @@ internal class IconPackManagerImpl @Inject constructor(
         val themes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.ResolveInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
         } else {
-            @Suppress("DEPRECATION")
             packageManager.queryIntentActivities(Intent("org.adw.launcher.THEMES"), PackageManager.GET_META_DATA)
         }
 
@@ -45,7 +44,6 @@ internal class IconPackManagerImpl @Inject constructor(
                 val applicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     packageManager.getApplicationInfo(iconPackageName, PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
                 } else {
-                    @Suppress("DEPRECATION")
                     packageManager.getApplicationInfo(iconPackageName, PackageManager.GET_META_DATA)
                 }
                 val iconLabel = packageManager.getApplicationLabel(applicationInfo).toString()
