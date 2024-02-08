@@ -147,8 +147,8 @@ class EditFavoritesScreenKtTest {
     private fun stateWith(apps: List<SelectedApp>): EditFavoritesState = EditFavoritesState(
         favoriteApps = apps.toImmutableList(),
         showHiddenApps = false,
-        eventSink = {
-            state = when (it) {
+        eventSink = { uiEvent ->
+            state = when (uiEvent) {
                 GoBack -> state
                 ToggleShowingHiddenApps -> state.copy(showHiddenApps = !state.showHiddenApps)
                 ClearFavorites -> state.copy(
@@ -156,8 +156,8 @@ class EditFavoritesScreenKtTest {
                         it.copy(isSelected = false)
                     }.toImmutableList()
                 )
-                is AddToFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it.app, isSelected = true))
-                is RemoveFromFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = it.app, isSelected = false))
+                is AddToFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = uiEvent.app, isSelected = true))
+                is RemoveFromFavorites -> state.copy(favoriteApps = state.favoriteApps.toggleAppSelected(app = uiEvent.app, isSelected = false))
             }
         }
     )

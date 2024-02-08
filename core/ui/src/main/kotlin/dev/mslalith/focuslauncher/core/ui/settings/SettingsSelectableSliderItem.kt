@@ -5,7 +5,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -33,7 +33,7 @@ fun SettingsSelectableSliderItem(
     ) {
         val activeColor = MaterialTheme.colorScheme.primary
         val inactiveColor = MaterialTheme.colorScheme.onSurface
-        var sliderValue by remember { mutableStateOf(value = value) }
+        var sliderValue by remember { mutableFloatStateOf(value = value) }
 
         Slider(
             value = sliderValue,

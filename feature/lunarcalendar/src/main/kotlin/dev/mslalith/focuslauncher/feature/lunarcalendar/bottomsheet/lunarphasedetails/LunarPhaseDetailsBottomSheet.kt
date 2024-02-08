@@ -2,7 +2,7 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphased
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,7 +47,7 @@ private fun LunarPhaseDetailsBottomSheetContent(
             contentColor = contentColor
         )
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
@@ -56,7 +56,7 @@ private fun LunarPhaseDetailsBottomSheetContent(
             contentColor = contentColor
         )
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp)
         )
 

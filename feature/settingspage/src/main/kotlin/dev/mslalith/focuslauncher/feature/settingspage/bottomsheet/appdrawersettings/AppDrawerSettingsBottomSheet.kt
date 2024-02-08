@@ -89,7 +89,7 @@ private fun AppDrawerSettingsBottomSheet(
             selectedItem = appDrawerViewTypeValue,
             onItemSelected = { index ->
                 val viewTypeName = appViewTypeList[index].first
-                val viewType = AppDrawerViewType.values().first { it.uiText.string(context = context) == viewTypeName }
+                val viewType = AppDrawerViewType.entries.first { it.uiText.string(context = context) == viewTypeName }
                 onUpdateAppDrawerViewType(viewType)
             }
         )
@@ -123,7 +123,7 @@ private fun AppDrawerSettingsBottomSheet(
             selectedItem = appDrawerIconViewTypeValue,
             onItemSelected = { index ->
                 val iconViewTypeName = appDrawerIconViewTypeList[index].first
-                val iconViewType = AppDrawerIconViewType.values().first { it.uiText.string(context = context) == iconViewTypeName }
+                val iconViewType = AppDrawerIconViewType.entries.first { it.uiText.string(context = context) == iconViewTypeName }
                 onUpdateAppDrawerIconViewType(iconViewType)
             }
         )

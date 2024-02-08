@@ -1,9 +1,11 @@
 package dev.mslalith.focuslauncher.core.ui.effects
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -11,6 +13,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.collections.immutable.ImmutableList
 
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 @Composable
 fun SystemBroadcastReceiver(
     systemAction: String,
@@ -31,11 +34,16 @@ fun SystemBroadcastReceiver(
             }
         }
 
-        context.registerReceiver(broadcast, intentFilter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(broadcast, intentFilter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(broadcast, intentFilter)
+        }
         onDispose { context.unregisterReceiver(broadcast) }
     }
 }
 
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 @Composable
 fun SystemBroadcastReceiver(
     systemActions: ImmutableList<String>,
@@ -58,7 +66,11 @@ fun SystemBroadcastReceiver(
             }
         }
 
-        context.registerReceiver(broadcast, intentFilter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(broadcast, intentFilter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(broadcast, intentFilter)
+        }
         onDispose { context.unregisterReceiver(broadcast) }
     }
 }

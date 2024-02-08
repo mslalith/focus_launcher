@@ -33,7 +33,7 @@ internal class ClockSettingsRepoImpl @Inject constructor(
     override val clockAlignmentFlow: Flow<ClockAlignment> = settingsDataStore.data
         .map { preferences ->
             val index = preferences[PREFERENCES_CLOCK_ALIGNMENT] ?: DEFAULT_CLOCK_ALIGNMENT.index
-            ClockAlignment.values().first { it.index == index }
+            ClockAlignment.entries.first { it.index == index }
         }
 
     override val clock24AnimationDurationFlow: Flow<Int> = settingsDataStore.data

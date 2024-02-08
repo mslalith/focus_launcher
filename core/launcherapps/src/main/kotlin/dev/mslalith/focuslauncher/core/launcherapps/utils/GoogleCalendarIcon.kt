@@ -21,7 +21,6 @@ internal object GoogleCalendarIcon {
             val activityInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 packageManager.getActivityInfo(cn, PackageManager.ComponentInfoFlags.of(PackageManager.GET_META_DATA.toLong()))
             } else {
-                @Suppress("DEPRECATION")
                 packageManager.getActivityInfo(cn, PackageManager.GET_META_DATA)
             }
             val resourcesForApplication = packageManager.getResourcesForApplication(GOOGLE_CALENDAR_PACKAGE_NAME)

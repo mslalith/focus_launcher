@@ -18,7 +18,6 @@ internal fun Context.isDefaultLauncher(): Boolean = if (Build.VERSION.SDK_INT >=
 @IgnoreInKoverReport
 private fun Context.isAppDefaultLauncher(): Boolean {
     val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_HOME) }
-    @Suppress("DEPRECATION")
     val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
     return resolveInfo?.let { it.activityInfo.packageName == packageName } ?: false
 }
