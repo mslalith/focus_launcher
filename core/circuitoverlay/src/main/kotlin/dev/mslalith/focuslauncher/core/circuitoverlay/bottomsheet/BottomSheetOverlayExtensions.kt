@@ -4,6 +4,7 @@ import com.slack.circuit.foundation.CircuitContent
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.overlay.OverlayHost
 import com.slack.circuit.runtime.Navigator
+import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.circuitoverlay.OverlayResultScreen
 import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
@@ -23,7 +24,7 @@ suspend fun OverlayHost.showBottomSheet(
             screen = screen,
             onNavEvent = { event ->
                 when (event) {
-                    NavEvent.Pop -> navigator.finish(Unit)
+                    is NavEvent.Pop -> navigator.finish(Unit)
                     else -> Unit
                 }
             }
@@ -52,13 +53,17 @@ suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
                     }
                 }
 
-                override fun resetRoot(newRoot: Screen): List<Screen> {
-                    error("Operation not allowed in overlays")
-                }
+                override fun peek(): Screen? = null
 
-                override fun pop(): Screen? {
+                override fun peekBackStack(): List<Screen> = emptyList()
+
+                override fun pop(result: PopResult?): Screen? {
                     navigator.finish(OverlayResultScreen())
                     return null
+                }
+
+                override fun resetRoot(newRoot: Screen, saveState: Boolean, restoreState: Boolean): List<Screen> {
+                    error("Operation not allowed in overlays")
                 }
             }
         )

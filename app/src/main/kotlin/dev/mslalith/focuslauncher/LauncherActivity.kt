@@ -45,8 +45,8 @@ class LauncherActivity : ComponentActivity() {
                 lifecycleScope.launch { packageActionUseCase(packageAction = packageAction) }
             }
 
-            val backstack = rememberSaveableBackStack { push(LauncherScreen) }
-            val navigator = rememberCircuitNavigator(backstack = backstack)
+            val backStack = rememberSaveableBackStack { push(LauncherScreen) }
+            val navigator = rememberCircuitNavigator(backStack = backStack)
 
             ProvideSystemUiController {
                 LauncherTheme(
@@ -57,7 +57,7 @@ class LauncherActivity : ComponentActivity() {
                             ContentWithOverlays {
                                 NavigableCircuitContent(
                                     navigator = navigator,
-                                    backstack = backstack
+                                    backStack = backStack
                                 )
                             }
                         }
