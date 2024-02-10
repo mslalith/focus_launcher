@@ -66,7 +66,8 @@ class SettingsPagePresenter @AssistedInject constructor(
             showStatusBar = showStatusBar,
             canDrawNotificationShade = canDrawNotificationShade,
             showIconPack = showIconPack,
-            isDefaultLauncher = isDefaultLauncher
+            isDefaultLauncher = isDefaultLauncher,
+            showDeveloperOption = true
         ) {
             when (it) {
                 ToggleNotificationShade -> scope.toggleNotificationShade()

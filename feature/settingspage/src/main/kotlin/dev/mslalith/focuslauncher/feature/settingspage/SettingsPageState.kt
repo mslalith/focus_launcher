@@ -7,5 +7,6 @@ data class SettingsPageState(
     val canDrawNotificationShade: Boolean,
     val showIconPack: Boolean,
     val isDefaultLauncher: Boolean,
+    val showDeveloperOption: Boolean,
     val eventSink: (SettingsPageUiEvent) -> Unit
 ) : CircuitUiState

@@ -29,3 +29,6 @@ data object IconPackScreen : Screen
 
 @Parcelize
 data object AboutScreen : Screen
+
+@Parcelize
+data object DeveloperScreen : Screen

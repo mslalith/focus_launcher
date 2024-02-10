@@ -101,4 +101,5 @@
     <string name="clear_hidden_apps">Clear Hidden Apps</string>
     <string name="clear_favorites">Clear Favorites</string>
     <string name="not_available">Not Available</string>
+    <string name="developer">Developer</string>
 </resources>

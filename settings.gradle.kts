@@ -49,6 +49,7 @@ include(
     ":screens:currentplace",
     ":screens:iconpack",
     ":screens:about",
+    ":screens:developer",
     ":feature:homepage",
     ":feature:settingspage",
     ":feature:appdrawerpage",
