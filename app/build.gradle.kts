@@ -117,6 +117,12 @@ dependencies {
     implementation(libs.circuit.overlay)
 }
 
+baselineProfile {
+    // Don't build on every iteration of a full assemble.
+    // Instead enable generation directly for the release build variant.
+    automaticGenerationDuringBuild = false
+}
+
 dependencies {
     kover(projects.core.common)
     kover(projects.core.data)
