@@ -18,6 +18,7 @@ import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutin
 import dev.mslalith.focuslauncher.core.data.repository.settings.AppDrawerSettingsRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
+import dev.mslalith.focuslauncher.core.model.BUILD_FLAVOR
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
@@ -62,11 +63,14 @@ class SettingsPagePresenter @AssistedInject constructor(
             }
         }
 
+        val showDeveloperOption = BUILD_FLAVOR.isDev()
+
         return SettingsPageState(
             showStatusBar = showStatusBar,
             canDrawNotificationShade = canDrawNotificationShade,
             showIconPack = showIconPack,
-            isDefaultLauncher = isDefaultLauncher
+            isDefaultLauncher = isDefaultLauncher,
+            showDeveloperOption = showDeveloperOption
         ) {
             when (it) {
                 ToggleNotificationShade -> scope.toggleNotificationShade()

@@ -20,6 +20,7 @@ import dev.mslalith.focuslauncher.core.screens.AboutScreen
 import dev.mslalith.focuslauncher.core.screens.AppDrawerSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.DeveloperScreen
 import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.core.screens.IconPackScreen
@@ -31,6 +32,7 @@ import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.About
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.AppDrawer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.ChangeTheme
+import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Developer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.EditFavorites
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.HideApps
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.IconPack
@@ -141,6 +143,10 @@ private fun SettingsPage(
             isDefaultLauncher = state.isDefaultLauncher,
             refreshIsDefaultLauncher = onRefreshIsDefaultLauncher
         )
+
+        if (state.showDeveloperOption) {
+            Developer { navigateTo(DeveloperScreen) }
+        }
 
         About { navigateTo(AboutScreen) }
 

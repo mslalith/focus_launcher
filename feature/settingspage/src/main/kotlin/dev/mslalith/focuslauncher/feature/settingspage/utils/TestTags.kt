@@ -13,6 +13,7 @@ object TestTags {
     const val ITEM_APP_DRAWER = "settings_item_app_drawer"
     const val ITEM_WIDGETS = "settings_item_widgets"
     const val ITEM_SET_AS_DEFAULT = "settings_item_set_as_default"
+    const val ITEM_DEVELOPER = "settings_item_developer"
     const val ITEM_ABOUT = "settings_item_about"
 
     const val WIDGETS_ITEM = "widgets_item"

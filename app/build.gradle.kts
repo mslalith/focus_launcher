@@ -28,6 +28,8 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             enableUnitTestCoverage = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         create("benchmark") {
@@ -100,6 +102,7 @@ dependencies {
     implementation(projects.screens.currentplace)
     implementation(projects.screens.iconpack)
     implementation(projects.screens.about)
+    implementation(projects.screens.developer)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
@@ -118,6 +121,7 @@ dependencies {
 
     kover(projects.screens.about)
     kover(projects.screens.currentplace)
+    kover(projects.screens.developer)
     kover(projects.screens.editfavorites)
     kover(projects.screens.hideapps)
     kover(projects.screens.iconpack)

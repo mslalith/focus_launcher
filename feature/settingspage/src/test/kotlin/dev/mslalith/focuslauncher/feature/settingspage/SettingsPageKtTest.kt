@@ -189,6 +189,7 @@ class SettingsPageKtTest {
         canDrawNotificationShade = true,
         showIconPack = true,
         isDefaultLauncher = false,
+        showDeveloperOption = false,
         eventSink = { event ->
             state = when (event) {
                 is SettingsPageUiEvent.GoTo -> state.also { currentScreen = event.screen }

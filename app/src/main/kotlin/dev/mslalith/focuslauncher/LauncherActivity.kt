@@ -15,6 +15,8 @@ import com.slack.circuit.overlay.ContentWithOverlays
 import dagger.hilt.android.AndroidEntryPoint
 import dev.mslalith.focuslauncher.core.domain.PackageActionUseCase
 import dev.mslalith.focuslauncher.core.lint.kover.IgnoreInKoverReport
+import dev.mslalith.focuslauncher.core.model.BUILD_FLAVOR
+import dev.mslalith.focuslauncher.core.model.BuildFlavor
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
 import dev.mslalith.focuslauncher.core.ui.effects.PackageActionListener
 import dev.mslalith.focuslauncher.core.ui.providers.ProvideSystemUiController
@@ -47,6 +49,7 @@ class LauncherActivity : ComponentActivity() {
 
             val backStack = rememberSaveableBackStack { push(LauncherScreen) }
             val navigator = rememberCircuitNavigator(backStack = backStack)
+            BUILD_FLAVOR = BuildFlavor.fromId(id = BuildConfig.FLAVOR)
 
             ProvideSystemUiController {
                 LauncherTheme(
