@@ -36,13 +36,13 @@ jobs:
       - name: Build release APK
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: assembleRelease --stacktrace --no-daemon --build-cache
+          arguments: assembleStoreRelease --stacktrace --no-daemon --build-cache
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app_apk
         with:
-          releaseDirectory: app/build/outputs/apk/release
+          releaseDirectory: app/build/outputs/apk/store/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -75,13 +75,13 @@ jobs:
       - name: Build release AAB
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: bundleRelease --stacktrace --no-daemon --build-cache
+          arguments: bundleStoreRelease --stacktrace --no-daemon --build-cache
 
       - name: Sign release AAB
         uses: r0adkll/sign-android-release@v1
         id: sign_app_aab
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: app/build/outputs/bundle/storeRelease
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
