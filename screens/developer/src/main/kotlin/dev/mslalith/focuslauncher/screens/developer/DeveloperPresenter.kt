@@ -47,7 +47,7 @@ class DeveloperPresenter @AssistedInject constructor(
         return DeveloperState(
             defaultFavoritesName = favoritesCacheFileInteractor.fileName,
             isFavoritesReading = isFavoritesReading,
-            isFavoritesSaving = isFavoritesSaving,
+            isFavoritesSaving = isFavoritesSaving
         ) {
             when (it) {
                 DeveloperUiEvent.GoBack -> navigator.pop()

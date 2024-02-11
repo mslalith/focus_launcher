@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import org.intellij.lang.annotations.Language
 import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.IOException
 
 abstract class CacheFileInteractor<T>(
     private val context: Context
@@ -15,21 +17,28 @@ abstract class CacheFileInteractor<T>(
     protected abstract fun T.toJson(): String
     protected abstract fun fromJson(@Language("json") json: String): T
 
-    fun readContents(uri: Uri): T = try {
+    fun readContents(uri: Uri): T = safeIO(default = default()) {
         val json = with(context) { uri.readContents() } ?: "{}"
         fromJson(json = json)
-    } catch (ex: Exception) {
-        ex.printStackTrace()
-        default()
     }
 
-    fun writeContents(uri: Uri, content: T): Boolean = try {
+    fun writeContents(uri: Uri, content: T): Boolean = safeIO(default = false) {
         with(context) { uri.saveContents(content.toJson()) }
         true
-    } catch (ex: Exception) {
-        ex.printStackTrace()
-        false
     }
+}
+
+private fun <T> safeIO(
+    default: T,
+    block: () -> T
+): T = try {
+    block()
+} catch (ex: FileNotFoundException) {
+    // ex.printStackTrace()
+    default
+} catch (ex: IOException) {
+    // ex.printStackTrace()
+    default
 }
 
 context (Context)
