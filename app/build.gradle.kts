@@ -4,6 +4,8 @@ plugins {
     id("focuslauncher.android.application.compose")
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinx.kover)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -91,6 +93,8 @@ koverReport {
 }
 
 dependencies {
+    baselineProfile(projects.baselineprofile)
+
     implementation(projects.core.screens)
     implementation(projects.core.ui)
     implementation(projects.core.model)
