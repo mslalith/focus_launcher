@@ -29,6 +29,7 @@ rootProject.name = "FocusLauncher"
 include(
     ":app",
     ":benchmark",
+    ":baselineprofile",
     ":core:common",
     ":core:model",
     ":core:screens",
