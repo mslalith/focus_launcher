@@ -102,4 +102,6 @@
     <string name="clear_favorites">Clear Favorites</string>
     <string name="not_available">Not Available</string>
     <string name="developer">Developer</string>
+    <string name="read_favorites">Read Favorites</string>
+    <string name="save_favorites">Save Favorites</string>
 </resources>

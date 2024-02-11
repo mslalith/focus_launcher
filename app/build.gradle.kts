@@ -28,6 +28,8 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             enableUnitTestCoverage = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         create("benchmark") {
