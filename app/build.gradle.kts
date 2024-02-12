@@ -109,6 +109,7 @@ dependencies {
     implementation(projects.screens.developer)
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.profile.installer)
 
