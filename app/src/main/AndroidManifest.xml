@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        android:theme="@style/Theme.App.Starting">
 
         <profileable
             android:shell="true"
