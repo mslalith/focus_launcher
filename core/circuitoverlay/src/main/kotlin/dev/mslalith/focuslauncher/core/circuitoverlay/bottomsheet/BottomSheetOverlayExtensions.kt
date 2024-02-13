@@ -8,6 +8,8 @@ import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import dev.mslalith.focuslauncher.core.circuitoverlay.OverlayResultScreen
 import dev.mslalith.focuslauncher.core.screens.BottomSheetScreen
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 fun <T> Navigator.overlayHostResult(result: T) {
     goTo(OverlayResultScreen(result = result))
@@ -55,14 +57,14 @@ suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
 
                 override fun peek(): Screen? = null
 
-                override fun peekBackStack(): List<Screen> = emptyList()
+                override fun peekBackStack(): ImmutableList<Screen> = persistentListOf()
 
                 override fun pop(result: PopResult?): Screen? {
                     navigator.finish(OverlayResultScreen())
                     return null
                 }
 
-                override fun resetRoot(newRoot: Screen, saveState: Boolean, restoreState: Boolean): List<Screen> {
+                override fun resetRoot(newRoot: Screen, saveState: Boolean, restoreState: Boolean): ImmutableList<Screen> {
                     error("Operation not allowed in overlays")
                 }
             }

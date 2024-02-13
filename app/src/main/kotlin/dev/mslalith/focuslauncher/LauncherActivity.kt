@@ -49,7 +49,7 @@ class LauncherActivity : ComponentActivity() {
                 lifecycleScope.launch { packageActionUseCase(packageAction = packageAction) }
             }
 
-            val backStack = rememberSaveableBackStack { push(LauncherScreen) }
+            val backStack = rememberSaveableBackStack(initialScreens = listOf(LauncherScreen))
             val navigator = rememberCircuitNavigator(backStack = backStack)
             BUILD_FLAVOR = BuildFlavor.fromId(id = BuildConfig.FLAVOR)
 
