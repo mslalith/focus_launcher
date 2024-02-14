@@ -67,11 +67,11 @@ class SettingsPagePresenterTest : PresenterTest<SettingsPagePresenter, SettingsP
     @Test
     fun `03 - verify refresh default launcher change`() = runPresenterTest {
         val state = awaitItem()
-        assertThat(state.isDefaultLauncher).isFalse()
+        assertThat(state.isDefaultLauncher).isTrue()
 
-        every { context.isDefaultLauncher() } returns true
+        every { context.isDefaultLauncher() } returns false
 
         state.eventSink(SettingsPageUiEvent.RefreshIsDefaultLauncher(context = context))
-        assertForTrue { it.isDefaultLauncher }
+        assertForFalse { it.isDefaultLauncher }
     }
 }
