@@ -25,8 +25,6 @@ class SentryPlugin : Plugin<Project> {
             apply(libs.findPlugin("sentry").get().get().pluginId)
         }
 
-        // take from ENV to allow builds in CI
-        // otherwise read from sentry.properties
         val sentryDsn = readSentryValueOf(propertyKey = SENTRY_DSN_PROPERTY, envKey = SENTRY_DSN_ENV, default = "")
         val sentryAuthToken = readSentryValueOf(SENTRY_AUTH_TOKEN_PROPERTY, default = "")
 
@@ -58,6 +56,8 @@ class SentryPlugin : Plugin<Project> {
         )
     }
 
+    // take from ENV to allow builds in CI
+    // otherwise read from sentry.properties
     private fun Project.readSentryValueOf(
         propertyKey: String,
         envKey: String = propertyKey,
