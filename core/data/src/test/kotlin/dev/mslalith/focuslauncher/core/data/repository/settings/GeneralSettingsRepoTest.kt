@@ -77,8 +77,8 @@ internal class GeneralSettingsRepoTest : CoroutineTest() {
             flow = repo.isDefaultLauncher,
             initialItem = DEFAULT_IS_DEFAULT_LAUNCHER,
             mutate = {
-                repo.setIsDefaultLauncher(true)
-                true
+                repo.setIsDefaultLauncher(false)
+                false
             }
         )
     }
