@@ -37,6 +37,8 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           arguments: assembleStoreRelease --stacktrace --no-daemon --build-cache
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
@@ -76,6 +78,8 @@ jobs:
         uses: gradle/gradle-build-action@v3
         with:
           arguments: bundleStoreRelease --stacktrace --no-daemon --build-cache
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Sign release AAB
         uses: r0adkll/sign-android-release@v1
