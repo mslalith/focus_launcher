@@ -38,6 +38,7 @@ mockk = "1.13.9"
 osmdroid = "6.1.18"
 robolectric = "4.11.1"
 room = "2.6.1"
+sentry = "4.3.0"
 suncalc = "3.9"
 truth = "1.4.0"
 turbine = "1.0.0"
@@ -107,6 +108,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
 kotlinx-kover = { group = "org.jetbrains.kotlinx", name = "kover", version.ref = "kover" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+sentry-gradlePlugin = { group = "io.sentry.android.gradle", name = "io.sentry.android.gradle.gradle.plugin", version.ref = "sentry" }
 
 # Benchmark libs
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
@@ -126,3 +128,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }

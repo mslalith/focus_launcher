@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.android.application)
     alias(libs.plugins.baselineprofile)
+    id("focuslauncher.sentry")
 }
 
 android {

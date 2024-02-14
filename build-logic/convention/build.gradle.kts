@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.sentry.gradlePlugin)
 }
 
 gradlePlugin {
@@ -62,6 +63,10 @@ gradlePlugin {
         register("lint") {
             id = "focuslauncher.lint"
             implementationClass = "LintConventionPlugin"
+        }
+        register("sentry") {
+            id = "focuslauncher.sentry"
+            implementationClass = "SentryPlugin"
         }
         register("newScreen") {
             id = "focuslauncher.screen.new"
