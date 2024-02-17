@@ -40,7 +40,7 @@ robolectric = "4.11.1"
 room = "2.6.1"
 sentry = "4.3.0"
 suncalc = "3.9"
-truth = "1.4.0"
+truth = "1.4.1"
 turbine = "1.0.0"
 uiautomator = "2.2.0"
 
