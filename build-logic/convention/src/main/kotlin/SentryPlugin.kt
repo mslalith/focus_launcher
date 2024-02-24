@@ -12,8 +12,11 @@ class SentryPlugin : Plugin<Project> {
 
     private companion object {
         private const val SENTRY_PROPERTIES_FILE = "sentry.properties"
+
         private const val SENTRY_DSN_ENV = "SENTRY_DSN"
         private const val SENTRY_DSN_PROPERTY = "sentry.dsn"
+
+        private const val SENTRY_AUTH_TOKEN_ENV = "SENTRY_AUTH_TOKEN"
         private const val SENTRY_AUTH_TOKEN_PROPERTY = "sentry.auth.token"
     }
 
@@ -25,12 +28,13 @@ class SentryPlugin : Plugin<Project> {
             apply(libs.findPlugin("sentry").get().get().pluginId)
         }
 
-        val sentryDsn = readSentryValueOf(propertyKey = SENTRY_DSN_PROPERTY, envKey = SENTRY_DSN_ENV, default = "")
-        val sentryAuthToken = readSentryValueOf(SENTRY_AUTH_TOKEN_PROPERTY, default = "")
+        val sentryDsn = readSentryValueOf(propertyKey = SENTRY_DSN_PROPERTY, envKey = SENTRY_DSN_ENV)
+        val sentryAuthToken = readSentryValueOf(propertyKey = SENTRY_AUTH_TOKEN_PROPERTY, envKey = SENTRY_AUTH_TOKEN_ENV)
 
         extensions.configure<ApplicationAndroidComponentsExtension> {
             onVariants { variant ->
                 variant.manifestPlaceholders.put("sentryDsn", sentryDsn)
+                variant.manifestPlaceholders.put("sentryEnvironment", variant.name)
             }
         }
 
@@ -40,27 +44,18 @@ class SentryPlugin : Plugin<Project> {
             authToken.set(sentryAuthToken)
 
             includeSourceContext.set(true)
+            includeProguardMapping.set(true)
+            autoUploadProguardMapping.set(true)
             tracingInstrumentation.enabled.set(false)
-            ignoreForVariants()
+            ignoredBuildTypes.set(setOf("debug"))
         }
-    }
-
-    private fun SentryPluginExtension.ignoreForVariants() {
-//        ignoredBuildTypes.set(setOf("debug"))
-//        ignoredFlavors.set( setOf("dev"))
-        ignoredVariants.set(
-            setOf(
-                "devDebug",
-                "storeDebug"
-            )
-        )
     }
 
     // take from ENV to allow builds in CI
     // otherwise read from sentry.properties
     private fun Project.readSentryValueOf(
         propertyKey: String,
-        envKey: String = propertyKey,
+        envKey: String,
         default: String? = null
     ): String = providers.environmentVariable(envKey).orNull ?: readSentrySecret(key = propertyKey, default = default)
 

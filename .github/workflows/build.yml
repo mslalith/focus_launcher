@@ -9,6 +9,7 @@ on:
 
 env:
   SENTRY_DSN: 'https://public_key@example.com/project_id'
+  SENTRY_AUTH_TOKEN: ""
 
 jobs:
   build:

@@ -20,12 +20,12 @@
 
     <application
         android:name=".FocusLauncherApp"
+        android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:allowBackup="true"
-        android:fullBackupOnly="true"
         android:theme="@style/Theme.App.Starting">
 
         <profileable
@@ -38,8 +38,8 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +53,9 @@
         <meta-data
             android:name="io.sentry.dsn"
             android:value="${sentryDsn}" />
+        <meta-data
+            android:name="io.sentry.environment"
+            android:value="${sentryEnvironment}" />
         <meta-data
             android:name="io.sentry.traces.user-interaction.enable"
             android:value="true" />

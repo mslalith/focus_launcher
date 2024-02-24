@@ -39,6 +39,7 @@ jobs:
           arguments: assembleStoreRelease --stacktrace --no-daemon --build-cache
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
@@ -82,6 +83,7 @@ jobs:
           arguments: bundleStoreRelease --stacktrace --no-daemon --build-cache
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Sign release AAB
         uses: r0adkll/sign-android-release@v1
