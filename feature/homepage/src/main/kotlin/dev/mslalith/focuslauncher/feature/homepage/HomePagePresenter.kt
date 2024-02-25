@@ -1,9 +1,9 @@
 package dev.mslalith.focuslauncher.feature.homepage
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
@@ -26,7 +26,7 @@ class HomePagePresenter @Inject constructor(
 
     @Composable
     override fun present(): HomePageState {
-        val isPullDownNotificationShadeEnabled by generalSettingsRepo.notificationShadeFlow.collectAsState(initial = DEFAULT_NOTIFICATION_SHADE)
+        val isPullDownNotificationShadeEnabled by generalSettingsRepo.notificationShadeFlow.collectAsRetainedState(initial = DEFAULT_NOTIFICATION_SHADE)
 
         val clockWidgetUiComponentState = clockWidgetUiComponentPresenter.present()
         val lunarCalendarUiComponentState = lunarCalendarUiComponentPresenter.present()
