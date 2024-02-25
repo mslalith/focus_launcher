@@ -10,6 +10,7 @@ import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
+import dev.mslalith.focuslauncher.core.model.place.Place
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import kotlinx.coroutines.flow.first
@@ -35,6 +36,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
 
     override fun presenterUnderTest() = CurrentPlacePresenter(
         navigator = navigator,
+        context = context,
         appCoroutineDispatcher = appCoroutineDispatcher,
         placesRepo = placesRepo,
         lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
@@ -109,14 +111,35 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
         assertFor(expected = expectedState.addressState) { it.addressState }
         cancelAndIgnoreRemainingEvents()
     }
+
+    @Test
+    fun `05 - when fetching address fails, default value must be shown`() = runPresenterTest {
+        val latLng = LatLng(latitude = 23.0, longitude = 60.0)
+
+        val state = awaitItem()
+        placesRepo.setPlace(place = Place.default())
+        state.eventSink(CurrentPlaceUiEvent.UpdateCurrentLatLng(latLng = latLng))
+
+        val expectedState = latLng.toCurrentPlaceState(address = "Not Available")
+        assertFor(expected = expectedState.addressState) { it.addressState }
+        cancelAndIgnoreRemainingEvents()
+    }
 }
 
 private fun LatLng.toCurrentPlaceState(
     initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) = toCurrentPlaceState(
+    initialLatLng = initialLatLng,
+    address = dummyPlaceFor(latLng = this).displayName
+)
+
+private fun LatLng.toCurrentPlaceState(
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0),
+    address: String
 ) = CurrentPlaceState(
     latLng = this,
     initialLatLng = initialLatLng,
-    addressState = LoadingState.Loaded(value = dummyPlaceFor(latLng = this).displayName),
+    addressState = LoadingState.Loaded(value = address),
     canSave = true,
     eventSink = {}
 )

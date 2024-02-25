@@ -7,7 +7,7 @@ import dev.mslalith.focuslauncher.core.model.location.LatLng
 data class CurrentPlaceState(
     val latLng: LatLng,
     val initialLatLng: LatLng,
-    val addressState: LoadingState<String?>,
+    val addressState: LoadingState<String>,
     val canSave: Boolean,
     val eventSink: (CurrentPlaceUiEvent) -> Unit
 ) : CircuitUiState
