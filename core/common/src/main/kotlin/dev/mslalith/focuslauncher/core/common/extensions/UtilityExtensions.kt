@@ -14,7 +14,7 @@ fun Double.asPercent(maxFractions: Int = 2) = limitDecimals(maxFractions = maxFr
 
 fun Double.limitDecimals(
     maxFractions: Int = 2,
-    minFractions: Int = 2,
+    minFractions: Int = 2
 ): String {
     val fractionsPlaceholder = "#".repeat(n = maxFractions)
     val decimalFormat = DecimalFormat("#.$fractionsPlaceholder", DecimalFormatSymbols(Locale.US)).apply {
