@@ -55,7 +55,7 @@ internal class PlacesApiImplTest : KtorApiTest() {
             throw JsonConvertException(message = "Test exception")
         }
 
-        placesApi.getPlace(latLng = latLng).assertException<JsonConvertException>()
+        placesApi.getPlace(latLng = latLng).assertDefault()
     }
 
     @Test
@@ -66,7 +66,7 @@ internal class PlacesApiImplTest : KtorApiTest() {
             throw DoubleReceiveException(call = mockk())
         }
 
-        placesApi.getPlace(latLng = latLng).assertException<DoubleReceiveException>()
+        placesApi.getPlace(latLng = latLng).assertDefault()
     }
 
     @Test
@@ -77,14 +77,17 @@ internal class PlacesApiImplTest : KtorApiTest() {
             throw HttpRequestTimeoutException(url = "", timeoutMillis = null)
         }
 
-        placesApi.getPlace(latLng = latLng).assertException<HttpRequestTimeoutException>()
+        placesApi.getPlace(latLng = latLng).assertDefault()
     }
 }
 
-private inline fun <reified T : Exception> Result<PlaceResponse>.assertException() {
-    exceptionOrNull().apply {
+private fun Result<PlaceResponse>.assertDefault() {
+    val default = PlaceResponse.default()
+    getOrNull().apply {
         assertThat(this).isNotNull()
-        assertThat(this).isInstanceOf(T::class.java)
+        assertThat(this?.latitude).isEqualTo(default.latitude)
+        assertThat(this?.longitude).isEqualTo(default.longitude)
+        assertThat(this?.displayName).isEqualTo(default.displayName)
     }
 }
 
