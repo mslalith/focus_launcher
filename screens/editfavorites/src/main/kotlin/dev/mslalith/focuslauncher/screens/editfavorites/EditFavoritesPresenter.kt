@@ -1,7 +1,6 @@
 package dev.mslalith.focuslauncher.screens.editfavorites
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.assisted.Assisted
@@ -71,7 +71,7 @@ class EditFavoritesPresenter @AssistedInject constructor(
     override fun present(): EditFavoritesState {
         val scope = rememberCoroutineScope()
 
-        val allFavorites by allFavoritesFlow.collectAsState(initial = persistentListOf())
+        val allFavorites by allFavoritesFlow.collectAsRetainedState(initial = persistentListOf())
         val favoriteApps by remember {
             derivedStateOf {
                 when (showHiddenApps) {

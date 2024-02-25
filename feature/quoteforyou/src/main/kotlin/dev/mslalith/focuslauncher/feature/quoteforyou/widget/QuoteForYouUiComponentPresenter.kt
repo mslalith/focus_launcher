@@ -1,10 +1,10 @@
 package dev.mslalith.focuslauncher.feature.quoteforyou.widget
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -28,8 +28,8 @@ class QuoteForYouUiComponentPresenter @Inject constructor(
     override fun present(): QuoteForYouUiComponentState {
         val scope = rememberCoroutineScope()
 
-        val showQuotes by quotesSettingsRepo.showQuotesFlow.collectAsState(initial = DEFAULT_SHOW_QUOTES)
-        val currentQuote by quotesRepo.currentQuoteStateFlow.collectAsState()
+        val showQuotes by quotesSettingsRepo.showQuotesFlow.collectAsRetainedState(initial = DEFAULT_SHOW_QUOTES)
+        val currentQuote by quotesRepo.currentQuoteStateFlow.collectAsRetainedState()
 
         return QuoteForYouUiComponentState(
             showQuotes = showQuotes,

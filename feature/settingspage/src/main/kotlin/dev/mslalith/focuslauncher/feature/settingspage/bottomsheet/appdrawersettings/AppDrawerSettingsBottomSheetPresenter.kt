@@ -1,10 +1,10 @@
 package dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.appdrawersettings
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -36,10 +36,10 @@ class AppDrawerSettingsBottomSheetPresenter @Inject constructor(
     override fun present(): AppDrawerSettingsBottomSheetState {
         val scope = rememberCoroutineScope()
 
-        val appDrawerViewType by appDrawerSettingsRepo.appDrawerViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_VIEW_TYPE)
-        val appDrawerIconViewType by appDrawerSettingsRepo.appDrawerIconViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
-        val showAppGroupHeader by appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.collectAsState(initial = DEFAULT_APP_GROUP_HEADER)
-        val showSearchBar by appDrawerSettingsRepo.searchBarVisibilityFlow.collectAsState(initial = DEFAULT_SEARCH_BAR)
+        val appDrawerViewType by appDrawerSettingsRepo.appDrawerViewTypeFlow.collectAsRetainedState(initial = DEFAULT_APP_DRAWER_VIEW_TYPE)
+        val appDrawerIconViewType by appDrawerSettingsRepo.appDrawerIconViewTypeFlow.collectAsRetainedState(initial = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
+        val showAppGroupHeader by appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.collectAsRetainedState(initial = DEFAULT_APP_GROUP_HEADER)
+        val showSearchBar by appDrawerSettingsRepo.searchBarVisibilityFlow.collectAsRetainedState(initial = DEFAULT_SEARCH_BAR)
 
         return AppDrawerSettingsBottomSheetState(
             appDrawerViewType = appDrawerViewType,

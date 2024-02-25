@@ -1,10 +1,10 @@
 package dev.mslalith.focuslauncher.screens.hideapps
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.assisted.Assisted
@@ -64,7 +64,7 @@ class HideAppsPresenter @AssistedInject constructor(
     override fun present(): HideAppsState {
         val scope = rememberCoroutineScope()
 
-        val hiddenApps by allHiddenAppsFlow.collectAsState(initial = persistentListOf())
+        val hiddenApps by allHiddenAppsFlow.collectAsRetainedState(initial = persistentListOf())
 
         return HideAppsState(
             hiddenApps = hiddenApps

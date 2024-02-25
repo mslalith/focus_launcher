@@ -2,13 +2,13 @@ package dev.mslalith.focuslauncher.feature.appdrawerpage
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
@@ -56,10 +56,10 @@ class AppDrawerPagePresenter @Inject constructor(
     override fun present(): AppDrawerPageState {
         val scope = rememberCoroutineScope()
 
-        val appDrawerViewType by appDrawerSettingsRepo.appDrawerViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_VIEW_TYPE)
-        val appDrawerIconViewType by appDrawerSettingsRepo.appDrawerIconViewTypeFlow.collectAsState(initial = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
-        val showAppGroupHeader by appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.collectAsState(initial = DEFAULT_APP_GROUP_HEADER)
-        val showSearchBar by appDrawerSettingsRepo.searchBarVisibilityFlow.collectAsState(initial = DEFAULT_SEARCH_BAR)
+        val appDrawerViewType by appDrawerSettingsRepo.appDrawerViewTypeFlow.collectAsRetainedState(initial = DEFAULT_APP_DRAWER_VIEW_TYPE)
+        val appDrawerIconViewType by appDrawerSettingsRepo.appDrawerIconViewTypeFlow.collectAsRetainedState(initial = DEFAULT_APP_DRAWER_ICON_VIEW_TYPE)
+        val showAppGroupHeader by appDrawerSettingsRepo.appGroupHeaderVisibilityFlow.collectAsRetainedState(initial = DEFAULT_APP_GROUP_HEADER)
+        val showSearchBar by appDrawerSettingsRepo.searchBarVisibilityFlow.collectAsRetainedState(initial = DEFAULT_SEARCH_BAR)
 
         LaunchedEffect(key1 = Unit) { reloadIconPackAfterFirstLoadUseCase() }
 

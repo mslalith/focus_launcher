@@ -2,10 +2,10 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.bottomsheet.lunarphasew
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.assisted.Assisted
@@ -50,12 +50,12 @@ class LunarPhaseWidgetSettingsBottomSheetPresenter @AssistedInject constructor(
     override fun present(): LunarPhaseWidgetSettingsBottomSheetState {
         val scope = rememberCoroutineScope()
 
-        val showLunarPhase by lunarPhaseSettingsRepo.showLunarPhaseFlow.collectAsState(initial = DEFAULT_SHOW_LUNAR_PHASE)
-        val showIlluminationPercent by lunarPhaseSettingsRepo.showIlluminationPercentFlow.collectAsState(initial = DEFAULT_SHOW_ILLUMINATION_PERCENT)
-        val showUpcomingPhaseDetails by lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.collectAsState(initial = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
-        val lunarPhaseDetails by lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.collectAsState()
-        val upcomingLunarPhase by lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.collectAsState()
-        val currentPlace by lunarPhaseSettingsRepo.currentPlaceFlow.collectAsState(initial = DEFAULT_CURRENT_PLACE)
+        val showLunarPhase by lunarPhaseSettingsRepo.showLunarPhaseFlow.collectAsRetainedState(initial = DEFAULT_SHOW_LUNAR_PHASE)
+        val showIlluminationPercent by lunarPhaseSettingsRepo.showIlluminationPercentFlow.collectAsRetainedState(initial = DEFAULT_SHOW_ILLUMINATION_PERCENT)
+        val showUpcomingPhaseDetails by lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.collectAsRetainedState(initial = DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
+        val lunarPhaseDetails by lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.collectAsRetainedState()
+        val upcomingLunarPhase by lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.collectAsRetainedState()
+        val currentPlace by lunarPhaseSettingsRepo.currentPlaceFlow.collectAsRetainedState(initial = DEFAULT_CURRENT_PLACE)
 
         LaunchedEffect(key1 = Unit) {
             combine(

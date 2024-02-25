@@ -2,9 +2,9 @@ package dev.mslalith.focuslauncher.feature.lunarcalendar.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
@@ -25,11 +25,11 @@ class LunarCalendarUiComponentPresenter @Inject constructor(
 
     @Composable
     override fun present(): LunarCalendarUiComponentState {
-        val showLunarPhase by lunarPhaseSettingsRepo.showLunarPhaseFlow.collectAsState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE)
-        val showIlluminationPercent by lunarPhaseSettingsRepo.showIlluminationPercentFlow.collectAsState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT)
-        val showUpcomingPhaseDetails by lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.collectAsState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
-        val lunarPhaseDetails by lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.collectAsState()
-        val upcomingLunarPhase by lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.collectAsState()
+        val showLunarPhase by lunarPhaseSettingsRepo.showLunarPhaseFlow.collectAsRetainedState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE)
+        val showIlluminationPercent by lunarPhaseSettingsRepo.showIlluminationPercentFlow.collectAsRetainedState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_ILLUMINATION_PERCENT)
+        val showUpcomingPhaseDetails by lunarPhaseSettingsRepo.showUpcomingPhaseDetailsFlow.collectAsRetainedState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_UPCOMING_PHASE_DETAILS)
+        val lunarPhaseDetails by lunarPhaseDetailsRepo.lunarPhaseDetailsStateFlow.collectAsRetainedState()
+        val upcomingLunarPhase by lunarPhaseDetailsRepo.upcomingLunarPhaseStateFlow.collectAsRetainedState()
 
         LaunchedEffect(key1 = Unit) {
             combine(
