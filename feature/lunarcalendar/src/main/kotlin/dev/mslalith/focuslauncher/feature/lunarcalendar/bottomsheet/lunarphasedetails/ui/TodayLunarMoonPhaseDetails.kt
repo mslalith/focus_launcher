@@ -19,8 +19,8 @@ internal fun TodayLunarMoonPhaseDetails(
     lunarPhaseDetails: LunarPhaseDetails,
     contentColor: Color
 ) {
-    val illuminationText = stringResource(id = R.string.illumination_value, lunarPhaseDetails.illumination.times(other = 100).asPercent(precision = 3))
-    val angleText = stringResource(id = R.string.angle_value, lunarPhaseDetails.phaseAngle.limitDecimals(precision = 2))
+    val illuminationText = stringResource(id = R.string.illumination_value, lunarPhaseDetails.illumination.times(other = 100).asPercent(maxFractions = 3))
+    val angleText = stringResource(id = R.string.angle_value, lunarPhaseDetails.phaseAngle.limitDecimals(maxFractions = 2))
 
     Column {
         Text(
