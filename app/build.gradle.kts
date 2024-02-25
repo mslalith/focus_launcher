@@ -14,8 +14,8 @@ android {
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
-        versionCode = 13
-        versionName = "0.8.1"
+        versionCode = 14
+        versionName = "0.8.2"
         setProperty("archivesBaseName", "Focus-Launcher-v$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
