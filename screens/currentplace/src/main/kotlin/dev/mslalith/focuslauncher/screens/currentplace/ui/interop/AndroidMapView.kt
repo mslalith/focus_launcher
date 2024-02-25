@@ -88,6 +88,6 @@ private fun MapView.addOnTapListener(block: (GeoPoint) -> Unit) {
 
 @IgnoreInKoverReport
 private fun GeoPoint.toLatLng(limitDecimals: Int): LatLng = LatLng(
-    latitude = latitude.limitDecimals(precision = limitDecimals).toDouble(),
-    longitude = longitude.limitDecimals(precision = limitDecimals).toDouble()
+    latitude = latitude.limitDecimals(maxFractions = limitDecimals).toDouble(),
+    longitude = longitude.limitDecimals(maxFractions = limitDecimals).toDouble()
 )
