@@ -76,7 +76,7 @@ private fun LunarPhaseWidgetSettingsBottomSheet(
         )
         SettingsSelectableItem(
             text = stringResource(id = R.string.current_place),
-            subText = state.currentPlace.address ?: stringResource(id = R.string.not_available),
+            subText = state.currentPlace.address,
             disabled = !state.showLunarPhase,
             onClick = navigateToCurrentPlace
         )

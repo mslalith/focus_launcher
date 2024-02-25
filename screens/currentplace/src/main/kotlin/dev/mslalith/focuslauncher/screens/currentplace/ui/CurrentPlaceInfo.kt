@@ -74,7 +74,7 @@ private fun LatLngInfo(
 
 @Composable
 private fun AddressInfo(
-    addressState: LoadingState<String?>
+    addressState: LoadingState<String>
 ) {
     Row(
         modifier = Modifier
@@ -104,7 +104,7 @@ private fun AddressInfo(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = it.value ?: stringResource(id = R.string.not_available),
+                            text = it.value,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }

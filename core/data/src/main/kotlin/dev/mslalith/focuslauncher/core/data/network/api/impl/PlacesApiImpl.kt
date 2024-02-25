@@ -25,10 +25,10 @@ internal class PlacesApiImpl @Inject constructor(
             }.body()
         )
     } catch (ex: JsonConvertException) {
-        Result.failure(exception = ex)
+        Result.success(value = PlaceResponse.default())
     } catch (ex: DoubleReceiveException) {
-        Result.failure(exception = ex)
+        Result.success(value = PlaceResponse.default())
     } catch (ex: HttpRequestTimeoutException) {
-        Result.failure(exception = ex)
+        Result.success(value = PlaceResponse.default())
     }
 }
