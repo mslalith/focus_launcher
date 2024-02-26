@@ -72,6 +72,8 @@ class FavoritesBottomSheetPresenter @AssistedInject constructor(
 }
 
 private fun SnapshotStateList<AppWithColor>.move(fromIndex: Int, toIndex: Int) {
+    if (fromIndex == toIndex) return
+
     val app = removeAt(index = fromIndex)
     add(index = toIndex, element = app)
 }
