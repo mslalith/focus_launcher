@@ -1,6 +1,11 @@
 package dev.mslalith.focuslauncher.core.circuitoverlay.bottomsheet
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -36,13 +41,19 @@ class BottomSheetOverlay<S : Any, R : Any>(
 
         ModalBottomSheet(
             modifier = Modifier.fillMaxWidth(),
+            windowInsets = WindowInsets.statusBars,
             content = {
-                content(state) { result ->
-                    scope.launch {
-                        try {
-                            sheetState.hide()
-                        } finally {
-                            navigator.finish(result)
+                Box(
+                    modifier = Modifier
+                        .windowInsetsPadding(insets = WindowInsets.navigationBars)
+                ) {
+                    content(state) { result ->
+                        scope.launch {
+                            try {
+                                sheetState.hide()
+                            } finally {
+                                navigator.finish(result)
+                            }
                         }
                     }
                 }
