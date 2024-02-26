@@ -17,7 +17,7 @@ fun <T> Navigator.overlayHostResult(result: T) {
 
 suspend fun OverlayHost.showBottomSheet(
     screen: BottomSheetScreen<Unit>,
-    skipPartiallyExpanded: Boolean = true,
+    skipPartiallyExpanded: Boolean = true
 ): Unit = show(
     BottomSheetOverlay(
         state = Unit,
@@ -38,7 +38,7 @@ suspend fun OverlayHost.showBottomSheet(
 
 suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
     screen: BottomSheetScreen<T>,
-    skipPartiallyExpanded: Boolean = true,
+    skipPartiallyExpanded: Boolean = true
 ): T? = show(
     BottomSheetOverlay<Unit, OverlayResultScreen<T>>(
         state = Unit,

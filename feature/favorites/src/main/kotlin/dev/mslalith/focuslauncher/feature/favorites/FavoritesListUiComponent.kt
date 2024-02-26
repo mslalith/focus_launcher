@@ -69,7 +69,7 @@ private fun FavoritesListUiComponent(
 
     fun showBottomSheet(
         screen: BottomSheetScreen<Unit>,
-        skipPartiallyExpanded: Boolean = true,
+        skipPartiallyExpanded: Boolean = true
     ) {
         scope.launch {
             overlayHost.showBottomSheet(
