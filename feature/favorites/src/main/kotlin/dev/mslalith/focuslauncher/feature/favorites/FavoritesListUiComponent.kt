@@ -63,8 +63,8 @@ private fun FavoritesListUiComponent(
     }
 
     Column(
-        horizontalAlignment = Alignment.End,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.End
     ) {
         StaggeredFlowRow(
             modifier = Modifier

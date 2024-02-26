@@ -24,7 +24,7 @@ fun ActionButton(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.small)
             .background(color = MaterialTheme.colorScheme.primaryContainer)

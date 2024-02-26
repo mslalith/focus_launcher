@@ -55,6 +55,7 @@ fun FavoritesBottomSheet(
 
 
     FavoritesBottomSheet(
+        modifier = modifier,
         favorites = state.favoritesList,
         onMove = { from, to -> eventSink(FavoritesBottomSheetUiEvent.Move(fromIndex = from, toIndex = to)) },
         onSaveClick = { eventSink(FavoritesBottomSheetUiEvent.Save) },
@@ -143,6 +144,7 @@ private fun InfoContent(
     modifier: Modifier = Modifier
 ) {
     Row(
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

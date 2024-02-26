@@ -60,7 +60,7 @@ class FavoritesBottomSheetPresenterTest : PresenterTest<FavoritesBottomSheetPres
         runBlocking { appDrawerRepo.addApps(apps = allApps) }
     }
 
-    override fun presenterUnderTest()  = FavoritesBottomSheetPresenter(
+    override fun presenterUnderTest() = FavoritesBottomSheetPresenter(
         navigator = navigator,
         favoritesRepo = favoritesRepo,
         getFavoriteColoredAppsUseCase = getFavoriteColoredAppsUseCase,
