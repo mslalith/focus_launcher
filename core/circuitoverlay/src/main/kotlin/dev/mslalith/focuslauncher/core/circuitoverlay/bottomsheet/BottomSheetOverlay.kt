@@ -22,11 +22,12 @@ import kotlinx.coroutines.launch
 class BottomSheetOverlay<S : Any, R : Any>(
     private val state: S,
     private val onDismiss: () -> R,
+    private val skipPartiallyExpanded: Boolean = true,
     private val content: @Composable (S, OverlayNavigator<R>) -> Unit
 ) : Overlay<R> {
     @Composable
     override fun Content(navigator: OverlayNavigator<R>) {
-        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
         val scope = rememberCoroutineScope()
 
         BackHandler(enabled = sheetState.isVisible) {

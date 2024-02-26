@@ -16,10 +16,12 @@ fun <T> Navigator.overlayHostResult(result: T) {
 }
 
 suspend fun OverlayHost.showBottomSheet(
-    screen: BottomSheetScreen<Unit>
+    screen: BottomSheetScreen<Unit>,
+    skipPartiallyExpanded: Boolean = true,
 ): Unit = show(
     BottomSheetOverlay(
         state = Unit,
+        skipPartiallyExpanded = skipPartiallyExpanded,
         onDismiss = {}
     ) { _, navigator ->
         CircuitContent(
@@ -35,10 +37,12 @@ suspend fun OverlayHost.showBottomSheet(
 )
 
 suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
-    screen: BottomSheetScreen<T>
+    screen: BottomSheetScreen<T>,
+    skipPartiallyExpanded: Boolean = true,
 ): T? = show(
     BottomSheetOverlay<Unit, OverlayResultScreen<T>>(
         state = Unit,
+        skipPartiallyExpanded = skipPartiallyExpanded,
         onDismiss = { OverlayResultScreen() }
     ) { _, navigator ->
         CircuitContent(

@@ -67,8 +67,16 @@ private fun FavoritesListUiComponent(
         addDefaultAppsToFavorites()
     }
 
-    fun showBottomSheet(screen: BottomSheetScreen<Unit>) {
-        scope.launch { overlayHost.showBottomSheet(screen) }
+    fun showBottomSheet(
+        screen: BottomSheetScreen<Unit>,
+        skipPartiallyExpanded: Boolean = true,
+    ) {
+        scope.launch {
+            overlayHost.showBottomSheet(
+                screen = screen,
+                skipPartiallyExpanded = skipPartiallyExpanded
+            )
+        }
     }
 
     Column(
@@ -87,7 +95,7 @@ private fun FavoritesListUiComponent(
                     FavoriteItem(
                         appWithColor = favoriteAppWithColor,
                         onClick = { context.launchApp(app = favoriteAppWithColor.app) },
-                        onLongClick = { showBottomSheet(screen = FavoritesBottomSheetScreen) }
+                        onLongClick = { showBottomSheet(screen = FavoritesBottomSheetScreen, skipPartiallyExpanded = false) }
                     )
                 }
             }
