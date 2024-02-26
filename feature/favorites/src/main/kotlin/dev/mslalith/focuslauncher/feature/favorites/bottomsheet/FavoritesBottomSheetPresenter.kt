@@ -19,6 +19,7 @@ import dev.mslalith.focuslauncher.core.domain.apps.GetFavoriteColoredAppsUseCase
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.core.screens.FavoritesBottomSheetScreen
 import dev.mslalith.focuslauncher.feature.favorites.bottomsheet.FavoritesBottomSheetUiEvent.Move
+import dev.mslalith.focuslauncher.feature.favorites.bottomsheet.FavoritesBottomSheetUiEvent.Remove
 import dev.mslalith.focuslauncher.feature.favorites.bottomsheet.FavoritesBottomSheetUiEvent.Save
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +56,7 @@ class FavoritesBottomSheetPresenter @AssistedInject constructor(
         ) {
             when (it) {
                 is Move -> favoritesList.move(fromIndex = it.fromIndex, toIndex = it.toIndex)
+                is Remove -> favoritesList -= it.appWithColor
                 is Save -> scope.saveFavorites(favorites = favoritesList)
             }
         }

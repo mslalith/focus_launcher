@@ -5,13 +5,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -59,7 +57,8 @@ fun FavoritesBottomSheet(
     FavoritesBottomSheet(
         favorites = state.favoritesList,
         onMove = { from, to -> eventSink(FavoritesBottomSheetUiEvent.Move(fromIndex = from, toIndex = to)) },
-        onSaveClick = { eventSink(FavoritesBottomSheetUiEvent.Save) }
+        onSaveClick = { eventSink(FavoritesBottomSheetUiEvent.Save) },
+        onRemoveFavorite = { eventSink(FavoritesBottomSheetUiEvent.Remove(appWithColor = it)) }
     )
 }
 
@@ -68,6 +67,7 @@ private fun FavoritesBottomSheet(
     favorites: ImmutableList<AppWithColor>,
     onMove: (Int, Int) -> Unit,
     onSaveClick: () -> Unit,
+    onRemoveFavorite: (AppWithColor) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showInfoContent by remember { mutableStateOf(value = false) }
@@ -96,9 +96,11 @@ private fun FavoritesBottomSheet(
         }
 
         FavoritesList(
+            modifier = Modifier.weight(weight = 1f, fill = false),
             lazyListState = lazyListState,
             reorderableLazyColumnState = reorderableLazyColumnState,
-            favorites = favorites
+            favorites = favorites,
+            onRemoveFavorite = onRemoveFavorite
         )
 
         VerticalSpacer(spacing = 12.dp)
@@ -137,51 +139,6 @@ private fun Header(
 }
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
-private fun FavoritesList(
-    lazyListState: LazyListState,
-    reorderableLazyColumnState: ReorderableLazyListState,
-    favorites: ImmutableList<AppWithColor>
-) {
-    LazyColumn(
-        state = lazyListState,
-        verticalArrangement = Arrangement.spacedBy(space = 8.dp)
-    ) {
-        items(
-            items = favorites,
-            key = { it.app.packageName }
-        ) { appWithColor ->
-            ReorderableItem(
-                reorderableLazyListState = reorderableLazyColumnState,
-                key = appWithColor.app.packageName
-            ) { isDragging ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_drag_indicator),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .draggableHandle()
-                                .padding(all = 12.dp)
-                        )
-                        Text(
-                            text = appWithColor.app.displayName,
-                            modifier = Modifier
-                                .weight(weight = 1f)
-                                .padding(vertical = 12.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 private fun InfoContent(
     modifier: Modifier = Modifier
 ) {
@@ -194,6 +151,38 @@ private fun InfoContent(
         )
         HorizontalSpacer(spacing = 12.dp)
         Text(text = stringResource(id = R.string.to_remove_favorite))
+    }
+}
+
+@Composable
+@OptIn(ExperimentalFoundationApi::class)
+private fun FavoritesList(
+    lazyListState: LazyListState,
+    reorderableLazyColumnState: ReorderableLazyListState,
+    favorites: ImmutableList<AppWithColor>,
+    onRemoveFavorite: (AppWithColor) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState,
+        verticalArrangement = Arrangement.spacedBy(space = 8.dp)
+    ) {
+        items(
+            items = favorites,
+            key = { it.app.packageName }
+        ) { appWithColor ->
+            ReorderableItem(
+                reorderableLazyListState = reorderableLazyColumnState,
+                key = appWithColor.app.packageName
+            ) { isDragging ->
+                DismissibleFavoriteItem(
+                    appWithColor = appWithColor,
+                    isDragging = isDragging,
+                    onDismiss = onRemoveFavorite
+                )
+            }
+        }
     }
 }
 
@@ -210,6 +199,7 @@ private fun PreviewInfoContent() {
                     )
                 ),
                 onMove = { _, _ -> },
+                onRemoveFavorite = {},
                 onSaveClick = {}
             )
         }

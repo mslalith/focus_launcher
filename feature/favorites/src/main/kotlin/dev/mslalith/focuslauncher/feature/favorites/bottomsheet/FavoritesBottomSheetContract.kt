@@ -12,5 +12,6 @@ data class FavoritesBottomSheetState(
 
 sealed interface FavoritesBottomSheetUiEvent : CircuitUiEvent {
     data class Move(val fromIndex: Int, val toIndex: Int) : FavoritesBottomSheetUiEvent
+    data class Remove(val appWithColor: AppWithColor) : FavoritesBottomSheetUiEvent
     data object Save : FavoritesBottomSheetUiEvent
 }
