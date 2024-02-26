@@ -17,6 +17,7 @@ import dev.mslalith.focuslauncher.core.testing.TestApps
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import dev.mslalith.focuslauncher.core.testing.toPackageNamed
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -119,6 +120,24 @@ class FavoritesBottomSheetPresenterTest : PresenterTest<FavoritesBottomSheetPres
 
         state.eventSink(FavoritesBottomSheetUiEvent.Move(fromIndex = 1, toIndex = 1))
         expectNoEvents()
+    }
+
+    @Test
+    fun `05 - when favorites are updated and saved, they must be saved to DB`() = runPresenterTest {
+        val chrome = TestApps.Chrome.toPackageNamed()
+        val youtube = TestApps.Youtube.toPackageNamed()
+
+        val state = awaitItem()
+        assertThat(state.favoritesList).isEmpty()
+
+        favoritesRepo.addToFavorites(listOf(chrome, youtube))
+        assertFor(expected = persistentListOf(chrome, youtube)) { it.favoritesList.toApps() }
+
+        state.eventSink(FavoritesBottomSheetUiEvent.Move(fromIndex = 1, toIndex = 0))
+        assertFor(expected = persistentListOf(youtube, chrome)) { it.favoritesList.toApps() }
+
+        state.eventSink(FavoritesBottomSheetUiEvent.Save)
+        assertThat(favoritesRepo.onlyFavoritesFlow.first()).isEqualTo(listOf(youtube, chrome))
     }
 }
 
