@@ -8,6 +8,7 @@ data class CurrentPlaceState(
     val latLng: LatLng,
     val initialLatLng: LatLng,
     val addressState: LoadingState<String>,
+    val isOnline: Boolean,
     val canSave: Boolean,
     val eventSink: (CurrentPlaceUiEvent) -> Unit
 ) : CircuitUiState
