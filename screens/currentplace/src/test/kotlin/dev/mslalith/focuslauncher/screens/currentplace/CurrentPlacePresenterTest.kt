@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.currentplace
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
+import dev.mslalith.focuslauncher.core.common.network.test.FakeNetworkMonitor
 import dev.mslalith.focuslauncher.core.data.test.repository.FakeAppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.FakePlacesRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeLunarPhaseSettingsRepo
@@ -26,6 +27,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
 
     private val appDrawerRepo = FakeAppDrawerRepo()
     private val placesRepo = FakePlacesRepo()
+    private val networkMonitor = FakeNetworkMonitor()
     private val lunarPhaseSettingsRepo = FakeLunarPhaseSettingsRepo()
     private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
@@ -37,6 +39,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
     override fun presenterUnderTest() = CurrentPlacePresenter(
         navigator = navigator,
         context = context,
+        networkMonitor = networkMonitor,
         appCoroutineDispatcher = appCoroutineDispatcher,
         placesRepo = placesRepo,
         lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
@@ -48,6 +51,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
             latLng = DEFAULT_CURRENT_PLACE.latLng,
             initialLatLng = DEFAULT_CURRENT_PLACE.latLng,
             addressState = LoadingState.Loading,
+            isOnline = true,
             canSave = false,
             eventSink = {}
         )
@@ -56,6 +60,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
         assertThat(awaitItem.latLng).isEqualTo(expected.latLng)
         assertThat(awaitItem.initialLatLng).isEqualTo(expected.initialLatLng)
         assertThat(awaitItem.addressState).isEqualTo(expected.addressState)
+        assertThat(awaitItem.isOnline).isEqualTo(expected.isOnline)
         assertThat(awaitItem.canSave).isEqualTo(expected.canSave)
 
         cancelAndIgnoreRemainingEvents()
@@ -124,6 +129,13 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
         assertFor(expected = expectedState.addressState) { it.addressState }
         cancelAndIgnoreRemainingEvents()
     }
+
+    @Test
+    fun `06 - when network is absent, verify isOnline state`() = runPresenterTest {
+        assertForTrue { it.isOnline }
+        networkMonitor.goOffline()
+        assertForFalse { it.isOnline }
+    }
 }
 
 private fun LatLng.toCurrentPlaceState(
@@ -140,6 +152,7 @@ private fun LatLng.toCurrentPlaceState(
     latLng = this,
     initialLatLng = initialLatLng,
     addressState = LoadingState.Loaded(value = address),
+    isOnline = true,
     canSave = true,
     eventSink = {}
 )

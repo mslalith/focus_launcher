@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import com.slack.circuit.codegen.annotations.CircuitInject
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.assisted.Assisted
@@ -19,6 +20,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.common.model.getOrNull
+import dev.mslalith.focuslauncher.core.common.network.NetworkMonitor
 import dev.mslalith.focuslauncher.core.data.repository.PlacesRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.LunarPhaseSettingsRepo
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
@@ -40,6 +42,7 @@ import kotlinx.coroutines.withContext
 class CurrentPlacePresenter @AssistedInject constructor(
     @Assisted private val navigator: Navigator,
     @ApplicationContext private val context: Context,
+    private val networkMonitor: NetworkMonitor,
     private val placesRepo: PlacesRepo,
     private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
@@ -60,6 +63,8 @@ class CurrentPlacePresenter @AssistedInject constructor(
     override fun present(): CurrentPlaceState {
         val scope = rememberCoroutineScope()
 
+        val isOnline by networkMonitor.isOnline.collectAsRetainedState(initial = true)
+
         LaunchedEffect(key1 = Unit) {
             val currentPlaceLatLng = lunarPhaseSettingsRepo.currentPlaceFlow.firstOrNull()?.latLng ?: latLng
             initialLatLng = currentPlaceLatLng
@@ -76,7 +81,8 @@ class CurrentPlacePresenter @AssistedInject constructor(
             latLng = latLng,
             initialLatLng = initialLatLng,
             addressState = addressState,
-            canSave = addressState is LoadingState.Loaded
+            isOnline = isOnline,
+            canSave = isOnline && addressState is LoadingState.Loaded
         ) {
             when (it) {
                 GoBack -> navigator.pop()

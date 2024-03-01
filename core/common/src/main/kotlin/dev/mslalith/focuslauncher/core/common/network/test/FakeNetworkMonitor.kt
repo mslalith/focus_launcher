@@ -6,12 +6,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class FakeNetworkMonitor : NetworkMonitor {
 
-    private val _isOnline = MutableStateFlow(value = false)
+    private val _isOnline = MutableStateFlow(value = true)
     override val isOnline: Flow<Boolean> = _isOnline
 
     override fun isCurrentlyConnected(): Boolean = _isOnline.value
 
-    fun setIsOnline(value: Boolean) {
-        _isOnline.value = value
+    fun goOnline() {
+        _isOnline.value = true
+    }
+
+    fun goOffline() {
+        _isOnline.value = false
     }
 }
