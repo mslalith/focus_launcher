@@ -42,7 +42,7 @@ class QuoteWidgetSettingsBottomSheetPresenterTest : PresenterTest<QuoteWidgetSet
 
     @Test
     fun `02 - when quotes are fetched, initial quote must be loaded`() = runPresenterTest {
-        networkMonitor.setIsOnline(value = true)
+        networkMonitor.goOnline()
 
         val state = awaitItem()
         state.eventSink(QuoteWidgetSettingsBottomSheetUiEvent.FetchQuoteWidget)
@@ -55,7 +55,7 @@ class QuoteWidgetSettingsBottomSheetPresenterTest : PresenterTest<QuoteWidgetSet
 
     @Test
     fun `03 - fetch next quote`() = runPresenterTest {
-        networkMonitor.setIsOnline(value = true)
+        networkMonitor.goOnline()
 
         val state = awaitItem()
         assertThat(state.currentQuote).isEqualTo(State.Initial)
