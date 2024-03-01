@@ -39,3 +39,6 @@ data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawe
 
 @Parcelize
 data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : BottomSheetScreen<Unit>()
+
+@Parcelize
+data object FavoritesBottomSheetScreen : BottomSheetScreen<Unit>()

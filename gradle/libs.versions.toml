@@ -36,6 +36,7 @@ ksp = "1.9.22-1.0.18"
 ktorClient = "2.3.8"
 mockk = "1.13.10"
 osmdroid = "6.1.18"
+reorderable = "1.4.0-beta02"
 robolectric = "4.11.1"
 room = "2.6.1"
 sentry = "4.3.1"
@@ -92,6 +93,7 @@ ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref =
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
 mockk = { group = "io.mockk", name="mockk", version.ref = "mockk" }
 osmdroid = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
+reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }

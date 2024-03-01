@@ -104,4 +104,6 @@
     <string name="developer">Developer</string>
     <string name="read_favorites">Read Favorites</string>
     <string name="save_favorites">Save Favorites</string>
+    <string name="save">Save</string>
+    <string name="to_remove_favorite">to remove Favorite</string>
 </resources>
