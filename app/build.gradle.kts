@@ -122,7 +122,7 @@ dependencies {
     implementation(libs.circuit.overlay)
 
     implementation(platform(libs.sentry.bom))
-    implementation(libs.sentry.android)
+    implementation(libs.sentry.android.core)
 }
 
 baselineProfile {

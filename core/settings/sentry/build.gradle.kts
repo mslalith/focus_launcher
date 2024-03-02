@@ -11,5 +11,5 @@ dependencies {
     implementation(projects.core.data)
 
     implementation(platform(libs.sentry.bom))
-    implementation(libs.sentry.android)
+    implementation(libs.sentry.android.core)
 }

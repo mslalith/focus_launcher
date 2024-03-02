@@ -104,7 +104,7 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version.ref = "suncalc" }
 
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry" }
-sentry-android = { module = "io.sentry:sentry-android" }
+sentry-android-core = { module = "io.sentry:sentry-android-core" }
 
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
