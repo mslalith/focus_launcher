@@ -69,7 +69,7 @@ object Constants {
                         latitude = 0.0,
                         longitude = 0.0
                     ),
-                    address = ""
+                    address = "Soul Buoy"
                 )
             }
 
