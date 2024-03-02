@@ -2,7 +2,17 @@ package dev.mslalith.focuslauncher.feature.settingspage
 
 import android.content.Context
 import com.slack.circuit.runtime.CircuitUiEvent
+import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
+
+data class SettingsPageState(
+    val showStatusBar: Boolean,
+    val canDrawNotificationShade: Boolean,
+    val showIconPack: Boolean,
+    val isDefaultLauncher: Boolean,
+    val showDeveloperOption: Boolean,
+    val eventSink: (SettingsPageUiEvent) -> Unit
+) : CircuitUiState
 
 sealed interface SettingsPageUiEvent : CircuitUiEvent {
     data object ToggleStatusBarVisibility : SettingsPageUiEvent

@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.appdrawerpage
 
+import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
 import dev.mslalith.focuslauncher.core.model.AppDrawerViewType
@@ -16,3 +17,8 @@ data class AppDrawerPageState(
     val searchBarQuery: String,
     val eventSink: (AppDrawerPageUiEvent) -> Unit
 ) : CircuitUiState
+
+sealed interface AppDrawerPageUiEvent : CircuitUiEvent {
+    data class UpdateSearchQuery(val query: String) : AppDrawerPageUiEvent
+    data object ReloadIconPack : AppDrawerPageUiEvent
+}
