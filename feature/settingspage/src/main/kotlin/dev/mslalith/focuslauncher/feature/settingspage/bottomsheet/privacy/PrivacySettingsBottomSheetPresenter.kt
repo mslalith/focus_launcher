@@ -6,6 +6,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.AppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
@@ -16,14 +18,18 @@ import dev.mslalith.focuslauncher.feature.settingspage.bottomsheet.privacy.Priva
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@CircuitInject(PrivacySettingsBottomSheetScreen::class, SingletonComponent::class)
-class PrivacySettingsBottomSheetPresenter @Inject constructor(
+class PrivacySettingsBottomSheetPresenter @AssistedInject constructor(
     private val updateReportCrashesSettingUseCase: UpdateReportCrashesSettingUseCase,
     private val generalSettingsRepo: GeneralSettingsRepo,
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : Presenter<PrivacySettingsBottomSheetState> {
+
+    @CircuitInject(PrivacySettingsBottomSheetScreen::class, SingletonComponent::class)
+    @AssistedFactory
+    fun interface Factory {
+        fun create(): PrivacySettingsBottomSheetPresenter
+    }
 
     @Composable
     override fun present(): PrivacySettingsBottomSheetState {
