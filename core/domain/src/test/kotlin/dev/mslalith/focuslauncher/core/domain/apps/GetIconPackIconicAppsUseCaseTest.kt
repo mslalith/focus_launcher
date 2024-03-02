@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.settings.GeneralSettingsRepo
 import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsIconPackAwareUseCase
@@ -55,6 +56,7 @@ internal class GetIconPackIconicAppsUseCaseTest : CoroutineTest() {
     private val testLauncherAppsManager = TestLauncherAppsManager()
     private val testIconPackManager = TestIconPackManager()
     private val testIconProvider = TestIconProvider
+    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
     @Before
     fun setup() {
@@ -66,7 +68,8 @@ internal class GetIconPackIconicAppsUseCaseTest : CoroutineTest() {
         )
         getAppsIconPackAwareUseCase = GetAppsIconPackAwareUseCase(
             getAppsUseCase = getAppsUseCase,
-            generalSettingsRepo = generalSettingsRepo
+            generalSettingsRepo = generalSettingsRepo,
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
         getIconPackAppsUseCase = GetIconPackAppsUseCase(
             iconPackManager = testIconPackManager,
@@ -74,7 +77,8 @@ internal class GetIconPackIconicAppsUseCaseTest : CoroutineTest() {
         )
         useCase = GetIconPackIconicAppsUseCase(
             getAppsIconPackAwareUseCase = getAppsIconPackAwareUseCase,
-            getIconPackAppsUseCase = getIconPackAppsUseCase
+            getIconPackAppsUseCase = getIconPackAppsUseCase,
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
     }
 

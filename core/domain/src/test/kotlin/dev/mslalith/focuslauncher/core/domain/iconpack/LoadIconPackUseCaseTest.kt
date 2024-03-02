@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.iconpack
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.model.IconPackLoadEvent
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -19,12 +20,16 @@ import org.junit.runners.MethodSorters
 class LoadIconPackUseCaseTest : CoroutineTest() {
 
     private val testIconPackManager = TestIconPackManager()
+    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
     private lateinit var useCase: LoadIconPackUseCase
 
     @Before
     fun setup() {
-        useCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
+        useCase = LoadIconPackUseCase(
+            iconPackManager = testIconPackManager,
+            appCoroutineDispatcher = appCoroutineDispatcher
+        )
     }
 
     @Test

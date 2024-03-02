@@ -55,13 +55,17 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
     @Inject
     lateinit var appDrawerRepo: AppDrawerRepo
 
+    private val generalSettingsRepo = FakeGeneralSettingsRepo()
+    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
+
     private val testIconProvider = TestIconProvider
     private val testIconPackManager = TestIconPackManager()
     private val fetchIconPacksUseCase = FetchIconPacksUseCase(iconPackManager = testIconPackManager)
-    private val loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
+    private val loadIconPackUseCase = LoadIconPackUseCase(
+        iconPackManager = testIconPackManager,
+        appCoroutineDispatcher = appCoroutineDispatcher
+    )
 
-    private val generalSettingsRepo = FakeGeneralSettingsRepo()
-    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
     private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
     @Before
