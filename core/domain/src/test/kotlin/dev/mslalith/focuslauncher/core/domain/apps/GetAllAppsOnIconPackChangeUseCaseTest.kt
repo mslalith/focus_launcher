@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.repository.AppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.repository.FavoritesRepo
 import dev.mslalith.focuslauncher.core.domain.apps.core.GetAppsUseCase
@@ -51,6 +52,7 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
 
     private val testLauncherAppsManager by lazy { TestLauncherAppsManager() }
     private val iconProvider by lazy { TestIconProvider }
+    private val appCoroutineDispatcher by lazy { TestAppCoroutineDispatcher() }
 
     private val allApps by lazy { TestApps.all.toPackageNamed().disableAsSystem() }
 
@@ -60,7 +62,8 @@ internal class GetAllAppsOnIconPackChangeUseCaseTest : CoroutineTest() {
         useCase = GetAllAppsOnIconPackChangeUseCase(
             getAppsUseCase = getAppsUseCase,
             appDrawerRepo = appDrawerRepo,
-            favoritesRepo = favoritesRepo
+            favoritesRepo = favoritesRepo,
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
         runBlocking { appDrawerRepo.addApps(apps = allApps) }
     }
