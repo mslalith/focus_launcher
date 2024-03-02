@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.clock24.widget
 
+import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import dev.mslalith.focuslauncher.core.model.ClockAlignment
 
@@ -11,3 +12,7 @@ data class ClockWidgetUiComponentState(
     val clock24AnimationDuration: Int,
     val eventSink: (ClockWidgetUiComponentUiEvent) -> Unit
 ) : CircuitUiState
+
+sealed interface ClockWidgetUiComponentUiEvent : CircuitUiEvent {
+    data object RefreshTime : ClockWidgetUiComponentUiEvent
+}

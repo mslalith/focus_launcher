@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.homepage
 
+import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentState
 import dev.mslalith.focuslauncher.feature.favorites.FavoritesListUiComponentState
@@ -13,3 +14,5 @@ data class HomePageState(
     val quoteForYouUiComponentState: QuoteForYouUiComponentState,
     val favoritesListUiComponentState: FavoritesListUiComponentState
 ) : CircuitUiState
+
+sealed interface HomePageUiEvent : CircuitUiEvent

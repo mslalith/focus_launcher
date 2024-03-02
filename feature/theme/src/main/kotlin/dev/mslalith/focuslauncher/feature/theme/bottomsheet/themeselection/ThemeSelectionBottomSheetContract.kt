@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.feature.theme.bottomsheet.themeselection
 
+import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import dev.mslalith.focuslauncher.core.model.Theme
 import dev.mslalith.focuslauncher.feature.theme.model.ThemeWithIcon
@@ -10,3 +11,7 @@ data class ThemeSelectionBottomSheetState(
     val allThemes: ImmutableList<ThemeWithIcon>,
     val eventSink: (ThemeSelectionBottomSheetUiEvent) -> Unit
 ) : CircuitUiState
+
+sealed interface ThemeSelectionBottomSheetUiEvent : CircuitUiEvent {
+    data class SelectedTheme(val theme: Theme?) : ThemeSelectionBottomSheetUiEvent
+}
