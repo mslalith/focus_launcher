@@ -40,3 +40,10 @@ fun Project.setupTestLogging() {
 tasks.register("clean", Delete::class) {
     delete(rootProject.layout.buildDirectory)
 }
+
+// Exclude the NDK from the Sentry Android SDK as we don't use it
+subprojects {
+    configurations.configureEach {
+        exclude(group = "io.sentry", module = "sentry-android-ndk")
+    }
+}
