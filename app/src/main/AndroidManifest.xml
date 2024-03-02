@@ -50,12 +50,19 @@
         </activity>
 
         <!-- Sentry Config -->
+        <!-- Disable Sentry exception tracking so we can turn it on based on the user preference -->
         <meta-data
-            android:name="io.sentry.dsn"
+            android:name="io.sentry.auto-init"
+            android:value="false" />
+        <meta-data
+            android:name="dev.mslalith.focuslauncher.sentryDsn"
             android:value="${sentryDsn}" />
         <meta-data
             android:name="io.sentry.environment"
             android:value="${sentryEnvironment}" />
+<!--        <meta-data-->
+<!--            android:name="io.sentry.debug"-->
+<!--            android:value="true" />-->
         <meta-data
             android:name="io.sentry.traces.user-interaction.enable"
             android:value="true" />

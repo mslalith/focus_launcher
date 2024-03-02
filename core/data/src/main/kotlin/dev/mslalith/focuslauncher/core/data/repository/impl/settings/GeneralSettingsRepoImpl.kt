@@ -11,6 +11,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_ICON_PACK_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_REPORT_CRASHES
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import javax.inject.Inject
@@ -47,6 +48,11 @@ internal class GeneralSettingsRepoImpl @Inject constructor(
             IconPackType.from(value = value)
         }
 
+    override val reportCrashesFlow: Flow<Boolean> = settingsDataStore.data
+        .map {
+            it[PREFERENCES_REPORT_CRASHES] ?: DEFAULT_REPORT_CRASHES
+        }
+
     override suspend fun overrideFirstRun() {
         settingsDataStore.edit { it[PREFERENCES_FIRST_RUN] = false }
     }
@@ -73,6 +79,12 @@ internal class GeneralSettingsRepoImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateReportCrashes(enabled: Boolean) {
+        settingsDataStore.edit {
+            it[PREFERENCES_REPORT_CRASHES] = enabled
+        }
+    }
+
     private suspend fun toggleData(
         preference: Preferences.Key<Boolean>,
         defaultValue: Boolean
@@ -87,6 +99,7 @@ internal class GeneralSettingsRepoImpl @Inject constructor(
         private val PREFERENCES_FIRST_RUN = booleanPreferencesKey(name = "preferences_first_run")
         private val PREFERENCES_STATUS_BAR_VISIBILITY = booleanPreferencesKey(name = "preferences_status_bar_visibility")
         private val PREFERENCES_NOTIFICATION_SHADE = booleanPreferencesKey(name = "preferences_notification_shade")
+        private val PREFERENCES_REPORT_CRASHES = booleanPreferencesKey(name = "preferences_report_crashes")
         private val PREFERENCES_IS_DEFAULT_LAUNCHER = booleanPreferencesKey(name = "preferences_is_default_launcher")
         private val PREFERENCES_ICON_PACK_TYPE = stringPreferencesKey(name = "preferences_icon_pack_type")
     }

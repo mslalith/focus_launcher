@@ -8,6 +8,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_ICON_PACK_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_REPORT_CRASHES
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
@@ -66,6 +67,18 @@ internal class GeneralSettingsRepoTest : CoroutineTest() {
             initialItem = DEFAULT_NOTIFICATION_SHADE,
             mutate = {
                 repo.toggleNotificationShade()
+                false
+            }
+        )
+    }
+
+    @Test
+    fun `verify report crash change`() = runCoroutineTest {
+        verifyChange(
+            flow = repo.reportCrashesFlow,
+            initialItem = DEFAULT_REPORT_CRASHES,
+            mutate = {
+                repo.updateReportCrashes(enabled = false)
                 false
             }
         )

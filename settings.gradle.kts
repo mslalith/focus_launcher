@@ -40,6 +40,7 @@ include(
     ":core:resources",
     ":core:launcherapps",
     ":core:lint",
+    ":core:settings:sentry",
     ":core:testing",
     ":core:testing-compose",
     ":core:testing-circuit",

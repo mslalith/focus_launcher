@@ -25,6 +25,7 @@ import dev.mslalith.focuslauncher.core.screens.EditFavoritesScreen
 import dev.mslalith.focuslauncher.core.screens.HideAppsScreen
 import dev.mslalith.focuslauncher.core.screens.IconPackScreen
 import dev.mslalith.focuslauncher.core.screens.LunarPhaseWidgetSettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.screens.PrivacySettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.QuoteWidgetSettingsBottomSheetScreen
 import dev.mslalith.focuslauncher.core.screens.SettingsPageScreen
 import dev.mslalith.focuslauncher.core.screens.ThemeSelectionBottomSheetScreen
@@ -36,6 +37,7 @@ import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Developer
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.EditFavorites
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.HideApps
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.IconPack
+import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.Privacy
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.PullDownNotifications
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SetAsDefaultLauncher
 import dev.mslalith.focuslauncher.feature.settingspage.settingsitems.SettingsHeader
@@ -79,6 +81,7 @@ fun SettingsPage(
         onToggleStatusBarVisibility = { eventSink(SettingsPageUiEvent.ToggleStatusBarVisibility) },
         onToggleNotificationShade = { eventSink(SettingsPageUiEvent.ToggleNotificationShade) },
         onAppDrawerClick = { showBottomSheet(screen = AppDrawerSettingsBottomSheetScreen) },
+        onPrivacyClick = { showBottomSheet(screen = PrivacySettingsBottomSheetScreen) },
         onClockWidgetClick = { showBottomSheet(screen = ClockWidgetSettingsBottomSheetScreen) },
         onLunarPhaseWidgetClick = ::showLunarPhaseWidgetSettingsBottomSheetScreen,
         onQuotesWidgetClick = { showBottomSheet(screen = QuoteWidgetSettingsBottomSheetScreen) },
@@ -94,6 +97,7 @@ private fun SettingsPage(
     onToggleStatusBarVisibility: () -> Unit,
     onToggleNotificationShade: () -> Unit,
     onAppDrawerClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
     onClockWidgetClick: () -> Unit,
     onLunarPhaseWidgetClick: () -> Unit,
     onQuotesWidgetClick: () -> Unit,
@@ -143,6 +147,8 @@ private fun SettingsPage(
             isDefaultLauncher = state.isDefaultLauncher,
             refreshIsDefaultLauncher = onRefreshIsDefaultLauncher
         )
+
+        Privacy(onClick = onPrivacyClick)
 
         if (state.showDeveloperOption) {
             Developer { navigateTo(DeveloperScreen) }
