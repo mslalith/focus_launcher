@@ -15,6 +15,9 @@ data object ThemeSelectionBottomSheetScreen : BottomSheetScreen<Unit>()
 data object AppDrawerSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
+data object PrivacySettingsBottomSheetScreen : BottomSheetScreen<Unit>()
+
+@Parcelize
 data object ClockWidgetSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize

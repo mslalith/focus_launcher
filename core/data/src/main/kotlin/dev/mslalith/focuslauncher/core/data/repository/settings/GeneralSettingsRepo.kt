@@ -9,10 +9,12 @@ interface GeneralSettingsRepo {
     val notificationShadeFlow: Flow<Boolean>
     val isDefaultLauncher: Flow<Boolean>
     val iconPackTypeFlow: Flow<IconPackType>
+    val reportCrashesFlow: Flow<Boolean>
 
     suspend fun overrideFirstRun()
     suspend fun toggleStatusBarVisibility()
     suspend fun toggleNotificationShade()
     suspend fun setIsDefaultLauncher(isDefault: Boolean)
     suspend fun updateIconPackType(iconPackType: IconPackType)
+    suspend fun updateReportCrashes(enabled: Boolean)
 }
