@@ -15,4 +15,6 @@ dependencies {
     implementation(projects.feature.quoteforyou)
 
     implementation(libs.kotlinx.collections.immutable)
+
+    testImplementation(projects.core.settings.sentry)
 }
