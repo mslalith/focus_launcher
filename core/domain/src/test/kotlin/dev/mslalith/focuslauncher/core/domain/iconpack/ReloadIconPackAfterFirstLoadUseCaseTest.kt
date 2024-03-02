@@ -2,6 +2,7 @@ package dev.mslalith.focuslauncher.core.domain.iconpack
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.launcherapps.manager.iconpack.test.TestIconPackManager
 import dev.mslalith.focuslauncher.core.model.IconPackLoadEvent
 import dev.mslalith.focuslauncher.core.model.IconPackType
@@ -22,14 +23,22 @@ class ReloadIconPackAfterFirstLoadUseCaseTest : CoroutineTest() {
     private lateinit var loadIconPackUseCase: LoadIconPackUseCase
 
     private val testIconPackManager = TestIconPackManager()
+    private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
     @Before
     fun setup() {
         useCase = ReloadIconPackAfterFirstLoadUseCase(
             iconPackManager = testIconPackManager,
-            reloadIconPackUseCase = ReloadIconPackUseCase(iconPackManager = testIconPackManager)
+            reloadIconPackUseCase = ReloadIconPackUseCase(
+                iconPackManager = testIconPackManager,
+                appCoroutineDispatcher = appCoroutineDispatcher
+            ),
+            appCoroutineDispatcher = appCoroutineDispatcher
         )
-        loadIconPackUseCase = LoadIconPackUseCase(iconPackManager = testIconPackManager)
+        loadIconPackUseCase = LoadIconPackUseCase(
+            iconPackManager = testIconPackManager,
+            appCoroutineDispatcher = appCoroutineDispatcher
+        )
     }
 
     @Test

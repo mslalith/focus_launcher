@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(libs.androidx.palette.ktx)
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.reorderable)
 }

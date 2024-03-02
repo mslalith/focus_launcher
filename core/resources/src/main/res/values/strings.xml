@@ -104,4 +104,9 @@
     <string name="developer">Developer</string>
     <string name="read_favorites">Read Favorites</string>
     <string name="save_favorites">Save Favorites</string>
+    <string name="save">Save</string>
+    <string name="to_remove_favorite">to remove Favorite</string>
+    <string name="this_feature_requires_internet_access">This feature requires internet access</string>
+    <string name="privacy">Privacy</string>
+    <string name="report_app_crashes">Report app crashes</string>
 </resources>

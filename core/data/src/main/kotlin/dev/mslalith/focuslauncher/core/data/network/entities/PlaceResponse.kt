@@ -25,7 +25,21 @@ internal data class PlaceResponse(
     val address: AddressResponse,
     @SerialName("boundingbox")
     val boundingBox: List<String>
-)
+) {
+    companion object {
+        fun default() = PlaceResponse(
+            id = -1,
+            license = "",
+            osmType = "",
+            osmId = 0,
+            latitude = "",
+            longitude = "",
+            displayName = "",
+            address = AddressResponse(),
+            boundingBox = listOf()
+        )
+    }
+}
 
 @IgnoreInKoverReport
 @Serializable

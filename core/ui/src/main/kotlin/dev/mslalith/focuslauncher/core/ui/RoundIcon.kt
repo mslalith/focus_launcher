@@ -1,6 +1,7 @@
 package dev.mslalith.focuslauncher.core.ui
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -8,6 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,6 +26,11 @@ fun RoundIcon(
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
+    val animatedContentColor by animateColorAsState(
+        label = "Content color",
+        targetValue = if (enabled) contentColor else MaterialTheme.colorScheme.surfaceDim
+    )
+
     IconButton(
         enabled = enabled,
         onClick = onClick,
@@ -34,7 +41,7 @@ fun RoundIcon(
         Icon(
             painter = painterResource(id = iconRes),
             contentDescription = contentDescription,
-            tint = contentColor
+            tint = animatedContentColor
         )
     }
 }

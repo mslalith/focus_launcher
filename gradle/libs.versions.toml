@@ -1,8 +1,8 @@
 [versions]
-androidGradlePlugin = "8.2.2"
+androidGradlePlugin = "8.3.0"
 androidMinSdk = "28"
 androidTargetSdk = "34"
-androidTest = "8.2.2"
+androidTest = "8.3.0"
 androidxActivity = "1.8.2"
 androidxAnnotation = "1.7.1"
 androidxComposeBom = "2024.02.01"
@@ -11,7 +11,7 @@ androidxCore = "1.12.0"
 androidxCoreTesting = "2.2.0"
 androidxDataStore = "1.0.0"
 androidxHiltNavigationCompose = "1.2.0"
-androidxLifecycleRuntime = "2.7.0"
+androidxLifecycle = "2.7.0"
 androidxNavigation = "2.7.7"
 androidxPalette = "1.0.0"
 androidxProfileInstaller = "1.3.1"
@@ -23,7 +23,7 @@ baselineprofile = "1.2.3"
 benchmarkMacroJunit4 = "1.2.3"
 detekt = "1.23.5"
 espressoCore = "3.5.1"
-hilt = "2.50"
+hilt = "2.51"
 hiltCompiler = "1.2.0"
 junit4 = "4.13.2"
 kotlin = "1.9.22"
@@ -32,15 +32,17 @@ kotlinxCoroutines = "1.8.0"
 kotlinxDatetime = "0.5.0"
 kotlinxSerialization = "1.6.3"
 kover = "0.7.6"
-ksp = "1.9.22-1.0.17"
+ksp = "1.9.22-1.0.18"
 ktorClient = "2.3.8"
-mockk = "1.13.9"
+mockk = "1.13.10"
 osmdroid = "6.1.18"
+reorderable = "1.4.0-beta02"
 robolectric = "4.11.1"
 room = "2.6.1"
-sentry = "4.3.0"
+sentry = "7.5.0"
+sentry-plugin = "4.3.1"
 suncalc = "3.9"
-truth = "1.4.1"
+truth = "1.4.2"
 turbine = "1.0.0"
 uiautomator = "2.3.0"
 
@@ -51,7 +53,8 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxCoreTesting" }
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
-androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycleRuntime" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "androidxPalette" }
 androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplashScreen" }
@@ -92,12 +95,17 @@ ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref =
 ktor-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
 mockk = { group = "io.mockk", name="mockk", version.ref = "mockk" }
 osmdroid = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
+reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version.ref = "suncalc" }
+
+sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry" }
+sentry-android-core = { module = "io.sentry:sentry-android-core" }
+
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
@@ -108,7 +116,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
 kotlinx-kover = { group = "org.jetbrains.kotlinx", name = "kover", version.ref = "kover" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-sentry-gradlePlugin = { group = "io.sentry.android.gradle", name = "io.sentry.android.gradle.gradle.plugin", version.ref = "sentry" }
+sentry-gradlePlugin = { group = "io.sentry.android.gradle", name = "io.sentry.android.gradle.gradle.plugin", version.ref = "sentry-plugin" }
 
 # Benchmark libs
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
@@ -128,4 +136,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentry-plugin" }

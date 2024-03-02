@@ -15,6 +15,9 @@ data object ThemeSelectionBottomSheetScreen : BottomSheetScreen<Unit>()
 data object AppDrawerSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
+data object PrivacySettingsBottomSheetScreen : BottomSheetScreen<Unit>()
+
+@Parcelize
 data object ClockWidgetSettingsBottomSheetScreen : BottomSheetScreen<Unit>()
 
 @Parcelize
@@ -39,3 +42,6 @@ data class AppMoreOptionsBottomSheetScreen(val appDrawerItem: @RawValue AppDrawe
 
 @Parcelize
 data class UpdateAppDisplayNameBottomSheetScreen(val app: @RawValue App) : BottomSheetScreen<Unit>()
+
+@Parcelize
+data object FavoritesBottomSheetScreen : BottomSheetScreen<Unit>()

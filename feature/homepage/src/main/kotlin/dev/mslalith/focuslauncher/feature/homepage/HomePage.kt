@@ -46,8 +46,10 @@ fun HomePage(
 
 
     fun openClockApp() {
-        val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
-        context.startActivity(intent)
+        runCatching {
+            val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+            context.startActivity(intent)
+        }
     }
 
     HomePage(

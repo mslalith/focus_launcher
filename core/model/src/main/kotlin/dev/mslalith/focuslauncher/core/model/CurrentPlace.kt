@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CurrentPlace(
     val latLng: LatLng,
-    val address: String?
+    val address: String
 )

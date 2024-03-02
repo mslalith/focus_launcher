@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.launcherapps)
+    implementation(projects.core.settings.sentry)
 
     implementation(libs.androidx.palette.ktx)
 

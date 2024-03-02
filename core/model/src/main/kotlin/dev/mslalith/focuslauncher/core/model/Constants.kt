@@ -36,6 +36,7 @@ object Constants {
                 val DEFAULT_THEME = Theme.FOLLOW_SYSTEM
                 const val DEFAULT_STATUS_BAR = false
                 const val DEFAULT_NOTIFICATION_SHADE = true
+                const val DEFAULT_REPORT_CRASHES = true
                 const val DEFAULT_IS_DEFAULT_LAUNCHER = true
                 val DEFAULT_ICON_PACK_TYPE = IconPackType.System
             }
@@ -68,7 +69,7 @@ object Constants {
                         latitude = 0.0,
                         longitude = 0.0
                     ),
-                    address = null
+                    address = "Soul Buoy"
                 )
             }
 

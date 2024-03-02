@@ -3,6 +3,7 @@ package dev.mslalith.focuslauncher.screens.currentplace
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.common.model.LoadingState
+import dev.mslalith.focuslauncher.core.common.network.test.FakeNetworkMonitor
 import dev.mslalith.focuslauncher.core.data.test.repository.FakeAppDrawerRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.FakePlacesRepo
 import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeLunarPhaseSettingsRepo
@@ -10,6 +11,7 @@ import dev.mslalith.focuslauncher.core.data.utils.dummyPlaceFor
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.LunarPhase.DEFAULT_CURRENT_PLACE
 import dev.mslalith.focuslauncher.core.model.CurrentPlace
 import dev.mslalith.focuslauncher.core.model.location.LatLng
+import dev.mslalith.focuslauncher.core.model.place.Place
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import kotlinx.coroutines.flow.first
@@ -25,6 +27,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
 
     private val appDrawerRepo = FakeAppDrawerRepo()
     private val placesRepo = FakePlacesRepo()
+    private val networkMonitor = FakeNetworkMonitor()
     private val lunarPhaseSettingsRepo = FakeLunarPhaseSettingsRepo()
     private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
 
@@ -35,6 +38,8 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
 
     override fun presenterUnderTest() = CurrentPlacePresenter(
         navigator = navigator,
+        context = context,
+        networkMonitor = networkMonitor,
         appCoroutineDispatcher = appCoroutineDispatcher,
         placesRepo = placesRepo,
         lunarPhaseSettingsRepo = lunarPhaseSettingsRepo
@@ -46,6 +51,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
             latLng = DEFAULT_CURRENT_PLACE.latLng,
             initialLatLng = DEFAULT_CURRENT_PLACE.latLng,
             addressState = LoadingState.Loading,
+            isOnline = true,
             canSave = false,
             eventSink = {}
         )
@@ -54,6 +60,7 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
         assertThat(awaitItem.latLng).isEqualTo(expected.latLng)
         assertThat(awaitItem.initialLatLng).isEqualTo(expected.initialLatLng)
         assertThat(awaitItem.addressState).isEqualTo(expected.addressState)
+        assertThat(awaitItem.isOnline).isEqualTo(expected.isOnline)
         assertThat(awaitItem.canSave).isEqualTo(expected.canSave)
 
         cancelAndIgnoreRemainingEvents()
@@ -109,14 +116,43 @@ class CurrentPlacePresenterTest : PresenterTest<CurrentPlacePresenter, CurrentPl
         assertFor(expected = expectedState.addressState) { it.addressState }
         cancelAndIgnoreRemainingEvents()
     }
+
+    @Test
+    fun `05 - when fetching address fails, default value must be shown`() = runPresenterTest {
+        val latLng = LatLng(latitude = 23.0, longitude = 60.0)
+
+        val state = awaitItem()
+        placesRepo.setPlace(place = Place.default())
+        state.eventSink(CurrentPlaceUiEvent.UpdateCurrentLatLng(latLng = latLng))
+
+        val expectedState = latLng.toCurrentPlaceState(address = "Not Available")
+        assertFor(expected = expectedState.addressState) { it.addressState }
+        cancelAndIgnoreRemainingEvents()
+    }
+
+    @Test
+    fun `06 - when network is absent, verify isOnline state`() = runPresenterTest {
+        assertForTrue { it.isOnline }
+        networkMonitor.goOffline()
+        assertForFalse { it.isOnline }
+    }
 }
 
 private fun LatLng.toCurrentPlaceState(
     initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0)
+) = toCurrentPlaceState(
+    initialLatLng = initialLatLng,
+    address = dummyPlaceFor(latLng = this).displayName
+)
+
+private fun LatLng.toCurrentPlaceState(
+    initialLatLng: LatLng = LatLng(latitude = 0.0, longitude = 0.0),
+    address: String
 ) = CurrentPlaceState(
     latLng = this,
     initialLatLng = initialLatLng,
-    addressState = LoadingState.Loaded(value = dummyPlaceFor(latLng = this).displayName),
+    addressState = LoadingState.Loaded(value = address),
+    isOnline = true,
     canSave = true,
     eventSink = {}
 )

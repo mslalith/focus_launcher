@@ -18,4 +18,5 @@ dependencies {
     implementation(libs.kotlinx.collections.immutable)
 
     testImplementation(libs.truth)
+    testImplementation(projects.core.testing)
 }

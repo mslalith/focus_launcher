@@ -100,6 +100,8 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.core.model)
     implementation(projects.core.domain)
+    implementation(projects.core.settings.sentry)
+
     implementation(projects.feature.theme)
     implementation(projects.screens.launcher)
     implementation(projects.screens.editfavorites)
@@ -113,10 +115,14 @@ dependencies {
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.profile.installer)
+    implementation(libs.androidx.lifecycle.process)
 
     implementation(libs.circuit.foundation)
     implementation(libs.circuit.runtime)
     implementation(libs.circuit.overlay)
+
+    implementation(platform(libs.sentry.bom))
+    implementation(libs.sentry.android.core)
 }
 
 baselineProfile {

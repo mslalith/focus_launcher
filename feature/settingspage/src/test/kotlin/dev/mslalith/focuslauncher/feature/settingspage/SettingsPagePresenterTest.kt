@@ -1,6 +1,5 @@
 package dev.mslalith.focuslauncher.feature.settingspage
 
-import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import dev.mslalith.focuslauncher.core.common.appcoroutinedispatcher.test.TestAppCoroutineDispatcher
 import dev.mslalith.focuslauncher.core.data.test.repository.settings.FakeAppDrawerSettingsRepo
@@ -9,7 +8,6 @@ import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
 import dev.mslalith.focuslauncher.core.testing.circuit.PresenterTest
 import dev.mslalith.focuslauncher.feature.settingspage.utils.isDefaultLauncher
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import org.junit.After
@@ -26,8 +24,6 @@ class SettingsPagePresenterTest : PresenterTest<SettingsPagePresenter, SettingsP
     private val generalSettingsRepo = FakeGeneralSettingsRepo()
     private val appDrawerSettingsRepo = FakeAppDrawerSettingsRepo()
     private val appCoroutineDispatcher = TestAppCoroutineDispatcher()
-
-    private val context = mockk<Context>()
 
     @Before
     fun setup() {

@@ -5,6 +5,7 @@ import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_ICON_PACK_TYPE
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_IS_DEFAULT_LAUNCHER
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_NOTIFICATION_SHADE
+import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_REPORT_CRASHES
 import dev.mslalith.focuslauncher.core.model.Constants.Defaults.Settings.General.DEFAULT_STATUS_BAR
 import dev.mslalith.focuslauncher.core.model.IconPackType
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,9 @@ class FakeGeneralSettingsRepo : GeneralSettingsRepo {
     private val iconPackTypeStateFlow = MutableStateFlow<IconPackType>(value = DEFAULT_ICON_PACK_TYPE)
     override val iconPackTypeFlow: Flow<IconPackType> = iconPackTypeStateFlow
 
+    private val reportCrashesStateFlow = MutableStateFlow(value = DEFAULT_REPORT_CRASHES)
+    override val reportCrashesFlow: Flow<Boolean> = reportCrashesStateFlow
+
     override suspend fun overrideFirstRun() {
         firstRunStateFlow.update { false }
     }
@@ -46,5 +50,9 @@ class FakeGeneralSettingsRepo : GeneralSettingsRepo {
 
     override suspend fun updateIconPackType(iconPackType: IconPackType) {
         iconPackTypeStateFlow.update { iconPackType }
+    }
+
+    override suspend fun updateReportCrashes(enabled: Boolean) {
+        reportCrashesStateFlow.update { enabled }
     }
 }
