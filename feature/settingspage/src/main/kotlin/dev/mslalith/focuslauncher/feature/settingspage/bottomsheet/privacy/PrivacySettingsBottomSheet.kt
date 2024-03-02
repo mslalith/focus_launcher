@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.codegen.annotations.CircuitInject
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.PrivacySettingsBottomSheetScreen
+import dev.mslalith.focuslauncher.core.ui.VerticalSpacer
 import dev.mslalith.focuslauncher.core.ui.settings.SettingsSelectableSwitchItem
 import dev.mslalith.focuslauncher.feature.settingspage.R
 
@@ -28,5 +30,6 @@ fun PrivacySettingsBottomSheet(
             checked = state.reportCrashes,
             onClick = { eventSink(PrivacySettingsBottomSheetUiEvent.ToggleReportCrashes) }
         )
+        VerticalSpacer(spacing = 12.dp)
     }
 }
