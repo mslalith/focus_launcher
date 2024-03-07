@@ -43,7 +43,7 @@ sentry = "7.5.0"
 sentry-plugin = "4.3.1"
 suncalc = "3.10"
 truth = "1.4.2"
-turbine = "1.0.0"
+turbine = "1.1.0"
 uiautomator = "2.3.0"
 
 [libraries]
