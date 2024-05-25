@@ -36,11 +36,11 @@ import androidx.compose.ui.unit.dp
 import dev.mslalith.focuslauncher.core.model.app.AppWithColor
 import dev.mslalith.focuslauncher.feature.favorites.R
 import kotlinx.coroutines.delay
-import sh.calvin.reorderable.ReorderableItemScope
+import sh.calvin.reorderable.ReorderableCollectionItemScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ReorderableItemScope.DismissibleFavoriteItem(
+internal fun ReorderableCollectionItemScope.DismissibleFavoriteItem(
     appWithColor: AppWithColor,
     isDragging: Boolean,
     onDismiss: (AppWithColor) -> Unit,
@@ -133,7 +133,7 @@ internal fun ReorderableItemScope.DismissibleFavoriteItem(
 }
 
 @Composable
-private fun ReorderableItemScope.FavoriteItem(
+private fun ReorderableCollectionItemScope.FavoriteItem(
     appWithColor: AppWithColor,
     isDragging: Boolean,
     modifier: Modifier = Modifier
