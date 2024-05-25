@@ -61,33 +61,35 @@ android {
     }
 }
 
-koverReport {
-    androidReports("devDebug") {
-        html {
-            setReportDir(layout.buildDirectory.dir("kover-report/html-report"))
-        }
-        filters {
-            excludes {
-                classes(
-                    "dagger.hilt.internal.aggregatedroot.codegen.**",
-                    "hilt_aggregated_deps.**",
-                    "dev.mslalith.focuslauncher.**.*_Factory*",
-                    "dev.mslalith.focuslauncher.**.*_Impl*",
-                    "dev.mslalith.**.*Hilt*",
-                    "dev.mslalith.**.*_MembersInjector",
-                    "dev.mslalith.**.BuildConfig",
-                    "dev.mslalith.focuslauncher.**.di.**",
-                    "dev.mslalith.focuslauncher.**.model.**",
-                    // Circuit
-                    "dev.mslalith.focuslauncher.**.*Factory",
-                    "dev.mslalith.focuslauncher.**.*FactoryModule"
-                )
-                annotatedBy(
-                    "androidx.compose.runtime.Composable",
-                    "androidx.compose.ui.tooling.preview.Preview",
-                    "dagger.Module",
-                    "*IgnoreInKoverReport"
-                )
+kover {
+    reports {
+        variant("devDebug") {
+            html {
+                htmlDir.set(layout.buildDirectory.dir("kover-report/html-report"))
+            }
+            filters {
+                excludes {
+                    classes(
+                        "dagger.hilt.internal.aggregatedroot.codegen.**",
+                        "hilt_aggregated_deps.**",
+                        "dev.mslalith.focuslauncher.**.*_Factory*",
+                        "dev.mslalith.focuslauncher.**.*_Impl*",
+                        "dev.mslalith.**.*Hilt*",
+                        "dev.mslalith.**.*_MembersInjector",
+                        "dev.mslalith.**.BuildConfig",
+                        "dev.mslalith.focuslauncher.**.di.**",
+                        "dev.mslalith.focuslauncher.**.model.**",
+                        // Circuit
+                        "dev.mslalith.focuslauncher.**.*Factory",
+                        "dev.mslalith.focuslauncher.**.*FactoryModule"
+                    )
+                    annotatedBy(
+                        "androidx.compose.runtime.Composable",
+                        "androidx.compose.ui.tooling.preview.Preview",
+                        "dagger.Module",
+                        "*IgnoreInKoverReport"
+                    )
+                }
             }
         }
     }
