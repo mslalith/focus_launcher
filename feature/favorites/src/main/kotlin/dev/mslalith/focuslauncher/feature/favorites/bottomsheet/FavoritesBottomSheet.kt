@@ -175,7 +175,7 @@ private fun FavoritesList(
             key = { it.app.packageName }
         ) { appWithColor ->
             ReorderableItem(
-                reorderableLazyListState = reorderableLazyColumnState,
+                state = reorderableLazyColumnState,
                 key = appWithColor.app.packageName
             ) { isDragging ->
                 DismissibleFavoriteItem(
