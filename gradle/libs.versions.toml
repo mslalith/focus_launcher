@@ -6,7 +6,6 @@ androidTest = "8.4.1"
 androidxActivity = "1.9.0"
 androidxAnnotation = "1.8.0"
 androidxComposeBom = "2024.05.00"
-androidxComposeCompiler = "1.5.14"
 androidxCore = "1.13.1"
 androidxCoreTesting = "2.2.0"
 androidxDataStore = "1.1.1"
@@ -26,13 +25,13 @@ espressoCore = "3.5.1"
 hilt = "2.51.1"
 hiltCompiler = "1.2.0"
 junit4 = "4.13.2"
-kotlin = "1.9.24"
+kotlin = "2.0.0"
 kotlinxCollectionImmutable = "0.3.7"
 kotlinxCoroutines = "1.8.1"
 kotlinxDatetime = "0.6.0"
 kotlinxSerialization = "1.6.3"
 kover = "0.8.0"
-ksp = "1.9.24-1.0.20"
+ksp = "2.0.0-1.0.21"
 ktorClient = "2.3.11"
 mockk = "1.13.11"
 osmdroid = "6.1.18"
@@ -111,6 +110,7 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
@@ -129,6 +129,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidTest" }
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

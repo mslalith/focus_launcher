@@ -13,6 +13,7 @@ class NewScreenConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("com.android.library")
+                apply("org.jetbrains.kotlin.plugin.compose")
                 apply("com.google.devtools.ksp")
             }
             val extension = extensions.getByType<LibraryExtension>()
