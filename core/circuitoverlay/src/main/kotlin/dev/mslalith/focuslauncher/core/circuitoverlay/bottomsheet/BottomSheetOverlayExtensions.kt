@@ -48,7 +48,7 @@ suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
         CircuitContent(
             screen = screen,
             navigator = object : Navigator {
-                override fun goTo(screen: Screen) {
+                override fun goTo(screen: Screen): Boolean {
                     if (screen is OverlayResultScreen<*>) {
                         @Suppress("UNCHECKED_CAST")
                         navigator.finish(
@@ -57,6 +57,7 @@ suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
                     } else {
                         error("Navigation directly to other screens from overlays is not supported")
                     }
+                    return false
                 }
 
                 override fun peek(): Screen? = null
