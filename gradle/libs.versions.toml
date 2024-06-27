@@ -41,7 +41,7 @@ room = "2.6.1"
 sentry = "7.10.0"
 sentry-plugin = "4.8.0"
 suncalc = "3.11"
-truth = "1.4.2"
+truth = "1.4.3"
 turbine = "1.1.0"
 uiautomator = "2.3.0"
 
