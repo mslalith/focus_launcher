@@ -133,7 +133,6 @@ class IconPackPresenterTest : PresenterTest<IconPackPresenter, IconPackState>() 
         state.eventSink(IconPackUiEvent.UpdateSelectedIconPackApp(iconPackType = selectedIconPackType))
 
         assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
-        assertThat(awaitItem().allApps).isEqualTo(LoadingState.Loading)
         assertAllApps(expected = allApps, iconPackType = selectedIconPackType)
     }
 
