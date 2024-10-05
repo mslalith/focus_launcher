@@ -57,7 +57,7 @@ private fun LauncherInternal(
     ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
-            beyondBoundsPageCount = 2,
+            beyondViewportPageCount = 2,
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
                 .consumeWindowInsets(paddingValues = paddingValues)

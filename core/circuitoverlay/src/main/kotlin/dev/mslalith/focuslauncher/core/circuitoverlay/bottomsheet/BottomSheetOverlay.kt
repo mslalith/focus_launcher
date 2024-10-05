@@ -42,7 +42,7 @@ class BottomSheetOverlay<S : Any, R : Any>(
 
         ModalBottomSheet(
             modifier = Modifier.fillMaxWidth(),
-            windowInsets = WindowInsets.statusBars,
+            contentWindowInsets = { WindowInsets.statusBars },
             content = {
                 Box(
                     modifier = Modifier
