@@ -1,7 +1,7 @@
 [versions]
 androidGradlePlugin = "8.7.3"
 androidMinSdk = "28"
-androidTargetSdk = "34"
+androidTargetSdk = "35"
 androidTest = "8.7.3"
 androidxActivity = "1.9.3"
 androidxAnnotation = "1.9.1"
