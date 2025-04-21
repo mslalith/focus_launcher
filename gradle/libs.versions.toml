@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "8.9.1"
+androidGradlePlugin = "8.9.2"
 androidMinSdk = "28"
 androidTargetSdk = "35"
 androidTest = "8.9.1"
