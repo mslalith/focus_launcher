@@ -57,4 +57,4 @@ internal abstract class AppDatabase : RoomDatabase() {
 }
 
 @DeleteTable(tableName = "cities")
-private class MigrateFrom2To3 : AutoMigrationSpec
+class MigrateFrom2To3 : AutoMigrationSpec
