@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.screens.launcher
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
@@ -10,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.slack.circuit.codegen.annotations.CircuitInject
-import com.slack.circuit.foundation.internal.BackHandler
 import dagger.hilt.components.SingletonComponent
 import dev.mslalith.focuslauncher.core.screens.LauncherScreen
 import dev.mslalith.focuslauncher.core.ui.providers.LocalLauncherPagerState

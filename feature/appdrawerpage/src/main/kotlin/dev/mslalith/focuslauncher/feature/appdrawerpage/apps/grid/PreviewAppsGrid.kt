@@ -88,7 +88,7 @@ private fun PreviewAppsContent(
                     appDrawerIconViewType = AppDrawerIconViewType.ICONS,
                     onClick = {},
                     onLongClick = {},
-                    modifier = Modifier.animateItemPlacement()
+                    modifier = Modifier.animateItem()
                 )
             }
 

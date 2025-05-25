@@ -45,7 +45,7 @@ internal fun AppsGrid(
                 appDrawerIconViewType = appDrawerIconViewType,
                 onClick = onAppClick,
                 onLongClick = onAppLongClick,
-                modifier = Modifier.animateItemPlacement()
+                modifier = Modifier.animateItem()
             )
         }
 
