@@ -12,4 +12,6 @@ dependencies {
     implementation(projects.feature.homepage)
     implementation(projects.feature.settingspage)
     implementation(projects.feature.appdrawerpage)
+
+    implementation(libs.androidx.activity.compose)
 }

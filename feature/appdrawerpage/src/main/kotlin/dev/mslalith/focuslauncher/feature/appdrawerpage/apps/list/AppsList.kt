@@ -65,7 +65,7 @@ internal fun AppsList(
                     showAppGroupHeader = showAppGroupHeader && groupedApps.size != 1,
                     onAppClick = onAppClick,
                     onAppLongClick = onAppLongClick,
-                    modifier = Modifier.animateItemPlacement()
+                    modifier = Modifier.animateItem()
                 )
             }
         }

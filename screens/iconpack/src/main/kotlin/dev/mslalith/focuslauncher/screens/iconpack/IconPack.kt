@@ -195,7 +195,7 @@ private fun IconPackListSheet(
                 appWithIcon = appWithIcon,
                 isSelected = iconPackState.iconPackType == customIconPackType,
                 onClick = { onIconPackClick(customIconPackType) },
-                modifier = Modifier.animateItemPlacement()
+                modifier = Modifier.animateItem()
             )
         }
     }
