@@ -8,7 +8,8 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.UpcomingLunarPhase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 class FakeLunarPhaseDetailsRepo : LunarPhaseDetailsRepo {
 
@@ -18,6 +19,7 @@ class FakeLunarPhaseDetailsRepo : LunarPhaseDetailsRepo {
     private val _upcomingLunarPhaseStateFlow = MutableStateFlow<State<UpcomingLunarPhase>>(value = State.Initial)
     override val upcomingLunarPhaseStateFlow: StateFlow<State<UpcomingLunarPhase>> = _upcomingLunarPhaseStateFlow
 
+    @OptIn(ExperimentalTime::class)
     override suspend fun refreshLunarPhaseDetails(instant: Instant, latLng: LatLng) = Unit
 
     fun setLunarPhaseDetails(details: LunarPhaseDetails) {

@@ -181,13 +181,13 @@ private fun ContentDrawScope.drawIllumination(
     Path()
         .apply {
             moveTo(x = radius, y = 0f)
-            quadraticBezierTo(
+            quadraticTo(
                 x1 = 0f,
                 y1 = 0f,
                 x2 = 0f,
                 y2 = radius
             )
-            quadraticBezierTo(
+            quadraticTo(
                 x1 = 0f,
                 y1 = size.height,
                 x2 = radius,

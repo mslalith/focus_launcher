@@ -11,8 +11,10 @@ import java.util.Locale
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
-import kotlinx.datetime.toJavaInstant
+import kotlin.time.ExperimentalTime
+import kotlin.time.toJavaInstant
 
+@OptIn(ExperimentalTime::class)
 @Composable
 internal fun RiseAndSetTime(
     modifier: Modifier = Modifier,

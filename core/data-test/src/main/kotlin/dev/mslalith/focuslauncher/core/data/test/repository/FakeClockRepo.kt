@@ -4,9 +4,11 @@ import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 class FakeClockRepo : ClockRepo {
 
     private val _currentInstantStateFlow = MutableStateFlow(value = Clock.System.now())

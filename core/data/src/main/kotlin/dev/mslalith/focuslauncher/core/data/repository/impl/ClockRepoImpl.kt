@@ -5,8 +5,10 @@ import dev.mslalith.focuslauncher.core.data.repository.ClockRepo
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 internal class ClockRepoImpl @Inject constructor(
     private val clockProvider: ClockProvider
 ) : ClockRepo {

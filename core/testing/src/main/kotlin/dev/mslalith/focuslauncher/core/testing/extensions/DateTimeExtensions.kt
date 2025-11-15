@@ -1,11 +1,13 @@
 package dev.mslalith.focuslauncher.core.testing.extensions
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 fun instantOf(
     year: Int = 2023,
     month: Month = Month.FEBRUARY,
@@ -15,7 +17,7 @@ fun instantOf(
 ): Instant = LocalDateTime(
     year = year,
     month = month,
-    dayOfMonth = dayOfMonth,
+    day = dayOfMonth,
     hour = hour,
     minute = minute,
     second = 0,

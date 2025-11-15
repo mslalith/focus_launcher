@@ -15,6 +15,7 @@ import dev.mslalith.focuslauncher.core.screens.LunarCalendarUiComponentScreen
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @CircuitInject(LunarCalendarUiComponentScreen::class, SingletonComponent::class)
 class LunarCalendarUiComponentPresenter @Inject constructor(
@@ -23,6 +24,7 @@ class LunarCalendarUiComponentPresenter @Inject constructor(
     private val lunarPhaseSettingsRepo: LunarPhaseSettingsRepo
 ) : Presenter<LunarCalendarUiComponentState> {
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     override fun present(): LunarCalendarUiComponentState {
         val showLunarPhase by lunarPhaseSettingsRepo.showLunarPhaseFlow.collectAsRetainedState(initial = Constants.Defaults.Settings.LunarPhase.DEFAULT_SHOW_LUNAR_PHASE)
