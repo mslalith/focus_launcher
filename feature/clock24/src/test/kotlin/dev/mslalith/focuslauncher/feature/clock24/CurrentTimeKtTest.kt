@@ -3,12 +3,15 @@ package dev.mslalith.focuslauncher.feature.clock24
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertAny
+import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
+import dev.mslalith.focuslauncher.core.testing.compose.matcher.onMatchWith
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 import dev.mslalith.focuslauncher.feature.clock24.widget.ui.CurrentTime
 import org.junit.FixMethodOrder
@@ -32,7 +35,8 @@ class CurrentTimeKtTest {
             CurrentTime(currentTime = "17:23")
         }
 
-        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "17:23"))
+        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK)
+            .assert(matcher = hasAnyDescendant(matcher = hasText(text = "17:23")))
     }
 
     @Test
@@ -43,9 +47,11 @@ class CurrentTimeKtTest {
             CurrentTime(currentTime = currentTime)
         }
 
-        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "17:23"))
+        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK)
+            .assert(matcher = hasAnyDescendant(matcher = hasText(text = "17:23")))
 
         currentTime = "21:49"
-        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK).onChildren().assertAny(matcher = hasText(text = "21:49"))
+        onNodeWithTag(testTag = TestTags.TAG_REGULAR_CLOCK)
+            .assert(matcher = hasAnyDescendant(matcher = hasText(text = "21:49")))
     }
 }
