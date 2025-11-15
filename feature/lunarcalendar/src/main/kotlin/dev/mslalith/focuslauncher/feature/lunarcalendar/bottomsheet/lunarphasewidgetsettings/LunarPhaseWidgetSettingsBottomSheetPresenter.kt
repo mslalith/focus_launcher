@@ -31,6 +31,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlin.time.ExperimentalTime
 
 class LunarPhaseWidgetSettingsBottomSheetPresenter @AssistedInject constructor(
     @Assisted private val navigator: Navigator,
@@ -46,6 +47,7 @@ class LunarPhaseWidgetSettingsBottomSheetPresenter @AssistedInject constructor(
         fun create(navigator: Navigator): LunarPhaseWidgetSettingsBottomSheetPresenter
     }
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     override fun present(): LunarPhaseWidgetSettingsBottomSheetState {
         val scope = rememberCoroutineScope()

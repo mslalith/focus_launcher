@@ -12,7 +12,9 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @RunWith(AppRobolectricTestRunner::class)
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 class ClockWidgetUiComponentPresenterTest : PresenterTest<ClockWidgetUiComponentPresenter, ClockWidgetUiComponentState>() {

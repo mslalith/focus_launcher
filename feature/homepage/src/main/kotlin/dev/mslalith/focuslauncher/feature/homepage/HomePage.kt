@@ -93,11 +93,13 @@ internal fun HomePage(
                     state = state.lunarCalendarUiComponentState,
                     onClick = onLunarCalendarWidgetClick
                 )
-                Box(modifier = Modifier.weight(weight = 1f)) {
-                    DecoratedQuote(
-                        state = state.quoteForYouUiComponentState,
-                        modifier = Modifier.align(alignment = Alignment.Center)
-                    )
+                if (state.quoteForYouUiComponentState.showQuotes) {
+                    Box(modifier = Modifier.weight(weight = 1f)) {
+                        DecoratedQuote(
+                            state = state.quoteForYouUiComponentState,
+                            modifier = Modifier.align(alignment = Alignment.Center)
+                        )
+                    }
                 }
                 FavoritesListUiComponent(
                     state = state.favoritesListUiComponentState,

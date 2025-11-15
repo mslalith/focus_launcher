@@ -14,6 +14,7 @@ import dev.mslalith.focuslauncher.core.model.Constants
 import dev.mslalith.focuslauncher.core.screens.ClockWidgetUiComponentScreen
 import dev.mslalith.focuslauncher.feature.clock24.widget.ClockWidgetUiComponentUiEvent.RefreshTime
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @CircuitInject(ClockWidgetUiComponentScreen::class, SingletonComponent::class)
 class ClockWidgetUiComponentPresenter @Inject constructor(
@@ -21,6 +22,7 @@ class ClockWidgetUiComponentPresenter @Inject constructor(
     private val clockSettingsRepo: ClockSettingsRepo
 ) : Presenter<ClockWidgetUiComponentState> {
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     override fun present(): ClockWidgetUiComponentState {
         val currentInstant by clockRepo.currentInstantStateFlow.collectAsRetainedState()

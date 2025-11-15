@@ -1,7 +1,9 @@
 package dev.mslalith.focuslauncher.core.common.providers.clock
 
-import kotlinx.datetime.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 interface ClockProvider {
+    @OptIn(ExperimentalTime::class)
     fun now(): Instant
 }
