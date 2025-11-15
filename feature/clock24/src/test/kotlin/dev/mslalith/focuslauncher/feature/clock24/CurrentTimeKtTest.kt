@@ -4,14 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assert
-import androidx.compose.ui.test.assertAny
 import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import dev.mslalith.focuslauncher.core.testing.AppRobolectricTestRunner
-import dev.mslalith.focuslauncher.core.testing.compose.matcher.onMatchWith
 import dev.mslalith.focuslauncher.feature.clock24.utils.TestTags
 import dev.mslalith.focuslauncher.feature.clock24.widget.ui.CurrentTime
 import org.junit.FixMethodOrder
