@@ -17,14 +17,6 @@ dependencyResolutionManagement {
     }
 }
 
-buildCache {
-    local {
-        isEnabled = true
-        directory = File(rootDir, "build-cache")
-        removeUnusedEntriesAfterDays = 30
-    }
-}
-
 rootProject.name = "FocusLauncher"
 include(
     ":app",
