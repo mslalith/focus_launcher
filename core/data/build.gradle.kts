@@ -26,8 +26,8 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
-    implementation(libs.androidx.dataStore.core)
-    implementation(libs.androidx.dataStore.preferences)
+    api(libs.androidx.dataStore.core)
+    api(libs.androidx.dataStore.preferences)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.android)
