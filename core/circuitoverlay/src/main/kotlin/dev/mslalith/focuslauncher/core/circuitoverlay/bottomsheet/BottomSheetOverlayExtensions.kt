@@ -69,7 +69,10 @@ suspend fun <T : Any> OverlayHost.showBottomSheetWithResult(
                     return null
                 }
 
-                override fun resetRoot(newRoot: Screen, saveState: Boolean, restoreState: Boolean): ImmutableList<Screen> {
+                override fun resetRoot(
+                    newRoot: Screen,
+                    options: Navigator.StateOptions
+                ): List<Screen> {
                     error("Operation not allowed in overlays")
                 }
             }
