@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(projects.core.common)
-    implementation(projects.core.data)
+    api(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.launcherapps)
     implementation(projects.core.settings.sentry)
