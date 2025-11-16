@@ -15,4 +15,5 @@ dependencies {
 
     implementation(libs.circuit.foundation)
     api(libs.circuit.test)
+    api(libs.kotlinx.collections.immutable)
 }

@@ -21,4 +21,6 @@ dependencies {
     implementation(libs.circuit.foundation)
     implementation(libs.circuit.runtime)
     implementation(libs.circuit.overlay)
+
+    implementation(libs.kotlinx.collections.immutable)
 }
