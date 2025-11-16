@@ -16,9 +16,20 @@ android {
         applicationId = "dev.mslalith.focuslauncher"
         versionCode = 15
         versionName = "0.9.0"
-        setProperty("archivesBaseName", "Focus-Launcher-v$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    applicationVariants.all {
+        val variant = this
+        variant.outputs.all {
+            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            val flavorName = variant.flavorName
+            val buildTypeName = variant.buildType.name
+
+            // Example: Focus-Launcher-v0.9.0-dev-debug.apk
+            output.outputFileName = "Focus-Launcher-v${defaultConfig.versionName}-${flavorName}-${buildTypeName}.apk"
+        }
     }
 
     buildTypes {
