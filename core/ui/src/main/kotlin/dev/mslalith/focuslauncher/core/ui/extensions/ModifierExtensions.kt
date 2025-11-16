@@ -1,5 +1,6 @@
 package dev.mslalith.focuslauncher.core.ui.extensions
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -8,6 +9,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import kotlin.random.Random
 
 inline fun Modifier.modifyIf(
     predicate: () -> Boolean,
@@ -25,6 +29,15 @@ fun Modifier.clickableNoRipple(
         onClick = onClick
     )
 }
+
+fun Modifier.debugBorder() = this then Modifier.border(
+    width = 1.dp,
+    color = Color(
+        red = Random.nextFloat(),
+        green = Random.nextFloat(),
+        blue = Random.nextFloat()
+    )
+)
 
 inline fun Modifier.onSwipeDown(
     enabled: Boolean = true,

@@ -115,14 +115,14 @@ private fun Modifier.settingsContentCurve(
         val path = Path().apply {
             moveTo(x = xEnd, y = lineHalf)
             lineTo(x = xCurveStart, y = lineHalf)
-            quadraticBezierTo(
+            quadraticTo(
                 x1 = lineHalf,
                 y1 = lineHalf,
                 x2 = lineHalf,
                 y2 = dividerCurveOffset + lineHalf
             )
             lineTo(x = lineHalf, y = yCurveEnd - lineHalf)
-            quadraticBezierTo(
+            quadraticTo(
                 x1 = lineHalf,
                 y1 = yEnd,
                 x2 = xCurveStart,
