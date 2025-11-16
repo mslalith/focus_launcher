@@ -18,7 +18,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @HiltAndroidTest
 @RunWith(AppRobolectricTestRunner::class)
 @Config(application = HiltTestApplication::class)

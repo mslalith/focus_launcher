@@ -14,13 +14,15 @@ import dev.mslalith.focuslauncher.core.model.lunarphase.toLunarPhase
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.datetime.Instant
-import kotlinx.datetime.toJavaInstant
 import org.shredzone.commons.suncalc.MoonIllumination
 import org.shredzone.commons.suncalc.MoonPhase
 import org.shredzone.commons.suncalc.MoonTimes
 import org.shredzone.commons.suncalc.SunTimes
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
+import kotlin.time.toJavaInstant
 
+@OptIn(ExperimentalTime::class)
 internal class LunarPhaseDetailsRepoImpl @Inject constructor() : LunarPhaseDetailsRepo {
     private val _lunarPhaseDetailsStateFlow = MutableStateFlow<State<LunarPhaseDetails>>(value = State.Initial)
     override val lunarPhaseDetailsStateFlow: StateFlow<State<LunarPhaseDetails>>

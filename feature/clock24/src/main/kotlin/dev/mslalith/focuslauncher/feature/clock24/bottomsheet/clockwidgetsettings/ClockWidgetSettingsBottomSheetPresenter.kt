@@ -25,6 +25,7 @@ import dev.mslalith.focuslauncher.feature.clock24.bottomsheet.clockwidgetsetting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @CircuitInject(ClockWidgetSettingsBottomSheetScreen::class, SingletonComponent::class)
 class ClockWidgetSettingsBottomSheetPresenter @Inject constructor(
@@ -33,6 +34,7 @@ class ClockWidgetSettingsBottomSheetPresenter @Inject constructor(
     private val appCoroutineDispatcher: AppCoroutineDispatcher
 ) : Presenter<ClockWidgetSettingsBottomSheetState> {
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     override fun present(): ClockWidgetSettingsBottomSheetState {
         val scope = rememberCoroutineScope()
