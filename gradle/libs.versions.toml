@@ -2,7 +2,7 @@
 androidGradlePlugin = "8.13.1"
 androidMinSdk = "28"
 androidTargetSdk = "36"
-androidTest = "8.13.1"
+androidTest = "8.13.2"
 androidxActivity = "1.12.1"
 androidxAnnotation = "1.9.1"
 androidxComposeBom = "2025.12.00"
