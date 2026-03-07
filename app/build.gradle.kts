@@ -1,3 +1,5 @@
+import com.android.build.api.artifact.SingleArtifact
+
 plugins {
     id("focuslauncher.android.application")
     id("focuslauncher.android.hilt")
@@ -9,27 +11,17 @@ plugins {
     id("focuslauncher.sentry")
 }
 
+val appVersionName = "0.9.0"
+
 android {
     namespace = "dev.mslalith.focuslauncher"
 
     defaultConfig {
         applicationId = "dev.mslalith.focuslauncher"
         versionCode = 15
-        versionName = "0.9.0"
+        versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    applicationVariants.all {
-        val variant = this
-        variant.outputs.all {
-            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            val flavorName = variant.flavorName
-            val buildTypeName = variant.buildType.name
-
-            // Example: Focus-Launcher-v0.9.0-dev-debug.apk
-            output.outputFileName = "Focus-Launcher-v${defaultConfig.versionName}-${flavorName}-${buildTypeName}.apk"
-        }
     }
 
     buildTypes {
@@ -54,7 +46,7 @@ android {
         }
     }
 
-    flavorDimensionList += "version"
+    flavorDimensions += "version"
     productFlavors {
         create("dev") {
             dimension = "version"
@@ -72,36 +64,24 @@ android {
     }
 }
 
-kover {
-    reports {
-        variant("devDebug") {
-            html {
-                htmlDir.set(layout.buildDirectory.dir("kover-report/html-report"))
-            }
-            filters {
-                excludes {
-                    classes(
-                        "dagger.hilt.internal.aggregatedroot.codegen.**",
-                        "hilt_aggregated_deps.**",
-                        "dev.mslalith.focuslauncher.**.*_Factory*",
-                        "dev.mslalith.focuslauncher.**.*_Impl*",
-                        "dev.mslalith.**.*Hilt*",
-                        "dev.mslalith.**.*_MembersInjector",
-                        "dev.mslalith.**.BuildConfig",
-                        "dev.mslalith.focuslauncher.**.di.**",
-                        "dev.mslalith.focuslauncher.**.model.**",
-                        // Circuit
-                        "dev.mslalith.focuslauncher.**.*Factory",
-                        "dev.mslalith.focuslauncher.**.*FactoryModule"
-                    )
-                    annotatedBy(
-                        "androidx.compose.runtime.Composable",
-                        "androidx.compose.ui.tooling.preview.Preview",
-                        "dagger.Module",
-                        "*IgnoreInKoverReport"
-                    )
-                }
-            }
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        val flavorName = variant.flavorName.orEmpty()
+        val buildType = variant.buildType.orEmpty()
+        val flavorPart = if (flavorName.isBlank()) "main" else flavorName
+        val outputName = "Focus-Launcher-v$appVersionName-$flavorPart-$buildType.apk"
+
+        val renameApkTask = tasks.register<Copy>(
+            "rename${variant.name.replaceFirstChar(Char::uppercaseChar)}Apk"
+        ) {
+            from(variant.artifacts.get(SingleArtifact.APK))
+            include("*.apk")
+            rename { outputName }
+            into(layout.buildDirectory.dir("outputs/apk-renamed/${variant.name}"))
+        }
+
+        tasks.matching { it.name == "assemble${variant.name.replaceFirstChar(Char::uppercaseChar)}" }.configureEach {
+            finalizedBy(renameApkTask)
         }
     }
 }

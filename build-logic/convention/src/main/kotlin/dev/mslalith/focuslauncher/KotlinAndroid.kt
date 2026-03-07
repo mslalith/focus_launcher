@@ -10,28 +10,24 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
-) = with(commonExtension) {
+    commonExtension: CommonExtension,
+) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-    compileSdk = libs.findVersion("androidTargetSdk").get().requiredVersion.toInt()
+    commonExtension.apply {
+        compileSdk = libs.findVersion("androidTargetSdk").get().requiredVersion.toInt()
+        defaultConfig.minSdk = libs.findVersion("androidMinSdk").get().requiredVersion.toInt()
 
-    defaultConfig {
-        minSdk = libs.findVersion("androidMinSdk").get().requiredVersion.toInt()
-    }
+        compileOptions.sourceCompatibility = JavaVersion.VERSION_17
+        compileOptions.targetCompatibility = JavaVersion.VERSION_17
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-            freeCompilerArgs.set(listOf("-Xcontext-receivers"))
+        kotlin {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
+                freeCompilerArgs.set(listOf("-Xcontext-receivers"))
+            }
         }
-    }
-    lint {
-        error.add("VisibleForTests")
+        lint.error.add("VisibleForTests")
     }
 }
 

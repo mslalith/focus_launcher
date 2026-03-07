@@ -10,13 +10,11 @@ import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 internal fun Project.configureAndroidCompose(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
-) = with(commonExtension) {
+    commonExtension: CommonExtension,
+) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-    buildFeatures {
-        compose = true
-    }
+    commonExtension.buildFeatures.compose = true
 
     extensions.configure<ComposeCompilerGradlePluginExtension> {
         fun Provider<String>.onlyIfTrue() = flatMap { provider { it.takeIf(String::toBoolean) } }

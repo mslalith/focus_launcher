@@ -6,12 +6,13 @@ import org.gradle.kotlin.dsl.getByType
 
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
+        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
         with(pluginManager) {
-            apply("dagger.hilt.android.plugin")
+            apply(libs.findPlugin("hilt").get().get().pluginId)
             apply("com.google.devtools.ksp")
         }
 
-        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
         dependencies {
             add(configurationName = "implementation", libs.findLibrary("hilt.android").get())
             add(configurationName = "ksp", libs.findLibrary("hilt.compiler").get())

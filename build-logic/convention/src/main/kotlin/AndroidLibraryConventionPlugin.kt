@@ -1,4 +1,4 @@
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import dev.mslalith.focuslauncher.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -13,13 +13,16 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         with(pluginManager) {
             apply("com.android.library")
             apply("focuslauncher.lint")
-            apply("org.jetbrains.kotlin.android")
             apply(libs.findPlugin("kotlinx-kover").get().get().pluginId)
         }
 
         extensions.configure<LibraryExtension> {
             configureKotlinAndroid(commonExtension = this)
-            defaultConfig.targetSdk = libs.findVersion("androidTargetSdk").get().requiredVersion.toInt()
+
+            // Robolectric SDK 36 requires Java 21; pin to 35 while CI/builds run on Java 17.
+            testOptions.unitTests.all {
+                it.systemProperty("robolectric.enabledSdks", "35")
+            }
         }
     }
 }

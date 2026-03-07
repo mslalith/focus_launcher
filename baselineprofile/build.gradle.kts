@@ -1,9 +1,8 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.android.test)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.baselineprofile)
     id("focuslauncher.lint")
 }
@@ -15,10 +14,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin.compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
     }
 
     defaultConfig {
@@ -47,13 +42,17 @@ android {
         create("store") { dimension = "version" }
     }
 
-    testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api34") {
+    testOptions.managedDevices.localDevices {
+        create("pixel6Api34") {
             device = "Pixel 6"
             apiLevel = 34
             systemImageSource = "google"
         }
     }
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }
 
 // This is the configuration block for the Baseline Profile plugin.

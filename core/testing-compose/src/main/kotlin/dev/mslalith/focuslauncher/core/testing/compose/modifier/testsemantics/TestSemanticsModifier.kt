@@ -8,6 +8,8 @@ import dev.mslalith.focuslauncher.core.testing.compose.modifier.testsemantics.im
 fun Modifier.testSemantics(
     tag: String,
     block: TestSemanticsScope.() -> Unit = {}
-): Modifier = this then testTag(tag = tag) then semantics {
-    TestSemanticsScopeImpl(semanticsPropertyReceiver = this).block()
-}
+): Modifier = this then Modifier
+    .testTag(tag = tag)
+    .semantics {
+        TestSemanticsScopeImpl(semanticsPropertyReceiver = this).block()
+    }
