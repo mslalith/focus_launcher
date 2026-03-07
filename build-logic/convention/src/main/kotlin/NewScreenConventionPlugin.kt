@@ -1,4 +1,4 @@
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.google.devtools.ksp.gradle.KspExtension
 import dev.mslalith.focuslauncher.configureAndroidCompose
 import org.gradle.api.Plugin
