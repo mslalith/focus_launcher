@@ -116,7 +116,7 @@ jobs:
           path: ${{ steps.rename_aab.outputs.to_path }}
 
       - name: Publish release
-        uses: release-drafter/release-drafter@v7.3.0
+        uses: release-drafter/release-drafter@v7.3.1
         with:
           version: ${{ steps.version.outputs.version }}
           publish: true
