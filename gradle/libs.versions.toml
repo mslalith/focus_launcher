@@ -43,7 +43,7 @@ sentry-plugin = "6.13.0"
 suncalc = "3.11"
 truth = "1.4.5"
 turbine = "1.2.1"
-uiautomator = "2.3.0"
+uiautomator = "2.4.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
